@@ -171,3 +171,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Moved progress bars back to inline layout beside team names, positioned between team name and edit button
 - **January 24, 2025**: Hidden progress bars from team display while keeping them in code for potential future use
 - **January 24, 2025**: Modified team fade-out animation to only fade to 30% opacity instead of completely disappearing for smoother transitions
+- **January 24, 2025**: Removed all confetti animations and functionality from the entire application
+- **January 24, 2025**: Fixed team jumping animation issue by stabilizing team filtering logic during transitions and showing both current and previous teams during fade transitions

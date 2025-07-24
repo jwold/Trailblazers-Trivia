@@ -9,7 +9,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
-import { createConfetti, createEncouragement } from "../lib/game-logic";
+// import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
   gameCode: string;
@@ -62,7 +62,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       // After fade-out completes, fade in the new team
       setTimeout(() => {
         setTeamTransitioning(false);
-      }, 1000); // Total duration: 400ms fade-out + 600ms fade-in
+      }, 500); // Shorter duration to reduce jumping
     }
     
     prevTeamIndexRef.current = currentTeamIndex;
@@ -118,7 +118,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: null }));
     }, 2000);
     
-    createConfetti();
+    // createConfetti();
     
     const points = usedBibleAssist 
       ? difficultyConfig[selectedDifficulty].bibleAssistPoints 
@@ -325,7 +325,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           
           <div className="grid grid-cols-1 gap-4">
-            {teams.filter((team, index) => teamsExpanded || index === gameSession.currentTeamIndex).map((team, originalIndex) => {
+            {teams.filter((team, index) => {
+              if (teamsExpanded) return true;
+              // During transition, show both current and previous team to avoid jumping
+              if (teamTransitioning && prevTeamIndexRef.current !== null) {
+                return index === gameSession.currentTeamIndex || index === prevTeamIndexRef.current;
+              }
+              return index === gameSession.currentTeamIndex;
+            }).map((team, originalIndex) => {
               const index = teams.findIndex(t => t.id === team.id);
               const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
                                team.color === "green" ? "bg-gray-100 border-gray-300" :
@@ -351,9 +358,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 : '';
 
               // Transition classes for team switching
+              const isCurrentTeam = index === gameSession.currentTeamIndex;
+              const isPreviousTeam = teamTransitioning && prevTeamIndexRef.current !== null && index === prevTeamIndexRef.current;
+              
               const transitionClass = !teamsExpanded && teamTransitioning 
-                ? 'animate-team-fade-out'
-                : !teamsExpanded && !teamTransitioning
+                ? (isPreviousTeam ? 'animate-team-fade-out' : 'animate-team-fade-in')
+                : !teamsExpanded && !teamTransitioning && isCurrentTeam
                 ? 'animate-team-fade-in'
                 : '';
               

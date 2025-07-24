@@ -59,8 +59,8 @@ export default function Home() {
           />
         )}
       </main>
-      {/* Confetti Container */}
-      <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50"></div>
+      {/* Confetti Container - Hidden */}
+      <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50 hidden"></div>
     </div>
   );
 }

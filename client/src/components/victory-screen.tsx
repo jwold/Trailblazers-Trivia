@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Crown, Trophy, Plus, Share } from "lucide-react";
 import { type Team, type ClientGameSession } from "@shared/schema";
-import { createConfetti } from "../lib/game-logic";
+// import { createConfetti } from "../lib/game-logic";
 import { useEffect } from "react";
 
 interface VictoryScreenProps {
@@ -17,12 +17,12 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
     queryKey: ["/api/games", gameCode],
   });
 
-  useEffect(() => {
-    // Create celebration effect on mount
-    createConfetti();
-    const interval = setInterval(createConfetti, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   // Create celebration effect on mount
+  //   createConfetti();
+  //   const interval = setInterval(createConfetti, 2000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   if (isLoading || !gameSession) {
     return <div className="text-center py-8">Loading results...</div>;
