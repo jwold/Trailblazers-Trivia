@@ -156,19 +156,16 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
 
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
-            <div className="max-w-xs">
-              
-              <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10 Points</SelectItem>
-                  <SelectItem value="15">15 Points</SelectItem>
-                  <SelectItem value="20">20 Points</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10 Points</SelectItem>
+                <SelectItem value="15">15 Points</SelectItem>
+                <SelectItem value="20">20 Points</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Start Game Button */}
