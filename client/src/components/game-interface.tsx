@@ -35,13 +35,37 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [editingTeamName, setEditingTeamName] = useState<string>("");
   const [teamAnimations, setTeamAnimations] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
   const [teamsExpanded, setTeamsExpanded] = useState(false);
+  const [teamTransitioning, setTeamTransitioning] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const prevTeamIndexRef = useRef<number | null>(null);
 
   const { data: gameSession, isLoading } = useQuery<ClientGameSession>({
     queryKey: ["/api/games", gameCode],
     refetchInterval: 1000,
   });
+
+  // Handle team transitions with fade effect
+  useEffect(() => {
+    if (!gameSession || teamsExpanded) return;
+    
+    const currentTeamIndex = gameSession.currentTeamIndex;
+    
+    if (prevTeamIndexRef.current !== null && 
+        prevTeamIndexRef.current !== currentTeamIndex && 
+        currentTeamIndex !== null) {
+      
+      // Start fade-out transition
+      setTeamTransitioning(true);
+      
+      // After fade-out completes, fade in the new team
+      setTimeout(() => {
+        setTeamTransitioning(false);
+      }, 1000); // Total duration: 400ms fade-out + 600ms fade-in
+    }
+    
+    prevTeamIndexRef.current = currentTeamIndex;
+  }, [gameSession?.currentTeamIndex, teamsExpanded]);
 
   const fetchQuestionMutation = useMutation({
     mutationFn: async (difficulty: string) => {
@@ -322,9 +346,16 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 : teamAnimations[team.id] === 'incorrect' 
                 ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
                 : '';
+
+              // Transition classes for team switching
+              const transitionClass = !teamsExpanded && teamTransitioning 
+                ? 'animate-team-fade-out'
+                : !teamsExpanded && !teamTransitioning
+                ? 'animate-team-fade-in'
+                : '';
               
               return (
-                <div key={team.id} className={`${animationClass || colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-300`}>
+                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-300`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1">
                       {editingTeamId === team.id ? (

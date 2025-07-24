@@ -160,3 +160,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Hidden progress bars for inactive teams to reduce visual clutter and focus attention on the current active team
 - **January 24, 2025**: Replaced large progress bars with small inline progress bars positioned to the left of edit icons for all teams
 - **January 24, 2025**: Implemented collapsible teams view - only active team shown by default with expand/collapse toggle button
+- **January 24, 2025**: Added smooth fade transitions (400ms fade-out, 600ms fade-in) when switching between teams in collapsed view
