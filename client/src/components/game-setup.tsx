@@ -113,7 +113,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             alt="Children playing and learning together" 
             className="rounded-2xl shadow-xl w-full h-64 object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
+          
           <div className="absolute bottom-4 left-4 text-white">
             <h2 className="text-3xl font-bold mb-2">Ready to Play?</h2>
             <p className="text-lg opacity-90">Test your Bible knowledge with friends!</p>
