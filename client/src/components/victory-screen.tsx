@@ -95,6 +95,17 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           </div>
         </CardContent>
       </Card>
+      {/* Action Buttons */}
+      <div className="flex justify-center">
+        <Button
+          onClick={onNewGame}
+          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-6 px-8 text-xl font-bold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-gray-300"
+        >
+          <Plus className="mr-3" size={24} />
+          New Game
+        </Button>
+      </div>
+      
       {/* Game Stats */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
@@ -119,16 +130,6 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           </div>
         </CardContent>
       </Card>
-      {/* Action Buttons */}
-      <div className="flex justify-center">
-        <Button
-          onClick={onNewGame}
-          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-6 px-8 text-xl font-bold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-gray-300"
-        >
-          <Plus className="mr-3" size={24} />
-          New Game
-        </Button>
-      </div>
       {/* Share Results */}
       <Card className="bg-gradient-to-r from-gray-600 to-gray-700 text-white border-4 border-gray-300 shadow-xl">
         <CardContent className="p-6 text-center">
