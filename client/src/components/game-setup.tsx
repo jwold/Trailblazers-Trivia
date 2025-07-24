@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Users, Lightbulb, Plus } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -156,16 +156,22 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
 
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
-            <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10 Points</SelectItem>
-                <SelectItem value="15">15 Points</SelectItem>
-                <SelectItem value="20">20 Points</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-3 gap-2">
+              {[10, 15, 20].map((points) => (
+                <Button
+                  key={points}
+                  onClick={() => setTargetScore(points)}
+                  variant={targetScore === points ? "default" : "outline"}
+                  className={`py-3 px-4 text-lg font-semibold transition-all duration-200 ${
+                    targetScore === points 
+                      ? "bg-brand-blue text-white hover:bg-brand-blue/90 border-2 border-brand-blue" 
+                      : "bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200"
+                  }`}
+                >
+                  {points} Points
+                </Button>
+              ))}
+            </div>
           </div>
 
           {/* Start Game Button */}
