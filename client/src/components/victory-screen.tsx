@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Crown, Trophy, RotateCcw, Plus, Share } from "lucide-react";
 import { type Team } from "@shared/schema";
-import { createConfetti } from "@/lib/game-logic";
+import { createConfetti } from "../lib/game-logic";
 import { useEffect } from "react";
 
 interface VictoryScreenProps {

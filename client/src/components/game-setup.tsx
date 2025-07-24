@@ -254,7 +254,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 <span className="text-white font-bold text-lg">1</span>
               </div>
               <h4 className="font-semibold text-blue-800 mb-2">Choose Difficulty</h4>
-              <p className="text-sm text-blue-600">Easy = 3 points<br/>Medium = 2 points<br/>Hard = 1 point</p>
+              <p className="text-sm text-blue-600">Easy = 1 point<br/>Medium = 2 points<br/>Hard = 3 points</p>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-xl">
               <div className="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">

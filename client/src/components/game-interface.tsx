@@ -8,7 +8,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Clock, Users, Gamepad2, Check, X, SkipForward, Eye, Pause, Square, Lightbulb } from "lucide-react";
 import { type Team, type TriviaQuestion, type GameSession } from "@shared/schema";
-import { createConfetti, createEncouragement } from "@/lib/game-logic";
+import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
   gameCode: string;
@@ -19,9 +19,9 @@ type GamePhase = "difficulty-selection" | "question-display" | "answer-reveal";
 type Difficulty = "Easy" | "Medium" | "Hard";
 
 const difficultyConfig = {
-  Easy: { points: 3, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
+  Easy: { points: 1, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
   Medium: { points: 2, color: "yellow", bgColor: "bg-yellow-500", hoverColor: "hover:bg-yellow-600" },
-  Hard: { points: 1, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
+  Hard: { points: 3, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {

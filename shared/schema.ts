@@ -26,7 +26,7 @@ export const gameSession = pgTable("game_sessions", {
   questionHistory: text("question_history").default("[]"), // JSON string of used question IDs
   gamePhase: varchar("game_phase", { length: 20 }).default("setup"), // setup, playing, victory
   isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({

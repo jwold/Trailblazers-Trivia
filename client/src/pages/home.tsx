@@ -1,7 +1,7 @@
 import { useState } from "react";
-import GameSetup from "@/components/game-setup";
-import GameInterface from "@/components/game-interface";
-import VictoryScreen from "@/components/victory-screen";
+import GameSetup from "../components/game-setup";
+import GameInterface from "../components/game-interface";
+import VictoryScreen from "../components/victory-screen";
 import { BookOpen, Settings, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

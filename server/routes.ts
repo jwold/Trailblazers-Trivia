@@ -44,8 +44,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Game not found" });
       }
 
-      const teams: Team[] = JSON.parse(session.teams);
-      const questionHistory: number[] = JSON.parse(session.questionHistory);
+      const teams: Team[] = JSON.parse(session.teams || "[]");
+      const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
 
       res.json({
         ...session,
@@ -68,7 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Game not found" });
       }
 
-      const questionHistory: number[] = JSON.parse(session.questionHistory);
+      const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
       const question = await storage.getRandomQuestion(difficulty, questionHistory);
       
       if (!question) {
@@ -105,8 +105,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Parse teams and questionHistory back to objects for response
-      const teams: Team[] = JSON.parse(session.teams);
-      const questionHistory: number[] = JSON.parse(session.questionHistory);
+      const teams: Team[] = JSON.parse(session.teams || "[]");
+      const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
 
       res.json({
         ...session,

@@ -63,9 +63,10 @@ The application defines three main entities:
 
 ### Question Management
 - Questions stored with difficulty categorization (Easy, Medium, Hard)
-- Scoring system: Easy = 3 points, Medium = 2 points, Hard = 1 point
+- Scoring system: Easy = 1 point, Medium = 2 points, Hard = 3 points
 - Bible references provided for educational value
 - Hint system available for accessibility
+- Complete 500-question database loaded from CSV
 
 ## External Dependencies
 

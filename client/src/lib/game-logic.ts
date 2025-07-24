@@ -48,11 +48,11 @@ export function generateHint(question: string, reference: string): string {
 export function calculateScore(difficulty: string): number {
   switch (difficulty.toLowerCase()) {
     case 'easy':
-      return 3;
+      return 1;
     case 'medium':
       return 2;
     case 'hard':
-      return 1;
+      return 3;
     default:
       return 1;
   }
