@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
-import { Users, Lightbulb, Plus } from "lucide-react";
+import { Users, Plus } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -198,40 +198,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
         </CardContent>
       </Card>
 
-      {/* How to Play Card */}
-      <Card className="border-4 border-brand-yellow/20 shadow-xl">
-        <CardContent className="p-6">
-          <div className="flex items-center mb-4">
-            <div className="bg-brand-yellow p-3 rounded-full mr-4">
-              <Lightbulb className="text-white" size={20} />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800">How to Play</h3>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-xl">
-              <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white font-bold text-lg">1</span>
-              </div>
-              <h4 className="font-semibold text-blue-800 mb-2">Choose Difficulty</h4>
-              <p className="text-sm text-blue-600">Easy = 1 point<br/>Medium = 2 points<br/>Hard = 3 points</p>
-            </div>
-            <div className="text-center p-4 bg-green-50 rounded-xl">
-              <div className="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white font-bold text-lg">2</span>
-              </div>
-              <h4 className="font-semibold text-green-800 mb-2">Answer Questions</h4>
-              <p className="text-sm text-green-600">Work as a team to answer Bible questions and earn points!</p>
-            </div>
-            <div className="text-center p-4 bg-yellow-50 rounded-xl">
-              <div className="bg-yellow-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white font-bold text-lg">3</span>
-              </div>
-              <h4 className="font-semibold text-yellow-800 mb-2">First to Target Wins!</h4>
-              <p className="text-sm text-yellow-600">Race to reach the target score and celebrate your victory!</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      
     </div>
   );
 }
