@@ -333,7 +333,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               </div>
 
-              {/* Next Question Button - Always Visible */}
+              {/* Next Question Button - Only visible during question display */}
               <div className="text-center">
                 <Button
                   onClick={nextQuestion}
