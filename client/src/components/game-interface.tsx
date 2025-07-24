@@ -389,7 +389,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         <div className="flex items-center gap-2 flex-1">
                           <h4 className={`font-bold ${textClass} text-lg flex-1`}>{team.name}</h4>
                           <div className="w-16 mr-2">
-                            <Progress value={progressWidth} className="h-2 [&>div]:bg-gray-600" />
+                            <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600" />
                           </div>
                           <Button
                             onClick={() => startEditingTeamName(team.id, team.name)}
