@@ -152,11 +152,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       timestamp: Date.now(),
     });
     
+    // Add question to history to prevent reappearance
+    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
+    
     // Move to next team
     const nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
     
     updateGameMutation.mutate({
       currentTeamIndex: nextTeamIndex,
+      questionHistory: questionHistory,
       detailedHistory: JSON.stringify(detailedHistory),
     });
     

@@ -142,3 +142,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Combined Easy and Medium difficulty categories into single "Easy" category worth 1 point
 - **January 24, 2025**: Updated Hard difficulty to be worth 3 points
 - **January 24, 2025**: Updated Bible assist scoring: Easy (0.5 pts), Hard (1 pt)
+- **January 24, 2025**: Fixed critical bug where incorrect answers weren't added to question history, causing repeat questions
