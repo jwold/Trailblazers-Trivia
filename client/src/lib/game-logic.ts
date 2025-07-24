@@ -49,10 +49,8 @@ export function calculateScore(difficulty: string): number {
   switch (difficulty.toLowerCase()) {
     case 'easy':
       return 1;
-    case 'medium':
-      return 2;
     case 'hard':
-      return 3;
+      return 2;
     default:
       return 1;
   }
