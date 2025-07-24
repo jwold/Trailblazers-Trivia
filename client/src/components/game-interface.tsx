@@ -338,6 +338,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               </div>
 
+              {/* Next Question Button - Always Visible */}
+              <div className="text-center">
+                <Button
+                  onClick={nextQuestion}
+                  disabled={true}
+                  className="bg-gradient-to-r from-gray-400 to-gray-500 text-white py-4 px-8 text-lg font-semibold transition-all duration-200 opacity-50 cursor-not-allowed"
+                >
+                  <SkipForward className="mr-2" size={20} />
+                  Next Question
+                </Button>
+                <p className="text-sm text-gray-500 mt-2">Mark answer as correct/incorrect first</p>
+              </div>
+
               
             </>
           )}
