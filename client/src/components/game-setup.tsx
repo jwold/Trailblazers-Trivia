@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
-import { Users, Plus } from "lucide-react";
+import { Users, Plus, Minus } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -128,21 +128,31 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
 
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
-            <div className="grid grid-cols-3 gap-2">
-              {[10, 15, 20].map((points) => (
-                <Button
-                  key={points}
-                  onClick={() => setTargetScore(points)}
-                  variant={targetScore === points ? "default" : "outline"}
-                  className={`py-3 px-4 text-lg font-semibold transition-all duration-200 ${
-                    targetScore === points 
-                      ? "bg-brand-blue text-white hover:bg-brand-blue/90 border-2 border-brand-blue" 
-                      : "bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200"
-                  }`}
-                >
-                  {points} Points
-                </Button>
-              ))}
+            <div className="flex items-center justify-center gap-4">
+              <Button
+                onClick={() => setTargetScore(Math.max(10, targetScore - 5))}
+                disabled={targetScore <= 10}
+                variant="outline"
+                size="lg"
+                className="w-12 h-12 p-0 border-2 border-gray-300 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Minus size={20} />
+              </Button>
+              
+              <div className="bg-white border-2 border-gray-300 rounded-lg px-6 py-3 min-w-[120px] text-center">
+                <div className="text-2xl font-bold text-gray-800">{targetScore}</div>
+                <div className="text-sm text-gray-600">Points</div>
+              </div>
+              
+              <Button
+                onClick={() => setTargetScore(Math.min(50, targetScore + 5))}
+                disabled={targetScore >= 50}
+                variant="outline"
+                size="lg"
+                className="w-12 h-12 p-0 border-2 border-gray-300 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Plus size={20} />
+              </Button>
             </div>
           </div>
 

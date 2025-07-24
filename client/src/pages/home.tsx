@@ -37,14 +37,13 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div>
-                <h1 className="text-2xl font-bold text-gray-800">Bible Trivia Quest</h1>
+                <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
               </div>
             </div>
             
           </div>
         </div>
       </header>
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 max-w-4xl">
         {gamePhase === "setup" && (
@@ -66,7 +65,6 @@ export default function Home() {
           />
         )}
       </main>
-
       {/* Confetti Container */}
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50"></div>
     </div>
