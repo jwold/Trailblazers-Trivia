@@ -14,6 +14,11 @@ interface GameSetupProps {
   onGameStart: (gameCode: string) => void;
 }
 
+const biblicalNames = [
+  "Israelites", "Levites", "Judeans", "Benjamites", "Ephraimites", "Shunammites",
+  "Rechabites", "Ninevites", "Persians", "Cretans", "Romans", "Greeks"
+];
+
 const teamColors = [
   { name: "blue", class: "bg-gray-500", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
   { name: "green", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
@@ -24,9 +29,20 @@ const teamColors = [
 ];
 
 export default function GameSetup({ onGameStart }: GameSetupProps) {
+  // Shuffle biblical names for random assignment
+  const getShuffledNames = () => {
+    const shuffled = [...biblicalNames];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const [availableNames] = useState<string[]>(getShuffledNames());
   const [teams, setTeams] = useState<Team[]>([
-    { id: nanoid(), name: "Blue Team", color: "blue", score: 0, correctAnswers: 0 },
-    { id: nanoid(), name: "Green Team", color: "green", score: 0, correctAnswers: 0 },
+    { id: nanoid(), name: availableNames[0], color: "blue", score: 0, correctAnswers: 0 },
+    { id: nanoid(), name: availableNames[1], color: "green", score: 0, correctAnswers: 0 },
   ]);
   const [targetScore, setTargetScore] = useState(10);
 
@@ -60,11 +76,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   const addTeam = () => {
     const usedColors = teams.map(team => team.color);
     const availableColor = teamColors.find(color => !usedColors.includes(color.name))?.name || "gray";
-    const colorName = availableColor.charAt(0).toUpperCase() + availableColor.slice(1);
+    const nextNameIndex = teams.length;
+    const teamName = nextNameIndex < availableNames.length ? availableNames[nextNameIndex] : `Team ${teams.length + 1}`;
     
     setTeams([...teams, { 
       id: nanoid(), 
-      name: `${colorName} Team`, 
+      name: teamName, 
       color: availableColor, 
       score: 0, 
       correctAnswers: 0 
