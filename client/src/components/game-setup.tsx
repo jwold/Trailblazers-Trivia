@@ -100,21 +100,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
 
   return (
     <div className="space-y-6">
-      {/* Hero Image */}
-      <div className="text-center mb-8">
-        <div className="relative mb-6">
-          <img 
-            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" 
-            alt="Children playing and learning together" 
-            className="rounded-2xl shadow-xl w-full h-64 object-cover" 
-          />
-          
-          <div className="absolute bottom-4 left-4 text-white">
-            <h2 className="text-3xl font-bold mb-2">Ready to Play?</h2>
-            <p className="text-lg opacity-90">Test your Bible knowledge with friends!</p>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Team Setup Card */}
       <Card className="border-4 border-brand-blue/20 shadow-xl">
