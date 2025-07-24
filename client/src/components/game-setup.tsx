@@ -38,10 +38,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       return response.json();
     },
     onSuccess: (data) => {
-      toast({
-        title: "Game Created!",
-        description: `Game code: ${data.gameCode}`,
-      });
       onGameStart(data.gameCode);
     },
     onError: () => {
