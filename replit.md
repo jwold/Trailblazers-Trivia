@@ -113,3 +113,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Updated scoring system from Easy=3pts, Medium=2pts, Hard=1pt to Easy=1pt, Medium=2pts, Hard=3pts
 - **January 24, 2025**: Added PostgreSQL database with 500 curated trivia questions loaded from CSV
 - **January 24, 2025**: Enhanced "Start Bible Trivia Quest" button visibility with stronger colors and shadows
+- **January 24, 2025**: Simplified team setup by removing manual color selection - colors are now auto-assigned

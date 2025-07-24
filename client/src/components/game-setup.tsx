@@ -59,11 +59,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     ));
   };
 
-  const updateTeamColor = (teamId: string, color: string) => {
-    setTeams(teams.map(team => 
-      team.id === teamId ? { ...team, color } : team
-    ));
-  };
+
 
   const addTeam = () => {
     const usedColors = teams.map(team => team.color);
@@ -140,29 +136,16 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                     <label className={`text-lg font-semibold ${colorConfig.textClass}`}>
                       Team {index + 1}
                     </label>
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        {teamColors.map((color) => (
-                          <button
-                            key={color.name}
-                            className={`w-8 h-8 ${color.class} rounded-full border-2 ${
-                              team.color === color.name ? 'border-gray-800 ring-2 ring-gray-400' : 'border-white'
-                            } shadow-md transition-all`}
-                            onClick={() => updateTeamColor(team.id, color.name)}
-                          />
-                        ))}
-                      </div>
-                      {teams.length > 2 && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={() => removeTeam(team.id)}
-                          className="text-red-600 hover:text-red-800"
-                        >
-                          ×
-                        </Button>
-                      )}
-                    </div>
+                    {teams.length > 2 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => removeTeam(team.id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        ×
+                      </Button>
+                    )}
                   </div>
                   <Input
                     placeholder="Enter team name..."
