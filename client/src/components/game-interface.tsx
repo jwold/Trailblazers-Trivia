@@ -274,7 +274,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
-                      <p className={textClass.replace('800', '600')}>Team Score</p>
                     </div>
                     <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
                   </div>
