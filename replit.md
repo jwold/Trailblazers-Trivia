@@ -127,3 +127,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Simplified start button text from "Start Bible Trivia Quest!" to just "Start"
 - **January 24, 2025**: Modified "Next Question" button to only appear after question has been marked correct, incorrect, or skipped
 - **January 24, 2025**: Hidden "Mark Correct", "Mark Wrong", and "Skip" buttons until a question is displayed after difficulty selection
+- **January 24, 2025**: Improved button layout - History and End Game buttons appear on same line during difficulty selection phase
