@@ -111,7 +111,7 @@ The application prioritizes simplicity and user experience while maintaining a c
 
 - **January 24, 2025**: Removed timer functionality completely from game interface and setup
 - **January 24, 2025**: Updated scoring system from Easy=3pts, Medium=2pts, Hard=1pt to Easy=1pt, Medium=2pts, Hard=3pts
-- **January 24, 2025**: Added PostgreSQL database with 500 curated trivia questions loaded from CSV
+- **January 24, 2025**: Added PostgreSQL database with 450 curated trivia questions loaded from CSV
 - **January 24, 2025**: Enhanced "Start Bible Trivia Quest" button visibility with stronger colors and shadows
 - **January 24, 2025**: Simplified team setup by removing manual color selection - colors are now auto-assigned
 - **January 24, 2025**: Added default team names based on colors (Blue Team, Green Team, etc.) so users can start immediately
@@ -129,7 +129,7 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Hidden "Mark Correct", "Mark Wrong", and "Skip" buttons until a question is displayed after difficulty selection
 - **January 24, 2025**: Improved button layout - History and End Game buttons appear on same line during difficulty selection phase
 - **January 24, 2025**: Removed celebration image from victory screen for cleaner interface
-- **January 24, 2025**: Updated database with deduplicated trivia questions (15 total: 5 Easy, 5 Medium, 5 Hard)
+- **January 24, 2025**: Updated database with deduplicated trivia questions (450 total: 201 Easy, 249 Hard)
 - **January 24, 2025**: Fixed Play Again and New Game button visibility by using standard color values instead of custom brand colors
 - **January 24, 2025**: Added Bible assist scoring system (Easy: 0.5 pts, Medium/Hard: 1 pt with Bible help)
 - **January 24, 2025**: Redesigned button layout with two-row system: Mark Correct buttons on top, other actions below
@@ -156,3 +156,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Repositioned "New Game" button in victory screen to appear above Game Summary section for better user flow
 - **January 24, 2025**: Moved "New Game" button to bottom of victory screen as full-width call-to-action for better accessibility
 - **January 24, 2025**: Simplified share results section from card format to simple button below "New Game" for cleaner interface
+- **January 24, 2025**: Expanded question database from 15 to 450 questions (201 Easy, 249 Hard) by importing and cleaning CSV data with proper difficulty normalization

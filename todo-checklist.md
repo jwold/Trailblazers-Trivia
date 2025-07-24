@@ -34,7 +34,7 @@ The Bible trivia app is functionally complete with a clean, mobile-friendly inte
 - [ ] Add Bible verse lookup integration
 
 ## Content Management
-- [ ] Expand question database (currently 15 questions)
+- [x] Expand question database (now 450 questions: 201 Easy, 249 Hard)
 - [ ] Add question validation and review system
 - [ ] Create admin interface for managing questions
 - [ ] Implement question flagging/reporting
