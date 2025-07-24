@@ -131,3 +131,6 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Removed celebration image from victory screen for cleaner interface
 - **January 24, 2025**: Updated database with deduplicated trivia questions (15 total: 5 Easy, 5 Medium, 5 Hard)
 - **January 24, 2025**: Fixed Play Again and New Game button visibility by using standard color values instead of custom brand colors
+- **January 24, 2025**: Added Bible assist scoring system (Easy: 0.5 pts, Medium/Hard: 1 pt with Bible help)
+- **January 24, 2025**: Redesigned button layout with two-row system: Mark Correct buttons on top, other actions below
+- **January 24, 2025**: History and Skip buttons now use icon-only display for compact layout

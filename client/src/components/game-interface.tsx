@@ -19,9 +19,9 @@ type GamePhase = "difficulty-selection" | "question-display";
 type Difficulty = "Easy" | "Medium" | "Hard";
 
 const difficultyConfig = {
-  Easy: { points: 1, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
-  Medium: { points: 2, color: "yellow", bgColor: "bg-yellow-500", hoverColor: "hover:bg-yellow-600" },
-  Hard: { points: 3, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
+  Easy: { points: 1, bibleAssistPoints: 0.5, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
+  Medium: { points: 2, bibleAssistPoints: 1, color: "yellow", bgColor: "bg-yellow-500", hoverColor: "hover:bg-yellow-600" },
+  Hard: { points: 3, bibleAssistPoints: 1, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
@@ -75,7 +75,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     fetchQuestionMutation.mutate(difficulty);
   };
 
-  const markCorrect = () => {
+  const markCorrect = (usedBibleAssist = false) => {
     if (!gameSession || !selectedDifficulty || !currentQuestion) return;
     
     createConfetti();
@@ -83,7 +83,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     const teams: Team[] = [...gameSession.teams];
     const currentTeamIndex = gameSession.currentTeamIndex;
-    const points = difficultyConfig[selectedDifficulty].points;
+    const points = usedBibleAssist 
+      ? difficultyConfig[selectedDifficulty].bibleAssistPoints 
+      : difficultyConfig[selectedDifficulty].points;
     const currentTeam = teams[currentTeamIndex];
     
     // Update current team's score
@@ -433,35 +435,47 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           
 
           {gamePhase === "question-display" ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <Button
-                onClick={markCorrect}
-                className="bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
-              >
-                <Check className="mb-2" size={20} />
-                <div className="text-sm">Mark Correct</div>
-              </Button>
-              <Button
-                onClick={markIncorrect}
-                className="bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
-              >
-                <X className="mb-2" size={20} />
-                <div className="text-sm">Mark Wrong</div>
-              </Button>
-              <Button
-                onClick={skipQuestion}
-                className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-4 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
-              >
-                <SkipForward className="mb-2" size={20} />
-                <div className="text-sm">Skip</div>
-              </Button>
-              <Button
-                onClick={() => setShowHistory(!showHistory)}
-                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-              >
-                <History className="mb-2" size={20} />
-                <div className="text-sm">History</div>
-              </Button>
+            <div className="space-y-4 mb-6">
+              {/* Top row: Mark Correct and Correct (Bible assist) */}
+              <div className="grid grid-cols-2 gap-4">
+                <Button
+                  onClick={() => markCorrect(false)}
+                  className="bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                >
+                  <Check className="mb-2" size={20} />
+                  <div className="text-sm">Mark Correct</div>
+                </Button>
+                <Button
+                  onClick={() => markCorrect(true)}
+                  className="bg-gradient-to-r from-green-400 to-green-500 text-white py-4 px-4 font-semibold hover:from-green-500 hover:to-green-600 transition-all duration-200"
+                >
+                  <Check className="mb-2" size={20} />
+                  <div className="text-sm">Correct (Bible assist)</div>
+                </Button>
+              </div>
+              
+              {/* Bottom row: Mark Wrong, Skip (icon only), History (icon only) */}
+              <div className="grid grid-cols-5 gap-4">
+                <Button
+                  onClick={markIncorrect}
+                  className="col-span-3 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
+                >
+                  <X className="mb-2" size={20} />
+                  <div className="text-sm">Mark Wrong</div>
+                </Button>
+                <Button
+                  onClick={skipQuestion}
+                  className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-4 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+                >
+                  <SkipForward size={20} />
+                </Button>
+                <Button
+                  onClick={() => setShowHistory(!showHistory)}
+                  className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+                >
+                  <History size={20} />
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="flex justify-center gap-4 mb-6">
