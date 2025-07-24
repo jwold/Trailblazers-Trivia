@@ -112,23 +112,25 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               const colorConfig = teamColors.find(c => c.name === team.color) || teamColors[0];
               
               return (
-                <div key={team.id} className={`${colorConfig.bgClass} p-4 rounded-xl border-2 ${colorConfig.borderClass} relative`}>
-                  <Input
-                    placeholder="Enter team name..."
-                    value={team.name}
-                    onChange={(e) => updateTeamName(team.id, e.target.value)}
-                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg ${index >= 2 ? 'pr-12' : ''}`}
-                  />
-                  {index >= 2 && (
-                    <Button
-                      onClick={() => removeTeam(team.id)}
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 p-0 text-gray-500 hover:text-red-600 hover:bg-red-50"
-                    >
-                      <X size={16} />
-                    </Button>
-                  )}
+                <div key={team.id} className={`${colorConfig.bgClass} p-4 rounded-xl border-2 ${colorConfig.borderClass}`}>
+                  <div className="flex items-center gap-3">
+                    {index >= 2 && (
+                      <Button
+                        onClick={() => removeTeam(team.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="w-8 h-8 p-0 text-gray-500 hover:text-red-600 hover:bg-red-50 flex-shrink-0"
+                      >
+                        <X size={16} />
+                      </Button>
+                    )}
+                    <Input
+                      placeholder="Enter team name..."
+                      value={team.name}
+                      onChange={(e) => updateTeamName(team.id, e.target.value)}
+                      className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
+                    />
+                  </div>
                 </div>
               );
             })}
