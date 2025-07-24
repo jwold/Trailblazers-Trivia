@@ -126,3 +126,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added delete buttons to teams beyond the first two, allowing removal of additional teams
 - **January 24, 2025**: Simplified start button text from "Start Bible Trivia Quest!" to just "Start"
 - **January 24, 2025**: Modified "Next Question" button to only appear after question has been marked correct, incorrect, or skipped
+- **January 24, 2025**: Hidden "Mark Correct", "Mark Wrong", and "Skip" buttons until a question is displayed after difficulty selection
