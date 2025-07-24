@@ -223,15 +223,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </CardContent>
       </Card>
 
-      {/* Current Team Turn */}
-      {gamePhase !== "answer-reveal" && (
-        <div className="text-center">
-          <div className="inline-flex items-center bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold">
-            <Users className="mr-2" size={20} />
-            {currentTeam.name} Turn
-          </div>
-        </div>
-      )}
+      
 
       {/* Question Display */}
       <Card className="border-4 border-brand-green/20 shadow-xl">
