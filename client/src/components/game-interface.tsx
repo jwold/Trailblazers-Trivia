@@ -261,13 +261,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                                team.color === "purple" ? "text-purple-800" :
                                "text-orange-800";
 
-              const progressClass = team.color === "blue" ? "bg-blue-500" :
-                                   team.color === "green" ? "bg-green-500" :
-                                   team.color === "yellow" ? "bg-yellow-500" :
-                                   team.color === "red" ? "bg-red-500" :
-                                   team.color === "purple" ? "bg-purple-500" :
-                                   "bg-orange-500";
-
               const progressWidth = (team.score / gameSession.targetScore) * 100;
               
               return (
@@ -279,7 +272,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
                   </div>
                   <div className="mt-2">
-                    <Progress value={progressWidth} className="h-3" />
+                    <Progress value={progressWidth} className="h-3 [&>div]:bg-gray-600" />
                   </div>
                 </div>
               );
