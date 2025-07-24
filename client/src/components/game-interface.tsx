@@ -462,7 +462,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       </div>
 
       {/* Game Code Display */}
-      <div className="text-center mt-4 text-gray-600">
+      <div className="text-center mt-4 text-gray-600 hidden">
         <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800">{gameCode}</span></p>
       </div>
     </div>
