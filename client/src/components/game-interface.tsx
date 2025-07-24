@@ -33,7 +33,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: gameSession, isLoading } = useQuery({
+  const { data: gameSession, isLoading } = useQuery<GameSession>({
     queryKey: ["/api/games", gameCode],
     refetchInterval: 1000,
   });
@@ -80,7 +80,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     createConfetti();
     createEncouragement("Awesome! Great job!");
     
-    const teams: Team[] = gameSession.teams;
+    const teams: Team[] = [...gameSession.teams];
     const currentTeamIndex = gameSession.currentTeamIndex;
     const points = difficultyConfig[selectedDifficulty].points;
     
@@ -89,14 +89,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     teams[currentTeamIndex].correctAnswers += 1;
     
     // Add question to history
-    const questionHistory = [...gameSession.questionHistory, currentQuestion.id];
+    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
     // Check for winner
     const hasWinner = teams[currentTeamIndex].score >= gameSession.targetScore;
     
     updateGameMutation.mutate({
-      teams,
-      questionHistory,
+      teams: teams,
+      questionHistory: questionHistory,
       gamePhase: hasWinner ? "victory" : "playing",
     });
     
@@ -136,11 +136,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     }
     
     // Add question to history
-    const questionHistory = [...gameSession.questionHistory, currentQuestion.id];
+    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
     updateGameMutation.mutate({
       currentTeamIndex: nextTeamIndex,
-      questionHistory,
+      questionHistory: questionHistory,
     });
     
     setQuestionNumber(prev => prev + 1);
