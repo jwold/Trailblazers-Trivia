@@ -143,3 +143,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Updated Hard difficulty to be worth 3 points
 - **January 24, 2025**: Updated Bible assist scoring: Easy (0.5 pts), Hard (1 pt)
 - **January 24, 2025**: Fixed critical bug where incorrect answers weren't added to question history, causing repeat questions
+- **January 24, 2025**: Removed Bible assist scoring functionality for simplified interface
+- **January 24, 2025**: Reorganized button layout - correct and wrong answer buttons now on same row with small history button beside them

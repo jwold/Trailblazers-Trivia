@@ -433,31 +433,25 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
           {gamePhase === "question-display" ? (
             <div className="space-y-4 mb-6">
-              {/* Mark Correct on its own line */}
-              <div>
+              {/* Correct and Wrong buttons with tiny History button */}
+              <div className="grid grid-cols-5 gap-2">
                 <Button
                   onClick={() => markCorrect(false)}
-                  className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                  className="col-span-2 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
                 >
                   <Check size={24} />
                 </Button>
-              </div>
-              
-              
-              
-              {/* Bottom row: Mark Wrong and History */}
-              <div className="grid grid-cols-4 gap-4">
                 <Button
                   onClick={markIncorrect}
-                  className="col-span-3 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
+                  className="col-span-2 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
                 >
                   <X size={24} />
                 </Button>
                 <Button
                   onClick={() => setShowHistory(!showHistory)}
-                  className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+                  className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-2 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
                 >
-                  <History size={20} />
+                  <History size={16} />
                 </Button>
               </div>
             </div>
