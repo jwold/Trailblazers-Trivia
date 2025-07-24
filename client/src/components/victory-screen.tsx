@@ -131,7 +131,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* Share Results Button */}
       <div className="text-center">
         <Button 
-          className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
           onClick={() => {
             const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
             if (navigator.share) {
@@ -145,7 +145,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
             }
           }}
         >
-          <Share className="mr-2" size={16} />
+          <Share className="mr-2 text-gray-700" size={16} />
           Share Results
         </Button>
       </div>

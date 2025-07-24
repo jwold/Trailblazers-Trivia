@@ -130,11 +130,10 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                     {index >= 2 && (
                       <Button
                         onClick={() => removeTeam(team.id)}
-                        variant="ghost"
                         size="sm"
-                        className="w-8 h-8 p-0 text-gray-500 hover:text-gray-700 hover:bg-gray-100 flex-shrink-0"
+                        className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 flex-shrink-0"
                       >
-                        <X size={16} />
+                        <X size={16} className="text-gray-700" />
                       </Button>
                     )}
                     <Input
@@ -154,10 +153,9 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             <div className="text-center mb-6">
               <Button
                 onClick={addTeam}
-                variant="outline"
-                className="bg-white border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50 py-3 px-6 text-gray-600 hover:text-gray-800"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 border-2 border-dashed border-gray-400 py-3 px-6"
               >
-                <Plus className="mr-2" size={20} />
+                <Plus className="mr-2 text-gray-700" size={20} />
                 Add Team
               </Button>
             </div>
@@ -169,11 +167,10 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               <Button
                 onClick={() => setTargetScore(Math.max(10, targetScore - 5))}
                 disabled={targetScore <= 10}
-                variant="outline"
                 size="lg"
-                className="w-12 h-12 p-0 border-2 border-gray-300 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Minus size={20} />
+                <Minus size={20} className="text-gray-700" />
               </Button>
               
               <div className="bg-white border-2 border-gray-300 rounded-lg px-6 py-3 min-w-[120px] text-center">
@@ -184,11 +181,10 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               <Button
                 onClick={() => setTargetScore(Math.min(50, targetScore + 5))}
                 disabled={targetScore >= 50}
-                variant="outline"
                 size="lg"
-                className="w-12 h-12 p-0 border-2 border-gray-300 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Plus size={20} />
+                <Plus size={20} className="text-gray-700" />
               </Button>
             </div>
           </div>

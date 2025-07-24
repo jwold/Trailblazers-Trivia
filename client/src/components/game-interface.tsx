@@ -380,10 +380,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                           <Button
                             onClick={cancelEditingTeamName}
                             size="sm"
-                            variant="outline"
-                            className="px-2 py-1"
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1"
                           >
-                            <X size={14} />
+                            <X size={14} className="text-gray-700" />
                           </Button>
                         </div>
                       ) : (
@@ -395,10 +394,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                           <Button
                             onClick={() => startEditingTeamName(team.id, team.name)}
                             size="sm"
-                            variant="ghost"
-                            className="text-gray-500 hover:text-gray-700 p-1"
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
                           >
-                            <Edit2 size={14} />
+                            <Edit2 size={14} className="text-gray-700" />
                           </Button>
                         </div>
                       )}
@@ -415,8 +413,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           <div className="text-center mt-4">
             <Button
               onClick={() => setTeamsExpanded(!teamsExpanded)}
-              variant="ghost"
-              className="text-gray-600 hover:text-gray-800 text-sm"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm"
             >
               {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
             </Button>
@@ -522,9 +519,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               </div>
               <Button
                 onClick={() => setShowHistory(false)}
-                variant="ghost"
                 size="sm"
-                className="text-gray-600 hover:text-gray-800"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700"
               >
                 ×
               </Button>
@@ -582,9 +578,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <div className="text-center mb-4">
           <Button
             onClick={() => setShowHistory(!showHistory)}
-            className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-3 px-6 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 font-semibold transition-all duration-200"
           >
-            <History className="mr-2" size={16} />
+            <History className="mr-2 text-gray-700" size={16} />
             {showHistory ? 'Hide History' : 'Show History'}
           </Button>
         </div>
@@ -594,7 +590,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       <div className="text-center">
         <Button
           onClick={endGame}
-          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-6 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
         >
           End Game
         </Button>
