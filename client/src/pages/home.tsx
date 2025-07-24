@@ -36,9 +36,6 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-brand-blue to-brand-green p-3 rounded-full">
-                <BookOpen className="text-white text-2xl" size={24} />
-              </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-800">Bible Trivia Quest</h1>
                 <p className="text-sm text-gray-600">Fun Bible Games for Kids!</p>
