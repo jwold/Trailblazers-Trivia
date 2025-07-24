@@ -443,16 +443,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </Button>
               </div>
               
-              {/* Correct (Bible assist) on its own line */}
-              <div>
-                <Button
-                  onClick={() => markCorrect(true)}
-                  className="w-full bg-gradient-to-r from-green-400 to-green-500 text-white py-4 px-4 font-semibold hover:from-green-500 hover:to-green-600 transition-all duration-200"
-                >
-                  <Check className="mb-2" size={20} />
-                  <div className="text-sm">Correct (Bible assist)</div>
-                </Button>
-              </div>
+              
               
               {/* Bottom row: Mark Wrong and History */}
               <div className="grid grid-cols-4 gap-4">
