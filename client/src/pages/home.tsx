@@ -2,7 +2,7 @@ import { useState } from "react";
 import GameSetup from "../components/game-setup";
 import GameInterface from "../components/game-interface";
 import VictoryScreen from "../components/victory-screen";
-import { BookOpen, HelpCircle } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type GamePhase = "setup" | "playing" | "victory";
@@ -44,11 +44,7 @@ export default function Home() {
                 <p className="text-sm text-gray-600">Fun Bible Games for Kids!</p>
               </div>
             </div>
-            <div className="flex space-x-2">
-              <Button variant="ghost" size="sm" className="bg-gray-100 hover:bg-gray-200">
-                <HelpCircle className="text-gray-600" size={16} />
-              </Button>
-            </div>
+            
           </div>
         </div>
       </header>
