@@ -324,7 +324,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {teams.filter((team, index) => teamsExpanded || index === gameSession.currentTeamIndex).map((team, originalIndex) => {
               const index = teams.findIndex(t => t.id === team.id);
               const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
