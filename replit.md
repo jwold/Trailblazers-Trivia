@@ -121,3 +121,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Made "Next Question" button always visible (disabled/grayed during question phase, prominent during answer phase)
 - **January 24, 2025**: Removed reveal functionality - answers now always show below questions in smaller text for simplified gameplay
 - **January 24, 2025**: Streamlined game flow by eliminating separate answer-reveal phase and reveal button
+- **January 24, 2025**: Replaced fixed target score buttons (10, 15, 20) with plus/minus increment system allowing scores from 10-50 points
+- **January 24, 2025**: Added back "Add Team" button to allow up to 6 teams in game setup

@@ -122,9 +122,21 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 </div>
               );
             })}
-
-
           </div>
+
+          {/* Add Team Button */}
+          {teams.length < 6 && (
+            <div className="text-center mb-6">
+              <Button
+                onClick={addTeam}
+                variant="outline"
+                className="bg-white border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50 py-3 px-6 text-gray-600 hover:text-gray-800"
+              >
+                <Plus className="mr-2" size={20} />
+                Add Team
+              </Button>
+            </div>
+          )}
 
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
