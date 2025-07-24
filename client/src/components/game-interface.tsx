@@ -34,6 +34,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
   const [editingTeamName, setEditingTeamName] = useState<string>("");
   const [teamAnimations, setTeamAnimations] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
+  const [teamsExpanded, setTeamsExpanded] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -297,7 +298,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {teams.map((team, index) => {
+            {teams.filter((team, index) => teamsExpanded || index === gameSession.currentTeamIndex).map((team, originalIndex) => {
+              const index = teams.findIndex(t => t.id === team.id);
               const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
                                team.color === "green" ? "bg-gray-100 border-gray-300" :
                                team.color === "yellow" ? "bg-gray-50 border-gray-200" :
@@ -376,6 +378,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               );
             })}
+          </div>
+          
+          {/* Expand/Collapse Teams Button */}
+          <div className="text-center mt-4">
+            <Button
+              onClick={() => setTeamsExpanded(!teamsExpanded)}
+              variant="ghost"
+              className="text-gray-600 hover:text-gray-800 text-sm"
+            >
+              {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
+            </Button>
           </div>
         </CardContent>
       </Card>
