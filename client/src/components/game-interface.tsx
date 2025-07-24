@@ -33,6 +33,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
   const [editingTeamName, setEditingTeamName] = useState<string>("");
+  const [teamAnimations, setTeamAnimations] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -80,15 +81,21 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const markCorrect = (usedBibleAssist = false) => {
     if (!gameSession || !selectedDifficulty || !currentQuestion || gameSession.currentTeamIndex === null) return;
     
-    createConfetti();
-    createEncouragement("Awesome! Great job!");
-    
     const teams: Team[] = [...gameSession.teams];
     const currentTeamIndex = gameSession.currentTeamIndex;
+    const currentTeam = teams[currentTeamIndex];
+    
+    // Trigger correct answer animation
+    setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: 'correct' }));
+    setTimeout(() => {
+      setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: null }));
+    }, 2000);
+    
+    createConfetti();
+    
     const points = usedBibleAssist 
       ? difficultyConfig[selectedDifficulty].bibleAssistPoints 
       : difficultyConfig[selectedDifficulty].points;
-    const currentTeam = teams[currentTeamIndex];
     
     // Update current team's score
     teams[currentTeamIndex].score += points;
@@ -136,9 +143,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const markIncorrect = () => {
     if (!gameSession || !selectedDifficulty || !currentQuestion || gameSession.currentTeamIndex === null) return;
     
-    createEncouragement("Nice try! Keep going!");
-    
     const currentTeam = gameSession.teams[gameSession.currentTeamIndex];
+    
+    // Trigger incorrect answer animation
+    setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: 'incorrect' }));
+    setTimeout(() => {
+      setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: null }));
+    }, 1000);
     
     // Add detailed history entry for incorrect answer
     const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
@@ -303,8 +314,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
               const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
               
+              // Animation classes for correct/incorrect feedback
+              const animationClass = teamAnimations[team.id] === 'correct' 
+                ? 'animate-correct-glow bg-green-200 border-green-400 shadow-lg shadow-green-300/50' 
+                : teamAnimations[team.id] === 'incorrect' 
+                ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
+                : '';
+              
               return (
-                <div key={team.id} className={`${colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''}`}>
+                <div key={team.id} className={`${animationClass || colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-300`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1">
                       {editingTeamId === team.id ? (
