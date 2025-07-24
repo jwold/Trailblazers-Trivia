@@ -37,19 +37,16 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
 
   return (
     <div className="space-y-6">
-      
-
       {/* Winner Announcement */}
       <Card className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 text-white border-4 border-gray-200 shadow-xl">
         <CardContent className="p-8 text-center">
           <div className="bounce-slow mb-4">
             <Crown className="mx-auto" size={64} />
           </div>
-          <h2 className="text-4xl font-bold mb-4">🎉 Congratulations! 🎉</h2>
+          <h2 className="text-4xl font-bold mb-4">🎉 Yay! 🎉</h2>
           <h3 className="text-2xl font-semibold mb-2">{winningTeam.name}</h3>
         </CardContent>
       </Card>
-
       {/* Final Scoreboard */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
@@ -98,7 +95,6 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           </div>
         </CardContent>
       </Card>
-
       {/* Game Stats */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
@@ -123,7 +119,6 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           </div>
         </CardContent>
       </Card>
-
       {/* Action Buttons */}
       <div className="flex justify-center">
         <Button
@@ -134,7 +129,6 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           New Game
         </Button>
       </div>
-
       {/* Share Results */}
       <Card className="bg-gradient-to-r from-gray-600 to-gray-700 text-white border-4 border-gray-300 shadow-xl">
         <CardContent className="p-6 text-center">

@@ -368,7 +368,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           {gamePhase === "difficulty-selection" && (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
                   const config = difficultyConfig[difficulty];
                   return (
@@ -386,6 +386,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   );
                 })}
               </div>
+
+              {/* History button - always available when there's history */}
+              {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
+                <div className="text-center mb-6">
+                  <Button
+                    onClick={() => setShowHistory(!showHistory)}
+                    className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-3 px-6 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+                  >
+                    <History className="mr-2" size={16} />
+                    {showHistory ? 'Hide History' : 'Show History'}
+                  </Button>
+                </div>
+              )}
             </>
           )}
 
