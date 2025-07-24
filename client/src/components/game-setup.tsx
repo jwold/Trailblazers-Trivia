@@ -157,7 +157,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
             <div className="max-w-xs">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Points to Win</label>
+              
               <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
                 <SelectTrigger>
                   <SelectValue />
