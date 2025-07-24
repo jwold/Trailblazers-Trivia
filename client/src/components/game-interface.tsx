@@ -451,14 +451,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   >
                     <X size={24} />
                   </Button>
-                  {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
-                    <Button
-                      onClick={() => setShowHistory(!showHistory)}
-                      className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-2 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
-                    >
-                      <History size={16} />
-                    </Button>
-                  )}
+
                 </div>
               )}
 
