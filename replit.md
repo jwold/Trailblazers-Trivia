@@ -130,3 +130,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Improved button layout - History and End Game buttons appear on same line during difficulty selection phase
 - **January 24, 2025**: Removed celebration image from victory screen for cleaner interface
 - **January 24, 2025**: Updated database with deduplicated trivia questions (15 total: 5 Easy, 5 Medium, 5 Hard)
+- **January 24, 2025**: Fixed Play Again and New Game button visibility by using standard color values instead of custom brand colors

@@ -130,14 +130,14 @@ export default function VictoryScreen({ gameCode, onNewGame, onPlayAgain }: Vict
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Button
           onClick={onPlayAgain}
-          className="bg-gradient-to-r from-brand-green to-green-600 text-white py-6 px-8 text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-green-200"
+          className="bg-gradient-to-r from-green-500 to-green-600 text-white py-6 px-8 text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-green-200"
         >
           <RotateCcw className="mr-3" size={24} />
           Play Again
         </Button>
         <Button
           onClick={onNewGame}
-          className="bg-gradient-to-r from-brand-blue to-blue-600 text-white py-6 px-8 text-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-blue-200"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6 px-8 text-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-blue-200"
         >
           <Plus className="mr-3" size={24} />
           New Game
