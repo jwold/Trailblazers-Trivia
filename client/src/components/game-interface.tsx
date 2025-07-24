@@ -438,7 +438,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
               {/* Scoring buttons - Only visible when question is displayed */}
               {!questionAnswered && (
-                <div className="space-y-3 mb-6">
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   <Button
                     onClick={() => markCorrect(false)}
                     className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
