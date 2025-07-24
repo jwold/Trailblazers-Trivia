@@ -294,7 +294,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           {gamePhase === "difficulty-selection" && (
             <>
-              <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Choose Your Difficulty</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
                   const config = difficultyConfig[difficulty];
