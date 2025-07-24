@@ -454,19 +454,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </Button>
               </div>
               
-              {/* Bottom row: Mark Wrong, Skip (icon only), History (icon only) */}
-              <div className="grid grid-cols-5 gap-4">
+              {/* Bottom row: Mark Wrong and History */}
+              <div className="grid grid-cols-4 gap-4">
                 <Button
                   onClick={markIncorrect}
                   className="col-span-3 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
                 >
                   <X size={24} />
-                </Button>
-                <Button
-                  onClick={skipQuestion}
-                  className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-4 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
-                >
-                  <SkipForward size={20} />
                 </Button>
                 <Button
                   onClick={() => setShowHistory(!showHistory)}
