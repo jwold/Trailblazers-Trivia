@@ -369,9 +369,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     </div>
                     <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
                   </div>
-                  <div className="mt-2">
-                    <Progress value={progressWidth} className="h-3 [&>div]:bg-gray-600" />
-                  </div>
+                  {index === gameSession.currentTeamIndex && (
+                    <div className="mt-2">
+                      <Progress value={progressWidth} className="h-3 [&>div]:bg-gray-600" />
+                    </div>
+                  )}
                 </div>
               );
             })}
