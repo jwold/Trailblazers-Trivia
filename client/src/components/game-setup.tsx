@@ -15,12 +15,12 @@ interface GameSetupProps {
 }
 
 const teamColors = [
-  { name: "blue", class: "bg-blue-500", bgClass: "bg-blue-50", borderClass: "border-blue-200", textClass: "text-blue-800" },
-  { name: "green", class: "bg-green-500", bgClass: "bg-green-50", borderClass: "border-green-200", textClass: "text-green-800" },
-  { name: "yellow", class: "bg-yellow-500", bgClass: "bg-yellow-50", borderClass: "border-yellow-200", textClass: "text-yellow-800" },
-  { name: "red", class: "bg-red-500", bgClass: "bg-red-50", borderClass: "border-red-200", textClass: "text-red-800" },
-  { name: "purple", class: "bg-purple-500", bgClass: "bg-purple-50", borderClass: "border-purple-200", textClass: "text-purple-800" },
-  { name: "orange", class: "bg-orange-500", bgClass: "bg-orange-50", borderClass: "border-orange-200", textClass: "text-orange-800" },
+  { name: "blue", class: "bg-gray-500", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "green", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
+  { name: "yellow", class: "bg-gray-400", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-700" },
+  { name: "red", class: "bg-gray-700", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
+  { name: "purple", class: "bg-gray-800", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
+  { name: "orange", class: "bg-gray-600", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
 ];
 
 export default function GameSetup({ onGameStart }: GameSetupProps) {
@@ -99,7 +99,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       
 
       {/* Team Setup Card */}
-      <Card className="border-4 border-brand-blue/20 shadow-xl">
+      <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           
 
@@ -115,7 +115,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                         onClick={() => removeTeam(team.id)}
                         variant="ghost"
                         size="sm"
-                        className="w-8 h-8 p-0 text-gray-500 hover:text-red-600 hover:bg-red-50 flex-shrink-0"
+                        className="w-8 h-8 p-0 text-gray-500 hover:text-gray-700 hover:bg-gray-100 flex-shrink-0"
                       >
                         <X size={16} />
                       </Button>
@@ -180,7 +180,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           <Button
             onClick={handleStartGame}
             disabled={createGameMutation.isPending}
-            className="w-full bg-gradient-to-r from-green-500 to-green-700 text-white py-6 px-8 text-2xl font-bold hover:from-green-600 hover:to-green-800 transition-all duration-200 transform hover:scale-105 shadow-xl border-4 border-green-300 ring-4 ring-green-200"
+            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 text-2xl font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 transform hover:scale-105 shadow-xl border-4 border-gray-400 ring-4 ring-gray-300"
           >
             {createGameMutation.isPending ? (
               "Creating Game..."

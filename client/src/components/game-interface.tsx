@@ -19,8 +19,8 @@ type GamePhase = "difficulty-selection" | "question-display";
 type Difficulty = "Easy" | "Hard";
 
 const difficultyConfig = {
-  Easy: { points: 1, bibleAssistPoints: 0.5, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
-  Hard: { points: 3, bibleAssistPoints: 1, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
+  Easy: { points: 1, bibleAssistPoints: 0.5, color: "gray", bgColor: "bg-gray-600", hoverColor: "hover:bg-gray-700" },
+  Hard: { points: 3, bibleAssistPoints: 1, color: "gray", bgColor: "bg-gray-800", hoverColor: "hover:bg-gray-900" },
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
@@ -254,29 +254,29 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   return (
     <div className="space-y-6">
       {/* Score Display */}
-      <Card className="border-4 border-brand-blue/20 shadow-xl">
+      <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {teams.map((team, index) => {
-              const colorClass = team.color === "blue" ? "bg-blue-50 border-blue-200" :
-                               team.color === "green" ? "bg-green-50 border-green-200" :
-                               team.color === "yellow" ? "bg-yellow-50 border-yellow-200" :
-                               team.color === "red" ? "bg-red-50 border-red-200" :
-                               team.color === "purple" ? "bg-purple-50 border-purple-200" :
-                               "bg-orange-50 border-orange-200";
+              const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
+                               team.color === "green" ? "bg-gray-100 border-gray-300" :
+                               team.color === "yellow" ? "bg-gray-50 border-gray-200" :
+                               team.color === "red" ? "bg-gray-100 border-gray-300" :
+                               team.color === "purple" ? "bg-gray-100 border-gray-300" :
+                               "bg-gray-50 border-gray-200";
               
-              const textClass = team.color === "blue" ? "text-blue-800" :
-                               team.color === "green" ? "text-green-800" :
-                               team.color === "yellow" ? "text-yellow-800" :
-                               team.color === "red" ? "text-red-800" :
-                               team.color === "purple" ? "text-purple-800" :
-                               "text-orange-800";
+              const textClass = team.color === "blue" ? "text-gray-800" :
+                               team.color === "green" ? "text-gray-800" :
+                               team.color === "yellow" ? "text-gray-700" :
+                               team.color === "red" ? "text-gray-800" :
+                               team.color === "purple" ? "text-gray-800" :
+                               "text-gray-800";
 
               const progressWidth = (team.score / gameSession.targetScore) * 100;
               
               return (
-                <div key={team.id} className={`${colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-yellow-400' : ''}`}>
+                <div key={team.id} className={`${colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''}`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
@@ -296,7 +296,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       
 
       {/* Question Display */}
-      <Card className="border-4 border-brand-green/20 shadow-xl">
+      <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           {gamePhase === "difficulty-selection" && (
             <>
@@ -326,7 +326,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
 
               {/* Question */}
-              <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl border-2 border-blue-200 mb-6">
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
                 <div className="text-center">
                   <div className="text-sm font-semibold text-gray-600 mb-2">
                     {selectedDifficulty?.toUpperCase()} QUESTION
@@ -342,19 +342,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 <div className="grid grid-cols-5 gap-2 mb-6">
                   <Button
                     onClick={() => markCorrect(false)}
-                    className="col-span-2 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                    className="col-span-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
                   >
                     <Check size={24} />
                   </Button>
                   <Button
                     onClick={markIncorrect}
-                    className="col-span-2 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
+                    className="col-span-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
                   >
                     <X size={24} />
                   </Button>
                   <Button
                     onClick={() => setShowHistory(!showHistory)}
-                    className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-2 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+                    className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-2 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
                   >
                     <History size={16} />
                   </Button>
@@ -366,7 +366,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 <div className="text-center">
                   <Button
                     onClick={nextQuestion}
-                    className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-6 px-12 text-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-yellow-400 ring-4 ring-yellow-200"
+                    className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-6 px-12 text-xl font-bold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-gray-400 ring-4 ring-gray-300"
                   >
                     <SkipForward className="mr-3" size={24} />
                     Next Question
@@ -384,11 +384,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
       {/* Question History */}
       {showHistory && (
-        <Card className="border-4 border-purple-200 shadow-xl">
+        <Card className="border-4 border-gray-200 shadow-xl">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
-                <div className="bg-purple-500 p-3 rounded-full mr-4">
+                <div className="bg-gray-600 p-3 rounded-full mr-4">
                   <History className="text-white" size={20} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800">Question History</h3>
@@ -454,7 +454,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       <div className="text-center">
         <Button
           onClick={endGame}
-          className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-6 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-6 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
         >
           <Square className="mr-2" size={20} />
           End Game
