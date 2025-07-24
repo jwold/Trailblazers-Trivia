@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-import { Crown, Trophy, RotateCcw, Plus, Share } from "lucide-react";
+import { Crown, Trophy, Plus, Share } from "lucide-react";
 import { type Team } from "@shared/schema";
 import { createConfetti } from "../lib/game-logic";
 import { useEffect } from "react";
@@ -10,10 +10,9 @@ import { useEffect } from "react";
 interface VictoryScreenProps {
   gameCode: string;
   onNewGame: () => void;
-  onPlayAgain: () => void;
 }
 
-export default function VictoryScreen({ gameCode, onNewGame, onPlayAgain }: VictoryScreenProps) {
+export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProps) {
   const { data: gameSession, isLoading } = useQuery({
     queryKey: ["/api/games", gameCode],
   });
@@ -127,14 +126,7 @@ export default function VictoryScreen({ gameCode, onNewGame, onPlayAgain }: Vict
       </Card>
 
       {/* Action Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Button
-          onClick={onPlayAgain}
-          className="bg-gradient-to-r from-green-500 to-green-600 text-white py-6 px-8 text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-green-200"
-        >
-          <RotateCcw className="mr-3" size={24} />
-          Play Again
-        </Button>
+      <div className="flex justify-center">
         <Button
           onClick={onNewGame}
           className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6 px-8 text-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-blue-200"
