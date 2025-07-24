@@ -339,7 +339,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
               {/* Scoring buttons - Only visible when question is displayed */}
               {!questionAnswered && (
-                <div className="grid grid-cols-5 gap-2 mb-6">
+                <div className={`grid gap-2 mb-6 ${gameSession.detailedHistory && JSON.parse(gameSession.detailedHistory || "[]").length > 0 ? 'grid-cols-5' : 'grid-cols-4'}`}>
                   <Button
                     onClick={() => markCorrect(false)}
                     className="col-span-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
@@ -352,12 +352,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   >
                     <X size={24} />
                   </Button>
-                  <Button
-                    onClick={() => setShowHistory(!showHistory)}
-                    className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-2 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
-                  >
-                    <History size={16} />
-                  </Button>
+                  {gameSession.detailedHistory && JSON.parse(gameSession.detailedHistory || "[]").length > 0 && (
+                    <Button
+                      onClick={() => setShowHistory(!showHistory)}
+                      className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-2 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+                    >
+                      <History size={16} />
+                    </Button>
+                  )}
                 </div>
               )}
 
@@ -405,11 +407,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {JSON.parse(gameSession.detailedHistory || "[]").map((entry: QuestionHistoryEntry, index: number) => (
-                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-200'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className={`${entry.wasCorrect ? 'bg-green-500' : 'bg-red-500'} text-white`}>
+                        <Badge className={`${entry.wasCorrect ? 'bg-gray-700' : 'bg-gray-600'} text-white`}>
                           {entry.teamName}
                         </Badge>
                         <Badge variant="outline">{entry.difficulty}</Badge>
@@ -424,7 +426,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         onClick={() => editHistoryEntry(index, true)}
                         disabled={entry.wasCorrect}
                         size="sm"
-                        className="bg-green-500 hover:bg-green-600 text-white px-2 py-1"
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
                       >
                         <Check size={14} />
                       </Button>
@@ -432,7 +434,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         onClick={() => editHistoryEntry(index, false)}
                         disabled={!entry.wasCorrect}
                         size="sm"
-                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1"
+                        className="bg-gray-700 hover:bg-gray-800 text-white px-2 py-1"
                       >
                         <X size={14} />
                       </Button>
