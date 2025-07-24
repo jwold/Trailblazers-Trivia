@@ -25,6 +25,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         targetScore: gameData.targetScore,
         currentTeamIndex: randomStartingTeam,
         questionHistory: "[]",
+        detailedHistory: "[]",
         gamePhase: "playing",
         isActive: true,
       });
@@ -53,6 +54,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...session,
         teams,
         questionHistory,
+        detailedHistory: session.detailedHistory || "[]",
       });
     } catch (error) {
       console.error("Error fetching game:", error);

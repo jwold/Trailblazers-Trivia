@@ -24,6 +24,7 @@ export const gameSession = pgTable("game_sessions", {
   targetScore: integer("target_score").default(10),
 
   questionHistory: text("question_history").default("[]"), // JSON string of used question IDs
+  detailedHistory: text("detailed_history").default("[]"), // JSON string of detailed question history
   gamePhase: varchar("game_phase", { length: 20 }).default("setup"), // setup, playing, victory
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -49,6 +50,19 @@ export const teamSchema = z.object({
   correctAnswers: z.number().default(0),
 });
 
+export const questionHistoryEntrySchema = z.object({
+  questionId: z.number(),
+  teamId: z.string(),
+  teamName: z.string(),
+  difficulty: z.string(),
+  question: z.string(),
+  answer: z.string(),
+  reference: z.string(),
+  points: z.number(),
+  wasCorrect: z.boolean(),
+  timestamp: z.number(),
+});
+
 export const gameSetupSchema = z.object({
   teams: z.array(teamSchema).min(2, "At least 2 teams required"),
   targetScore: z.number().min(5).max(50).default(10),
@@ -62,3 +76,4 @@ export type GameSession = typeof gameSession.$inferSelect;
 export type InsertGameSession = z.infer<typeof insertGameSessionSchema>;
 export type Team = z.infer<typeof teamSchema>;
 export type GameSetup = z.infer<typeof gameSetupSchema>;
+export type QuestionHistoryEntry = z.infer<typeof questionHistoryEntrySchema>;
