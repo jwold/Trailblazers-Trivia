@@ -455,13 +455,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           <div className="flex justify-center gap-4 mb-6">
             <Button
-              onClick={() => setShowHistory(!showHistory)}
-              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-            >
-              <History className="mb-2" size={20} />
-              <div className="text-sm">History</div>
-            </Button>
-            <Button
               onClick={endGame}
               className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
             >
