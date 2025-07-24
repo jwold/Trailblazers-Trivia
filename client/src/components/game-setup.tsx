@@ -25,8 +25,8 @@ const teamColors = [
 
 export default function GameSetup({ onGameStart }: GameSetupProps) {
   const [teams, setTeams] = useState<Team[]>([
-    { id: nanoid(), name: "", color: "blue", score: 0, correctAnswers: 0 },
-    { id: nanoid(), name: "", color: "green", score: 0, correctAnswers: 0 },
+    { id: nanoid(), name: "Blue Team", color: "blue", score: 0, correctAnswers: 0 },
+    { id: nanoid(), name: "Green Team", color: "green", score: 0, correctAnswers: 0 },
   ]);
   const [targetScore, setTargetScore] = useState(10);
 
@@ -64,10 +64,11 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   const addTeam = () => {
     const usedColors = teams.map(team => team.color);
     const availableColor = teamColors.find(color => !usedColors.includes(color.name))?.name || "gray";
+    const colorName = availableColor.charAt(0).toUpperCase() + availableColor.slice(1);
     
     setTeams([...teams, { 
       id: nanoid(), 
-      name: "", 
+      name: `${colorName} Team`, 
       color: availableColor, 
       score: 0, 
       correctAnswers: 0 
@@ -105,24 +106,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       {/* Team Setup Card */}
       <Card className="border-4 border-brand-blue/20 shadow-xl">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <div className="bg-brand-blue p-3 rounded-full mr-4">
-                <Users className="text-white" size={20} />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">Set Up Teams</h3>
-            </div>
-            {teams.length < 6 && (
-              <Button
-                onClick={addTeam}
-                size="sm"
-                className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200"
-              >
-                <Plus className="mr-1" size={16} />
-                Add Team
-              </Button>
-            )}
-          </div>
+          
 
           <div className="space-y-4 mb-6">
             {teams.map((team, index) => {
@@ -130,21 +114,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               
               return (
                 <div key={team.id} className={`${colorConfig.bgClass} p-4 rounded-xl border-2 ${colorConfig.borderClass}`}>
-                  <div className="flex items-center justify-between mb-3">
-                    <label className={`text-lg font-semibold ${colorConfig.textClass}`}>
-                      Team {index + 1}
-                    </label>
-                    {teams.length > 2 && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => removeTeam(team.id)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        ×
-                      </Button>
-                    )}
-                  </div>
                   <Input
                     placeholder="Enter team name..."
                     value={team.name}
