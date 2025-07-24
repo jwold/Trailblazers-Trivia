@@ -129,24 +129,26 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       </Button>
       
       {/* Share Results Button */}
-      <Button 
-        className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
-        onClick={() => {
-          const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
-          if (navigator.share) {
-            navigator.share({
-              title: "Bible Trivia Quest Victory!",
-              text: shareText,
-            });
-          } else {
-            navigator.clipboard.writeText(shareText);
-            alert("Victory message copied to clipboard!");
-          }
-        }}
-      >
-        <Share className="mr-2" size={16} />
-        Share Results
-      </Button>
+      <div className="text-center">
+        <Button 
+          className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
+          onClick={() => {
+            const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
+            if (navigator.share) {
+              navigator.share({
+                title: "Bible Trivia Quest Victory!",
+                text: shareText,
+              });
+            } else {
+              navigator.clipboard.writeText(shareText);
+              alert("Victory message copied to clipboard!");
+            }
+          }}
+        >
+          <Share className="mr-2" size={16} />
+          Share Results
+        </Button>
+      </div>
     </div>
   );
 }
