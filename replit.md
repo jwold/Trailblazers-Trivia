@@ -117,3 +117,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added default team names based on colors (Blue Team, Green Team, etc.) so users can start immediately
 - **January 24, 2025**: Removed all hint functionality from game interface for cleaner experience
 - **January 24, 2025**: Implemented random starting team selection to make games more fair
+- **January 24, 2025**: Enhanced "Next Question" button visibility with bright orange-red gradient, larger size, animation, and helpful text
+- **January 24, 2025**: Made "Next Question" button always visible (disabled/grayed during question phase, prominent during answer phase)
