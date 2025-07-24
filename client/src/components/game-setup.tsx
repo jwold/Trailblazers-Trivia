@@ -187,12 +187,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             {createGameMutation.isPending ? (
               "Creating Game..."
             ) : (
-              <>
-                <svg className="mr-3 h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                Start Bible Trivia Quest!
-              </>
+              "Start"
             )}
           </Button>
         </CardContent>
