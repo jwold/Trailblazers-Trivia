@@ -47,7 +47,6 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
           </div>
           <h2 className="text-4xl font-bold mb-4">🎉 Congratulations! 🎉</h2>
           <h3 className="text-2xl font-semibold mb-2">{winningTeam.name}</h3>
-          <p className="text-xl opacity-90">You are the Bible Trivia Champions!</p>
         </CardContent>
       </Card>
 
