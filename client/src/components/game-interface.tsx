@@ -458,7 +458,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           onClick={endGame}
           className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-6 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
         >
-          <Square className="mr-2" size={20} />
           End Game
         </Button>
       </div>
