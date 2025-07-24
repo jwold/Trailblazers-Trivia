@@ -56,7 +56,6 @@ export default function Home() {
           <VictoryScreen 
             gameCode={gameCode}
             onNewGame={handleNewGame}
-            onPlayAgain={handlePlayAgain}
           />
         )}
       </main>

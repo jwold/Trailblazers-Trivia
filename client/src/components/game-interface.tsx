@@ -8,7 +8,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2 } from "lucide-react";
-import { type Team, type TriviaQuestion, type GameSession, type QuestionHistoryEntry } from "@shared/schema";
+import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
@@ -36,7 +36,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: gameSession, isLoading } = useQuery<GameSession>({
+  const { data: gameSession, isLoading } = useQuery<ClientGameSession>({
     queryKey: ["/api/games", gameCode],
     refetchInterval: 1000,
   });
@@ -61,7 +61,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   });
 
   const updateGameMutation = useMutation({
-    mutationFn: async (updates: Partial<GameSession>) => {
+    mutationFn: async (updates: Partial<ClientGameSession>) => {
       const response = await apiRequest("PUT", `/api/games/${gameCode}`, updates);
       return response.json();
     },
@@ -78,7 +78,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   };
 
   const markCorrect = (usedBibleAssist = false) => {
-    if (!gameSession || !selectedDifficulty || !currentQuestion) return;
+    if (!gameSession || !selectedDifficulty || !currentQuestion || gameSession.currentTeamIndex === null) return;
     
     createConfetti();
     createEncouragement("Awesome! Great job!");
@@ -98,7 +98,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
     // Add detailed history entry
-    const detailedHistory: QuestionHistoryEntry[] = JSON.parse(gameSession.detailedHistory || "[]");
+    const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
     detailedHistory.push({
       questionId: currentQuestion.id,
       teamId: currentTeam.id,
@@ -113,7 +113,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     });
     
     // Check for winner
-    const hasWinner = teams[currentTeamIndex].score >= gameSession.targetScore;
+    const hasWinner = teams[currentTeamIndex].score >= (gameSession.targetScore || 10);
     
     // Move to next team after answering
     const nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
@@ -121,7 +121,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     updateGameMutation.mutate({
       teams: teams,
       questionHistory: questionHistory,
-      detailedHistory: JSON.stringify(detailedHistory),
+      detailedHistory: detailedHistory,
       currentTeamIndex: nextTeamIndex,
       gamePhase: hasWinner ? "victory" : "playing",
     });
@@ -134,14 +134,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   };
 
   const markIncorrect = () => {
-    if (!gameSession || !selectedDifficulty || !currentQuestion) return;
+    if (!gameSession || !selectedDifficulty || !currentQuestion || gameSession.currentTeamIndex === null) return;
     
     createEncouragement("Nice try! Keep going!");
     
     const currentTeam = gameSession.teams[gameSession.currentTeamIndex];
     
     // Add detailed history entry for incorrect answer
-    const detailedHistory: QuestionHistoryEntry[] = JSON.parse(gameSession.detailedHistory || "[]");
+    const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
     detailedHistory.push({
       questionId: currentQuestion.id,
       teamId: currentTeam.id,
@@ -164,7 +164,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     updateGameMutation.mutate({
       currentTeamIndex: nextTeamIndex,
       questionHistory: questionHistory,
-      detailedHistory: JSON.stringify(detailedHistory),
+      detailedHistory: detailedHistory,
     });
     
     setQuestionAnswered(true);
@@ -207,7 +207,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const editHistoryEntry = (entryIndex: number, newResult: boolean) => {
     if (!gameSession) return;
     
-    const detailedHistory: QuestionHistoryEntry[] = JSON.parse(gameSession.detailedHistory || "[]");
+    const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
     const entry = detailedHistory[entryIndex];
     
     if (!entry) return;
@@ -238,7 +238,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     updateGameMutation.mutate({
       teams: teams,
-      detailedHistory: JSON.stringify(detailedHistory),
+      detailedHistory: detailedHistory,
     });
     
     toast({
@@ -277,7 +277,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   }
 
   const teams: Team[] = gameSession.teams;
-  const currentTeam = teams[gameSession.currentTeamIndex];
+  const currentTeam = gameSession.currentTeamIndex !== null ? teams[gameSession.currentTeamIndex] : null;
 
   return (
     <div className="space-y-6">
@@ -301,7 +301,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                                team.color === "purple" ? "text-gray-800" :
                                "text-gray-800";
 
-              const progressWidth = (team.score / gameSession.targetScore) * 100;
+              const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
               
               return (
                 <div key={team.id} className={`${colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''}`}>
@@ -407,7 +407,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
               {/* Scoring buttons - Only visible when question is displayed */}
               {!questionAnswered && (
-                <div className={`grid gap-2 mb-6 ${gameSession.detailedHistory && JSON.parse(gameSession.detailedHistory || "[]").length > 0 ? 'grid-cols-5' : 'grid-cols-4'}`}>
+                <div className={`grid gap-2 mb-6 ${gameSession.detailedHistory && gameSession.detailedHistory.length > 0 ? 'grid-cols-5' : 'grid-cols-4'}`}>
                   <Button
                     onClick={() => markCorrect(false)}
                     className="col-span-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
@@ -420,7 +420,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   >
                     <X size={24} />
                   </Button>
-                  {gameSession.detailedHistory && JSON.parse(gameSession.detailedHistory || "[]").length > 0 && (
+                  {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
                     <Button
                       onClick={() => setShowHistory(!showHistory)}
                       className="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-2 font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200"
@@ -474,7 +474,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             </div>
             
             <div className="space-y-4 max-h-96 overflow-y-auto">
-              {JSON.parse(gameSession.detailedHistory || "[]").map((entry: QuestionHistoryEntry, index: number) => (
+              {gameSession.detailedHistory.map((entry: QuestionHistoryEntry, index: number) => (
                 <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-200'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -510,7 +510,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   </div>
                 </div>
               ))}
-              {JSON.parse(gameSession.detailedHistory || "[]").length === 0 && (
+              {gameSession.detailedHistory.length === 0 && (
                 <div className="text-center text-gray-500 py-8">
                   No questions answered yet
                 </div>

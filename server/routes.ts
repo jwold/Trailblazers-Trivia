@@ -49,12 +49,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const teams: Team[] = JSON.parse(session.teams || "[]");
       const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
+      const detailedHistory = JSON.parse(session.detailedHistory || "[]");
 
       res.json({
         ...session,
         teams,
         questionHistory,
-        detailedHistory: session.detailedHistory || "[]",
+        detailedHistory,
       });
     } catch (error) {
       console.error("Error fetching game:", error);
@@ -108,14 +109,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Game not found" });
       }
 
-      // Parse teams and questionHistory back to objects for response
+      // Parse teams, questionHistory, and detailedHistory back to objects for response
       const teams: Team[] = JSON.parse(session.teams || "[]");
       const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
+      const detailedHistory = JSON.parse(session.detailedHistory || "[]");
 
       res.json({
         ...session,
         teams,
         questionHistory,
+        detailedHistory,
       });
     } catch (error) {
       console.error("Error updating game:", error);

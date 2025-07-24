@@ -77,3 +77,10 @@ export type InsertGameSession = z.infer<typeof insertGameSessionSchema>;
 export type Team = z.infer<typeof teamSchema>;
 export type GameSetup = z.infer<typeof gameSetupSchema>;
 export type QuestionHistoryEntry = z.infer<typeof questionHistoryEntrySchema>;
+
+// Client-side GameSession type with parsed fields
+export type ClientGameSession = Omit<GameSession, 'teams' | 'questionHistory' | 'detailedHistory'> & {
+  teams: Team[];
+  questionHistory: number[];
+  detailedHistory: QuestionHistoryEntry[];
+};

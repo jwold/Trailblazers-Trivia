@@ -80,7 +80,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteGameSession(gameCode: string): Promise<boolean> {
     const result = await db.delete(gameSession).where(eq(gameSession.gameCode, gameCode));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 }
 
