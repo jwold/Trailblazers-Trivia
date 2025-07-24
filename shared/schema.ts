@@ -22,7 +22,7 @@ export const gameSession = pgTable("game_sessions", {
   teams: text("teams").notNull(), // JSON string
   currentTeamIndex: integer("current_team_index").default(0),
   targetScore: integer("target_score").default(10),
-  timerDuration: integer("timer_duration").default(45),
+
   questionHistory: text("question_history").default("[]"), // JSON string of used question IDs
   gamePhase: varchar("game_phase", { length: 20 }).default("setup"), // setup, playing, victory
   isActive: boolean("is_active").default(true),
@@ -52,7 +52,6 @@ export const teamSchema = z.object({
 export const gameSetupSchema = z.object({
   teams: z.array(teamSchema).min(2, "At least 2 teams required"),
   targetScore: z.number().min(5).max(50).default(10),
-  timerDuration: z.number().min(15).max(120).default(45),
 });
 
 export type User = typeof users.$inferSelect;

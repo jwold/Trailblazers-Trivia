@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Clock, Users, Gamepad2, Check, X, SkipForward, Eye, Pause, Square, Lightbulb } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Eye, Lightbulb, Square } from "lucide-react";
 import { type Team, type TriviaQuestion, type GameSession } from "@shared/schema";
 import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -28,10 +28,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [gamePhase, setGamePhase] = useState<GamePhase>("difficulty-selection");
   const [currentQuestion, setCurrentQuestion] = useState<TriviaQuestion | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
-  const [timeRemaining, setTimeRemaining] = useState(45);
   const [showHint, setShowHint] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
-  const timerRef = useRef<NodeJS.Timeout>();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -48,7 +46,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     onSuccess: (question: TriviaQuestion) => {
       setCurrentQuestion(question);
       setGamePhase("question-display");
-      startTimer();
     },
     onError: () => {
       toast({
@@ -69,36 +66,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     },
   });
 
-  const startTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    
-    setTimeRemaining(gameSession?.timerDuration || 45);
-    timerRef.current = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current);
-          handleTimeUp();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  };
 
-  const stopTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = undefined;
-    }
-  };
-
-  const handleTimeUp = () => {
-    toast({
-      title: "Time's Up!",
-      description: "Moving to the next team.",
-    });
-    revealAnswer();
-  };
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
@@ -109,7 +77,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const markCorrect = () => {
     if (!gameSession || !selectedDifficulty || !currentQuestion) return;
     
-    stopTimer();
     createConfetti();
     createEncouragement("Awesome! Great job!");
     
@@ -143,7 +110,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const markIncorrect = () => {
     if (!gameSession) return;
     
-    stopTimer();
     createEncouragement("Nice try! Keep going!");
     
     // Move to next team
@@ -157,7 +123,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   };
 
   const revealAnswer = () => {
-    stopTimer();
     setGamePhase("answer-reveal");
   };
 
@@ -189,29 +154,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     nextQuestion();
   };
 
-  const pauseGame = () => {
-    stopTimer();
-    toast({
-      title: "Game Paused",
-      description: "The game has been paused.",
-    });
-  };
-
   const endGame = () => {
-    stopTimer();
     updateGameMutation.mutate({
       gamePhase: "victory",
     });
     onGameEnd();
   };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
 
   if (isLoading || !gameSession) {
     return <div className="text-center py-8">Loading game...</div>;
@@ -314,13 +262,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
           {gamePhase === "question-display" && currentQuestion && (
             <>
-              {/* Timer */}
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-4 rounded-full text-2xl font-bold">
-                  <Clock className="mr-3" size={24} />
-                  <span>{timeRemaining}</span>
-                </div>
-              </div>
+
 
               {/* Question */}
               <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl border-2 border-blue-200 mb-6">
@@ -431,17 +373,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              onClick={pauseGame}
-              className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-4 font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all duration-200"
-            >
-              <Pause className="mr-2" size={16} />
-              Pause Game
-            </Button>
+          <div className="text-center">
             <Button
               onClick={endGame}
-              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
             >
               <Square className="mr-2" size={16} />
               End Game

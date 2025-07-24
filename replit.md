@@ -106,3 +106,10 @@ The application defines three main entities:
 - **Caching**: Client-side question caching for offline-friendly experience
 
 The application prioritizes simplicity and user experience while maintaining a clean, extensible architecture that can grow with additional features and user load.
+
+## Recent Changes
+
+- **January 24, 2025**: Removed timer functionality completely from game interface and setup
+- **January 24, 2025**: Updated scoring system from Easy=3pts, Medium=2pts, Hard=1pt to Easy=1pt, Medium=2pts, Hard=3pts
+- **January 24, 2025**: Added PostgreSQL database with 500 curated trivia questions loaded from CSV
+- **January 24, 2025**: Enhanced "Start Bible Trivia Quest" button visibility with stronger colors and shadows

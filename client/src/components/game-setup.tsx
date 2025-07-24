@@ -29,7 +29,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     { id: nanoid(), name: "", color: "green", score: 0, correctAnswers: 0 },
   ]);
   const [targetScore, setTargetScore] = useState(10);
-  const [timerDuration, setTimerDuration] = useState(45);
+
   const { toast } = useToast();
 
   const createGameMutation = useMutation({
@@ -99,7 +99,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     createGameMutation.mutate({
       teams: validTeams,
       targetScore,
-      timerDuration,
     });
   };
 
@@ -189,33 +188,18 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4">Game Settings</h4>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Points to Win</label>
-                <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="10">10 Points</SelectItem>
-                    <SelectItem value="15">15 Points</SelectItem>
-                    <SelectItem value="20">20 Points</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Timer (seconds)</label>
-                <Select value={timerDuration.toString()} onValueChange={(value) => setTimerDuration(parseInt(value))}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="30">30 seconds</SelectItem>
-                    <SelectItem value="45">45 seconds</SelectItem>
-                    <SelectItem value="60">60 seconds</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="max-w-xs">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Points to Win</label>
+              <Select value={targetScore.toString()} onValueChange={(value) => setTargetScore(parseInt(value))}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 Points</SelectItem>
+                  <SelectItem value="15">15 Points</SelectItem>
+                  <SelectItem value="20">20 Points</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -261,7 +245,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 <span className="text-white font-bold text-lg">2</span>
               </div>
               <h4 className="font-semibold text-green-800 mb-2">Answer Questions</h4>
-              <p className="text-sm text-green-600">Work as a team to answer Bible questions before time runs out!</p>
+              <p className="text-sm text-green-600">Work as a team to answer Bible questions and earn points!</p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
               <div className="bg-yellow-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
