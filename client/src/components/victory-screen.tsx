@@ -38,14 +38,7 @@ export default function VictoryScreen({ gameCode, onNewGame, onPlayAgain }: Vict
 
   return (
     <div className="space-y-6">
-      {/* Celebration Image */}
-      <div className="text-center mb-8">
-        <img 
-          src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" 
-          alt="Team celebration with raised hands and confetti" 
-          className="rounded-2xl shadow-xl w-full h-64 object-cover" 
-        />
-      </div>
+      
 
       {/* Winner Announcement */}
       <Card className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white border-4 border-yellow-200 shadow-xl">
