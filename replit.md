@@ -158,3 +158,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Simplified share results section from card format to simple button below "New Game" for cleaner interface
 - **January 24, 2025**: Expanded question database from 15 to 450 questions (201 Easy, 249 Hard) by importing and cleaning CSV data with proper difficulty normalization
 - **January 24, 2025**: Hidden progress bars for inactive teams to reduce visual clutter and focus attention on the current active team
+- **January 24, 2025**: Replaced large progress bars with small inline progress bars positioned to the left of edit icons for all teams

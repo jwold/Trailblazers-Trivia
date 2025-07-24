@@ -356,6 +356,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       ) : (
                         <div className="flex items-center gap-2 flex-1">
                           <h4 className={`font-bold ${textClass} text-lg flex-1`}>{team.name}</h4>
+                          <div className="w-16 mr-2">
+                            <Progress value={progressWidth} className="h-2 [&>div]:bg-gray-600" />
+                          </div>
                           <Button
                             onClick={() => startEditingTeamName(team.id, team.name)}
                             size="sm"
@@ -369,11 +372,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     </div>
                     <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
                   </div>
-                  {index === gameSession.currentTeamIndex && (
-                    <div className="mt-2">
-                      <Progress value={progressWidth} className="h-3 [&>div]:bg-gray-600" />
-                    </div>
-                  )}
+
                 </div>
               );
             })}
