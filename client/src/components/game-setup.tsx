@@ -82,19 +82,18 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   };
 
   const handleStartGame = () => {
-    const validTeams = teams.filter(team => team.name.trim() !== "");
-    
-    if (validTeams.length < 2) {
+    // Use teams as they are (default names are fine)
+    if (teams.length < 2) {
       toast({
         title: "Error",
-        description: "Please add at least 2 teams with names.",
+        description: "Please add at least 2 teams.",
         variant: "destructive",
       });
       return;
     }
 
     createGameMutation.mutate({
-      teams: validTeams,
+      teams: teams,
       targetScore,
     });
   };

@@ -114,3 +114,6 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added PostgreSQL database with 500 curated trivia questions loaded from CSV
 - **January 24, 2025**: Enhanced "Start Bible Trivia Quest" button visibility with stronger colors and shadows
 - **January 24, 2025**: Simplified team setup by removing manual color selection - colors are now auto-assigned
+- **January 24, 2025**: Added default team names based on colors (Blue Team, Green Team, etc.) so users can start immediately
+- **January 24, 2025**: Removed all hint functionality from game interface for cleaner experience
+- **January 24, 2025**: Implemented random starting team selection to make games more fair

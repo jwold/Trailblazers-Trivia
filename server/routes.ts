@@ -16,12 +16,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const gameData = gameSetupSchema.parse(req.body);
       
       const gameCode = generateGameCode();
+      // Set random starting team
+      const randomStartingTeam = Math.floor(Math.random() * gameData.teams.length);
+      
       const session = await storage.createGameSession({
         gameCode,
         teams: JSON.stringify(gameData.teams),
         targetScore: gameData.targetScore,
-        timerDuration: gameData.timerDuration,
-        currentTeamIndex: 0,
+        currentTeamIndex: randomStartingTeam,
         questionHistory: "[]",
         gamePhase: "playing",
         isActive: true,
