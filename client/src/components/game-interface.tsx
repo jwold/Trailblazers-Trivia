@@ -431,7 +431,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           {gamePhase === "difficulty-selection" && (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
                   const config = difficultyConfig[difficulty];
                   return (
@@ -439,11 +439,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       key={difficulty}
                       onClick={() => selectDifficulty(difficulty)}
                       disabled={fetchQuestionMutation.isPending}
-                      className={`${config.bgColor} ${config.hoverColor} text-white py-6 px-6 text-lg font-semibold transition-all duration-200 transform hover:scale-105 border-4 border-white/20`}
+                      className={`${config.bgColor} ${config.hoverColor} text-white py-8 px-8 text-xl font-semibold transition-all duration-200 transform hover:scale-105 border-4 border-white/20`}
                     >
                       <div className="text-center">
-                        <div className="text-2xl font-bold">{difficulty.toUpperCase()}</div>
-                        <div className="text-sm opacity-90">{config.points} Points</div>
+                        <div className="text-3xl font-bold">{difficulty.toUpperCase()}</div>
+                        <div className="text-base opacity-90">{config.points} Points</div>
                       </div>
                     </Button>
                   );
