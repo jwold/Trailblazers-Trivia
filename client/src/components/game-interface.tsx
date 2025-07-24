@@ -379,9 +379,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <SkipForward className="mr-3" size={24} />
                   Next Question
                 </Button>
-                <div className="mt-3 text-sm text-blue-600 font-semibold">
-                  Click to continue the game!
-                </div>
+                
               </div>
             </>
           )}
