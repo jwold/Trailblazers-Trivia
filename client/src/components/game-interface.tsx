@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Eye, Lightbulb, Square } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Eye, Square } from "lucide-react";
 import { type Team, type TriviaQuestion, type GameSession } from "@shared/schema";
 import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -28,7 +28,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [gamePhase, setGamePhase] = useState<GamePhase>("difficulty-selection");
   const [currentQuestion, setCurrentQuestion] = useState<TriviaQuestion | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
-  const [showHint, setShowHint] = useState(false);
+  
   const [questionNumber, setQuestionNumber] = useState(1);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -70,7 +70,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
-    setShowHint(false);
     fetchQuestionMutation.mutate(difficulty);
   };
 
@@ -147,7 +146,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setGamePhase("difficulty-selection");
     setCurrentQuestion(null);
     setSelectedDifficulty(null);
-    setShowHint(false);
   };
 
   const skipQuestion = () => {
@@ -173,12 +171,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Score Display */}
       <Card className="border-4 border-brand-blue/20 shadow-xl">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-2xl font-bold text-gray-800">Scoreboard</h3>
-            <Badge variant="outline" className="bg-brand-blue text-white px-4 py-2 text-lg font-semibold">
-              Question {questionNumber}
-            </Badge>
-          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {teams.map((team, index) => {
               const colorClass = team.color === "blue" ? "bg-blue-50 border-blue-200" :
@@ -267,27 +260,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               </div>
 
-              {/* Hint Button */}
-              <div className="text-center mb-6">
-                <Button
-                  onClick={() => setShowHint(true)}
-                  className="bg-gradient-to-r from-purple-400 to-purple-500 text-white py-3 px-6 font-semibold hover:from-purple-500 hover:to-purple-600 transition-all duration-200"
-                >
-                  <Lightbulb className="mr-2" size={16} />
-                  Get a Hint
-                </Button>
-              </div>
-
-              {/* Hint Display */}
-              {showHint && (
-                <div className="bg-purple-50 border-4 border-purple-200 p-4 rounded-xl mb-6">
-                  <div className="flex items-center mb-2">
-                    <Lightbulb className="text-purple-600 mr-2" size={16} />
-                    <span className="font-semibold text-purple-800">Hint:</span>
-                  </div>
-                  <p className="text-purple-700">Think about the Bible reference: {currentQuestion.reference}</p>
-                </div>
-              )}
+              
             </>
           )}
 
@@ -324,12 +297,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Leader Controls */}
       <Card className="border-4 border-brand-orange/20 shadow-xl">
         <CardContent className="p-6">
-          <div className="flex items-center mb-6">
-            <div className="bg-brand-orange p-3 rounded-full mr-4">
-              <Gamepad2 className="text-white" size={20} />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800">Leader Controls</h3>
-          </div>
+          
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <Button
