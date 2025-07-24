@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2 } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -36,6 +36,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamAnimations, setTeamAnimations] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
   const [teamsExpanded, setTeamsExpanded] = useState(false);
   const [teamTransitioning, setTeamTransitioning] = useState(false);
+  const [answerVisible, setAnswerVisible] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const prevTeamIndexRef = useRef<number | null>(null);
@@ -76,6 +77,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       setCurrentQuestion(question);
       setGamePhase("question-display");
       setQuestionAnswered(false);
+      setAnswerVisible(false);
     },
     onError: () => {
       toast({
@@ -218,6 +220,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setCurrentQuestion(null);
     setSelectedDifficulty(null);
     setQuestionAnswered(false);
+    setAnswerVisible(false);
   };
 
   const skipQuestion = () => {
@@ -463,7 +466,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   </div>
                   <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
                   <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
-                  <div className="text-base text-gray-700 italic">Answer: {currentQuestion.answer}</div>
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="text-base text-gray-700 italic">Answer:</div>
+                    <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
+                      {currentQuestion.answer}
+                    </div>
+                    <Button
+                      onClick={() => setAnswerVisible(!answerVisible)}
+                      size="sm"
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
+                    >
+                      {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
+                    </Button>
+                  </div>
                 </div>
               </div>
 
