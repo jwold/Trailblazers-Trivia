@@ -34,13 +34,8 @@ export default function Home() {
       {/* Header */}
       <header className="bg-white shadow-lg border-b-4 border-brand-blue sticky top-0 z-50">
         <div className="px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
-              </div>
-            </div>
-            
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
           </div>
         </div>
       </header>
