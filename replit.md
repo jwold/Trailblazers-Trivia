@@ -140,5 +140,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Changed progress bars from team colors to dark gray for better visual consistency
 - **January 24, 2025**: Fixed skip question functionality to add skipped questions to history, preventing them from appearing again
 - **January 24, 2025**: Combined Easy and Medium difficulty categories into single "Easy" category worth 1 point
-- **January 24, 2025**: Updated Hard difficulty to be worth 2 points instead of 3
+- **January 24, 2025**: Updated Hard difficulty to be worth 3 points
 - **January 24, 2025**: Updated Bible assist scoring: Easy (0.5 pts), Hard (1 pt)

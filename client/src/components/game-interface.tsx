@@ -20,7 +20,7 @@ type Difficulty = "Easy" | "Hard";
 
 const difficultyConfig = {
   Easy: { points: 1, bibleAssistPoints: 0.5, color: "green", bgColor: "bg-green-500", hoverColor: "hover:bg-green-600" },
-  Hard: { points: 2, bibleAssistPoints: 1, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
+  Hard: { points: 3, bibleAssistPoints: 1, color: "red", bgColor: "bg-red-500", hoverColor: "hover:bg-red-600" },
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
