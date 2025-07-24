@@ -105,11 +105,23 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       {/* Team Setup Card */}
       <Card className="border-4 border-brand-blue/20 shadow-xl">
         <CardContent className="p-6">
-          <div className="flex items-center mb-6">
-            <div className="bg-brand-blue p-3 rounded-full mr-4">
-              <Users className="text-white" size={20} />
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <div className="bg-brand-blue p-3 rounded-full mr-4">
+                <Users className="text-white" size={20} />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Set Up Teams</h3>
             </div>
-            <h3 className="text-2xl font-bold text-gray-800">Set Up Teams</h3>
+            {teams.length < 6 && (
+              <Button
+                onClick={addTeam}
+                size="sm"
+                className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200"
+              >
+                <Plus className="mr-1" size={16} />
+                Add Team
+              </Button>
+            )}
           </div>
 
           <div className="space-y-4 mb-6">
@@ -143,15 +155,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               );
             })}
 
-            {teams.length < 6 && (
-              <Button
-                onClick={addTeam}
-                className="w-full bg-gradient-to-r from-purple-400 to-purple-600 text-white py-4 px-6 text-lg font-semibold hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 border-4 border-purple-200"
-              >
-                <Plus className="mr-2" size={20} />
-                Add Another Team
-              </Button>
-            )}
+
           </div>
 
           {/* Game Settings */}
