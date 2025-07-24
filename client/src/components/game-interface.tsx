@@ -374,12 +374,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               <div className="text-center">
                 <Button
                   onClick={nextQuestion}
-                  className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-6 px-12 text-xl font-bold hover:from-orange-600 hover:to-red-600 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-white animate-pulse"
+                  className="bg-gradient-to-r from-brand-blue to-blue-600 text-white py-6 px-12 text-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-white"
                 >
                   <SkipForward className="mr-3" size={24} />
                   Next Question
                 </Button>
-                <div className="mt-3 text-sm text-orange-600 font-semibold">
+                <div className="mt-3 text-sm text-blue-600 font-semibold">
                   Click to continue the game!
                 </div>
               </div>
