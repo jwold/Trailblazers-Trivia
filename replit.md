@@ -165,3 +165,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Changed progress bar backgrounds to white when not filled, maintaining gray fill color for better visual contrast
 - **January 24, 2025**: Made progress bars full-width by moving them below team names in a vertical layout instead of inline positioning
 - **January 24, 2025**: Added blurred answer functionality with toggle eye icon - answers start blurred and can be revealed/hidden by tapping the eye button
+- **January 24, 2025**: Removed max-width constraint from main container to enable full-width layout on desktop devices

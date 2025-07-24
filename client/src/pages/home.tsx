@@ -40,7 +40,7 @@ export default function Home() {
         </div>
       </header>
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 max-w-4xl">
+      <main className="container mx-auto px-4 py-6">
         {gamePhase === "setup" && (
           <GameSetup onGameStart={handleGameStart} />
         )}
