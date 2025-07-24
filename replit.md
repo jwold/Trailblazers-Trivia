@@ -125,3 +125,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added back "Add Team" button to allow up to 6 teams in game setup
 - **January 24, 2025**: Added delete buttons to teams beyond the first two, allowing removal of additional teams
 - **January 24, 2025**: Simplified start button text from "Start Bible Trivia Quest!" to just "Start"
+- **January 24, 2025**: Modified "Next Question" button to only appear after question has been marked correct, incorrect, or skipped

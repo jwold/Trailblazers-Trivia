@@ -30,6 +30,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
+  const [questionAnswered, setQuestionAnswered] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -46,6 +47,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     onSuccess: (question: TriviaQuestion) => {
       setCurrentQuestion(question);
       setGamePhase("question-display");
+      setQuestionAnswered(false);
     },
     onError: () => {
       toast({
@@ -119,6 +121,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     if (hasWinner) {
       setTimeout(() => onGameEnd(), 2000);
     }
+    
+    setQuestionAnswered(true);
   };
 
   const markIncorrect = () => {
@@ -150,6 +154,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       currentTeamIndex: nextTeamIndex,
       detailedHistory: JSON.stringify(detailedHistory),
     });
+    
+    setQuestionAnswered(true);
   };
 
 
@@ -175,6 +181,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setGamePhase("difficulty-selection");
     setCurrentQuestion(null);
     setSelectedDifficulty(null);
+    setQuestionAnswered(false);
   };
 
   const skipQuestion = () => {
@@ -331,16 +338,18 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               </div>
 
-              {/* Next Question Button - Only visible during question display */}
-              <div className="text-center">
-                <Button
-                  onClick={nextQuestion}
-                  className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-6 px-12 text-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-yellow-400 ring-4 ring-yellow-200"
-                >
-                  <SkipForward className="mr-3" size={24} />
-                  Next Question
-                </Button>
-              </div>
+              {/* Next Question Button - Only visible after question is answered */}
+              {questionAnswered && (
+                <div className="text-center">
+                  <Button
+                    onClick={nextQuestion}
+                    className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-6 px-12 text-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-yellow-400 ring-4 ring-yellow-200"
+                  >
+                    <SkipForward className="mr-3" size={24} />
+                    Next Question
+                  </Button>
+                </div>
+              )}
 
               
             </>
