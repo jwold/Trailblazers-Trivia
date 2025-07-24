@@ -386,18 +386,18 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                           </Button>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-2 flex-1">
-                          <h4 className={`font-bold ${textClass} text-lg flex-1`}>{team.name}</h4>
-                          <div className="w-16 mr-2">
-                            <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600" />
+                        <div className="flex flex-col gap-2 flex-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className={`font-bold ${textClass} text-lg flex-1`}>{team.name}</h4>
+                            <Button
+                              onClick={() => startEditingTeamName(team.id, team.name)}
+                              size="sm"
+                              className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
+                            >
+                              <Edit2 size={14} className="text-gray-700" />
+                            </Button>
                           </div>
-                          <Button
-                            onClick={() => startEditingTeamName(team.id, team.name)}
-                            size="sm"
-                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
-                          >
-                            <Edit2 size={14} className="text-gray-700" />
-                          </Button>
+                          <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600 w-full" />
                         </div>
                       )}
                     </div>
