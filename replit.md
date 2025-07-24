@@ -169,3 +169,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Optimized difficulty selection buttons for desktop with 2-column layout, larger sizing, and improved spacing
 - **January 24, 2025**: Updated team cards to use full width layout on all screen sizes for better readability and consistency
 - **January 24, 2025**: Moved progress bars back to inline layout beside team names, positioned between team name and edit button
+- **January 24, 2025**: Hidden progress bars from team display while keeping them in code for potential future use
