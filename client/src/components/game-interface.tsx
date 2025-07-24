@@ -434,8 +434,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   onClick={() => markCorrect(false)}
                   className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
                 >
-                  <Check className="mb-2" size={20} />
-                  <div className="text-sm">Mark Correct</div>
+                  <Check size={24} />
                 </Button>
               </div>
               
@@ -456,8 +455,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   onClick={markIncorrect}
                   className="col-span-3 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
                 >
-                  <X className="mb-2" size={20} />
-                  <div className="text-sm">Mark Wrong</div>
+                  <X size={24} />
                 </Button>
                 <Button
                   onClick={skipQuestion}
