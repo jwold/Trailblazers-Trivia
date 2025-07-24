@@ -113,10 +113,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Check for winner
     const hasWinner = teams[currentTeamIndex].score >= gameSession.targetScore;
     
+    // Move to next team after answering
+    const nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
+    
     updateGameMutation.mutate({
       teams: teams,
       questionHistory: questionHistory,
       detailedHistory: JSON.stringify(detailedHistory),
+      currentTeamIndex: nextTeamIndex,
       gamePhase: hasWinner ? "victory" : "playing",
     });
     
@@ -165,20 +169,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const nextQuestion = () => {
     if (!gameSession || !currentQuestion) return;
     
-    // Move to next team if not already moved
-    let nextTeamIndex = gameSession.currentTeamIndex;
-    if (gamePhase !== "answer-reveal") {
-      nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
-    }
-    
-    // Add question to history
-    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
-    
-    updateGameMutation.mutate({
-      currentTeamIndex: nextTeamIndex,
-      questionHistory: questionHistory,
-    });
-    
+    // Team rotation is already handled in markCorrect/markIncorrect
+    // Just reset the question state
     setQuestionNumber(prev => prev + 1);
     setGamePhase("difficulty-selection");
     setCurrentQuestion(null);
@@ -436,18 +428,22 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
           {gamePhase === "question-display" ? (
             <div className="space-y-4 mb-6">
-              {/* Top row: Mark Correct and Correct (Bible assist) */}
-              <div className="grid grid-cols-2 gap-4">
+              {/* Mark Correct on its own line */}
+              <div>
                 <Button
                   onClick={() => markCorrect(false)}
-                  className="bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
                 >
                   <Check className="mb-2" size={20} />
                   <div className="text-sm">Mark Correct</div>
                 </Button>
+              </div>
+              
+              {/* Correct (Bible assist) on its own line */}
+              <div>
                 <Button
                   onClick={() => markCorrect(true)}
-                  className="bg-gradient-to-r from-green-400 to-green-500 text-white py-4 px-4 font-semibold hover:from-green-500 hover:to-green-600 transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-green-400 to-green-500 text-white py-4 px-4 font-semibold hover:from-green-500 hover:to-green-600 transition-all duration-200"
                 >
                   <Check className="mb-2" size={20} />
                   <div className="text-sm">Correct (Bible assist)</div>

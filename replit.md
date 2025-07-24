@@ -134,3 +134,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added Bible assist scoring system (Easy: 0.5 pts, Medium/Hard: 1 pt with Bible help)
 - **January 24, 2025**: Redesigned button layout with two-row system: Mark Correct buttons on top, other actions below
 - **January 24, 2025**: History and Skip buttons now use icon-only display for compact layout
+- **January 24, 2025**: Fixed team rotation bug - teams now properly alternate turns after both correct and incorrect answers
+- **January 24, 2025**: Updated button layout - Mark Correct and Bible assist buttons now each have their own full-width line
