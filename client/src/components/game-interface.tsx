@@ -438,20 +438,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
               {/* Scoring buttons - Only visible when question is displayed */}
               {!questionAnswered && (
-                <div className={`grid gap-2 mb-6 ${gameSession.detailedHistory && gameSession.detailedHistory.length > 0 ? 'grid-cols-5' : 'grid-cols-4'}`}>
+                <div className="space-y-3 mb-6">
                   <Button
                     onClick={() => markCorrect(false)}
-                    className="col-span-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+                    className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
                   >
                     <Check size={24} />
                   </Button>
                   <Button
                     onClick={markIncorrect}
-                    className="col-span-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
+                    className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
                   >
                     <X size={24} />
                   </Button>
-
                 </div>
               )}
 
