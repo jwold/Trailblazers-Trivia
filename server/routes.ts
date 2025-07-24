@@ -103,6 +103,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         updates.questionHistory = JSON.stringify(updates.questionHistory);
       }
 
+      // Convert detailedHistory array to JSON string if provided
+      if (updates.detailedHistory) {
+        updates.detailedHistory = JSON.stringify(updates.detailedHistory);
+      }
+
       const session = await storage.updateGameSession(gameCode, updates);
       
       if (!session) {
