@@ -337,6 +337,30 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               </div>
 
+              {/* Scoring buttons - Only visible when question is displayed */}
+              {!questionAnswered && (
+                <div className="grid grid-cols-5 gap-2 mb-6">
+                  <Button
+                    onClick={() => markCorrect(false)}
+                    className="col-span-2 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                  >
+                    <Check size={24} />
+                  </Button>
+                  <Button
+                    onClick={markIncorrect}
+                    className="col-span-2 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
+                  >
+                    <X size={24} />
+                  </Button>
+                  <Button
+                    onClick={() => setShowHistory(!showHistory)}
+                    className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-2 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+                  >
+                    <History size={16} />
+                  </Button>
+                </div>
+              )}
+
               {/* Next Question Button - Only visible after question is answered */}
               {questionAnswered && (
                 <div className="text-center">
@@ -429,62 +453,22 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Leader Controls */}
       <Card className="border-4 border-brand-orange/20 shadow-xl">
         <CardContent className="p-6">
-          
-
-          {gamePhase === "question-display" ? (
-            <div className="space-y-4 mb-6">
-              {/* Correct and Wrong buttons with tiny History button */}
-              <div className="grid grid-cols-5 gap-2">
-                <Button
-                  onClick={() => markCorrect(false)}
-                  className="col-span-2 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200"
-                >
-                  <Check size={24} />
-                </Button>
-                <Button
-                  onClick={markIncorrect}
-                  className="col-span-2 bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200"
-                >
-                  <X size={24} />
-                </Button>
-                <Button
-                  onClick={() => setShowHistory(!showHistory)}
-                  className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-2 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-                >
-                  <History size={16} />
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-center gap-4 mb-6">
-              <Button
-                onClick={() => setShowHistory(!showHistory)}
-                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-              >
-                <History className="mb-2" size={20} />
-                <div className="text-sm">History</div>
-              </Button>
-              <Button
-                onClick={endGame}
-                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-              >
-                <Square className="mb-2" size={20} />
-                <div className="text-sm">End Game</div>
-              </Button>
-            </div>
-          )}
-
-          {gamePhase === "question-display" && (
-            <div className="text-center mb-6">
-              <Button
-                onClick={endGame}
-                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
-              >
-                <Square className="mr-2" size={16} />
-                End Game
-              </Button>
-            </div>
-          )}
+          <div className="flex justify-center gap-4 mb-6">
+            <Button
+              onClick={() => setShowHistory(!showHistory)}
+              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+            >
+              <History className="mb-2" size={20} />
+              <div className="text-sm">History</div>
+            </Button>
+            <Button
+              onClick={endGame}
+              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
+            >
+              <Square className="mb-2" size={20} />
+              <div className="text-sm">End Game</div>
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

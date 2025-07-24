@@ -145,3 +145,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Fixed critical bug where incorrect answers weren't added to question history, causing repeat questions
 - **January 24, 2025**: Removed Bible assist scoring functionality for simplified interface
 - **January 24, 2025**: Reorganized button layout - correct and wrong answer buttons now on same row with small history button beside them
+- **January 24, 2025**: Moved scoring buttons into the question card, right below the question content for better workflow
