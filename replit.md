@@ -152,3 +152,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added ability to edit team names during gameplay with inline editing interface including save/cancel buttons and keyboard shortcuts
 - **January 24, 2025**: Replaced modal popups with visual animations - correct answers trigger green glow/pulse effect (2s), incorrect answers trigger red glow/shake effect (1s)
 - **January 24, 2025**: Removed history button from question display interface for cleaner gameplay experience
+- **January 24, 2025**: Moved history button to bottom of page above "End Game" button for consistent accessibility
