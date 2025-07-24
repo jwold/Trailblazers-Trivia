@@ -81,7 +81,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
                     <div>
                       <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
                       <p className={textClass.replace('800', '600')} style={{ fontSize: '0.875rem' }}>
-                        {team.correctAnswers} correct answers
+                        {team.correctAnswers} correct
                       </p>
                     </div>
                   </div>
@@ -96,7 +96,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
         </CardContent>
       </Card>
       {/* Game Stats */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-gray-200 shadow-xl hidden">
         <CardContent className="p-6">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Game Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
