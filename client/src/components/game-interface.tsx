@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -30,6 +31,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [showHistory, setShowHistory] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [questionAnswered, setQuestionAnswered] = useState(false);
+  const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
+  const [editingTeamName, setEditingTeamName] = useState<string>("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -244,6 +247,31 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     });
   };
 
+  const startEditingTeamName = (teamId: string, currentName: string) => {
+    setEditingTeamId(teamId);
+    setEditingTeamName(currentName);
+  };
+
+  const saveTeamName = () => {
+    if (!gameSession || !editingTeamId || !editingTeamName.trim()) return;
+
+    const updatedTeams = gameSession.teams.map(team =>
+      team.id === editingTeamId ? { ...team, name: editingTeamName.trim() } : team
+    );
+
+    updateGameMutation.mutate({
+      teams: updatedTeams,
+    });
+
+    setEditingTeamId(null);
+    setEditingTeamName("");
+  };
+
+  const cancelEditingTeamName = () => {
+    setEditingTeamId(null);
+    setEditingTeamName("");
+  };
+
   if (isLoading || !gameSession) {
     return <div className="text-center py-8">Loading game...</div>;
   }
@@ -278,10 +306,50 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               return (
                 <div key={team.id} className={`${colorClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''}`}>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
+                    <div className="flex items-center gap-2 flex-1">
+                      {editingTeamId === team.id ? (
+                        <div className="flex items-center gap-2 flex-1">
+                          <Input
+                            value={editingTeamName}
+                            onChange={(e) => setEditingTeamName(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') saveTeamName();
+                              if (e.key === 'Escape') cancelEditingTeamName();
+                            }}
+                            className="text-lg font-bold border-2 border-gray-400 focus:border-gray-600"
+                            autoFocus
+                          />
+                          <Button
+                            onClick={saveTeamName}
+                            size="sm"
+                            className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
+                          >
+                            <Check size={14} />
+                          </Button>
+                          <Button
+                            onClick={cancelEditingTeamName}
+                            size="sm"
+                            variant="outline"
+                            className="px-2 py-1"
+                          >
+                            <X size={14} />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 flex-1">
+                          <h4 className={`font-bold ${textClass} text-lg flex-1`}>{team.name}</h4>
+                          <Button
+                            onClick={() => startEditingTeamName(team.id, team.name)}
+                            size="sm"
+                            variant="ghost"
+                            className="text-gray-500 hover:text-gray-700 p-1"
+                          >
+                            <Edit2 size={14} />
+                          </Button>
+                        </div>
+                      )}
                     </div>
-                    <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
+                    <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
                   </div>
                   <div className="mt-2">
                     <Progress value={progressWidth} className="h-3 [&>div]:bg-gray-600" />

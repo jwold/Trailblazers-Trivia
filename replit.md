@@ -149,3 +149,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Converted entire application to grayscale color scheme - all colored elements now use appropriate grayscale equivalents with proper contrast
 - **January 24, 2025**: Modified history button to only appear after the first question is answered, improving interface clarity for new games
 - **January 24, 2025**: Replaced color-based team names with biblical group names (Israelites, Levites, Judeans, etc.) that are randomly assigned to teams
+- **January 24, 2025**: Added ability to edit team names during gameplay with inline editing interface including save/cancel buttons and keyboard shortcuts
