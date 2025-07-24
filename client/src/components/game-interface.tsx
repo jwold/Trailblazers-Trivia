@@ -179,6 +179,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   };
 
   const skipQuestion = () => {
+    if (!gameSession || !currentQuestion) return;
+    
+    // Add skipped question to history to prevent it from appearing again
+    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
+    
+    updateGameMutation.mutate({
+      questionHistory: questionHistory,
+    });
+    
     nextQuestion();
   };
 

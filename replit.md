@@ -138,3 +138,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Updated button layout - Mark Correct and Bible assist buttons now each have their own full-width line
 - **January 24, 2025**: Simplified Mark Correct and Mark Wrong buttons to use only icons (checkmark and X) without text labels
 - **January 24, 2025**: Changed progress bars from team colors to dark gray for better visual consistency
+- **January 24, 2025**: Fixed skip question functionality to add skipped questions to history, preventing them from appearing again
