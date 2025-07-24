@@ -174,3 +174,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Removed all confetti animations and functionality from the entire application
 - **January 24, 2025**: Fixed team jumping animation issue by stabilizing team filtering logic during transitions and showing both current and previous teams during fade transitions
 - **January 24, 2025**: Added max-width constraint (768px) to main container for optimal display on both mobile and desktop devices
+- **January 24, 2025**: Added "How to Play" floating help button with comprehensive game rules modal covering setup, gameplay, scoring, features, and leader tips
