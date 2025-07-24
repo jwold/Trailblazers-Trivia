@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Eye, Square, History, Edit2 } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2 } from "lucide-react";
 import { type Team, type TriviaQuestion, type GameSession, type QuestionHistoryEntry } from "@shared/schema";
 import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -15,7 +15,7 @@ interface GameInterfaceProps {
   onGameEnd: () => void;
 }
 
-type GamePhase = "difficulty-selection" | "question-display" | "answer-reveal";
+type GamePhase = "difficulty-selection" | "question-display";
 type Difficulty = "Easy" | "Medium" | "Hard";
 
 const difficultyConfig = {
@@ -118,8 +118,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     if (hasWinner) {
       setTimeout(() => onGameEnd(), 2000);
-    } else {
-      revealAnswer();
     }
   };
 
@@ -152,13 +150,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       currentTeamIndex: nextTeamIndex,
       detailedHistory: JSON.stringify(detailedHistory),
     });
-    
-    revealAnswer();
   };
 
-  const revealAnswer = () => {
-    setGamePhase("answer-reveal");
-  };
+
 
   const nextQuestion = () => {
     if (!gameSession || !currentQuestion) return;
@@ -334,43 +328,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     {selectedDifficulty?.toUpperCase()} QUESTION
                   </div>
                   <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
-                  <div className="text-sm text-gray-600">{currentQuestion.reference}</div>
+                  <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+                  <div className="text-base text-gray-700 italic">Answer: {currentQuestion.answer}</div>
                 </div>
               </div>
 
               {/* Next Question Button - Always Visible */}
-              <div className="text-center">
-                <Button
-                  onClick={nextQuestion}
-                  disabled={true}
-                  className="bg-gradient-to-r from-gray-400 to-gray-500 text-white py-4 px-8 text-lg font-semibold transition-all duration-200 opacity-50 cursor-not-allowed"
-                >
-                  <SkipForward className="mr-2" size={20} />
-                  Next Question
-                </Button>
-                <p className="text-sm text-gray-500 mt-2">Mark answer as correct/incorrect first</p>
-              </div>
-
-              
-            </>
-          )}
-
-          {gamePhase === "answer-reveal" && currentQuestion && (
-            <>
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full text-lg font-semibold">
-                  <Check className="mr-2" size={20} />
-                  Correct Answer
-                </div>
-              </div>
-
-              <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200 mb-6">
-                <h4 className="text-2xl font-bold text-green-800 mb-4 text-center">{currentQuestion.answer}</h4>
-                <div className="text-center">
-                  <p className="text-green-700 mb-4">{currentQuestion.reference}</p>
-                </div>
-              </div>
-
               <div className="text-center">
                 <Button
                   onClick={nextQuestion}
@@ -379,10 +342,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <SkipForward className="mr-3" size={24} />
                   Next Question
                 </Button>
-                
               </div>
+
+              
             </>
           )}
+
+
         </CardContent>
       </Card>
 
@@ -459,7 +425,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <CardContent className="p-6">
           
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <Button
               onClick={markCorrect}
               disabled={gamePhase !== "question-display"}
@@ -483,14 +449,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               <SkipForward className="mb-2" size={20} />
               <div className="text-sm">Skip</div>
             </Button>
-            <Button
-              onClick={revealAnswer}
-              disabled={gamePhase !== "question-display"}
-              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-4 font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
-            >
-              <Eye className="mb-2" size={20} />
-              <div className="text-sm">Reveal</div>
-            </Button>
+
             <Button
               onClick={() => setShowHistory(!showHistory)}
               className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-4 font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"

@@ -119,3 +119,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Implemented random starting team selection to make games more fair
 - **January 24, 2025**: Enhanced "Next Question" button visibility with solid blue gradient, larger size, and helpful text (removed blinking animation)
 - **January 24, 2025**: Made "Next Question" button always visible (disabled/grayed during question phase, prominent during answer phase)
+- **January 24, 2025**: Removed reveal functionality - answers now always show below questions in smaller text for simplified gameplay
+- **January 24, 2025**: Streamlined game flow by eliminating separate answer-reveal phase and reveal button

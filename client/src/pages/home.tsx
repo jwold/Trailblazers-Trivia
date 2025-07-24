@@ -38,7 +38,6 @@ export default function Home() {
             <div className="flex items-center space-x-3">
               <div>
                 <h1 className="text-2xl font-bold text-gray-800">Bible Trivia Quest</h1>
-                <p className="text-sm text-gray-600">Fun Bible Games for Kids!</p>
               </div>
             </div>
             
