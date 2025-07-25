@@ -170,19 +170,31 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
         <CardContent className="p-6">
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your trivia category</h3>
           <div className="grid grid-cols-5 gap-0">
-            {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
+            {(Object.keys(gameTypeConfig) as GameType[]).map((gameType, index) => {
               const config = gameTypeConfig[gameType];
               const IconComponent = config.icon;
               const isSelected = selectedGameType === gameType;
+              const isFirst = index === 0;
+              const isLast = index === Object.keys(gameTypeConfig).length - 1;
+              
+              // Determine border radius based on position
+              let borderRadiusClasses = "";
+              if (isSelected) {
+                borderRadiusClasses = "rounded-xl";
+              } else if (isFirst) {
+                borderRadiusClasses = "rounded-l-xl";
+              } else if (isLast) {
+                borderRadiusClasses = "rounded-r-xl";
+              }
               
               return (
                 <div
                   key={gameType}
                   onClick={() => setSelectedGameType(gameType)}
-                  className={`relative flex-shrink-0 aspect-square rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
+                  className={`relative flex-shrink-0 aspect-square border-2 cursor-pointer transition-all duration-200 ${borderRadiusClasses} ${
                     isSelected 
-                      ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105` 
-                      : `bg-gray-50 border-gray-200 hover:bg-gray-100`
+                      ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 z-10 transform hover:scale-105` 
+                      : `bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105`
                   }`}
                 >
                     <div className="flex flex-col items-center justify-center h-full p-3 text-center">
@@ -195,7 +207,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                       </div>
                     </div>
                     {isSelected && (
-                      <div className="absolute top-1 right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center">
+                      <div className="absolute top-1 right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center z-20">
                         <Check size={12} className="text-white" />
                       </div>
                     )}
