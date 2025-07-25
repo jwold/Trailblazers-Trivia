@@ -97,9 +97,7 @@ export default function Home() {
               {/* Main Content */}
               <div className="relative">
                 <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">Epic Trivia Battles!</h2>
-                <p className="text-lg md:text-xl mb-4 text-gray-600 font-medium">
-                  Challenge your teams • Test Bible knowledge • Have amazing fun!
-                </p>
+                <p className="text-lg md:text-xl mb-4 text-gray-600 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
                 <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm md:text-base text-gray-600">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse"></div>
