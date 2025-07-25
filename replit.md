@@ -241,3 +241,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Updated database distribution: Animals (995), US History (980), Bible (950), Geography (540), World History (540)
 - **January 25, 2025**: Added conditional Bible reference display - references only show for Bible category questions in both game display and history
 - **January 25, 2025**: Implemented responsive category selection - desktop shows visual card grid, mobile uses dropdown for better touch experience
+- **January 25, 2025**: Optimized hero banner spacing and content for mobile visibility - reduced padding, font sizes, and removed "Mobile Friendly" feature to ensure start button is visible on most phone screens

@@ -72,7 +72,7 @@ export default function Home() {
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
         <div className="bg-gray-200 relative overflow-hidden border-b-2 border-gray-300">
-          <div className="container mx-auto px-4 py-12 max-w-3xl relative z-10">
+          <div className="container mx-auto px-4 py-6 max-w-3xl relative z-10">
             <div className="text-center">
               {/* Floating Bible Icons */}
               <div className="absolute top-4 left-8 opacity-30 animate-bounce">
@@ -90,33 +90,29 @@ export default function Home() {
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">
                   🎯 Epic Bible Trivia Battles! 
                 </h2>
-                <p className="text-xl md:text-2xl mb-6 text-gray-600 font-medium">
+                <p className="text-lg md:text-xl mb-4 text-gray-600 font-medium">
                   Challenge your teams • Test Bible knowledge • Have amazing fun!
                 </p>
-                <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base text-gray-600">
+                <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm md:text-base text-gray-600">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse"></div>
                     <span>Up to 10 Teams</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse delay-200"></div>
-                    <span>450+ Questions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse delay-400"></div>
-                    <span>Mobile Friendly</span>
+                    <span>4,000+ Questions</span>
                   </div>
                 </div>
                 
                 {/* Call to Action */}
                 <Button
                   onClick={() => setShowRules(true)}
-                  className="bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 font-bold py-3 px-8 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-300"
+                  className="bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 font-bold py-2 px-6 text-base rounded-full shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-300"
                 >
-                  <HelpCircle className="mr-2" size={20} />
+                  <HelpCircle className="mr-2" size={18} />
                   See How It Works!
                 </Button>
               </div>
