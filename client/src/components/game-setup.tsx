@@ -464,7 +464,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           <Button
             onClick={handleStartGame}
             disabled={createGameMutation.isPending}
-            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 text-2xl font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400"
+            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400 text-[30px] pt-[32px] pb-[32px]"
           >
             {createGameMutation.isPending ? (
               "Creating Game..."
