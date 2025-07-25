@@ -211,3 +211,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Simplified team cards in Teams & Scores section with compact styling (smaller padding, text, and borders) since banner now clearly indicates whose turn it is
 - **January 25, 2025**: Completely minimized team display to simple text lines with no backgrounds, borders, or cards - maximum focus on main game actions while keeping clean score tracking
 - **January 25, 2025**: Fixed team glow animations to clear immediately when moving to next question, preventing lingering animation states
+- **January 25, 2025**: Added swipeable game category selection with 5 categories (Bible, Animals, US History, World History, Geography) featuring square cards with icons, descriptions, and visual selection states - Bible selected by default

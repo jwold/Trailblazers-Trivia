@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Book, Globe, MapPin, Heart, Landmark } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -18,10 +18,54 @@ interface GameInterfaceProps {
 
 type GamePhase = "difficulty-selection" | "question-display";
 type Difficulty = "Easy" | "Hard";
+type GameType = "Bible" | "Animals" | "US History" | "World History" | "Geography";
 
 const difficultyConfig = {
   Easy: { points: 1, bibleAssistPoints: 0.5, color: "gray", bgColor: "bg-gray-600", hoverColor: "hover:bg-gray-700" },
   Hard: { points: 3, bibleAssistPoints: 1, color: "gray", bgColor: "bg-gray-800", hoverColor: "hover:bg-gray-900" },
+};
+
+const gameTypeConfig = {
+  Bible: {
+    label: "Bible",
+    icon: Book,
+    description: "Biblical knowledge and stories",
+    bgColor: "bg-gradient-to-br from-blue-100 to-purple-100",
+    borderColor: "border-blue-200",
+    iconColor: "text-blue-600"
+  },
+  Animals: {
+    label: "Animals",
+    icon: Heart,
+    description: "Wildlife and nature facts",
+    bgColor: "bg-gradient-to-br from-green-100 to-emerald-100",
+    borderColor: "border-green-200",
+    iconColor: "text-green-600"
+  },
+  "US History": {
+    label: "US History",
+    icon: Landmark,
+    description: "American historical events",
+    bgColor: "bg-gradient-to-br from-red-100 to-orange-100",
+    borderColor: "border-red-200",
+    iconColor: "text-red-600"
+  },
+  "World History": {
+    label: "World History",
+    icon: Globe,
+    description: "Global historical events",
+    bgColor: "bg-gradient-to-br from-yellow-100 to-amber-100",
+    borderColor: "border-yellow-200",
+    iconColor: "text-yellow-600"
+  },
+  Geography: {
+    label: "Geography",
+    icon: MapPin,
+    description: "Countries, capitals & landmarks",
+    bgColor: "bg-gradient-to-br from-cyan-100 to-blue-100",
+    borderColor: "border-cyan-200",
+    iconColor: "text-cyan-600"
+  }
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
@@ -37,6 +81,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamsExpanded, setTeamsExpanded] = useState(false);
   const [teamTransitioning, setTeamTransitioning] = useState(false);
   const [answerVisible, setAnswerVisible] = useState(false);
+  const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const prevTeamIndexRef = useRef<number | null>(null);
@@ -341,7 +386,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               </h3>
               <p className="text-lg text-gray-600 font-medium">
                 {gamePhase === "difficulty-selection" 
-                  ? "Choose your question difficulty • Test your Bible knowledge" 
+                  ? `Choose your question difficulty • ${gameTypeConfig[selectedGameType]?.description || 'Test your knowledge'}` 
                   : `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'} is answering the question.`
                 }
               </p>
@@ -365,6 +410,54 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       </div>
 
 
+
+      {/* Game Type Selection Cards */}
+      {gamePhase === "difficulty-selection" && (
+        <div className="mb-6">
+          <h4 className="text-lg font-semibold text-gray-800 mb-4 text-center">Choose game category</h4>
+          <div className="overflow-x-auto pb-4">
+            <div className="flex gap-4 px-2" style={{ minWidth: 'max-content' }}>
+              {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
+                const config = gameTypeConfig[gameType];
+                const IconComponent = config.icon;
+                const isSelected = selectedGameType === gameType;
+                
+                return (
+                  <div
+                    key={gameType}
+                    onClick={() => setSelectedGameType(gameType)}
+                    className={`relative flex-shrink-0 w-32 h-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
+                      isSelected 
+                        ? `${config.bgColor} ${config.borderColor} ring-4 ring-gray-300 shadow-lg scale-105` 
+                        : `bg-gray-50 border-gray-200 hover:bg-gray-100`
+                    }`}
+                  >
+                    <div className="flex flex-col items-center justify-center h-full p-3 text-center">
+                      <IconComponent 
+                        size={32} 
+                        className={`mb-2 ${isSelected ? config.iconColor : 'text-gray-400'}`} 
+                      />
+                      <div className={`text-sm font-semibold ${isSelected ? 'text-gray-800' : 'text-gray-600'}`}>
+                        {config.label}
+                      </div>
+                      {isSelected && (
+                        <div className="text-xs text-gray-600 mt-1 leading-tight">
+                          {config.description}
+                        </div>
+                      )}
+                    </div>
+                    {isSelected && (
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center">
+                        <Check size={14} className="text-white" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Question Display */}
       {gamePhase === "difficulty-selection" && (
