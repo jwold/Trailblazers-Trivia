@@ -197,3 +197,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Reorganized team setup header layout - moved "Choose your team names" to left side and "Add Team" button to right side with ghost styling instead of background colors
 - **January 25, 2025**: Removed sticky positioning from header to allow natural scrolling behavior
 - **January 25, 2025**: Updated "Add Team" button text to "+ Team" and reduced spacing between plus icon and label
+- **January 25, 2025**: Made game phase banner always visible during gameplay with dynamic content - shows "Choose your question difficulty" during difficulty selection and "[Team] is answering the question" during question display phase
