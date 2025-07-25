@@ -23,6 +23,7 @@ export const gameSession = pgTable("game_sessions", {
   teams: text("teams").notNull(), // JSON string
   currentTeamIndex: integer("current_team_index").default(0),
   targetScore: integer("target_score").default(10),
+  category: varchar("category", { length: 20 }).notNull().default("bible"),
 
   questionHistory: text("question_history").default("[]"), // JSON string of used question IDs
   detailedHistory: text("detailed_history").default("[]"), // JSON string of detailed question history

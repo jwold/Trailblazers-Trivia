@@ -3,12 +3,57 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
-import { Users, Plus, Minus, X } from "lucide-react";
+import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { type Team, type GameSetup as GameSetupType } from "@shared/schema";
 import { nanoid } from "nanoid";
+
+type GameType = "Bible" | "Animals" | "US History" | "World History" | "Geography";
+
+const gameTypeConfig = {
+  "Bible": {
+    icon: BookOpen,
+    label: "Bible",
+    description: "Test your biblical knowledge",
+    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
+    borderColor: "border-gray-400",
+    iconColor: "text-gray-700"
+  },
+  "Animals": {
+    icon: Cat,
+    label: "Animals",
+    description: "Explore the animal kingdom",
+    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
+    borderColor: "border-gray-400",
+    iconColor: "text-gray-700"
+  },
+  "US History": {
+    icon: Flag,
+    label: "US History",
+    description: "American historical events",
+    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
+    borderColor: "border-gray-400",
+    iconColor: "text-gray-700"
+  },
+  "World History": {
+    icon: Globe,
+    label: "World History",
+    description: "Global historical knowledge",
+    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
+    borderColor: "border-gray-400",
+    iconColor: "text-gray-700"
+  },
+  "Geography": {
+    icon: MapPin,
+    label: "Geography",
+    description: "World places and landmarks",
+    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
+    borderColor: "border-gray-400",
+    iconColor: "text-gray-700"
+  }
+};
 
 interface GameSetupProps {
   onGameStart: (gameCode: string) => void;
@@ -49,11 +94,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     { id: nanoid(), name: availableNames[1], color: "green", score: 0, correctAnswers: 0 },
   ]);
   const [targetScore, setTargetScore] = useState(10);
+  const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
 
   const { toast } = useToast();
 
   const createGameMutation = useMutation({
-    mutationFn: async (gameData: GameSetupType) => {
+    mutationFn: async (gameData: GameSetupType & { category: string }) => {
       const response = await apiRequest("POST", "/api/games", gameData);
       return response.json();
     },
@@ -109,15 +155,61 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       return;
     }
 
+    const categoryParam = selectedGameType.toLowerCase().replace(/\s+/g, '_');
     createGameMutation.mutate({
       teams: teams,
       targetScore,
+      category: categoryParam,
     });
   };
 
   return (
     <div className="space-y-6">
-      
+      {/* Game Category Selection */}
+      <Card className="border-4 border-gray-200 shadow-xl">
+        <CardContent className="p-6">
+          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your trivia category</h3>
+          <div className="overflow-x-auto pb-4">
+            <div className="flex gap-4 justify-center" style={{ minWidth: 'max-content' }}>
+              {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
+                const config = gameTypeConfig[gameType];
+                const IconComponent = config.icon;
+                const isSelected = selectedGameType === gameType;
+                
+                return (
+                  <div
+                    key={gameType}
+                    onClick={() => setSelectedGameType(gameType)}
+                    className={`relative flex-shrink-0 w-32 h-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
+                      isSelected 
+                        ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105` 
+                        : `bg-gray-50 border-gray-200 hover:bg-gray-100`
+                    }`}
+                  >
+                    <div className="flex flex-col items-center justify-center h-full p-3 text-center">
+                      <IconComponent 
+                        size={32} 
+                        className={`mb-2 ${isSelected ? config.iconColor : 'text-gray-400'}`} 
+                      />
+                      <div className={`text-sm font-semibold ${isSelected ? 'text-gray-800' : 'text-gray-600'}`}>
+                        {config.label}
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <div className="absolute top-1 right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center">
+                        <Check size={12} className="text-white" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <p className="text-center text-gray-600 text-sm mt-2">
+            {gameTypeConfig[selectedGameType].description}
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Team Setup Card */}
       <Card className="border-4 border-gray-200 shadow-xl">
