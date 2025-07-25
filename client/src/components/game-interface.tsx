@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Volume2 } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -44,6 +44,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamTransitioning, setTeamTransitioning] = useState(false);
   const [answerVisible, setAnswerVisible] = useState(false);
   const [questionBlurred, setQuestionBlurred] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -83,6 +84,25 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     prevTeamIndexRef.current = currentTeamIndex;
   }, [gameSession?.currentTeamIndex, teamsExpanded]);
+
+  // Stop speech when question changes or component unmounts
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      setIsSpeaking(false);
+    };
+  }, [currentQuestion]);
+
+  // Stop speech on component unmount
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const fetchQuestionMutation = useMutation({
     mutationFn: async (difficulty: Difficulty) => {
@@ -133,7 +153,40 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     },
   });
 
-
+  const readQuestion = () => {
+    if (!currentQuestion || !('speechSynthesis' in window)) return;
+    
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+    
+    if (isSpeaking) {
+      setIsSpeaking(false);
+      return;
+    }
+    
+    // Create speech text
+    let textToRead = currentQuestion.question;
+    
+    // Add Bible reference for Bible category questions
+    if (gameSession?.category === 'bible' && currentQuestion.reference) {
+      textToRead += `. Reference: ${currentQuestion.reference}`;
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    
+    // Configure speech settings
+    utterance.rate = 0.9; // Slightly slower for better comprehension
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    // Handle speech events
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    
+    // Start speaking
+    window.speechSynthesis.speak(utterance);
+  };
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
@@ -522,6 +575,22 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   >
                     {currentQuestion.question}
                   </h4>
+                  
+                  {/* Text-to-Speech Button */}
+                  {!questionBlurred && 'speechSynthesis' in window && (
+                    <div className="flex justify-center mb-3">
+                      <Button
+                        onClick={readQuestion}
+                        className={`bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 text-sm font-medium flex items-center gap-2 transition-all duration-200 ${
+                          isSpeaking ? 'animate-pulse' : ''
+                        }`}
+                      >
+                        <Volume2 size={16} />
+                        {isSpeaking ? 'Speaking...' : 'Read Question'}
+                      </Button>
+                    </div>
+                  )}
+                  
                   {gameSession?.category === 'bible' && currentQuestion.reference && (
                     <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
                   )}
