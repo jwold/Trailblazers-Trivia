@@ -203,9 +203,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 );
               })}
           </div>
-          <p className="text-center text-gray-600 text-sm mt-2">
-            {gameTypeConfig[selectedGameType].description}
-          </p>
         </CardContent>
       </Card>
 
