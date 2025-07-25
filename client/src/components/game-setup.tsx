@@ -270,58 +270,39 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
             <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your game mode</h3>
             
             <div className="mb-8">
-              <div className="flex items-center gap-3">
-                <div className="flex-1">
-                  <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
-                    <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
-                      <SelectValue>
-                        <div className="flex items-center gap-3">
-                          {gameMode === "regular" ? (
-                            <>
-                              <Gamepad2 size={24} className="text-gray-700" />
-                              <span className="text-lg font-semibold">Regular</span>
-                            </>
-                          ) : (
-                            <>
-                              <Volume2 size={24} className="text-gray-700" />
-                              <span className="text-lg font-semibold">Shoutout</span>
-                            </>
-                          )}
-                        </div>
-                      </SelectValue>
-                    </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="regular">
-                      <div className="flex items-center gap-3">
-                        <Gamepad2 size={20} className="text-gray-700" />
-                        <span className="font-semibold">Regular</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="shoutout">
-                      <div className="flex items-center gap-3">
-                        <Volume2 size={20} className="text-gray-700" />
-                        <span className="font-semibold">Shoutout</span>
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                  </Select>
-                </div>
-                
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-8 h-8 p-0 text-gray-400 hover:text-gray-600 flex-shrink-0"
-                  onClick={() => {
-                    if (gameMode === "regular") {
-                      setShowRegularModal(true);
-                    } else {
-                      setShowShoutoutModal(true);
-                    }
-                  }}
-                >
-                  <Info size={16} />
-                </Button>
-              </div>
+              <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
+                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+                  <SelectValue>
+                    <div className="flex items-center gap-3">
+                      {gameMode === "regular" ? (
+                        <>
+                          <Gamepad2 size={24} className="text-gray-700" />
+                          <span className="text-lg font-semibold">Regular</span>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 size={24} className="text-gray-700" />
+                          <span className="text-lg font-semibold">Shoutout</span>
+                        </>
+                      )}
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="regular">
+                    <div className="flex items-center gap-3">
+                      <Gamepad2 size={20} className="text-gray-700" />
+                      <span className="font-semibold">Regular</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="shoutout">
+                    <div className="flex items-center gap-3">
+                      <Volume2 size={20} className="text-gray-700" />
+                      <span className="font-semibold">Shoutout</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
             {/* Modal Dialogs */}
