@@ -524,7 +524,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   const transitionClass = '';
                   
                   return (
-                    <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
+                    <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-3 rounded-lg border ${index === gameSession.currentTeamIndex ? 'ring-2 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 flex-1">
                           {editingTeamId === team.id ? (
@@ -536,7 +536,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                                   if (e.key === 'Enter') saveTeamName();
                                   if (e.key === 'Escape') cancelEditingTeamName();
                                 }}
-                                className="text-lg font-bold border-2 border-gray-400 focus:border-gray-600"
+                                className="text-sm font-semibold border border-gray-400 focus:border-gray-600"
                                 autoFocus
                               />
                               <Button
@@ -544,31 +544,31 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                                 size="sm"
                                 className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
                               >
-                                <Check size={14} />
+                                <Check size={12} />
                               </Button>
                               <Button
                                 onClick={cancelEditingTeamName}
                                 size="sm"
                                 className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1"
                               >
-                                <X size={14} className="text-gray-700" />
+                                <X size={12} className="text-gray-700" />
                               </Button>
                             </div>
                           ) : (
                             <div className="flex items-center gap-2 flex-1">
-                              <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
+                              <h4 className={`font-semibold ${textClass} text-sm`}>{team.name}</h4>
                               <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600 flex-1 hidden" />
                               <Button
                                 onClick={() => startEditingTeamName(team.id, team.name)}
                                 size="sm"
                                 className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
                               >
-                                <Edit2 size={14} className="text-gray-700" />
+                                <Edit2 size={12} className="text-gray-700" />
                               </Button>
                             </div>
                           )}
                         </div>
-                        <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
+                        <div className={`text-xl font-bold ${textClass} ml-2`}>{team.score}</div>
                       </div>
                     </div>
                   );

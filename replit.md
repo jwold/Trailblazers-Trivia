@@ -203,3 +203,9 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Updated scoring buttons to use 30px font size, simplified labels to "Correct" and "Wrong", and removed check/X icons for cleaner interface
 - **January 25, 2025**: Combined Score Display and Question History into unified "Game Status" card with tabbed interface - "Teams & Scores" and "History" tabs with question count indicator
 - **January 25, 2025**: Modified History tab to always be visible even when no questions are answered yet, showing question count only when history exists
+- **January 25, 2025**: Updated all banner backgrounds from gray-100 to gray-200 for slightly better visual definition while maintaining light appearance
+- **January 25, 2025**: Redesigned tab navigation with clean underline indicators instead of button-style tabs, following modern design patterns
+- **January 25, 2025**: Standardized button sizing across interface - New Game and Next Question buttons now match Easy/Hard difficulty button dimensions (py-8 px-8 text-xl font-semibold)
+- **January 25, 2025**: Removed icons from New Game and Next Question buttons for cleaner interface aesthetic
+- **January 25, 2025**: Converted all banners from dark gradients to light gray backgrounds (bg-gray-200) with dark text for better visual hierarchy - banners no longer compete with main CTA buttons
+- **January 25, 2025**: Simplified team cards in Teams & Scores section with compact styling (smaller padding, text, and borders) since banner now clearly indicates whose turn it is
