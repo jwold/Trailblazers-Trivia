@@ -130,8 +130,8 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 variant="ghost"
                 className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
               >
-                <Plus className="mr-2" size={20} />
-                Add Team
+                <Plus className="mr-1" size={20} />
+                Team
               </Button>
             )}
           </div>
