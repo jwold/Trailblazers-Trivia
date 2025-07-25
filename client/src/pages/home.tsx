@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-4 border-gray-300 sticky top-0 z-50">
+      <header className="bg-white shadow-lg border-b-4 border-gray-300">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
