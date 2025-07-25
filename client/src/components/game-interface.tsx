@@ -43,6 +43,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamsExpanded, setTeamsExpanded] = useState(false);
   const [teamTransitioning, setTeamTransitioning] = useState(false);
   const [answerVisible, setAnswerVisible] = useState(false);
+  const [questionBlurred, setQuestionBlurred] = useState(true);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -108,6 +109,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       }
       setQuestionAnswered(false);
       setAnswerVisible(false);
+      setQuestionBlurred(true); // Reset blur for new questions
       setLastSelectedDifficulty(variables);
       // Clear any lingering animations when a new question loads
       setTeamAnimations({});
@@ -153,6 +155,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     if (targetQuestion) {
       setCurrentQuestion(targetQuestion);
       setAnswerVisible(false); // Reset answer visibility when switching
+      setQuestionBlurred(true); // Reset blur when switching questions
     } else {
       fetchQuestionMutation.mutate(difficulty);
     }
@@ -268,6 +271,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setSelectedDifficulty(lastSelectedDifficulty);
     setQuestionAnswered(false);
     setAnswerVisible(false);
+    setQuestionBlurred(true);
     // Clear any remaining team animations
     setTeamAnimations({});
     
@@ -392,12 +396,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">
                 🎮 {gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'}'s Turn
               </h3>
-              <p className="text-lg text-gray-600 font-medium">
-                {gamePhase === "difficulty-selection" 
-                  ? `Choose your question difficulty • ${gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia` 
-                  : `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'} is answering the question.`
-                }
-              </p>
+              
             </div>
           </div>
         </div>
@@ -467,7 +466,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div className="text-sm font-semibold text-gray-600 mb-2">
                     {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia
                   </div>
-                  <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
+                  <h4 
+                    className={`text-2xl font-bold text-gray-800 mb-4 transition-all duration-300 cursor-pointer select-none ${
+                      questionBlurred ? 'blur-md' : ''
+                    }`}
+                    onClick={() => setQuestionBlurred(false)}
+                  >
+                    {currentQuestion.question}
+                  </h4>
                   {gameSession?.category === 'bible' && currentQuestion.reference && (
                     <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
                   )}
