@@ -38,13 +38,13 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
   return (
     <div className="space-y-6">
       {/* Winner Announcement */}
-      <Card className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 text-white border-4 border-gray-200 shadow-xl">
+      <Card className="bg-gray-100 border-4 border-gray-200 shadow-xl">
         <CardContent className="p-8 text-center">
           <div className="bounce-slow mb-4">
-            <Crown className="mx-auto" size={64} />
+            <Crown className="mx-auto text-gray-600" size={64} />
           </div>
-          <h2 className="text-4xl font-bold mb-4">🎉 Yay! 🎉</h2>
-          <h3 className="text-2xl font-semibold mb-2">{winningTeam.name}</h3>
+          <h2 className="text-4xl font-bold mb-4 text-gray-800">🎉 Yay! 🎉</h2>
+          <h3 className="text-2xl font-semibold mb-2 text-gray-700">{winningTeam.name}</h3>
         </CardContent>
       </Card>
       {/* Final Scoreboard */}

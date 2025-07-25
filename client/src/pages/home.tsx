@@ -71,42 +71,42 @@ export default function Home() {
       </header>
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
-        <div className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 relative overflow-hidden">
+        <div className="bg-gray-100 relative overflow-hidden border-b-2 border-gray-200">
           <div className="container mx-auto px-4 py-12 max-w-3xl relative z-10">
-            <div className="text-center text-white">
+            <div className="text-center">
               {/* Floating Bible Icons */}
-              <div className="absolute top-4 left-8 opacity-20 animate-bounce">
-                <BookOpen size={32} className="transform rotate-12" />
+              <div className="absolute top-4 left-8 opacity-30 animate-bounce">
+                <BookOpen size={32} className="transform rotate-12 text-gray-500" />
               </div>
-              <div className="absolute top-8 right-12 opacity-20 animate-bounce delay-300">
-                <BookOpen size={24} className="transform -rotate-12" />
+              <div className="absolute top-8 right-12 opacity-30 animate-bounce delay-300">
+                <BookOpen size={24} className="transform -rotate-12 text-gray-500" />
               </div>
-              <div className="absolute bottom-6 left-16 opacity-20 animate-bounce delay-500">
-                <BookOpen size={28} className="transform rotate-6" />
+              <div className="absolute bottom-6 left-16 opacity-30 animate-bounce delay-500">
+                <BookOpen size={28} className="transform rotate-6 text-gray-500" />
               </div>
-              <div className="absolute bottom-4 right-8 opacity-20 animate-bounce delay-700">
-                <BookOpen size={20} className="transform -rotate-6" />
+              <div className="absolute bottom-4 right-8 opacity-30 animate-bounce delay-700">
+                <BookOpen size={20} className="transform -rotate-6 text-gray-500" />
               </div>
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
                   🎯 Epic Bible Trivia Battles! 
                 </h2>
-                <p className="text-xl md:text-2xl mb-6 text-gray-200 font-medium">
+                <p className="text-xl md:text-2xl mb-6 text-gray-600 font-medium">
                   Challenge your teams • Test Bible knowledge • Have amazing fun!
                 </p>
-                <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base">
+                <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base text-gray-600">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse"></div>
                     <span>Up to 10 Teams</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse delay-200"></div>
+                    <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse delay-200"></div>
                     <span>450+ Questions</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse delay-400"></div>
+                    <div className="w-3 h-3 bg-gray-600 rounded-full animate-pulse delay-400"></div>
                     <span>Mobile Friendly</span>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ export default function Home() {
                 {/* Call to Action */}
                 <Button
                   onClick={() => setShowRules(true)}
-                  className="bg-gradient-to-r from-white to-gray-100 text-gray-800 hover:from-gray-100 hover:to-gray-200 font-bold py-3 px-8 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20"
+                  className="bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 font-bold py-3 px-8 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-300"
                 >
                   <HelpCircle className="mr-2" size={20} />
                   See How It Works!
@@ -129,7 +129,7 @@ export default function Home() {
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 <defs>
                   <pattern id="crosses" patternUnits="userSpaceOnUse" width="20" height="20">
-                    <path d="M10 5 L10 15 M5 10 L15 10" stroke="white" strokeWidth="0.5" fill="none"/>
+                    <path d="M10 5 L10 15 M5 10 L15 10" stroke="gray" strokeWidth="0.5" fill="none"/>
                   </pattern>
                 </defs>
                 <rect width="100" height="100" fill="url(#crosses)" />

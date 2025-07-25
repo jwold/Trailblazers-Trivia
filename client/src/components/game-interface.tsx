@@ -321,23 +321,23 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   return (
     <div className="space-y-6">
       {/* Game Phase Banner - Always visible */}
-      <div className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 relative overflow-hidden mb-6 rounded-xl">
+      <div className="bg-gray-100 relative overflow-hidden mb-6 rounded-xl border-2 border-gray-200">
         <div className="px-6 py-8 relative z-10">
-          <div className="text-center text-white">
+          <div className="text-center">
             {/* Floating Icons */}
-            <div className="absolute top-2 left-4 opacity-20 animate-bounce">
-              <Gamepad2 size={20} className="transform rotate-12" />
+            <div className="absolute top-2 left-4 opacity-30 animate-bounce">
+              <Gamepad2 size={20} className="transform rotate-12 text-gray-500" />
             </div>
-            <div className="absolute top-3 right-6 opacity-20 animate-bounce delay-300">
-              <Users size={18} className="transform -rotate-12" />
+            <div className="absolute top-3 right-6 opacity-30 animate-bounce delay-300">
+              <Users size={18} className="transform -rotate-12 text-gray-500" />
             </div>
             
             {/* Main Content */}
             <div className="relative">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">
                 🎮 {gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'}'s Turn
               </h3>
-              <p className="text-lg text-gray-200 font-medium">
+              <p className="text-lg text-gray-600 font-medium">
                 {gamePhase === "difficulty-selection" 
                   ? "Choose your question difficulty • Test your Bible knowledge" 
                   : `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'} is answering the question.`
@@ -353,7 +353,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <svg viewBox="0 0 100 100" className="w-full h-full">
               <defs>
                 <pattern id="dots" patternUnits="userSpaceOnUse" width="10" height="10">
-                  <circle cx="5" cy="5" r="1" fill="white"/>
+                  <circle cx="5" cy="5" r="1" fill="gray"/>
                 </pattern>
               </defs>
               <rect width="100" height="100" fill="url(#dots)" />
