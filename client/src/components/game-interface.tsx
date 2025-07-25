@@ -404,15 +404,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             })}
           </div>
           
-          {/* Expand/Collapse Teams Button */}
-          <div className="text-center mt-4">
-            <Button
-              onClick={() => setTeamsExpanded(!teamsExpanded)}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
-            >
-              {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
-            </Button>
-          </div>
+          {/* Expand/Collapse Teams Button - Only show if 3+ teams */}
+          {teams.length >= 3 && (
+            <div className="text-center mt-4">
+              <Button
+                onClick={() => setTeamsExpanded(!teamsExpanded)}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
+              >
+                {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
 
