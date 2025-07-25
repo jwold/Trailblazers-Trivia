@@ -177,21 +177,28 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               const isFirst = index === 0;
               const isLast = index === Object.keys(gameTypeConfig).length - 1;
               
-              // Determine border radius based on position
+              // Determine border radius and border classes based on position
               let borderRadiusClasses = "";
+              let borderClasses = "";
+              
               if (isSelected) {
                 borderRadiusClasses = "rounded-xl";
+                borderClasses = "border-2";
               } else if (isFirst) {
                 borderRadiusClasses = "rounded-l-xl";
+                borderClasses = "border-2 border-r-0";
               } else if (isLast) {
                 borderRadiusClasses = "rounded-r-xl";
+                borderClasses = "border-2 border-l-0";
+              } else {
+                borderClasses = "border-t-2 border-b-2";
               }
               
               return (
                 <div
                   key={gameType}
                   onClick={() => setSelectedGameType(gameType)}
-                  className={`relative flex-shrink-0 aspect-square border-2 cursor-pointer transition-all duration-200 ${borderRadiusClasses} ${
+                  className={`relative flex-shrink-0 aspect-square cursor-pointer transition-all duration-200 ${borderRadiusClasses} ${borderClasses} ${
                     isSelected 
                       ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 z-10 transform hover:scale-105` 
                       : `bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105`
