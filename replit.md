@@ -213,3 +213,6 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Fixed team glow animations to clear immediately when moving to next question, preventing lingering animation states
 - **January 25, 2025**: Added swipeable game category selection with 5 categories (Bible, Animals, US History, World History, Geography) featuring square cards with icons and visual selection states - Bible selected by default
 - **January 25, 2025**: Simplified game category cards to uniform 128x128px size with icons and labels only, removing descriptions for cleaner interface
+- **January 25, 2025**: Implemented single-table multi-category database system with category column added to trivia_questions table
+- **January 25, 2025**: Updated backend API to filter questions by category and difficulty using query parameters
+- **January 25, 2025**: Expanded question database to include all categories: Bible (450), Animals (30), US History (30), World History (30), Geography (30) for total of 570 questions
