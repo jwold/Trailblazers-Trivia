@@ -214,9 +214,28 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     if (hasWinner) {
       setTimeout(() => onGameEnd(), 2000);
+      return;
     }
     
-    setQuestionAnswered(true);
+    // Auto-advance to next question
+    setTimeout(() => {
+      setQuestionNumber(prev => prev + 1);
+      setGamePhase("question-display");
+      setCurrentQuestion(null);
+      setEasyQuestion(null);
+      setHardQuestion(null);
+      setSelectedDifficulty(lastSelectedDifficulty);
+      setQuestionAnswered(false);
+      setAnswerVisible(false);
+      setQuestionBlurred(true);
+      setTeamAnimations({});
+      
+      // Auto-load new questions
+      setTimeout(() => {
+        fetchQuestionMutation.mutate("Easy");
+        fetchQuestionMutation.mutate("Hard");
+      }, 100);
+    }, 1000);
   };
 
   const markIncorrect = () => {
@@ -253,7 +272,25 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       detailedHistory: detailedHistory,
     });
     
-    setQuestionAnswered(true);
+    // Auto-advance to next question
+    setTimeout(() => {
+      setQuestionNumber(prev => prev + 1);
+      setGamePhase("question-display");
+      setCurrentQuestion(null);
+      setEasyQuestion(null);
+      setHardQuestion(null);
+      setSelectedDifficulty(lastSelectedDifficulty);
+      setQuestionAnswered(false);
+      setAnswerVisible(false);
+      setQuestionBlurred(true);
+      setTeamAnimations({});
+      
+      // Auto-load new questions
+      setTimeout(() => {
+        fetchQuestionMutation.mutate("Easy");
+        fetchQuestionMutation.mutate("Hard");
+      }, 100);
+    }, 1000);
   };
 
 
