@@ -92,7 +92,7 @@ export default function Home() {
               <div>
                 <h3 className="font-semibold text-gray-800 mb-2">Game Setup</h3>
                 <ul className="list-disc list-inside space-y-1 text-sm">
-                  <li>Create 2-6 teams with unique names</li>
+                  <li>Create 2-10 teams with unique names</li>
                   <li>Set a target score between 10-50 points</li>
                   <li>Teams are automatically assigned biblical names</li>
                   <li>The game randomly selects which team goes first</li>

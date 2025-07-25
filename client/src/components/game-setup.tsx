@@ -16,7 +16,7 @@ interface GameSetupProps {
 
 const biblicalNames = [
   "Israelites", "Levites", "Judeans", "Benjamites", "Ephraimites", "Shunammites",
-  "Rechabites", "Ninevites", "Persians", "Cretans", "Romans", "Greeks"
+  "Rechabites", "Ninevites", "Persians", "Cretans", "Romans", "Greeks", "Egyptians", "Philistines"
 ];
 
 const teamColors = [
@@ -26,6 +26,10 @@ const teamColors = [
   { name: "red", class: "bg-gray-700", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "purple", class: "bg-gray-800", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "orange", class: "bg-gray-600", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "teal", class: "bg-gray-500", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "pink", class: "bg-gray-400", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
+  { name: "indigo", class: "bg-gray-700", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "cyan", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
 ];
 
 export default function GameSetup({ onGameStart }: GameSetupProps) {
@@ -149,7 +153,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           </div>
 
           {/* Add Team Button */}
-          {teams.length < 6 && (
+          {teams.length < 10 && (
             <div className="text-center mb-6">
               <Button
                 onClick={addTeam}
