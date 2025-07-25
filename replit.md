@@ -258,3 +258,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added "Resume Game" button in header (top right, left of help button) when user clicks logo during active game
 - **January 25, 2025**: Removed "Which animal can carry heavy loads?" question from database - animals category now has 987 questions
 - **January 25, 2025**: Removed "What is the only animal that can't get cancer?" question from database - animals category now has 986 questions
+- **January 25, 2025**: Removed 4 problematic animal questions (bushy tail, live 50+ years, survive freezing) - animals category now has 982 questions
