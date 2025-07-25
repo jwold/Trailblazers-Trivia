@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Info } from "lucide-react";
+import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Info, HelpCircle, Mail } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -104,6 +104,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   const [gameMode, setGameMode] = useState<"regular" | "shoutout">("regular");
   const [showRegularModal, setShowRegularModal] = useState(false);
   const [showShoutoutModal, setShowShoutoutModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
   
   // Shuffle names for random assignment based on category
   const getShuffledNames = (category: GameType) => {
@@ -229,6 +230,19 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
       {/* Combined Game Setup Card */}
       <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
+          {/* Header with Help Button */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Bible Trivia Quest</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-500 hover:text-gray-700"
+              onClick={() => setShowHelpModal(true)}
+            >
+              <HelpCircle size={20} />
+              <span className="ml-1">Help</span>
+            </Button>
+          </div>
           {/* Game Category Selection */}
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your trivia category</h3>
           
@@ -351,6 +365,49 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                       <li>• Quick reactions and fast thinking</li>
                       <li>• Perfect for energetic groups</li>
                     </ul>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            {/* Help Modal */}
+            <Dialog open={showHelpModal} onOpenChange={setShowHelpModal}>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <HelpCircle size={20} />
+                    Help & Support
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <h4 className="font-semibold text-blue-800 mb-2">How to Play</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• Pick category, mode, teams & target score</li>
+                      <li>• Teams take turns answering questions</li>
+                      <li>• First to target score wins!</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                    <h4 className="font-semibold text-gray-800 mb-2">Game Modes</h4>
+                    <div className="text-sm text-gray-700 space-y-1">
+                      <div><strong>Regular:</strong> Teams take turns</div>
+                      <div><strong>Shoutout:</strong> All teams compete at once</div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Mail size={16} className="text-green-700" />
+                      <span className="text-green-700">Contact: </span>
+                      <a 
+                        href="mailto:joshua@joshuawold.com" 
+                        className="text-green-800 hover:text-green-900 font-medium"
+                      >
+                        joshua@joshuawold.com
+                      </a>
+                    </div>
                   </div>
                 </div>
               </DialogContent>
