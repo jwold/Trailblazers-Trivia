@@ -14,6 +14,7 @@ export const triviaQuestions = pgTable("trivia_questions", {
   question: text("question").notNull(),
   answer: text("answer").notNull(),
   reference: text("reference").notNull(),
+  category: varchar("category", { length: 20 }).notNull().default("bible"),
 });
 
 export const gameSession = pgTable("game_sessions", {

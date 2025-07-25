@@ -1,6 +1,6 @@
 import { users, triviaQuestions, gameSession, type User, type InsertUser, type TriviaQuestion, type InsertTriviaQuestion, type GameSession, type InsertGameSession, type Team } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -10,7 +10,8 @@ export interface IStorage {
   // Trivia Questions
   getAllQuestions(): Promise<TriviaQuestion[]>;
   getQuestionsByDifficulty(difficulty: string): Promise<TriviaQuestion[]>;
-  getRandomQuestion(difficulty: string, excludeIds: number[]): Promise<TriviaQuestion | undefined>;
+  getQuestionsByDifficultyAndCategory(difficulty: string, category: string): Promise<TriviaQuestion[]>;
+  getRandomQuestion(difficulty: string, excludeIds: number[], category?: string): Promise<TriviaQuestion | undefined>;
   
   // Game Sessions
   createGameSession(session: InsertGameSession): Promise<GameSession>;
@@ -46,8 +47,16 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(triviaQuestions).where(eq(triviaQuestions.difficulty, difficulty));
   }
 
-  async getRandomQuestion(difficulty: string, excludeIds: number[] = []): Promise<TriviaQuestion | undefined> {
-    const questions = await this.getQuestionsByDifficulty(difficulty);
+  async getQuestionsByDifficultyAndCategory(difficulty: string, category: string): Promise<TriviaQuestion[]> {
+    return await db.select().from(triviaQuestions)
+      .where(and(
+        eq(triviaQuestions.difficulty, difficulty),
+        eq(triviaQuestions.category, category)
+      ));
+  }
+
+  async getRandomQuestion(difficulty: string, excludeIds: number[] = [], category: string = "bible"): Promise<TriviaQuestion | undefined> {
+    const questions = await this.getQuestionsByDifficultyAndCategory(difficulty, category);
     const availableQuestions = questions.filter(q => !excludeIds.includes(q.id));
     
     if (availableQuestions.length === 0) return undefined;

@@ -115,7 +115,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
   const fetchQuestionMutation = useMutation({
     mutationFn: async (difficulty: string) => {
-      const response = await apiRequest("GET", `/api/games/${gameCode}/question/${difficulty}`);
+      const categoryParam = selectedGameType.toLowerCase().replace(/\s+/g, '_');
+      const response = await apiRequest("GET", `/api/games/${gameCode}/question/${difficulty}?category=${categoryParam}`);
       return response.json();
     },
     onSuccess: (question: TriviaQuestion) => {

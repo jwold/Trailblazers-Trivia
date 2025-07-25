@@ -67,6 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/games/:gameCode/question/:difficulty", async (req, res) => {
     try {
       const { gameCode, difficulty } = req.params;
+      const { category = "bible" } = req.query;
       const session = await storage.getGameSession(gameCode);
       
       if (!session) {
@@ -74,10 +75,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const questionHistory: number[] = JSON.parse(session.questionHistory || "[]");
-      const question = await storage.getRandomQuestion(difficulty, questionHistory);
+      const question = await storage.getRandomQuestion(difficulty, questionHistory, category as string);
       
       if (!question) {
-        return res.status(404).json({ message: "No more questions available for this difficulty" });
+        return res.status(404).json({ message: "No more questions available for this difficulty and category" });
       }
 
       res.json(question);
