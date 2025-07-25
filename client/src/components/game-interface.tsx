@@ -426,25 +426,20 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div
                     key={gameType}
                     onClick={() => setSelectedGameType(gameType)}
-                    className={`relative flex-shrink-0 w-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
+                    className={`relative flex-shrink-0 w-32 h-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
                       isSelected 
-                        ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 h-40` 
-                        : `bg-gray-50 border-gray-200 hover:bg-gray-100 h-32`
+                        ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105` 
+                        : `bg-gray-50 border-gray-200 hover:bg-gray-100`
                     }`}
                   >
                     <div className="flex flex-col items-center justify-center h-full p-3 text-center">
                       <IconComponent 
-                        size={28} 
+                        size={32} 
                         className={`mb-2 ${isSelected ? config.iconColor : 'text-gray-400'}`} 
                       />
-                      <div className={`text-xs font-semibold ${isSelected ? 'text-gray-800' : 'text-gray-600'} mb-1`}>
+                      <div className={`text-sm font-semibold ${isSelected ? 'text-gray-800' : 'text-gray-600'}`}>
                         {config.label}
                       </div>
-                      {isSelected && (
-                        <div className="text-xs text-gray-600 leading-tight px-1">
-                          {config.description}
-                        </div>
-                      )}
                     </div>
                     {isSelected && (
                       <div className="absolute top-1 right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center">
