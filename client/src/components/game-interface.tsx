@@ -367,7 +367,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Question Display */}
       {gamePhase === "difficulty-selection" && (
         <>
-          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose a question type</h3>
+          <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose a question type</h4>
         </>
       )}
       
