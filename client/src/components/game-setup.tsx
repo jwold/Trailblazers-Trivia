@@ -220,7 +220,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   return (
     <div className="space-y-6">
       {/* Combined Game Setup Card */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
           {/* Game Category Selection */}
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your trivia category</h3>
@@ -257,7 +257,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                   onClick={() => handleCategoryChange(gameType)}
                   className={`relative flex-shrink-0 aspect-square cursor-pointer transition-all duration-200 ${borderRadiusClasses} ${borderClasses} ${
                     isSelected 
-                      ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 z-10 transform hover:scale-105` 
+                      ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 scale-105 z-10 transform hover:scale-105` 
                       : `bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105`
                   }`}
                 >
@@ -389,7 +389,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           <Button
             onClick={handleStartGame}
             disabled={createGameMutation.isPending}
-            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 text-2xl font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 transform hover:scale-105 shadow-xl border-4 border-gray-400 ring-4 ring-gray-300"
+            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 text-2xl font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400"
           >
             {createGameMutation.isPending ? (
               "Creating Game..."

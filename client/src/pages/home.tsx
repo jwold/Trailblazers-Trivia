@@ -32,9 +32,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white shadow-lg border-b-4 border-gray-300">
+      <header className="sticky top-0 z-40 bg-white border-b-4 border-gray-300">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
@@ -60,7 +60,7 @@ export default function Home() {
               )}
               <Button
                 onClick={() => setShowRules(!showRules)}
-                className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg p-2 shadow-lg transition-all duration-200"
+                className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg p-2 transition-all duration-200"
                 size="sm"
               >
                 <HelpCircle size={20} />

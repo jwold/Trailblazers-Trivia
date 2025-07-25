@@ -253,3 +253,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Completed comprehensive accuracy review of all 3,991 questions across categories - fixed factual errors, removed 13 duplicate questions, corrected historical inaccuracies (Hammurabi classification, Columbus language, geography disputes), and improved answer clarity throughout database
 - **January 25, 2025**: Added question blur functionality - questions start blurred and unblur permanently when tapped, no re-blur option
 - **January 25, 2025**: Removed banner description text and cleaned up 3 duplicate "hunt in groups" animal questions from database
+- **January 25, 2025**: Fixed horizontal scrolling issue on mobile by removing all shadow effects (buttons, cards, headers) and adding comprehensive overflow prevention with max-width constraints and overflow-x-hidden across all layout elements
