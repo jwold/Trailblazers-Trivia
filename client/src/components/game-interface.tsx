@@ -441,7 +441,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {gamePhase === "question-display" && (easyQuestion || hardQuestion) && (
         <>
           {/* Difficulty Tabs */}
-          <Card className="border-4 border-gray-200 shadow-xl mb-6">
+          <Card className="border-4 border-gray-200 mb-6">
             <CardContent className="p-6">
               {/* Tab Navigation */}
               <div className="border-b border-gray-200 mb-6">
@@ -502,11 +502,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       onClick={() => setAnswerVisible(false)}
                       className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                     >
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="text-base text-gray-700 font-semibold">Answer:</div>
-                        <div className="text-base text-gray-700 italic text-left">
-                          {currentQuestion.answer}
-                        </div>
+                      <div className="text-base text-gray-700 italic text-center">
+                        {currentQuestion.answer}
                       </div>
                     </div>
                   )}
@@ -564,7 +561,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </>
       )}
       {/* Game Status - Combined Scores and History */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
           {/* Tab Navigation */}
           <div className="border-b border-gray-200 mb-6">
