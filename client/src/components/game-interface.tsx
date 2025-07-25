@@ -221,6 +221,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setSelectedDifficulty(null);
     setQuestionAnswered(false);
     setAnswerVisible(false);
+    // Clear any remaining team animations
+    setTeamAnimations({});
   };
 
   const skipQuestion = () => {
