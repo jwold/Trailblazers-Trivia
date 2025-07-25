@@ -96,9 +96,7 @@ export default function Home() {
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">
-                  🎯 Epic Bible Trivia Battles! 
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">Epic Trivia Battles!</h2>
                 <p className="text-lg md:text-xl mb-4 text-gray-600 font-medium">
                   Challenge your teams • Test Bible knowledge • Have amazing fun!
                 </p>
@@ -140,7 +138,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 max-w-3xl">
         {gamePhase === "setup" && (
@@ -165,9 +162,6 @@ export default function Home() {
           />
         )}
       </main>
-      
-
-
       {/* Rules Overlay */}
       {showRules && (
         <div 
@@ -248,7 +242,6 @@ export default function Home() {
           </Card>
         </div>
       )}
-      
       {/* Confetti Container - Hidden */}
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50 hidden"></div>
     </div>
