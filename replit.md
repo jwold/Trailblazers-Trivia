@@ -256,3 +256,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Fixed horizontal scrolling issue on mobile by removing all shadow effects (buttons, cards, headers) and adding comprehensive overflow prevention with max-width constraints and overflow-x-hidden across all layout elements
 - **January 25, 2025**: Added clickable logo navigation that returns to home page with "Resume Game" button functionality when active game exists
 - **January 25, 2025**: Removed "Which animal can carry heavy loads?" question from database - animals category now has 987 questions
+- **January 25, 2025**: Removed "What is the only animal that can't get cancer?" question from database - animals category now has 986 questions
