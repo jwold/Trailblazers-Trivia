@@ -42,7 +42,7 @@ export default function Home() {
               className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity duration-200"
               onClick={() => {
                 setGamePhase("setup");
-                setGameCode("");
+                // Keep gameCode so Resume button can appear in header
               }}
             >
               <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
@@ -54,8 +54,16 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
             </div>
             
-            {/* Header Right Side - End Game and Help Buttons */}
+            {/* Header Right Side - Resume Game, End Game and Help Buttons */}
             <div className="flex items-center gap-3">
+              {gamePhase === "setup" && gameCode && (
+                <Button
+                  onClick={() => setGamePhase("playing")}
+                  className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 font-semibold transition-all duration-200"
+                >
+                  Resume Game
+                </Button>
+              )}
               {gamePhase === "playing" && (
                 <Button
                   onClick={handleGameEnd}
