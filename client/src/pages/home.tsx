@@ -48,15 +48,24 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
             </div>
             
-            {/* End Game Button - Only show during game */}
-            {gamePhase === "playing" && (
+            {/* Header Right Side - End Game and Help Buttons */}
+            <div className="flex items-center gap-3">
+              {gamePhase === "playing" && (
+                <Button
+                  onClick={handleGameEnd}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 font-semibold transition-all duration-200"
+                >
+                  End Game
+                </Button>
+              )}
               <Button
-                onClick={handleGameEnd}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 font-semibold transition-all duration-200"
+                onClick={() => setShowRules(!showRules)}
+                className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg p-2 shadow-lg transition-all duration-200"
+                size="sm"
               >
-                End Game
+                <HelpCircle size={20} />
               </Button>
-            )}
+            </div>
           </div>
         </div>
       </header>
@@ -81,16 +90,7 @@ export default function Home() {
         )}
       </main>
       
-      {/* How to Play Button */}
-      <div className="fixed bottom-4 right-4 z-40">
-        <Button
-          onClick={() => setShowRules(!showRules)}
-          className="bg-gray-600 hover:bg-gray-700 text-white rounded-full p-3 shadow-lg"
-          size="sm"
-        >
-          <HelpCircle size={20} />
-        </Button>
-      </div>
+
 
       {/* Rules Overlay */}
       {showRules && (
