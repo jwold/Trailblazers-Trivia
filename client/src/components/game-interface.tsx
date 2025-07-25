@@ -477,19 +477,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 <Users className="mr-2" size={16} />
                 Teams & Scores
               </Button>
-              {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
-                <Button
-                  onClick={() => setShowHistory(true)}
-                  className={`px-4 py-2 font-semibold transition-all duration-200 ${
-                    showHistory 
-                      ? 'bg-gray-600 hover:bg-gray-700 text-white' 
-                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-                  }`}
-                >
-                  <History className="mr-2" size={16} />
-                  History ({gameSession.detailedHistory.length})
-                </Button>
-              )}
+              <Button
+                onClick={() => setShowHistory(true)}
+                className={`px-4 py-2 font-semibold transition-all duration-200 ${
+                  showHistory 
+                    ? 'bg-gray-600 hover:bg-gray-700 text-white' 
+                    : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                }`}
+              >
+                <History className="mr-2" size={16} />
+                History {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 ? `(${gameSession.detailedHistory.length})` : ''}
+              </Button>
             </div>
           </div>
 
