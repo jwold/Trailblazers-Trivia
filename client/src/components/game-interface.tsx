@@ -490,9 +490,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         <div className="text-base text-gray-700 italic">
                           {currentQuestion.answer}
                         </div>
-                        <div className="text-gray-500 text-xs ml-2">
-                          (tap to hide)
-                        </div>
                       </div>
                     </div>
                   )}
