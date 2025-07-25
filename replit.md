@@ -193,3 +193,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added "Choose a question type" title above Easy/Hard difficulty buttons for clearer user guidance
 - **January 25, 2025**: Moved game phase banner above team names section for better visual hierarchy and user flow
 - **January 25, 2025**: Reverted all pastel color changes back to original grayscale design throughout the entire application
+- **January 25, 2025**: Added click-outside functionality to close "How to Play" modal by clicking on dark overlay background
+- **January 25, 2025**: Reorganized team setup header layout - moved "Choose your team names" to left side and "Add Team" button to right side with ghost styling instead of background colors

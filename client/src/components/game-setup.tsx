@@ -122,7 +122,19 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       {/* Team Setup Card */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your team names</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-gray-800">Choose your team names</h3>
+            {teams.length < 10 && (
+              <Button
+                onClick={addTeam}
+                variant="ghost"
+                className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+              >
+                <Plus className="mr-2" size={20} />
+                Add Team
+              </Button>
+            )}
+          </div>
 
           <div className="space-y-4 mb-6">
             {teams.map((team, index) => {
@@ -150,18 +162,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             })}
           </div>
 
-          {/* Add Team Button */}
-          {teams.length < 10 && (
-            <div className="text-center mb-6">
-              <Button
-                onClick={addTeam}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 border-2 border-dashed border-gray-400 py-3 px-6"
-              >
-                <Plus className="mr-2 text-gray-700" size={20} />
-                Add Team
-              </Button>
-            </div>
-          )}
+
 
           {/* Game Settings */}
           <div className="bg-gray-50 p-4 rounded-xl mb-6">
