@@ -570,18 +570,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </Card>
       )}
 
-      {/* History Button */}
-      {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
-        <div className="text-center mb-4">
-          <Button
-            onClick={() => setShowHistory(!showHistory)}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 font-semibold transition-all duration-200"
-          >
-            <History className="mr-2 text-gray-700" size={16} />
-            {showHistory ? 'Hide History' : 'Show History'}
-          </Button>
-        </div>
-      )}
+
 
 
 
