@@ -420,9 +420,54 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </CardContent>
       </Card>
 
-      
+      {/* Game Phase Banner */}
+      {gamePhase === "difficulty-selection" && (
+        <div className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 relative overflow-hidden mb-6 rounded-xl">
+          <div className="px-6 py-8 relative z-10">
+            <div className="text-center text-white">
+              {/* Floating Icons */}
+              <div className="absolute top-2 left-4 opacity-20 animate-bounce">
+                <Gamepad2 size={20} className="transform rotate-12" />
+              </div>
+              <div className="absolute top-3 right-6 opacity-20 animate-bounce delay-300">
+                <Users size={18} className="transform -rotate-12" />
+              </div>
+              
+              {/* Main Content */}
+              <div className="relative">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                  🎮 {gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'} is up!
+                </h3>
+                <p className="text-lg text-gray-200 font-medium">
+                  Choose your question difficulty • Test your Bible knowledge
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Subtle background pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-0 left-0 w-full h-full">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <defs>
+                  <pattern id="dots" patternUnits="userSpaceOnUse" width="10" height="10">
+                    <circle cx="5" cy="5" r="1" fill="white"/>
+                  </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#dots)" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Question Display */}
+      {gamePhase === "difficulty-selection" && (
+        <>
+          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose a question type</h3>
+        </>
+      )}
+      
       {gamePhase === "difficulty-selection" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
