@@ -401,7 +401,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 {selectedDifficulty} • {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''}
               </div>
               <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
-              <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+              {gameSession?.category === 'bible' && currentQuestion.reference && (
+                <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+              )}
               <div className="flex items-center justify-center gap-2">
                 <div className="text-base text-gray-700 italic">Answer:</div>
                 <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
@@ -599,7 +601,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       </div>
                       <h4 className="font-semibold text-gray-800 mb-2">{entry.question}</h4>
                       <p className="text-gray-600 mb-1"><strong>Answer:</strong> {entry.answer}</p>
-                      <p className="text-gray-500 text-sm">{entry.reference}</p>
+                      {gameSession?.category === 'bible' && entry.reference && (
+                        <p className="text-gray-500 text-sm">{entry.reference}</p>
+                      )}
                     </div>
                     <div className="flex gap-2 ml-4">
                       <Button
