@@ -446,9 +446,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <div className="text-center">
               <Button
                 onClick={nextQuestion}
-                className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-6 px-12 text-xl font-bold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-gray-400 ring-4 ring-gray-300"
+                className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-8 px-8 text-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
               >
-                <SkipForward className="mr-3" size={24} />
                 Next Question
               </Button>
             </div>
