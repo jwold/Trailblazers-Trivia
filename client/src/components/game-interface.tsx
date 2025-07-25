@@ -116,11 +116,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     const currentTeamIndex = gameSession.currentTeamIndex;
     const currentTeam = teams[currentTeamIndex];
     
-    // Trigger correct answer animation
-    setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: 'correct' }));
-    setTimeout(() => {
-      setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: null }));
-    }, 2000);
+    // Animation disabled
     
     // createConfetti();
     
@@ -176,11 +172,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     
     const currentTeam = gameSession.teams[gameSession.currentTeamIndex];
     
-    // Trigger incorrect answer animation
-    setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: 'incorrect' }));
-    setTimeout(() => {
-      setTeamAnimations(prev => ({ ...prev, [currentTeam.id]: null }));
-    }, 1000);
+    // Animation disabled
     
     // Add detailed history entry for incorrect answer
     const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
@@ -515,12 +507,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
                   const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
                   
-                  // Animation classes for correct/incorrect feedback
-                  const animationClass = teamAnimations[team.id] === 'correct' 
-                    ? 'animate-correct-glow text-green-700' 
-                    : teamAnimations[team.id] === 'incorrect' 
-                    ? 'animate-incorrect-shake text-red-700' 
-                    : '';
+                  // Animation classes for correct/incorrect feedback - disabled
+                  const animationClass = '';
 
                   // Transition classes for team switching - only when not expanding/collapsing
                   const isCurrentTeam = index === gameSession.currentTeamIndex;
