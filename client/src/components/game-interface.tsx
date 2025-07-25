@@ -43,7 +43,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamsExpanded, setTeamsExpanded] = useState(false);
   const [teamTransitioning, setTeamTransitioning] = useState(false);
   const [answerVisible, setAnswerVisible] = useState(false);
-  const [questionBlurred, setQuestionBlurred] = useState(true);
+  const [questionVisible, setQuestionVisible] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSpeakingAnswer, setIsSpeakingAnswer] = useState(false);
 
@@ -131,7 +131,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       }
       setQuestionAnswered(false);
       setAnswerVisible(false);
-      setQuestionBlurred(true); // Reset blur for new questions
+      setQuestionVisible(false); // Reset blur for new questions
       setLastSelectedDifficulty(variables);
       // Clear any lingering animations when a new question loads
       setTeamAnimations({});
@@ -240,7 +240,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     if (targetQuestion) {
       setCurrentQuestion(targetQuestion);
       setAnswerVisible(false); // Reset answer visibility when switching
-      setQuestionBlurred(true); // Reset blur when switching questions
+      setQuestionVisible(false); // Reset question visibility when switching
     } else {
       fetchQuestionMutation.mutate(difficulty);
     }
@@ -312,7 +312,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       setSelectedDifficulty(lastSelectedDifficulty);
       setQuestionAnswered(false);
       setAnswerVisible(false);
-      setQuestionBlurred(true);
+      setQuestionVisible(false);
       setTeamAnimations({});
       
       // Auto-load new questions
@@ -367,7 +367,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       setSelectedDifficulty(lastSelectedDifficulty);
       setQuestionAnswered(false);
       setAnswerVisible(false);
-      setQuestionBlurred(true);
+      setQuestionVisible(false);
       setTeamAnimations({});
       
       // Auto-load new questions
@@ -439,7 +439,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       setSelectedDifficulty(lastSelectedDifficulty);
       setQuestionAnswered(false);
       setAnswerVisible(false);
-      setQuestionBlurred(true);
+      setQuestionVisible(false);
       setTeamAnimations({});
       
       // Auto-load new questions
@@ -463,7 +463,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setSelectedDifficulty(lastSelectedDifficulty);
     setQuestionAnswered(false);
     setAnswerVisible(false);
-    setQuestionBlurred(true);
+    setQuestionVisible(false);
     // Clear any remaining team animations
     setTeamAnimations({});
     
@@ -494,7 +494,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setSelectedDifficulty(lastSelectedDifficulty);
     setQuestionAnswered(false);
     setAnswerVisible(false);
-    setQuestionBlurred(true);
+    setQuestionVisible(false);
     setTeamAnimations({});
     
     // Auto-load new questions
@@ -671,33 +671,39 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia
                   </div>
                   <div className="flex items-center justify-center gap-3 mb-4">
-                    <h4 
-                      className={`text-2xl font-bold text-gray-800 transition-all duration-300 cursor-pointer select-none ${
-                        questionBlurred ? 'blur-md' : ''
-                      }`}
-                      onClick={() => setQuestionBlurred(false)}
-                    >
-                      {currentQuestion.question}
-                    </h4>
-                    
-                    {/* Text-to-Speech Button */}
-                    {!questionBlurred && 'speechSynthesis' in window && (
+                    {!questionVisible ? (
                       <Button
-                        onClick={readQuestion}
-                        size="sm"
-                        className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
-                          isSpeaking ? 'animate-pulse' : ''
-                        }`}
+                        onClick={() => setQuestionVisible(true)}
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 text-lg font-medium"
                       >
-                        <Volume2 size={14} />
+                        Show Question
                       </Button>
+                    ) : (
+                      <>
+                        <h4 className="text-2xl font-bold text-gray-800">
+                          {currentQuestion.question}
+                        </h4>
+                        
+                        {/* Text-to-Speech Button */}
+                        {'speechSynthesis' in window && (
+                          <Button
+                            onClick={readQuestion}
+                            size="sm"
+                            className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
+                              isSpeaking ? 'animate-pulse' : ''
+                            }`}
+                          >
+                            <Volume2 size={14} />
+                          </Button>
+                        )}
+                      </>
                     )}
                   </div>
                   
-                  {gameSession?.category === 'bible' && currentQuestion.reference && (
+                  {questionVisible && gameSession?.category === 'bible' && currentQuestion.reference && (
                     <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
                   )}
-                  {!answerVisible ? (
+                  {questionVisible && !answerVisible && (
                     <div className="text-center mt-4">
                       <Button
                         onClick={() => setAnswerVisible(true)}
@@ -706,7 +712,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         Show Answer
                       </Button>
                     </div>
-                  ) : (
+                  )}
+                  {questionVisible && answerVisible && (
                     <div 
                       onClick={() => setAnswerVisible(false)}
                       className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
