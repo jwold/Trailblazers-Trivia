@@ -118,6 +118,8 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       { id: nanoid(), name: initialNames[1], color: "green", score: 0, correctAnswers: 0 },
     ];
   });
+  // Track which team names have been manually customized by users
+  const [customizedTeamNames, setCustomizedTeamNames] = useState<Set<string>>(new Set());
   const [targetScore, setTargetScore] = useState(10);
 
   const { toast } = useToast();
@@ -143,6 +145,8 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     setTeams(teams.map(team => 
       team.id === teamId ? { ...team, name } : team
     ));
+    // Mark this team as having a custom name
+    setCustomizedTeamNames(prev => new Set(prev).add(teamId));
   };
 
 
@@ -153,11 +157,18 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     const newNames = getShuffledNames(newCategory);
     setAvailableNames(newNames);
     
-    // Update existing team names with category-appropriate names
-    setTeams(teams.map((team, index) => ({
-      ...team,
-      name: index < newNames.length ? newNames[index] : `Team ${index + 1}`
-    })));
+    // Only update team names that haven't been manually customized
+    setTeams(teams.map((team, index) => {
+      // If this team has been customized, keep the custom name
+      if (customizedTeamNames.has(team.id)) {
+        return team;
+      }
+      // Otherwise, update with category-appropriate name
+      return {
+        ...team,
+        name: index < newNames.length ? newNames[index] : `Team ${index + 1}`
+      };
+    }));
   };
 
   const addTeam = () => {
@@ -178,6 +189,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   const removeTeam = (teamId: string) => {
     if (teams.length > 2) {
       setTeams(teams.filter(team => team.id !== teamId));
+      // Remove the team from customized names tracking
+      setCustomizedTeamNames(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(teamId);
+        return newSet;
+      });
     }
   };
 
