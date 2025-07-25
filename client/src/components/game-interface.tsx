@@ -416,7 +416,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <div className="mb-6">
           <h4 className="text-lg font-semibold text-gray-800 mb-4 text-center">Choose game category</h4>
           <div className="overflow-x-auto pb-4">
-            <div className="flex gap-4 px-2" style={{ minWidth: 'max-content' }}>
+            <div className="flex gap-4 px-2 py-2" style={{ minWidth: 'max-content' }}>
               {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
                 const config = gameTypeConfig[gameType];
                 const IconComponent = config.icon;
@@ -428,7 +428,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     onClick={() => setSelectedGameType(gameType)}
                     className={`relative flex-shrink-0 w-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
                       isSelected 
-                        ? `${config.bgColor} ${config.borderColor} ring-4 ring-gray-300 shadow-lg scale-105 h-40` 
+                        ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 h-40` 
                         : `bg-gray-50 border-gray-200 hover:bg-gray-100 h-32`
                     }`}
                   >
@@ -447,8 +447,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       )}
                     </div>
                     {isSelected && (
-                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center">
-                        <Check size={14} className="text-white" />
+                      <div className="absolute top-1 right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center">
+                        <Check size={12} className="text-white" />
                       </div>
                     )}
                   </div>
