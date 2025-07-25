@@ -130,6 +130,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               
               return (
                 <div key={team.id} className="flex items-center gap-3">
+                  <Input
+                    placeholder="Enter team name..."
+                    value={team.name}
+                    onChange={(e) => updateTeamName(team.id, e.target.value)}
+                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
+                  />
                   {index >= 2 && (
                     <Button
                       onClick={() => removeTeam(team.id)}
@@ -139,12 +145,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                       <X size={16} className="text-gray-700" />
                     </Button>
                   )}
-                  <Input
-                    placeholder="Enter team name..."
-                    value={team.name}
-                    onChange={(e) => updateTeamName(team.id, e.target.value)}
-                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
-                  />
                 </div>
               );
             })}
