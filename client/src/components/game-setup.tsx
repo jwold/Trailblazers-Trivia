@@ -118,6 +118,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     const initialNames = getShuffledNames(selectedGameType);
     return [
       { id: nanoid(), name: initialNames[0], color: "blue", score: 0, correctAnswers: 0 },
+      { id: nanoid(), name: initialNames[1], color: "green", score: 0, correctAnswers: 0 },
     ];
   });
   // Track which team names have been manually customized by users
@@ -406,7 +407,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                     onChange={(e) => updateTeamName(team.id, e.target.value)}
                     className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
                   />
-                  {index >= 1 && (
+                  {index >= 1 && teams.length > 1 && (
                     <Button
                       onClick={() => removeTeam(team.id)}
                       size="sm"
