@@ -436,7 +436,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               >
                 <div className="text-center">
                   <div className="text-3xl font-bold">{difficulty.toUpperCase()}</div>
-                  <div className="text-base opacity-90">{config.points} Points</div>
+                  <div className="text-base opacity-90">{config.points} Point{config.points !== 1 ? 's' : ''}</div>
                 </div>
               </Button>
             );
@@ -573,6 +573,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
 
 
+
+      {/* Show History Button - Only when history is hidden */}
+      {!showHistory && (
+        <div className="text-center">
+          <Button
+            onClick={() => setShowHistory(true)}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700"
+          >
+            <History className="mr-2" size={16} />
+            Show History
+          </Button>
+        </div>
+      )}
 
       {/* Game Code Display */}
       <div className="text-center mt-4 text-gray-600 hidden">
