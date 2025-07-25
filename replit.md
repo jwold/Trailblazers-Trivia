@@ -191,3 +191,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added "Choose your team names" title above team setup section for better user guidance
 - **January 25, 2025**: Added dynamic game phase banner showing current team and encouraging question selection during difficulty phase
 - **January 25, 2025**: Added "Choose a question type" title above Easy/Hard difficulty buttons for clearer user guidance
+- **January 25, 2025**: Moved game phase banner above team names section for better visual hierarchy and user flow
