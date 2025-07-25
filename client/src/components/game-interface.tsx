@@ -739,7 +739,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                               isSpeakingAnswer ? 'animate-pulse' : ''
                             }`}
                           >
-                            <Mic size={14} />
+                            <Volume2 size={14} />
                           </Button>
                         )}
                       </div>
