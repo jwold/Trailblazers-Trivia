@@ -30,7 +30,10 @@ const difficultyConfig = {
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
   const [gamePhase, setGamePhase] = useState<GamePhase>("difficulty-selection");
   const [currentQuestion, setCurrentQuestion] = useState<TriviaQuestion | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("Easy");
+  const [lastSelectedDifficulty, setLastSelectedDifficulty] = useState<Difficulty>("Easy");
+  const [easyQuestion, setEasyQuestion] = useState<TriviaQuestion | null>(null);
+  const [hardQuestion, setHardQuestion] = useState<TriviaQuestion | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [questionAnswered, setQuestionAnswered] = useState(false);
@@ -73,15 +76,23 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   }, [gameSession?.currentTeamIndex, teamsExpanded]);
 
   const fetchQuestionMutation = useMutation({
-    mutationFn: async (difficulty: string) => {
+    mutationFn: async (difficulty: Difficulty) => {
       const response = await apiRequest("GET", `/api/games/${gameCode}/question/${difficulty}`);
       return response.json();
     },
-    onSuccess: (question: TriviaQuestion) => {
+    onSuccess: (question: TriviaQuestion, variables: Difficulty) => {
+      if (variables === "Easy") {
+        setEasyQuestion(question);
+      } else {
+        setHardQuestion(question);
+      }
       setCurrentQuestion(question);
       setGamePhase("question-display");
       setQuestionAnswered(false);
       setAnswerVisible(false);
+      setLastSelectedDifficulty(variables);
+      // Clear any lingering animations when a new question loads
+      setTeamAnimations({});
     },
     onError: () => {
       toast({
@@ -106,7 +117,34 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
-    fetchQuestionMutation.mutate(difficulty);
+    setLastSelectedDifficulty(difficulty);
+    
+    // Auto-fetch both questions when first entering question mode
+    if (gamePhase === "difficulty-selection") {
+      // Fetch both Easy and Hard questions
+      fetchQuestionMutation.mutate("Easy");
+      fetchQuestionMutation.mutate("Hard");
+      setGamePhase("question-display");
+    } else {
+      // Switch between already loaded questions
+      const targetQuestion = difficulty === "Easy" ? easyQuestion : hardQuestion;
+      if (targetQuestion) {
+        setCurrentQuestion(targetQuestion);
+      } else {
+        // Fetch if not loaded
+        fetchQuestionMutation.mutate(difficulty);
+      }
+    }
+  };
+
+  const switchDifficulty = (difficulty: Difficulty) => {
+    setSelectedDifficulty(difficulty);
+    const targetQuestion = difficulty === "Easy" ? easyQuestion : hardQuestion;
+    if (targetQuestion) {
+      setCurrentQuestion(targetQuestion);
+    } else {
+      fetchQuestionMutation.mutate(difficulty);
+    }
   };
 
   const markCorrect = (usedBibleAssist = false) => {
@@ -214,7 +252,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setQuestionNumber(prev => prev + 1);
     setGamePhase("difficulty-selection");
     setCurrentQuestion(null);
-    setSelectedDifficulty(null);
+    setEasyQuestion(null);
+    setHardQuestion(null);
+    setSelectedDifficulty(lastSelectedDifficulty);
     setQuestionAnswered(false);
     setAnswerVisible(false);
     // Clear any remaining team animations
@@ -368,57 +408,78 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {gamePhase === "difficulty-selection" && (
         <>
           <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose a question type</h4>
+          <div className="text-center mb-6">
+            <Button
+              onClick={() => selectDifficulty(lastSelectedDifficulty)}
+              disabled={fetchQuestionMutation.isPending}
+              className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-8 px-8 text-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
+            >
+              {fetchQuestionMutation.isPending ? "Loading Questions..." : `Start with ${lastSelectedDifficulty} Questions`}
+            </Button>
+          </div>
         </>
       )}
-      
-      {gamePhase === "difficulty-selection" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
-            const config = difficultyConfig[difficulty];
-            return (
-              <Button
-                key={difficulty}
-                onClick={() => selectDifficulty(difficulty)}
-                disabled={fetchQuestionMutation.isPending}
-                className={`${config.bgColor} ${config.hoverColor} text-white py-8 px-8 text-xl font-semibold transition-all duration-200 transform hover:scale-105 border-4 border-white/20`}
-              >
-                <div className="text-center">
-                  <div className="text-3xl font-bold">{difficulty.toUpperCase()}</div>
-                  <div className="text-base opacity-90">{config.points} Point{config.points !== 1 ? 's' : ''}</div>
-                </div>
-              </Button>
-            );
-          })}
-        </div>
-      )}
 
-      {gamePhase === "question-display" && currentQuestion && (
+      {gamePhase === "question-display" && (easyQuestion || hardQuestion) && (
         <>
-          {/* Question */}
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
-            <div className="text-center">
-              <div className="text-sm font-semibold text-gray-600 mb-2">
-                {selectedDifficulty} • {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''}
+          {/* Difficulty Tabs */}
+          <Card className="border-4 border-gray-200 shadow-xl mb-6">
+            <CardContent className="p-6">
+              {/* Tab Navigation */}
+              <div className="border-b border-gray-200 mb-6">
+                <nav className="flex space-x-8">
+                  <button
+                    onClick={() => switchDifficulty("Easy")}
+                    disabled={!easyQuestion || questionAnswered}
+                    className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
+                      selectedDifficulty === "Easy"
+                        ? 'border-gray-600 text-gray-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    } ${(!easyQuestion || questionAnswered) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    Easy (1 Point)
+                  </button>
+                  <button
+                    onClick={() => switchDifficulty("Hard")}
+                    disabled={!hardQuestion || questionAnswered}
+                    className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
+                      selectedDifficulty === "Hard"
+                        ? 'border-gray-600 text-gray-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    } ${(!hardQuestion || questionAnswered) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    Hard (3 Points)
+                  </button>
+                </nav>
               </div>
-              <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
-              {gameSession?.category === 'bible' && currentQuestion.reference && (
-                <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
-              )}
-              <div className="flex items-center justify-center gap-2">
-                <div className="text-base text-gray-700 italic">Answer:</div>
-                <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
-                  {currentQuestion.answer}
+
+              {/* Question Content */}
+              {currentQuestion && (
+                <div className="text-center">
+                  <div className="text-sm font-semibold text-gray-600 mb-2">
+                    {selectedDifficulty} • {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''}
+                  </div>
+                  <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
+                  {gameSession?.category === 'bible' && currentQuestion.reference && (
+                    <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+                  )}
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="text-base text-gray-700 italic">Answer:</div>
+                    <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
+                      {currentQuestion.answer}
+                    </div>
+                    <Button
+                      onClick={() => setAnswerVisible(!answerVisible)}
+                      size="sm"
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
+                    >
+                      {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
+                    </Button>
+                  </div>
                 </div>
-                <Button
-                  onClick={() => setAnswerVisible(!answerVisible)}
-                  size="sm"
-                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
-                >
-                  {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
-                </Button>
-              </div>
-            </div>
-          </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* Scoring buttons - Only visible when question is displayed */}
           {!questionAnswered && (

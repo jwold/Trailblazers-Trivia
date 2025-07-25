@@ -242,3 +242,6 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added conditional Bible reference display - references only show for Bible category questions in both game display and history
 - **January 25, 2025**: Implemented responsive category selection - desktop shows visual card grid, mobile uses dropdown for better touch experience
 - **January 25, 2025**: Optimized hero banner spacing and content for mobile visibility - reduced padding, font sizes, and removed "Mobile Friendly" feature to ensure start button is visible on most phone screens
+- **January 25, 2025**: Implemented tabbed difficulty selection interface - teams no longer choose between Easy/Hard upfront, instead they see both questions and can switch between difficulties using tabs until answering
+- **January 25, 2025**: Added difficulty preference memory - system remembers last selected difficulty and defaults to it for subsequent rounds (Easy for first round)
+- **January 25, 2025**: Auto-loads both Easy and Hard questions when team starts their turn, allowing real-time switching between difficulties in tabbed interface
