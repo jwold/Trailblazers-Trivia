@@ -34,10 +34,29 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-4 border-brand-blue sticky top-0 z-50">
+      <header className="bg-white shadow-lg border-b-4 border-gray-300 sticky top-0 z-50">
         <div className="px-4 py-4">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
+          <div className="flex items-center justify-between">
+            {/* Logo and Title */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
+                <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" fill="currentColor">
+                  <path d="M12 2L2 7V17C2 18.1 2.9 19 4 19H8V12H16V19H20C21.1 19 22 18.1 22 17V7L12 2Z"/>
+                  <path d="M8 19V21C8 22.1 8.9 23 10 23H14C15.1 23 16 22.1 16 21V19H8Z"/>
+                </svg>
+              </div>
+              <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
+            </div>
+            
+            {/* End Game Button - Only show during game */}
+            {gamePhase === "playing" && (
+              <Button
+                onClick={handleGameEnd}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 font-semibold transition-all duration-200"
+              >
+                End Game
+              </Button>
+            )}
           </div>
         </div>
       </header>

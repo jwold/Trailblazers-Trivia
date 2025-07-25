@@ -181,3 +181,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Moved team delete button to the right side of input field for better visual flow
 - **January 25, 2025**: Fixed team collapse/expand bounce animation by simplifying filtering logic and disabling conflicting transitions
 - **January 25, 2025**: Removed Card container wrapper around difficulty selection and question display buttons for cleaner interface
+- **January 25, 2025**: Added Trailblazers logo to left side of header and moved end game button to right side of header during gameplay

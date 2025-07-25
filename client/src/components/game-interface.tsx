@@ -579,15 +579,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </div>
       )}
 
-      {/* End Game Button */}
-      <div className="text-center">
-        <Button
-          onClick={endGame}
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
-        >
-          End Game
-        </Button>
-      </div>
+
 
       {/* Game Code Display */}
       <div className="text-center mt-4 text-gray-600 hidden">
