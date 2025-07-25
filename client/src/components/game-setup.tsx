@@ -129,24 +129,22 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               const colorConfig = teamColors.find(c => c.name === team.color) || teamColors[0];
               
               return (
-                <div key={team.id} className={`${colorConfig.bgClass} p-4 rounded-xl border-2 ${colorConfig.borderClass}`}>
-                  <div className="flex items-center gap-3">
-                    {index >= 2 && (
-                      <Button
-                        onClick={() => removeTeam(team.id)}
-                        size="sm"
-                        className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 flex-shrink-0"
-                      >
-                        <X size={16} className="text-gray-700" />
-                      </Button>
-                    )}
-                    <Input
-                      placeholder="Enter team name..."
-                      value={team.name}
-                      onChange={(e) => updateTeamName(team.id, e.target.value)}
-                      className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
-                    />
-                  </div>
+                <div key={team.id} className="flex items-center gap-3">
+                  {index >= 2 && (
+                    <Button
+                      onClick={() => removeTeam(team.id)}
+                      size="sm"
+                      className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 flex-shrink-0"
+                    >
+                      <X size={16} className="text-gray-700" />
+                    </Button>
+                  )}
+                  <Input
+                    placeholder="Enter team name..."
+                    value={team.name}
+                    onChange={(e) => updateTeamName(team.id, e.target.value)}
+                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
+                  />
                 </div>
               );
             })}
