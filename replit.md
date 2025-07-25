@@ -184,3 +184,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added Trailblazers logo to left side of header and moved end game button to right side of header during gameplay
 - **January 25, 2025**: Hide expand/collapse teams button when there are fewer than 3 teams for cleaner interface
 - **January 25, 2025**: Moved help button from bottom-right corner to top-right of header beside end game button
+- **January 25, 2025**: Modified team display logic to always show both teams when there are 2 teams during gameplay

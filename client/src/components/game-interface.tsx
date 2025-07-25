@@ -326,6 +326,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           
           <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
             {teams.filter((team, index) => {
+              // Always show all teams if there are only 2 teams
+              if (teams.length <= 2) return true;
               if (teamsExpanded) return true;
               // Only show current team when collapsed (simplified logic to prevent bounce)
               return index === gameSession.currentTeamIndex;
