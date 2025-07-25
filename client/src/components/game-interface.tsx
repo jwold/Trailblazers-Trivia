@@ -481,19 +481,18 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       </Button>
                     </div>
                   ) : (
-                    <div className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+                    <div 
+                      onClick={() => setAnswerVisible(false)}
+                      className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                    >
                       <div className="flex items-center justify-center gap-2">
                         <div className="text-base text-gray-700 font-semibold">Answer:</div>
                         <div className="text-base text-gray-700 italic">
                           {currentQuestion.answer}
                         </div>
-                        <Button
-                          onClick={() => setAnswerVisible(false)}
-                          size="sm"
-                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
-                        >
-                          <EyeOff size={16} className="text-gray-700" />
-                        </Button>
+                        <div className="text-gray-500 text-xs ml-2">
+                          (tap to hide)
+                        </div>
                       </div>
                     </div>
                   )}
