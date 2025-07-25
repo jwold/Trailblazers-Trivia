@@ -567,29 +567,29 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div className="text-sm font-semibold text-gray-600 mb-2">
                     {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia
                   </div>
-                  <h4 
-                    className={`text-2xl font-bold text-gray-800 mb-4 transition-all duration-300 cursor-pointer select-none ${
-                      questionBlurred ? 'blur-md' : ''
-                    }`}
-                    onClick={() => setQuestionBlurred(false)}
-                  >
-                    {currentQuestion.question}
-                  </h4>
-                  
-                  {/* Text-to-Speech Button */}
-                  {!questionBlurred && 'speechSynthesis' in window && (
-                    <div className="flex justify-center mb-3">
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <h4 
+                      className={`text-2xl font-bold text-gray-800 transition-all duration-300 cursor-pointer select-none ${
+                        questionBlurred ? 'blur-md' : ''
+                      }`}
+                      onClick={() => setQuestionBlurred(false)}
+                    >
+                      {currentQuestion.question}
+                    </h4>
+                    
+                    {/* Text-to-Speech Button */}
+                    {!questionBlurred && 'speechSynthesis' in window && (
                       <Button
                         onClick={readQuestion}
-                        className={`bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 text-sm font-medium flex items-center gap-2 transition-all duration-200 ${
+                        size="sm"
+                        className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
                           isSpeaking ? 'animate-pulse' : ''
                         }`}
                       >
-                        <Volume2 size={16} />
-                        {isSpeaking ? 'Speaking...' : 'Read Question'}
+                        <Volume2 size={14} />
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                   
                   {gameSession?.category === 'bible' && currentQuestion.reference && (
                     <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
