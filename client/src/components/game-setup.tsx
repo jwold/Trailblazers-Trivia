@@ -20,15 +20,15 @@ const biblicalNames = [
 ];
 
 const teamColors = [
-  { name: "blue", class: "bg-gray-500", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "blue", class: "bg-gray-500", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "green", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
-  { name: "yellow", class: "bg-gray-400", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-700" },
+  { name: "yellow", class: "bg-gray-400", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "red", class: "bg-gray-700", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "purple", class: "bg-gray-800", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
-  { name: "orange", class: "bg-gray-600", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
-  { name: "teal", class: "bg-gray-500", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "orange", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
+  { name: "teal", class: "bg-gray-500", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "pink", class: "bg-gray-400", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
-  { name: "indigo", class: "bg-gray-700", bgClass: "bg-gray-50", borderClass: "border-gray-200", textClass: "text-gray-800" },
+  { name: "indigo", class: "bg-gray-700", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
   { name: "cyan", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
 ];
 

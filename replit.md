@@ -176,3 +176,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 24, 2025**: Added max-width constraint (768px) to main container for optimal display on both mobile and desktop devices
 - **January 24, 2025**: Added "How to Play" floating help button with comprehensive game rules modal covering setup, gameplay, scoring, features, and leader tips
 - **January 25, 2025**: Increased maximum team limit from 6 to 10 teams with additional biblical names and color variations
+- **January 25, 2025**: Standardized all team background colors to consistent gray-100 with gray-300 borders for uniform appearance

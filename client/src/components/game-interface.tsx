@@ -334,19 +334,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               return index === gameSession.currentTeamIndex;
             }).map((team, originalIndex) => {
               const index = teams.findIndex(t => t.id === team.id);
-              const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
-                               team.color === "green" ? "bg-gray-100 border-gray-300" :
-                               team.color === "yellow" ? "bg-gray-50 border-gray-200" :
-                               team.color === "red" ? "bg-gray-100 border-gray-300" :
-                               team.color === "purple" ? "bg-gray-100 border-gray-300" :
-                               "bg-gray-50 border-gray-200";
+              const colorClass = "bg-gray-100 border-gray-300";
               
-              const textClass = team.color === "blue" ? "text-gray-800" :
-                               team.color === "green" ? "text-gray-800" :
-                               team.color === "yellow" ? "text-gray-700" :
-                               team.color === "red" ? "text-gray-800" :
-                               team.color === "purple" ? "text-gray-800" :
-                               "text-gray-800";
+              const textClass = "text-gray-800";
 
               const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
               
