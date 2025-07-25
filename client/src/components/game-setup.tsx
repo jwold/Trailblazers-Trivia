@@ -59,10 +59,28 @@ interface GameSetupProps {
   onGameStart: (gameCode: string) => void;
 }
 
-const biblicalNames = [
-  "Israelites", "Levites", "Judeans", "Benjamites", "Ephraimites", "Shunammites",
-  "Rechabites", "Ninevites", "Persians", "Cretans", "Romans", "Greeks", "Egyptians", "Philistines"
-];
+const categoryNames = {
+  "Bible": [
+    "Israelites", "Levites", "Judeans", "Benjamites", "Ephraimites", "Shunammites",
+    "Rechabites", "Ninevites", "Persians", "Cretans", "Romans", "Greeks", "Egyptians", "Philistines"
+  ],
+  "Animals": [
+    "Lions", "Eagles", "Wolves", "Bears", "Tigers", "Hawks", "Foxes", "Dolphins",
+    "Elephants", "Panthers", "Falcons", "Sharks", "Rhinos", "Jaguars"
+  ],
+  "US History": [
+    "Patriots", "Colonists", "Pioneers", "Revolutionaries", "Federalists", "Yankees",
+    "Rebels", "Union", "Minutemen", "Founding Fathers", "Pilgrims", "Cowboys", "Explorers", "Settlers"
+  ],
+  "World History": [
+    "Spartans", "Vikings", "Samurai", "Knights", "Gladiators", "Crusaders",
+    "Warriors", "Legions", "Conquerors", "Empire", "Dynasty", "Republic", "Pharaohs", "Emperors"
+  ],
+  "Geography": [
+    "Explorers", "Navigators", "Mountaineers", "Voyagers", "Adventurers", "Trekkers",
+    "Nomads", "Travelers", "Pioneers", "Compass", "Atlas", "Summit", "Valley", "Rivers"
+  ]
+};
 
 const teamColors = [
   { name: "blue", class: "bg-gray-500", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
@@ -78,9 +96,12 @@ const teamColors = [
 ];
 
 export default function GameSetup({ onGameStart }: GameSetupProps) {
-  // Shuffle biblical names for random assignment
-  const getShuffledNames = () => {
-    const shuffled = [...biblicalNames];
+  const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
+  
+  // Shuffle names for random assignment based on category
+  const getShuffledNames = (category: GameType) => {
+    const names = categoryNames[category];
+    const shuffled = [...names];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -88,13 +109,15 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
     return shuffled;
   };
 
-  const [availableNames] = useState<string[]>(getShuffledNames());
-  const [teams, setTeams] = useState<Team[]>([
-    { id: nanoid(), name: availableNames[0], color: "blue", score: 0, correctAnswers: 0 },
-    { id: nanoid(), name: availableNames[1], color: "green", score: 0, correctAnswers: 0 },
-  ]);
+  const [availableNames, setAvailableNames] = useState<string[]>(() => getShuffledNames(selectedGameType));
+  const [teams, setTeams] = useState<Team[]>(() => {
+    const initialNames = getShuffledNames(selectedGameType);
+    return [
+      { id: nanoid(), name: initialNames[0], color: "blue", score: 0, correctAnswers: 0 },
+      { id: nanoid(), name: initialNames[1], color: "green", score: 0, correctAnswers: 0 },
+    ];
+  });
   const [targetScore, setTargetScore] = useState(10);
-  const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
 
   const { toast } = useToast();
 
@@ -122,6 +145,19 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
   };
 
 
+
+  // Handle category change
+  const handleCategoryChange = (newCategory: GameType) => {
+    setSelectedGameType(newCategory);
+    const newNames = getShuffledNames(newCategory);
+    setAvailableNames(newNames);
+    
+    // Update existing team names with category-appropriate names
+    setTeams(teams.map((team, index) => ({
+      ...team,
+      name: index < newNames.length ? newNames[index] : `Team ${index + 1}`
+    })));
+  };
 
   const addTeam = () => {
     const usedColors = teams.map(team => team.color);
@@ -198,7 +234,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
               return (
                 <div
                   key={gameType}
-                  onClick={() => setSelectedGameType(gameType)}
+                  onClick={() => handleCategoryChange(gameType)}
                   className={`relative flex-shrink-0 aspect-square cursor-pointer transition-all duration-200 ${borderRadiusClasses} ${borderClasses} ${
                     isSelected 
                       ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105 z-10 transform hover:scale-105` 

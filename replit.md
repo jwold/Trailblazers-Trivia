@@ -216,3 +216,7 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Implemented single-table multi-category database system with category column added to trivia_questions table
 - **January 25, 2025**: Updated backend API to filter questions by category and difficulty using query parameters
 - **January 25, 2025**: Expanded question database to include all categories: Bible (450), Animals (30), US History (30), World History (30), Geography (30) for total of 570 questions
+- **January 25, 2025**: Moved category selection to game setup screen - teams now commit to one category per game
+- **January 25, 2025**: Added category-specific team name suggestions that automatically update when switching categories
+- **January 25, 2025**: Implemented seamless tabbed category interface with proper borders and elevation for active selection
+- **January 25, 2025**: Combined category and team setup into single unified card for cleaner interface
