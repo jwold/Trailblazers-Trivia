@@ -169,23 +169,22 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your trivia category</h3>
-          <div className="overflow-x-auto pb-4">
-            <div className="flex gap-4 justify-center" style={{ minWidth: 'max-content' }}>
-              {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
-                const config = gameTypeConfig[gameType];
-                const IconComponent = config.icon;
-                const isSelected = selectedGameType === gameType;
-                
-                return (
-                  <div
-                    key={gameType}
-                    onClick={() => setSelectedGameType(gameType)}
-                    className={`relative flex-shrink-0 w-32 h-32 rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
-                      isSelected 
-                        ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105` 
-                        : `bg-gray-50 border-gray-200 hover:bg-gray-100`
-                    }`}
-                  >
+          <div className="grid grid-cols-5 gap-0">
+            {(Object.keys(gameTypeConfig) as GameType[]).map((gameType) => {
+              const config = gameTypeConfig[gameType];
+              const IconComponent = config.icon;
+              const isSelected = selectedGameType === gameType;
+              
+              return (
+                <div
+                  key={gameType}
+                  onClick={() => setSelectedGameType(gameType)}
+                  className={`relative flex-shrink-0 aspect-square rounded-xl border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 ${
+                    isSelected 
+                      ? `${config.bgColor} ${config.borderColor} ring-2 ring-gray-300 shadow-lg scale-105` 
+                      : `bg-gray-50 border-gray-200 hover:bg-gray-100`
+                  }`}
+                >
                     <div className="flex flex-col items-center justify-center h-full p-3 text-center">
                       <IconComponent 
                         size={32} 
@@ -203,7 +202,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                   </div>
                 );
               })}
-            </div>
           </div>
           <p className="text-center text-gray-600 text-sm mt-2">
             {gameTypeConfig[selectedGameType].description}
