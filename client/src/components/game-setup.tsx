@@ -165,11 +165,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
 
   return (
     <div className="space-y-6">
-      {/* Game Category Selection */}
+      {/* Combined Game Setup Card */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
+          {/* Game Category Selection */}
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your trivia category</h3>
-          <div className="grid grid-cols-5 gap-0">
+          <div className="grid grid-cols-5 gap-0 mb-8">
             {(Object.keys(gameTypeConfig) as GameType[]).map((gameType, index) => {
               const config = gameTypeConfig[gameType];
               const IconComponent = config.icon;
@@ -222,12 +223,8 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 );
               })}
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Team Setup Card */}
-      <Card className="border-4 border-gray-200 shadow-xl">
-        <CardContent className="p-6">
+          {/* Team Setup Section */}
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-gray-800">Choose your team names</h3>
             {teams.length < 10 && (
@@ -312,8 +309,6 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           </Button>
         </CardContent>
       </Card>
-
-      
     </div>
   );
 }
