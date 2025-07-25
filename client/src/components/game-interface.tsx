@@ -288,11 +288,28 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Add skipped question to history to prevent it from appearing again
     const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
+    // Keep the same team's turn (don't change currentTeamIndex)
     updateGameMutation.mutate({
       questionHistory: questionHistory,
     });
     
-    nextQuestion();
+    // Reset question state without changing teams
+    setQuestionNumber(prev => prev + 1);
+    setGamePhase("question-display");
+    setCurrentQuestion(null);
+    setEasyQuestion(null);
+    setHardQuestion(null);
+    setSelectedDifficulty(lastSelectedDifficulty);
+    setQuestionAnswered(false);
+    setAnswerVisible(false);
+    setQuestionBlurred(true);
+    setTeamAnimations({});
+    
+    // Auto-load new questions
+    setTimeout(() => {
+      fetchQuestionMutation.mutate("Easy");
+      fetchQuestionMutation.mutate("Hard");
+    }, 100);
   };
 
   const endGame = () => {
@@ -415,18 +432,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           </div>
         </div>
       </div>
-
-
-
-
-
       {/* Loading state */}
       {(!easyQuestion && !hardQuestion && fetchQuestionMutation.isPending) && (
         <div className="text-center py-8">
           <div className="text-xl font-semibold text-gray-600">Loading questions...</div>
         </div>
       )}
-
       {gamePhase === "question-display" && (easyQuestion || hardQuestion) && (
         <>
           {/* Difficulty Tabs */}
@@ -493,7 +504,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     >
                       <div className="flex items-center justify-center gap-2">
                         <div className="text-base text-gray-700 font-semibold">Answer:</div>
-                        <div className="text-base text-gray-700 italic">
+                        <div className="text-base text-gray-700 italic text-left">
                           {currentQuestion.answer}
                         </div>
                       </div>
@@ -524,6 +535,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   Wrong
                 </Button>
               </div>
+              
+              {/* Skip Question Button */}
+              <div className="flex justify-center mb-6">
+                <Button
+                  onClick={skipQuestion}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
+                >
+                  <SkipForward size={20} />
+                  Skip Question (Keep Turn)
+                </Button>
+              </div>
             </>
           )}
 
@@ -541,11 +563,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           )}
         </>
       )}
-
-
-
-
-
       {/* Game Status - Combined Scores and History */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
@@ -720,7 +737,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
         </CardContent>
       </Card>
-
       {/* Game Code Display */}
       <div className="text-center mt-4 text-gray-600 hidden">
         <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800">{gameCode}</span></p>
