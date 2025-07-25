@@ -419,99 +419,85 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       
 
       {/* Question Display */}
-      <Card className="border-4 border-gray-200 shadow-xl">
-        <CardContent className="p-6">
-          {gamePhase === "difficulty-selection" && (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
-                  const config = difficultyConfig[difficulty];
-                  return (
-                    <Button
-                      key={difficulty}
-                      onClick={() => selectDifficulty(difficulty)}
-                      disabled={fetchQuestionMutation.isPending}
-                      className={`${config.bgColor} ${config.hoverColor} text-white py-8 px-8 text-xl font-semibold transition-all duration-200 transform hover:scale-105 border-4 border-white/20`}
-                    >
-                      <div className="text-center">
-                        <div className="text-3xl font-bold">{difficulty.toUpperCase()}</div>
-                        <div className="text-base opacity-90">{config.points} Points</div>
-                      </div>
-                    </Button>
-                  );
-                })}
+      {gamePhase === "difficulty-selection" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {(Object.keys(difficultyConfig) as Difficulty[]).map((difficulty) => {
+            const config = difficultyConfig[difficulty];
+            return (
+              <Button
+                key={difficulty}
+                onClick={() => selectDifficulty(difficulty)}
+                disabled={fetchQuestionMutation.isPending}
+                className={`${config.bgColor} ${config.hoverColor} text-white py-8 px-8 text-xl font-semibold transition-all duration-200 transform hover:scale-105 border-4 border-white/20`}
+              >
+                <div className="text-center">
+                  <div className="text-3xl font-bold">{difficulty.toUpperCase()}</div>
+                  <div className="text-base opacity-90">{config.points} Points</div>
+                </div>
+              </Button>
+            );
+          })}
+        </div>
+      )}
+
+      {gamePhase === "question-display" && currentQuestion && (
+        <>
+          {/* Question */}
+          <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
+            <div className="text-center">
+              <div className="text-sm font-semibold text-gray-600 mb-2">
+                {selectedDifficulty?.toUpperCase()}
               </div>
+              <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
+              <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+              <div className="flex items-center justify-center gap-2">
+                <div className="text-base text-gray-700 italic">Answer:</div>
+                <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
+                  {currentQuestion.answer}
+                </div>
+                <Button
+                  onClick={() => setAnswerVisible(!answerVisible)}
+                  size="sm"
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
+                >
+                  {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
+                </Button>
+              </div>
+            </div>
+          </div>
 
-
-            </>
+          {/* Scoring buttons - Only visible when question is displayed */}
+          {!questionAnswered && (
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <Button
+                onClick={() => markCorrect(false)}
+                className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+              >
+                <Check size={24} />
+              </Button>
+              <Button
+                onClick={markIncorrect}
+                className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
+              >
+                <X size={24} />
+              </Button>
+            </div>
           )}
 
-          {gamePhase === "question-display" && currentQuestion && (
-            <>
-
-
-              {/* Question */}
-              <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
-                <div className="text-center">
-                  <div className="text-sm font-semibold text-gray-600 mb-2">
-                    {selectedDifficulty?.toUpperCase()}
-                  </div>
-                  <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
-                  <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="text-base text-gray-700 italic">Answer:</div>
-                    <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
-                      {currentQuestion.answer}
-                    </div>
-                    <Button
-                      onClick={() => setAnswerVisible(!answerVisible)}
-                      size="sm"
-                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
-                    >
-                      {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Scoring buttons - Only visible when question is displayed */}
-              {!questionAnswered && (
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  <Button
-                    onClick={() => markCorrect(false)}
-                    className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-                  >
-                    <Check size={24} />
-                  </Button>
-                  <Button
-                    onClick={markIncorrect}
-                    className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
-                  >
-                    <X size={24} />
-                  </Button>
-                </div>
-              )}
-
-              {/* Next Question Button - Only visible after question is answered */}
-              {questionAnswered && (
-                <div className="text-center">
-                  <Button
-                    onClick={nextQuestion}
-                    className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-6 px-12 text-xl font-bold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-gray-400 ring-4 ring-gray-300"
-                  >
-                    <SkipForward className="mr-3" size={24} />
-                    Next Question
-                  </Button>
-                </div>
-              )}
-
-              
-            </>
+          {/* Next Question Button - Only visible after question is answered */}
+          {questionAnswered && (
+            <div className="text-center">
+              <Button
+                onClick={nextQuestion}
+                className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-6 px-12 text-xl font-bold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-gray-400 ring-4 ring-gray-300"
+              >
+                <SkipForward className="mr-3" size={24} />
+                Next Question
+              </Button>
+            </div>
           )}
-
-
-        </CardContent>
-      </Card>
+        </>
+      )}
 
       {/* Question History */}
       {showHistory && (
