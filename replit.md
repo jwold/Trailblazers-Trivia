@@ -251,3 +251,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Enhanced answer box interaction - entire answer area is now clickable to hide, with hover effects and "(tap to hide)" hint for better mobile usability
 - **January 25, 2025**: Preserved custom team names when switching categories - system now tracks manually edited names and only updates unmodified team names with category-appropriate suggestions
 - **January 25, 2025**: Completed comprehensive accuracy review of all 3,991 questions across categories - fixed factual errors, removed 13 duplicate questions, corrected historical inaccuracies (Hammurabi classification, Columbus language, geography disputes), and improved answer clarity throughout database
+- **January 25, 2025**: Added question blur functionality - questions start blurred and unblur permanently when tapped, no re-blur option
+- **January 25, 2025**: Removed banner description text and cleaned up 3 duplicate "hunt in groups" animal questions from database
