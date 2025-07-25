@@ -391,7 +391,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           {activeGameCode && onResumeGame && (
             <Button
               onClick={onResumeGame}
-              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 text-lg font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border-2 border-gray-300 mb-4"
+              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-6 px-8 text-xl font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border-4 border-gray-400 mb-4"
             >
               Resume Game ({activeGameCode})
             </Button>
