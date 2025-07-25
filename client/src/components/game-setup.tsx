@@ -324,7 +324,9 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           {/* Game Mode Selection */}
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your game mode</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            {/* Desktop View - Hidden on mobile */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Regular Mode */}
               <div
                 onClick={() => setGameMode("regular")}
@@ -452,6 +454,117 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Mobile View - Dropdown */}
+            <div className="md:hidden mb-8">
+              <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
+                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+                  <SelectValue>
+                    <div className="flex items-center gap-3">
+                      {gameMode === "regular" ? (
+                        <>
+                          <Gamepad2 size={24} className="text-gray-700" />
+                          <span className="text-lg font-semibold">Regular</span>
+                          <Dialog open={showRegularModal} onOpenChange={setShowRegularModal}>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-5 h-5 p-0 text-gray-400 hover:text-gray-600 ml-auto"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setShowRegularModal(true);
+                                }}
+                              >
+                                <Info size={16} />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-md">
+                              <DialogHeader>
+                                <DialogTitle className="flex items-center gap-2">
+                                  <Gamepad2 size={20} />
+                                  Regular Mode
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-3">
+                                <p className="text-gray-700">
+                                  Teams take turns answering questions in an orderly fashion.
+                                </p>
+                                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                  <h4 className="font-semibold text-blue-800 mb-2">How it works:</h4>
+                                  <ul className="text-sm text-blue-700 space-y-1">
+                                    <li>• Teams answer one at a time</li>
+                                    <li>• Click "Correct" or "Wrong" to score</li>
+                                    <li>• Turn automatically advances to next team</li>
+                                    <li>• Perfect for classroom settings</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 size={24} className="text-gray-700" />
+                          <span className="text-lg font-semibold">Shoutout</span>
+                          <Dialog open={showShoutoutModal} onOpenChange={setShowShoutoutModal}>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-5 h-5 p-0 text-gray-400 hover:text-gray-600 ml-auto"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setShowShoutoutModal(true);
+                                }}
+                              >
+                                <Info size={16} />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-md">
+                              <DialogHeader>
+                                <DialogTitle className="flex items-center gap-2">
+                                  <Volume2 size={20} />
+                                  Shoutout Mode
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-3">
+                                <p className="text-gray-700">
+                                  Fast-paced competition where all teams compete simultaneously!
+                                </p>
+                                <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                                  <h4 className="font-semibold text-purple-800 mb-2">How it works:</h4>
+                                  <ul className="text-sm text-purple-700 space-y-1">
+                                    <li>• All teams can answer at once</li>
+                                    <li>• Tap the team name who answered first</li>
+                                    <li>• Quick reactions and fast thinking</li>
+                                    <li>• Perfect for energetic groups</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </>
+                      )}
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="regular">
+                    <div className="flex items-center gap-3">
+                      <Gamepad2 size={20} className="text-gray-700" />
+                      <span className="font-semibold">Regular</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="shoutout">
+                    <div className="flex items-center gap-3">
+                      <Volume2 size={20} className="text-gray-700" />
+                      <span className="font-semibold">Shoutout</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
