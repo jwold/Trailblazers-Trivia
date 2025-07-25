@@ -120,12 +120,15 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
         </CardContent>
       </Card>
       {/* New Game Button */}
-      <Button
-        onClick={onNewGame}
-        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 text-xl font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 border-4 border-white/20 mb-4"
-      >
-        New Game
-      </Button>
+      <div className="flex justify-center mb-4">
+        <Button
+          onClick={onNewGame}
+          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 text-xl font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
+          style={{ minWidth: '200px' }}
+        >
+          New Game
+        </Button>
+      </div>
       
       {/* Share Results Button */}
       <div className="text-center">
