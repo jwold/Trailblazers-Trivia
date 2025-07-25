@@ -286,8 +286,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Check for winner
     const hasWinner = teams[currentTeamIndex].score >= (gameSession.targetScore || 10);
     
-    // Move to next team after answering
-    const nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
+    // Move to next team after answering (only in regular mode)
+    const nextTeamIndex = gameSession.gameMode === "regular" ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length : gameSession.currentTeamIndex;
     
     updateGameMutation.mutate({
       teams: teams,
@@ -348,8 +348,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Add question to history to prevent reappearance
     const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
-    // Move to next team
-    const nextTeamIndex = (gameSession.currentTeamIndex + 1) % gameSession.teams.length;
+    // Move to next team (only in regular mode)
+    const nextTeamIndex = gameSession.gameMode === "regular" ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length : gameSession.currentTeamIndex;
     
     updateGameMutation.mutate({
       currentTeamIndex: nextTeamIndex,
@@ -378,7 +378,77 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     }, 1000);
   };
 
-
+  const markTeamCorrect = (teamId: string) => {
+    if (!gameSession || !selectedDifficulty || !currentQuestion) return;
+    
+    const teams: Team[] = [...gameSession.teams];
+    const winningTeam = teams.find(team => team.id === teamId);
+    if (!winningTeam) return;
+    
+    const points = difficultyConfig[selectedDifficulty].points;
+    
+    // Update the winning team's score
+    const teamIndex = teams.findIndex(team => team.id === teamId);
+    teams[teamIndex].score += points;
+    teams[teamIndex].correctAnswers += 1;
+    
+    // Add question to history
+    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
+    
+    // Add detailed history entry
+    const detailedHistory: QuestionHistoryEntry[] = [...gameSession.detailedHistory];
+    detailedHistory.push({
+      questionId: currentQuestion.id,
+      teamId: winningTeam.id,
+      teamName: winningTeam.name,
+      difficulty: selectedDifficulty,
+      question: currentQuestion.question,
+      answer: currentQuestion.answer,
+      reference: currentQuestion.reference,
+      points: points,
+      wasCorrect: true,
+      timestamp: Date.now(),
+    });
+    
+    // Check for winner
+    const hasWinner = teams[teamIndex].score >= (gameSession.targetScore || 10);
+    
+    updateGameMutation.mutate({
+      teams: teams,
+      questionHistory: questionHistory,
+      detailedHistory: detailedHistory,
+      gamePhase: hasWinner ? "victory" : "playing",
+    });
+    
+    if (hasWinner) {
+      setTimeout(() => onGameEnd(), 2000);
+      return;
+    }
+    
+    // Trigger animation
+    setTeamAnimations({ [teamId]: 'correct' });
+    setTimeout(() => setTeamAnimations({}), 2000);
+    
+    // Auto-advance to next question
+    setTimeout(() => {
+      setQuestionNumber(prev => prev + 1);
+      setGamePhase("question-display");
+      setCurrentQuestion(null);
+      setEasyQuestion(null);
+      setHardQuestion(null);
+      setSelectedDifficulty(lastSelectedDifficulty);
+      setQuestionAnswered(false);
+      setAnswerVisible(false);
+      setQuestionBlurred(true);
+      setTeamAnimations({});
+      
+      // Auto-load new questions
+      setTimeout(() => {
+        fetchQuestionMutation.mutate("Easy");
+        fetchQuestionMutation.mutate("Hard");
+      }, 100);
+    }, 1000);
+  };
 
   const nextQuestion = () => {
     if (!gameSession || !currentQuestion) return;
@@ -533,7 +603,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             {/* Main Content */}
             <div className="relative">
               <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">
-                🎮 {gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'}'s Turn
+                🎮 {gameSession?.gameMode === "shoutout" ? "All Teams Compete!" : 
+                    `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'}'s Turn`}
               </h3>
               
             </div>
@@ -668,37 +739,72 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             </CardContent>
           </Card>
 
-          {/* Scoring buttons - Only visible when question is displayed */}
+          {/* Scoring Interface - Different for Regular vs Shoutout modes */}
           {!questionAnswered && (
             <>
-              <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">Choose the team's answer</h4>
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <Button
-                  onClick={() => markCorrect(false)}
-                  className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 flex items-center justify-center border-4 border-white/20"
-                  style={{ fontSize: '30px' }}
-                >
-                  Correct
-                </Button>
-                <Button
-                  onClick={markIncorrect}
-                  className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-8 px-8 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200 flex items-center justify-center border-4 border-white/20"
-                  style={{ fontSize: '30px' }}
-                >
-                  Wrong
-                </Button>
-              </div>
-              
-              {/* Skip Question Button */}
-              <div className="flex justify-center mb-6">
-                <Button
-                  onClick={skipQuestion}
-                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
-                >
-                  <SkipForward size={20} />
-                  Skip Question (Keep Turn)
-                </Button>
-              </div>
+              {gameSession.gameMode === "regular" ? (
+                <>
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                    Choose {currentTeam?.name}'s answer
+                  </h4>
+                  <div className="grid grid-cols-2 gap-6 mb-6">
+                    <Button
+                      onClick={() => markCorrect(false)}
+                      className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 flex items-center justify-center border-4 border-white/20"
+                      style={{ fontSize: '30px' }}
+                    >
+                      Correct
+                    </Button>
+                    <Button
+                      onClick={markIncorrect}
+                      className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-8 px-8 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200 flex items-center justify-center border-4 border-white/20"
+                      style={{ fontSize: '30px' }}
+                    >
+                      Wrong
+                    </Button>
+                  </div>
+                  
+                  {/* Skip Question Button */}
+                  <div className="flex justify-center mb-6">
+                    <Button
+                      onClick={skipQuestion}
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
+                    >
+                      <SkipForward size={20} />
+                      Skip Question (Keep Turn)
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                    Tap the team that answered first!
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    {teams.map((team) => (
+                      <Button
+                        key={team.id}
+                        onClick={() => markTeamCorrect(team.id)}
+                        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-6 px-6 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 flex items-center justify-center border-4 border-white/20 transform hover:scale-105"
+                        style={{ fontSize: '20px' }}
+                      >
+                        {team.name}
+                      </Button>
+                    ))}
+                  </div>
+                  
+                  {/* Skip Question Button */}
+                  <div className="flex justify-center mb-6">
+                    <Button
+                      onClick={skipQuestion}
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
+                    >
+                      <SkipForward size={20} />
+                      Skip Question
+                    </Button>
+                  </div>
+                </>
+              )}
             </>
           )}
 

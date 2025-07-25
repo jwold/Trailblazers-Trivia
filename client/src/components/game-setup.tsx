@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin } from "lucide-react";
+import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -100,6 +100,7 @@ const teamColors = [
 
 export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }: GameSetupProps) {
   const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
+  const [gameMode, setGameMode] = useState<"regular" | "shoutout">("regular");
   
   // Shuffle names for random assignment based on category
   const getShuffledNames = (category: GameType) => {
@@ -216,6 +217,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
       teams: teams,
       targetScore,
       category: categoryParam,
+      gameMode,
     });
   };
 
@@ -314,6 +316,68 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                 })}
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Game Mode Selection */}
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your game mode</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Regular Mode */}
+              <div
+                onClick={() => setGameMode("regular")}
+                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 ${
+                  gameMode === "regular" 
+                    ? "bg-gray-100 border-gray-400 ring-2 ring-gray-300 scale-105 transform" 
+                    : "bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105"
+                }`}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <Gamepad2 
+                    size={40} 
+                    className={`mb-3 ${gameMode === "regular" ? 'text-gray-700' : 'text-gray-400'}`} 
+                  />
+                  <h4 className={`text-lg font-bold mb-2 ${gameMode === "regular" ? 'text-gray-800' : 'text-gray-600'}`}>
+                    Regular
+                  </h4>
+                  <p className={`text-sm ${gameMode === "regular" ? 'text-gray-700' : 'text-gray-500'}`}>
+                    Teams take turns. Click "Correct" or "Wrong" to award points and advance to the next team.
+                  </p>
+                </div>
+                {gameMode === "regular" && (
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center">
+                    <Check size={14} className="text-white" />
+                  </div>
+                )}
+              </div>
+
+              {/* Shoutout Mode */}
+              <div
+                onClick={() => setGameMode("shoutout")}
+                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 ${
+                  gameMode === "shoutout" 
+                    ? "bg-gray-100 border-gray-400 ring-2 ring-gray-300 scale-105 transform" 
+                    : "bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105"
+                }`}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <Volume2 
+                    size={40} 
+                    className={`mb-3 ${gameMode === "shoutout" ? 'text-gray-700' : 'text-gray-400'}`} 
+                  />
+                  <h4 className={`text-lg font-bold mb-2 ${gameMode === "shoutout" ? 'text-gray-800' : 'text-gray-600'}`}>
+                    Shoutout
+                  </h4>
+                  <p className={`text-sm ${gameMode === "shoutout" ? 'text-gray-700' : 'text-gray-500'}`}>
+                    All teams compete! Tap the team name of whoever answers first to award them the points.
+                  </p>
+                </div>
+                {gameMode === "shoutout" && (
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center">
+                    <Check size={14} className="text-white" />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Team Setup Section */}

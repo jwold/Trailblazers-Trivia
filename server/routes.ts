@@ -29,6 +29,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         gamePhase: "playing",
         isActive: true,
         category: gameData.category || 'bible',
+        gameMode: gameData.gameMode || 'regular',
       });
 
       res.json({ gameCode, session });

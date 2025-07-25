@@ -24,6 +24,7 @@ export const gameSession = pgTable("game_sessions", {
   currentTeamIndex: integer("current_team_index").default(0),
   targetScore: integer("target_score").default(10),
   category: varchar("category", { length: 20 }).notNull().default("bible"),
+  gameMode: varchar("game_mode", { length: 20 }).notNull().default("regular"), // regular, shoutout
 
   questionHistory: text("question_history").default("[]"), // JSON string of used question IDs
   detailedHistory: text("detailed_history").default("[]"), // JSON string of detailed question history
@@ -69,6 +70,7 @@ export const gameSetupSchema = z.object({
   teams: z.array(teamSchema).min(2, "At least 2 teams required"),
   targetScore: z.number().min(5).max(50).default(10),
   category: z.string().optional(),
+  gameMode: z.enum(["regular", "shoutout"]).default("regular"),
 });
 
 export type User = typeof users.$inferSelect;
