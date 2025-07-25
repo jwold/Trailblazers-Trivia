@@ -540,103 +540,184 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </div>
       )}
 
-      {/* Score Display */}
+      {/* Game Status - Combined Scores and History */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
-          
-          <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
-            {teams.filter((team, index) => {
-              // Always show all teams if there are only 2 teams
-              if (teams.length <= 2) return true;
-              if (teamsExpanded) return true;
-              // Only show current team when collapsed (simplified logic to prevent bounce)
-              return index === gameSession.currentTeamIndex;
-            }).map((team, originalIndex) => {
-              const index = teams.findIndex(t => t.id === team.id);
-              const colorClass = "bg-gray-100 border-gray-300";
-              
-              const textClass = "text-gray-800";
-
-              const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
-              
-              // Animation classes for correct/incorrect feedback
-              const animationClass = teamAnimations[team.id] === 'correct' 
-                ? 'animate-correct-glow bg-green-200 border-green-400 shadow-lg shadow-green-300/50' 
-                : teamAnimations[team.id] === 'incorrect' 
-                ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
-                : '';
-
-              // Transition classes for team switching - only when not expanding/collapsing
-              const isCurrentTeam = index === gameSession.currentTeamIndex;
-              const isPreviousTeam = teamTransitioning && prevTeamIndexRef.current !== null && index === prevTeamIndexRef.current;
-              
-              // Disable transition animations during expand/collapse to prevent bounce
-              const transitionClass = '';
-              
-              return (
-                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 flex-1">
-                      {editingTeamId === team.id ? (
-                        <div className="flex items-center gap-2 flex-1">
-                          <Input
-                            value={editingTeamName}
-                            onChange={(e) => setEditingTeamName(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') saveTeamName();
-                              if (e.key === 'Escape') cancelEditingTeamName();
-                            }}
-                            className="text-lg font-bold border-2 border-gray-400 focus:border-gray-600"
-                            autoFocus
-                          />
-                          <Button
-                            onClick={saveTeamName}
-                            size="sm"
-                            className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
-                          >
-                            <Check size={14} />
-                          </Button>
-                          <Button
-                            onClick={cancelEditingTeamName}
-                            size="sm"
-                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1"
-                          >
-                            <X size={14} className="text-gray-700" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2 flex-1">
-                          <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
-                          <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600 flex-1 hidden" />
-                          <Button
-                            onClick={() => startEditingTeamName(team.id, team.name)}
-                            size="sm"
-                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
-                          >
-                            <Edit2 size={14} className="text-gray-700" />
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                    <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
-                  </div>
-
-                </div>
-              );
-            })}
-          </div>
-          
-          {/* Expand/Collapse Teams Button - Only show if 3+ teams */}
-          {teams.length >= 3 && (
-            <div className="text-center mt-4">
+          {/* Tab Navigation */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex gap-2">
               <Button
-                onClick={() => setTeamsExpanded(!teamsExpanded)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
+                onClick={() => setShowHistory(false)}
+                className={`px-4 py-2 font-semibold transition-all duration-200 ${
+                  !showHistory 
+                    ? 'bg-gray-600 hover:bg-gray-700 text-white' 
+                    : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                }`}
               >
-                {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
+                <Users className="mr-2" size={16} />
+                Teams & Scores
               </Button>
+              {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && (
+                <Button
+                  onClick={() => setShowHistory(true)}
+                  className={`px-4 py-2 font-semibold transition-all duration-200 ${
+                    showHistory 
+                      ? 'bg-gray-600 hover:bg-gray-700 text-white' 
+                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                  }`}
+                >
+                  <History className="mr-2" size={16} />
+                  History ({gameSession.detailedHistory.length})
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Teams & Scores View */}
+          {!showHistory && (
+            <>
+              <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
+                {teams.filter((team, index) => {
+                  // Always show all teams if there are only 2 teams
+                  if (teams.length <= 2) return true;
+                  if (teamsExpanded) return true;
+                  // Only show current team when collapsed (simplified logic to prevent bounce)
+                  return index === gameSession.currentTeamIndex;
+                }).map((team, originalIndex) => {
+                  const index = teams.findIndex(t => t.id === team.id);
+                  const colorClass = "bg-gray-100 border-gray-300";
+                  
+                  const textClass = "text-gray-800";
+
+                  const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
+                  
+                  // Animation classes for correct/incorrect feedback
+                  const animationClass = teamAnimations[team.id] === 'correct' 
+                    ? 'animate-correct-glow bg-green-200 border-green-400 shadow-lg shadow-green-300/50' 
+                    : teamAnimations[team.id] === 'incorrect' 
+                    ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
+                    : '';
+
+                  // Transition classes for team switching - only when not expanding/collapsing
+                  const isCurrentTeam = index === gameSession.currentTeamIndex;
+                  const isPreviousTeam = teamTransitioning && prevTeamIndexRef.current !== null && index === prevTeamIndexRef.current;
+                  
+                  // Disable transition animations during expand/collapse to prevent bounce
+                  const transitionClass = '';
+                  
+                  return (
+                    <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 flex-1">
+                          {editingTeamId === team.id ? (
+                            <div className="flex items-center gap-2 flex-1">
+                              <Input
+                                value={editingTeamName}
+                                onChange={(e) => setEditingTeamName(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') saveTeamName();
+                                  if (e.key === 'Escape') cancelEditingTeamName();
+                                }}
+                                className="text-lg font-bold border-2 border-gray-400 focus:border-gray-600"
+                                autoFocus
+                              />
+                              <Button
+                                onClick={saveTeamName}
+                                size="sm"
+                                className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
+                              >
+                                <Check size={14} />
+                              </Button>
+                              <Button
+                                onClick={cancelEditingTeamName}
+                                size="sm"
+                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1"
+                              >
+                                <X size={14} className="text-gray-700" />
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 flex-1">
+                              <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
+                              <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600 flex-1 hidden" />
+                              <Button
+                                onClick={() => startEditingTeamName(team.id, team.name)}
+                                size="sm"
+                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
+                              >
+                                <Edit2 size={14} className="text-gray-700" />
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                        <div className={`text-3xl font-bold ${textClass} ml-2`}>{team.score}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Expand/Collapse Teams Button - Only show if 3+ teams */}
+              {teams.length >= 3 && (
+                <div className="text-center mt-4">
+                  <Button
+                    onClick={() => setTeamsExpanded(!teamsExpanded)}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
+                  >
+                    {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Question History View */}
+          {showHistory && (
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {gameSession.detailedHistory.map((entry: QuestionHistoryEntry, index: number) => (
+                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-200'}`}>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge className={`${entry.wasCorrect ? 'bg-gray-700' : 'bg-gray-600'} text-white`}>
+                          {entry.teamName}
+                        </Badge>
+                        <Badge variant="outline">{entry.difficulty}</Badge>
+                        <Badge variant="outline">{entry.points} pts</Badge>
+                      </div>
+                      <h4 className="font-semibold text-gray-800 mb-2">{entry.question}</h4>
+                      <p className="text-gray-600 mb-1"><strong>Answer:</strong> {entry.answer}</p>
+                      <p className="text-gray-500 text-sm">{entry.reference}</p>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <Button
+                        onClick={() => editHistoryEntry(index, true)}
+                        disabled={entry.wasCorrect}
+                        size="sm"
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
+                      >
+                        <Check size={14} />
+                      </Button>
+                      <Button
+                        onClick={() => editHistoryEntry(index, false)}
+                        disabled={!entry.wasCorrect}
+                        size="sm"
+                        className="bg-gray-700 hover:bg-gray-800 text-white px-2 py-1"
+                      >
+                        <X size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {gameSession.detailedHistory.length === 0 && (
+                <div className="text-center text-gray-500 py-8">
+                  No questions answered yet
+                </div>
+              )}
             </div>
           )}
+
         </CardContent>
       </Card>
 

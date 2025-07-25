@@ -201,3 +201,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added "Choose the team's answer" title above scoring buttons and added descriptive labels "Answered correct" and "Answered wrong" to checkmark and X buttons for better user guidance
 - **January 25, 2025**: Made header sticky again with top-0 positioning and z-40 for proper layering
 - **January 25, 2025**: Updated scoring buttons to use 30px font size, simplified labels to "Correct" and "Wrong", and removed check/X icons for cleaner interface
+- **January 25, 2025**: Combined Score Display and Question History into unified "Game Status" card with tabbed interface - "Teams & Scores" and "History" tabs with question count indicator
