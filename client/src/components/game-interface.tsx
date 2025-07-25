@@ -456,89 +456,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </>
       )}
 
-      {/* Question History */}
-      {showHistory && (
-        <Card className="border-4 border-gray-200 shadow-xl">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center">
-                <div className="bg-gray-600 p-3 rounded-full mr-4">
-                  <History className="text-white" size={20} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800">Question History</h3>
-              </div>
-              <Button
-                onClick={() => setShowHistory(false)}
-                size="sm"
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700"
-              >
-                ×
-              </Button>
-            </div>
-            
-            <div className="space-y-4 max-h-96 overflow-y-auto">
-              {gameSession.detailedHistory.map((entry: QuestionHistoryEntry, index: number) => (
-                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge className={`${entry.wasCorrect ? 'bg-gray-700' : 'bg-gray-600'} text-white`}>
-                          {entry.teamName}
-                        </Badge>
-                        <Badge variant="outline">{entry.difficulty}</Badge>
-                        <Badge variant="outline">{entry.points} pts</Badge>
-                      </div>
-                      <h4 className="font-semibold text-gray-800 mb-2">{entry.question}</h4>
-                      <p className="text-gray-600 mb-1"><strong>Answer:</strong> {entry.answer}</p>
-                      <p className="text-gray-500 text-sm">{entry.reference}</p>
-                    </div>
-                    <div className="flex gap-2 ml-4">
-                      <Button
-                        onClick={() => editHistoryEntry(index, true)}
-                        disabled={entry.wasCorrect}
-                        size="sm"
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
-                      >
-                        <Check size={14} />
-                      </Button>
-                      <Button
-                        onClick={() => editHistoryEntry(index, false)}
-                        disabled={!entry.wasCorrect}
-                        size="sm"
-                        className="bg-gray-700 hover:bg-gray-800 text-white px-2 py-1"
-                      >
-                        <X size={14} />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {gameSession.detailedHistory.length === 0 && (
-                <div className="text-center text-gray-500 py-8">
-                  No questions answered yet
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
 
 
-
-
-      {/* Show History Button - Only when history exists and is hidden */}
-      {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && !showHistory && (
-        <div className="text-center mb-4">
-          <Button
-            onClick={() => setShowHistory(true)}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 font-semibold transition-all duration-200"
-          >
-            <History className="mr-2 text-gray-700" size={16} />
-            Show History
-          </Button>
-        </div>
-      )}
 
       {/* Game Status - Combined Scores and History */}
       <Card className="border-4 border-gray-200 shadow-xl">
