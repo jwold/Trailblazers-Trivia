@@ -443,10 +443,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
           {/* Next Question Button - Only visible after question is answered */}
           {questionAnswered && (
-            <div className="text-center">
+            <div className="flex justify-center">
               <Button
                 onClick={nextQuestion}
                 className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-8 px-8 text-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
+                style={{ minWidth: '200px' }}
               >
                 Next Question
               </Button>
