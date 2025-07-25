@@ -460,7 +460,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               {currentQuestion && (
                 <div className="text-center">
                   <div className="text-sm font-semibold text-gray-600 mb-2">
-                    {selectedDifficulty} • {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''}
+                    {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia
                   </div>
                   <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
                   {gameSession?.category === 'bible' && currentQuestion.reference && (
