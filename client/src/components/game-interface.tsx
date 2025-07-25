@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Volume2 } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Volume2, Mic } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -45,6 +45,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [answerVisible, setAnswerVisible] = useState(false);
   const [questionBlurred, setQuestionBlurred] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isSpeakingAnswer, setIsSpeakingAnswer] = useState(false);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -92,6 +93,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         window.speechSynthesis.cancel();
       }
       setIsSpeaking(false);
+      setIsSpeakingAnswer(false);
     };
   }, [currentQuestion]);
 
@@ -183,6 +185,36 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
+    
+    // Start speaking
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const readAnswer = () => {
+    if (!currentQuestion || !('speechSynthesis' in window)) return;
+    
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+    
+    if (isSpeakingAnswer) {
+      setIsSpeakingAnswer(false);
+      return;
+    }
+    
+    // Create speech text - just the answer
+    const textToRead = `The answer is: ${currentQuestion.answer}`;
+    
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    
+    // Configure speech settings
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    // Handle speech events
+    utterance.onstart = () => setIsSpeakingAnswer(true);
+    utterance.onend = () => setIsSpeakingAnswer(false);
+    utterance.onerror = () => setIsSpeakingAnswer(false);
     
     // Start speaking
     window.speechSynthesis.speak(utterance);
@@ -608,8 +640,26 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       onClick={() => setAnswerVisible(false)}
                       className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                     >
-                      <div className="text-base text-gray-700 italic text-center">
-                        {currentQuestion.answer}
+                      <div className="flex items-center justify-center gap-3">
+                        <div className="text-base text-gray-700 italic text-center">
+                          {currentQuestion.answer}
+                        </div>
+                        
+                        {/* Text-to-Speech Button for Answer */}
+                        {'speechSynthesis' in window && (
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent hiding answer when clicking mic
+                              readAnswer();
+                            }}
+                            size="sm"
+                            className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
+                              isSpeakingAnswer ? 'animate-pulse' : ''
+                            }`}
+                          >
+                            <Mic size={14} />
+                          </Button>
+                        )}
                       </div>
                     </div>
                   )}
