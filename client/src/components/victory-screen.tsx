@@ -38,7 +38,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
   return (
     <div className="space-y-6">
       {/* Winner Announcement */}
-      <Card className="bg-gray-100 border-4 border-gray-200 shadow-xl">
+      <Card className="bg-gray-200 border-4 border-gray-300 shadow-xl">
         <CardContent className="p-8 text-center">
           <div className="bounce-slow mb-4">
             <Crown className="mx-auto text-gray-600" size={64} />

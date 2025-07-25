@@ -71,7 +71,7 @@ export default function Home() {
       </header>
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
-        <div className="bg-gray-100 relative overflow-hidden border-b-2 border-gray-200">
+        <div className="bg-gray-200 relative overflow-hidden border-b-2 border-gray-300">
           <div className="container mx-auto px-4 py-12 max-w-3xl relative z-10">
             <div className="text-center">
               {/* Floating Bible Icons */}

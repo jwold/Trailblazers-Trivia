@@ -321,7 +321,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   return (
     <div className="space-y-6">
       {/* Game Phase Banner - Always visible */}
-      <div className="bg-gray-100 relative overflow-hidden mb-6 rounded-xl border-2 border-gray-200">
+      <div className="bg-gray-200 relative overflow-hidden mb-6 rounded-xl border-2 border-gray-300">
         <div className="px-6 py-8 relative z-10">
           <div className="text-center">
             {/* Floating Icons */}
