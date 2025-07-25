@@ -286,8 +286,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Check for winner
     const hasWinner = teams[currentTeamIndex].score >= (gameSession.targetScore || 10);
     
-    // Move to next team after answering (only in regular mode)
-    const nextTeamIndex = gameSession.gameMode === "regular" ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length : gameSession.currentTeamIndex;
+    // Move to next team after answering (only in regular mode with multiple teams)
+    const nextTeamIndex = (gameSession.gameMode === "regular" && gameSession.teams.length > 1) 
+      ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length 
+      : gameSession.currentTeamIndex;
     
     updateGameMutation.mutate({
       teams: teams,
@@ -348,8 +350,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Add question to history to prevent reappearance
     const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
     
-    // Move to next team (only in regular mode)
-    const nextTeamIndex = gameSession.gameMode === "regular" ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length : gameSession.currentTeamIndex;
+    // Move to next team (only in regular mode with multiple teams)
+    const nextTeamIndex = (gameSession.gameMode === "regular" && gameSession.teams.length > 1) 
+      ? (gameSession.currentTeamIndex + 1) % gameSession.teams.length 
+      : gameSession.currentTeamIndex;
     
     updateGameMutation.mutate({
       currentTeamIndex: nextTeamIndex,

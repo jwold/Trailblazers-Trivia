@@ -118,7 +118,6 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     const initialNames = getShuffledNames(selectedGameType);
     return [
       { id: nanoid(), name: initialNames[0], color: "blue", score: 0, correctAnswers: 0 },
-      { id: nanoid(), name: initialNames[1], color: "green", score: 0, correctAnswers: 0 },
     ];
   });
   // Track which team names have been manually customized by users
@@ -190,7 +189,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   };
 
   const removeTeam = (teamId: string) => {
-    if (teams.length > 2) {
+    if (teams.length > 1) {
       setTeams(teams.filter(team => team.id !== teamId));
       // Remove the team from customized names tracking
       setCustomizedTeamNames(prev => {
@@ -203,10 +202,10 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
 
   const handleStartGame = () => {
     // Use teams as they are (default names are fine)
-    if (teams.length < 2) {
+    if (teams.length < 1) {
       toast({
         title: "Error",
-        description: "Please add at least 2 teams.",
+        description: "Please add at least 1 team.",
         variant: "destructive",
       });
       return;
@@ -407,7 +406,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                     onChange={(e) => updateTeamName(team.id, e.target.value)}
                     className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
                   />
-                  {index >= 2 && (
+                  {index >= 1 && (
                     <Button
                       onClick={() => removeTeam(team.id)}
                       size="sm"
