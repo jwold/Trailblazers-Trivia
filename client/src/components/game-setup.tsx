@@ -169,7 +169,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           {/* Game Category Selection */}
-          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your trivia category</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your trivia category</h3>
           <div className="grid grid-cols-5 gap-0 mb-8">
             {(Object.keys(gameTypeConfig) as GameType[]).map((gameType, index) => {
               const config = gameTypeConfig[gameType];
@@ -187,12 +187,12 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                 borderClasses = "border-2";
               } else if (isFirst) {
                 borderRadiusClasses = "rounded-l-xl";
-                borderClasses = "border-2 border-r-0";
+                borderClasses = "border-2 border-r";
               } else if (isLast) {
                 borderRadiusClasses = "rounded-r-xl";
                 borderClasses = "border-2 border-l-0";
               } else {
-                borderClasses = "border-t-2 border-b-2";
+                borderClasses = "border-t-2 border-b-2 border-r";
               }
               
               return (
