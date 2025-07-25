@@ -345,7 +345,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               </h3>
               <p className="text-lg text-gray-600 font-medium">
                 {gamePhase === "difficulty-selection" 
-                  ? "Choose your question difficulty" 
+                  ? `Choose your question difficulty • ${gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia` 
                   : `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'} is answering the question.`
                 }
               </p>
@@ -406,7 +406,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
             <div className="text-center">
               <div className="text-sm font-semibold text-gray-600 mb-2">
-                {selectedDifficulty?.toUpperCase()}
+                {selectedDifficulty?.toUpperCase()} • {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} TRIVIA
               </div>
               <h4 className="text-2xl font-bold text-gray-800 mb-4">{currentQuestion.question}</h4>
               <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
