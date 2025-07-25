@@ -239,3 +239,5 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Total database now contains 4,005+ questions across all categories with comprehensive Bible coverage from Genesis through Revelation
 - **January 25, 2025**: Successfully processed complete Bible CSV import using batch SQL processing with proper ID sequencing from 6001-6500
 - **January 25, 2025**: Updated database distribution: Animals (995), US History (980), Bible (950), Geography (540), World History (540)
+- **January 25, 2025**: Added conditional Bible reference display - references only show for Bible category questions in both game display and history
+- **January 25, 2025**: Implemented responsive category selection - desktop shows visual card grid, mobile uses dropdown for better touch experience

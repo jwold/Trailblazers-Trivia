@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
@@ -206,7 +207,9 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
         <CardContent className="p-6">
           {/* Game Category Selection */}
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-left">Choose your trivia category</h3>
-          <div className="grid grid-cols-5 gap-0 mb-8">
+          
+          {/* Desktop View - Hidden on mobile */}
+          <div className="hidden md:grid grid-cols-5 gap-0 mb-8">
             {(Object.keys(gameTypeConfig) as GameType[]).map((gameType, index) => {
               const config = gameTypeConfig[gameType];
               const IconComponent = config.icon;
@@ -258,6 +261,40 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
                   </div>
                 );
               })}
+          </div>
+
+          {/* Mobile View - Dropdown */}
+          <div className="md:hidden mb-8">
+            <Select value={selectedGameType} onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+                <SelectValue>
+                  <div className="flex items-center gap-3">
+                    {selectedGameType && gameTypeConfig[selectedGameType] && (
+                      <>
+                        {(() => {
+                          const IconComponent = gameTypeConfig[selectedGameType].icon;
+                          return <IconComponent size={24} className={gameTypeConfig[selectedGameType].iconColor} />;
+                        })()}
+                        <span className="text-lg font-semibold">{gameTypeConfig[selectedGameType].label}</span>
+                      </>
+                    )}
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(gameTypeConfig).map(([gameType, config]) => {
+                  const IconComponent = config.icon;
+                  return (
+                    <SelectItem key={gameType} value={gameType}>
+                      <div className="flex items-center gap-3 py-2">
+                        <IconComponent size={20} className={config.iconColor} />
+                        <span className="font-medium">{config.label}</span>
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Team Setup Section */}
