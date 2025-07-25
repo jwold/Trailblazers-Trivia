@@ -20,8 +20,8 @@ type GamePhase = "difficulty-selection" | "question-display";
 type Difficulty = "Easy" | "Hard";
 
 const difficultyConfig = {
-  Easy: { points: 1, bibleAssistPoints: 0.5, color: "gray", bgColor: "bg-gray-600", hoverColor: "hover:bg-gray-700" },
-  Hard: { points: 3, bibleAssistPoints: 1, color: "gray", bgColor: "bg-gray-800", hoverColor: "hover:bg-gray-900" },
+  Easy: { points: 1, bibleAssistPoints: 0.5, color: "pastel-green", bgColor: "bg-pastel-green-dark", hoverColor: "hover:bg-green-600" },
+  Hard: { points: 3, bibleAssistPoints: 1, color: "pastel-purple", bgColor: "bg-pastel-purple-dark", hoverColor: "hover:bg-purple-600" },
 };
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
@@ -322,7 +322,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     <div className="space-y-6">
       {/* Game Phase Banner */}
       {gamePhase === "difficulty-selection" && (
-        <div className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 relative overflow-hidden mb-6 rounded-xl">
+        <div className="bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-600 relative overflow-hidden mb-6 rounded-xl">
           <div className="px-6 py-8 relative z-10">
             <div className="text-center text-white">
               {/* Floating Icons */}
@@ -362,7 +362,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       )}
 
       {/* Score Display */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-pastel-blue shadow-xl bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
           
           <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
@@ -374,7 +374,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               return index === gameSession.currentTeamIndex;
             }).map((team, originalIndex) => {
               const index = teams.findIndex(t => t.id === team.id);
-              const colorClass = "bg-gray-100 border-gray-300";
+              const colorClass = "bg-pastel-blue border-pastel-blue";
               
               const textClass = "text-gray-800";
 
@@ -382,9 +382,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               
               // Animation classes for correct/incorrect feedback
               const animationClass = teamAnimations[team.id] === 'correct' 
-                ? 'animate-correct-glow bg-green-200 border-green-400 shadow-lg shadow-green-300/50' 
+                ? 'animate-correct-glow bg-pastel-green border-pastel-green-dark shadow-lg shadow-green-300/50' 
                 : teamAnimations[team.id] === 'incorrect' 
-                ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
+                ? 'animate-incorrect-shake bg-pastel-pink border-pastel-pink-dark shadow-lg shadow-pink-300/50' 
                 : '';
 
               // Transition classes for team switching - only when not expanding/collapsing
@@ -395,7 +395,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               const transitionClass = '';
               
               return (
-                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
+                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-pastel-purple-dark' : ''} transition-all duration-200 ease-in-out`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1">
                       {editingTeamId === team.id ? (
@@ -492,7 +492,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {gamePhase === "question-display" && currentQuestion && (
         <>
           {/* Question */}
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border-2 border-gray-200 mb-6">
+          <div className="bg-gradient-to-r from-pastel-yellow to-pastel-orange p-6 rounded-xl border-2 border-pastel-yellow mb-6">
             <div className="text-center">
               <div className="text-sm font-semibold text-gray-600 mb-2">
                 {selectedDifficulty?.toUpperCase()}
@@ -520,13 +520,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <div className="grid grid-cols-2 gap-3 mb-6">
               <Button
                 onClick={() => markCorrect(false)}
-                className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-lg"
               >
                 <Check size={24} />
               </Button>
               <Button
                 onClick={markIncorrect}
-                className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
+                className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-lg"
               >
                 <X size={24} />
               </Button>
@@ -538,7 +538,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <div className="text-center">
               <Button
                 onClick={nextQuestion}
-                className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-6 px-12 text-xl font-bold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-gray-400 ring-4 ring-gray-300"
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-6 px-12 text-xl font-bold hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-2xl border-4 border-blue-300 ring-4 ring-blue-200"
               >
                 <SkipForward className="mr-3" size={24} />
                 Next Question

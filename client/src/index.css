@@ -24,12 +24,19 @@
   --ring: hsl(0, 0%, 4%);
   --radius: 0.75rem;
   
-  /* Custom brand colors - converted to grayscale */
-  --brand-blue: hsl(0, 0%, 60%);
-  --brand-green: hsl(0, 0%, 39%);
-  --brand-yellow: hsl(0, 0%, 80%);
-  --brand-orange: hsl(0, 0%, 60%);
-  --brand-purple: hsl(0, 0%, 45%);
+  /* Kid-friendly pastel colors with accessibility */
+  --pastel-blue: hsl(210, 60%, 85%);
+  --pastel-blue-dark: hsl(210, 70%, 45%);
+  --pastel-green: hsl(140, 50%, 85%);
+  --pastel-green-dark: hsl(140, 60%, 40%);
+  --pastel-purple: hsl(270, 50%, 85%);
+  --pastel-purple-dark: hsl(270, 60%, 45%);
+  --pastel-pink: hsl(330, 60%, 88%);
+  --pastel-pink-dark: hsl(330, 70%, 50%);
+  --pastel-yellow: hsl(50, 70%, 88%);
+  --pastel-yellow-dark: hsl(50, 80%, 45%);
+  --pastel-orange: hsl(30, 70%, 85%);
+  --pastel-orange-dark: hsl(30, 80%, 45%);
 }
 
 .dark {
@@ -60,40 +67,87 @@
   }
 
   body {
-    @apply font-sans antialiased bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 min-h-screen;
+    @apply font-sans antialiased bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen;
   }
 }
 
 @layer utilities {
-  .brand-blue {
-    color: hsl(0, 0%, 60%);
+  /* Pastel background colors */
+  .bg-pastel-blue {
+    background-color: var(--pastel-blue);
   }
-  .bg-brand-blue {
-    background-color: hsl(0, 0%, 60%);
+  .bg-pastel-blue-dark {
+    background-color: var(--pastel-blue-dark);
   }
-  .brand-green {
-    color: hsl(0, 0%, 39%);
+  .bg-pastel-green {
+    background-color: var(--pastel-green);
   }
-  .bg-brand-green {
-    background-color: hsl(0, 0%, 39%);
+  .bg-pastel-green-dark {
+    background-color: var(--pastel-green-dark);
   }
-  .brand-yellow {
-    color: hsl(0, 0%, 80%);
+  .bg-pastel-purple {
+    background-color: var(--pastel-purple);
   }
-  .bg-brand-yellow {
-    background-color: hsl(0, 0%, 80%);
+  .bg-pastel-purple-dark {
+    background-color: var(--pastel-purple-dark);
   }
-  .brand-orange {
-    color: hsl(0, 0%, 60%);
+  .bg-pastel-pink {
+    background-color: var(--pastel-pink);
   }
-  .bg-brand-orange {
-    background-color: hsl(0, 0%, 60%);
+  .bg-pastel-pink-dark {
+    background-color: var(--pastel-pink-dark);
   }
-  .brand-purple {
-    color: hsl(0, 0%, 45%);
+  .bg-pastel-yellow {
+    background-color: var(--pastel-yellow);
   }
-  .bg-brand-purple {
-    background-color: hsl(0, 0%, 45%);
+  .bg-pastel-yellow-dark {
+    background-color: var(--pastel-yellow-dark);
+  }
+  .bg-pastel-orange {
+    background-color: var(--pastel-orange);
+  }
+  .bg-pastel-orange-dark {
+    background-color: var(--pastel-orange-dark);
+  }
+  
+  /* Pastel text colors */
+  .text-pastel-blue-dark {
+    color: var(--pastel-blue-dark);
+  }
+  .text-pastel-green-dark {
+    color: var(--pastel-green-dark);
+  }
+  .text-pastel-purple-dark {
+    color: var(--pastel-purple-dark);
+  }
+  .text-pastel-pink-dark {
+    color: var(--pastel-pink-dark);
+  }
+  .text-pastel-yellow-dark {
+    color: var(--pastel-yellow-dark);
+  }
+  .text-pastel-orange-dark {
+    color: var(--pastel-orange-dark);
+  }
+  
+  /* Pastel border colors */
+  .border-pastel-blue {
+    border-color: var(--pastel-blue);
+  }
+  .border-pastel-green {
+    border-color: var(--pastel-green);
+  }
+  .border-pastel-purple {
+    border-color: var(--pastel-purple);
+  }
+  .border-pastel-pink {
+    border-color: var(--pastel-pink);
+  }
+  .border-pastel-yellow {
+    border-color: var(--pastel-yellow);
+  }
+  .border-pastel-orange {
+    border-color: var(--pastel-orange);
   }
 }
 

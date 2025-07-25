@@ -120,7 +120,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       
 
       {/* Team Setup Card */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-pastel-blue shadow-xl bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your team names</h3>
 
@@ -155,7 +155,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             <div className="text-center mb-6">
               <Button
                 onClick={addTeam}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 border-2 border-dashed border-gray-400 py-3 px-6"
+                className="bg-pastel-green hover:bg-pastel-green-dark text-gray-700 border-2 border-dashed border-pastel-green-dark py-3 px-6"
               >
                 <Plus className="mr-2 text-gray-700" size={20} />
                 Add Team
@@ -164,7 +164,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           )}
 
           {/* Game Settings */}
-          <div className="bg-gray-50 p-4 rounded-xl mb-6">
+          <div className="bg-pastel-purple p-4 rounded-xl mb-6">
             <div className="flex items-center justify-center gap-4">
               <Button
                 onClick={() => setTargetScore(Math.max(10, targetScore - 5))}
@@ -195,7 +195,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
           <Button
             onClick={handleStartGame}
             disabled={createGameMutation.isPending}
-            className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-6 px-8 text-2xl font-bold hover:from-gray-700 hover:to-gray-900 transition-all duration-200 transform hover:scale-105 shadow-xl border-4 border-gray-400 ring-4 ring-gray-300"
+            className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-6 px-8 text-2xl font-bold hover:from-purple-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-xl border-4 border-purple-300 ring-4 ring-purple-200"
           >
             {createGameMutation.isPending ? (
               "Creating Game..."

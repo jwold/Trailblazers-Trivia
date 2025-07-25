@@ -71,7 +71,7 @@ export default function Home() {
       </header>
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
-        <div className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 relative overflow-hidden">
+        <div className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-500 relative overflow-hidden">
           <div className="container mx-auto px-4 py-12 max-w-3xl relative z-10">
             <div className="text-center text-white">
               {/* Floating Bible Icons */}
@@ -98,15 +98,15 @@ export default function Home() {
                 </p>
                 <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-pastel-green rounded-full animate-pulse border-2 border-white/30"></div>
                     <span>Up to 10 Teams</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse delay-200"></div>
+                    <div className="w-3 h-3 bg-pastel-yellow rounded-full animate-pulse delay-200 border-2 border-white/30"></div>
                     <span>450+ Questions</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse delay-400"></div>
+                    <div className="w-3 h-3 bg-pastel-pink rounded-full animate-pulse delay-400 border-2 border-white/30"></div>
                     <span>Mobile Friendly</span>
                   </div>
                 </div>
