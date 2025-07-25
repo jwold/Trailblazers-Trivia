@@ -220,3 +220,6 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added category-specific team name suggestions that automatically update when switching categories
 - **January 25, 2025**: Implemented seamless tabbed category interface with proper borders and elevation for active selection
 - **January 25, 2025**: Combined category and team setup into single unified card for cleaner interface
+- **January 25, 2025**: Fixed critical category filtering bug - removed database default value and updated schema to properly pass category from frontend to backend
+- **January 25, 2025**: Added visual category indicators in game interface showing active category during gameplay
+- **January 25, 2025**: Verified category-specific question filtering works correctly across all 5 categories

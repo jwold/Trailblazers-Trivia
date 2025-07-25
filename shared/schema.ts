@@ -68,6 +68,7 @@ export const questionHistoryEntrySchema = z.object({
 export const gameSetupSchema = z.object({
   teams: z.array(teamSchema).min(2, "At least 2 teams required"),
   targetScore: z.number().min(5).max(50).default(10),
+  category: z.string().optional(),
 });
 
 export type User = typeof users.$inferSelect;
