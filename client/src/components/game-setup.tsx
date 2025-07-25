@@ -328,13 +328,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
               {/* Regular Mode */}
               <div
                 onClick={() => setGameMode("regular")}
-                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 ${
+                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 aspect-square ${
                   gameMode === "regular" 
                     ? "bg-gray-100 border-gray-400 ring-2 ring-gray-300 scale-105 transform" 
                     : "bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105"
                 }`}
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center justify-center text-center h-full">
                   <Gamepad2 
                     size={40} 
                     className={`mb-3 ${gameMode === "regular" ? 'text-gray-700' : 'text-gray-400'}`} 
@@ -392,13 +392,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
               {/* Shoutout Mode */}
               <div
                 onClick={() => setGameMode("shoutout")}
-                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 ${
+                className={`relative cursor-pointer transition-all duration-200 rounded-xl border-2 p-6 aspect-square ${
                   gameMode === "shoutout" 
                     ? "bg-gray-100 border-gray-400 ring-2 ring-gray-300 scale-105 transform" 
                     : "bg-gray-50 border-gray-200 hover:bg-gray-100 transform hover:scale-105"
                 }`}
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center justify-center text-center h-full">
                   <Volume2 
                     size={40} 
                     className={`mb-3 ${gameMode === "shoutout" ? 'text-gray-700' : 'text-gray-400'}`} 
