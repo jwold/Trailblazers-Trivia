@@ -28,7 +28,7 @@ const difficultyConfig = {
 
 
 export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
-  const [gamePhase, setGamePhase] = useState<GamePhase>("difficulty-selection");
+  const [gamePhase, setGamePhase] = useState<GamePhase>("question-display");
   const [currentQuestion, setCurrentQuestion] = useState<TriviaQuestion | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("Easy");
   const [lastSelectedDifficulty, setLastSelectedDifficulty] = useState<Difficulty>("Easy");
@@ -52,6 +52,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     queryKey: ["/api/games", gameCode],
     refetchInterval: 1000,
   });
+
+  // Auto-load questions when game session is first loaded
+  useEffect(() => {
+    if (gameSession && !easyQuestion && !hardQuestion && !fetchQuestionMutation.isPending) {
+      fetchQuestionMutation.mutate("Easy");
+      fetchQuestionMutation.mutate("Hard");
+    }
+  }, [gameSession, easyQuestion, hardQuestion]);
 
   // Handle team transitions with fade effect
   useEffect(() => {
@@ -253,7 +261,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     // Team rotation is already handled in markCorrect/markIncorrect
     // Just reset the question state
     setQuestionNumber(prev => prev + 1);
-    setGamePhase("difficulty-selection");
+    setGamePhase("question-display");
     setCurrentQuestion(null);
     setEasyQuestion(null);
     setHardQuestion(null);
@@ -262,6 +270,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setAnswerVisible(false);
     // Clear any remaining team animations
     setTeamAnimations({});
+    
+    // Auto-load new questions
+    setTimeout(() => {
+      fetchQuestionMutation.mutate("Easy");
+      fetchQuestionMutation.mutate("Hard");
+    }, 100);
   };
 
   const skipQuestion = () => {
@@ -407,20 +421,11 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
 
 
-      {/* Question Display */}
-      {gamePhase === "difficulty-selection" && (
-        <>
-          <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">Ready for questions?</h4>
-          <div className="text-center mb-6">
-            <Button
-              onClick={() => selectDifficulty("Easy")}
-              disabled={fetchQuestionMutation.isPending}
-              className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-8 px-8 text-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
-            >
-              {fetchQuestionMutation.isPending ? "Loading Questions..." : "Start Questions"}
-            </Button>
-          </div>
-        </>
+      {/* Loading state */}
+      {(!easyQuestion && !hardQuestion && fetchQuestionMutation.isPending) && (
+        <div className="text-center py-8">
+          <div className="text-xl font-semibold text-gray-600">Loading questions...</div>
+        </div>
       )}
 
       {gamePhase === "question-display" && (easyQuestion || hardQuestion) && (

@@ -246,3 +246,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Added difficulty preference memory - system remembers last selected difficulty and defaults to it for subsequent rounds (Easy for first round)
 - **January 25, 2025**: Auto-loads both Easy and Hard questions when team starts their turn, allowing real-time switching between difficulties in tabbed interface
 - **January 25, 2025**: Enhanced tabbed interface to allow switching between difficulties at any time (even after seeing answers), starting directly with Easy question selected by default
+- **January 25, 2025**: Removed intermediate "Ready for questions?" screen - game now loads directly into Easy question with tabs interface, auto-loading both Easy and Hard questions immediately
