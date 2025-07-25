@@ -494,7 +494,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           {/* Teams & Scores View */}
           {!showHistory && (
             <>
-              <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
+              <div className="space-y-2">
                 {teams.filter((team, index) => {
                   // Always show all teams if there are only 2 teams
                   if (teams.length <= 2) return true;
@@ -503,17 +503,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   return index === gameSession.currentTeamIndex;
                 }).map((team, originalIndex) => {
                   const index = teams.findIndex(t => t.id === team.id);
-                  const colorClass = "bg-gray-100 border-gray-300";
-                  
                   const textClass = "text-gray-800";
 
                   const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
                   
                   // Animation classes for correct/incorrect feedback
                   const animationClass = teamAnimations[team.id] === 'correct' 
-                    ? 'animate-correct-glow bg-green-200 border-green-400 shadow-lg shadow-green-300/50' 
+                    ? 'animate-correct-glow text-green-700' 
                     : teamAnimations[team.id] === 'incorrect' 
-                    ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
+                    ? 'animate-incorrect-shake text-red-700' 
                     : '';
 
                   // Transition classes for team switching - only when not expanding/collapsing
@@ -524,7 +522,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   const transitionClass = '';
                   
                   return (
-                    <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-3 rounded-lg border ${index === gameSession.currentTeamIndex ? 'ring-2 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
+                    <div key={team.id} className={`${transitionClass} py-1 ${index === gameSession.currentTeamIndex ? 'font-bold' : ''} transition-all duration-200 ease-in-out`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 flex-1">
                           {editingTeamId === team.id ? (
@@ -556,19 +554,19 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                             </div>
                           ) : (
                             <div className="flex items-center gap-2 flex-1">
-                              <h4 className={`font-semibold ${textClass} text-sm`}>{team.name}</h4>
+                              <span className={`${animationClass || textClass} text-sm ${index === gameSession.currentTeamIndex ? 'font-bold' : 'font-medium'}`}>{team.name}</span>
                               <Progress value={progressWidth} className="h-2 bg-white [&>div]:bg-gray-600 flex-1 hidden" />
                               <Button
                                 onClick={() => startEditingTeamName(team.id, team.name)}
                                 size="sm"
-                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1"
+                                className="bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1"
                               >
-                                <Edit2 size={12} className="text-gray-700" />
+                                <Edit2 size={10} className="text-gray-500" />
                               </Button>
                             </div>
                           )}
                         </div>
-                        <div className={`text-xl font-bold ${textClass} ml-2`}>{team.score}</div>
+                        <div className={`text-lg font-bold ${animationClass || textClass} ml-2`}>{team.score}</div>
                       </div>
                     </div>
                   );

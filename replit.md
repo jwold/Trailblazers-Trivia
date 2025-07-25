@@ -209,3 +209,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Removed icons from New Game and Next Question buttons for cleaner interface aesthetic
 - **January 25, 2025**: Converted all banners from dark gradients to light gray backgrounds (bg-gray-200) with dark text for better visual hierarchy - banners no longer compete with main CTA buttons
 - **January 25, 2025**: Simplified team cards in Teams & Scores section with compact styling (smaller padding, text, and borders) since banner now clearly indicates whose turn it is
+- **January 25, 2025**: Completely minimized team display to simple text lines with no backgrounds, borders, or cards - maximum focus on main game actions while keeping clean score tracking
