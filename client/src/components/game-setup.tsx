@@ -336,13 +336,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
               >
                 <div className="flex flex-col items-center justify-center text-center h-full">
                   <Gamepad2 
-                    size={40} 
-                    className={`mb-3 ${gameMode === "regular" ? 'text-gray-700' : 'text-gray-400'}`} 
+                    size={32} 
+                    className={`mb-2 ${gameMode === "regular" ? 'text-gray-700' : 'text-gray-400'}`} 
                   />
-                  <div className="flex items-center gap-2 mb-2">
-                    <h4 className={`text-lg font-bold ${gameMode === "regular" ? 'text-gray-800' : 'text-gray-600'}`}>
+                  <div className="flex items-center gap-2">
+                    <div className={`text-sm font-semibold ${gameMode === "regular" ? 'text-gray-800' : 'text-gray-600'}`}>
                       Regular
-                    </h4>
+                    </div>
                     <Dialog open={showRegularModal} onOpenChange={setShowRegularModal}>
                       <DialogTrigger asChild>
                         <Button
@@ -400,13 +400,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
               >
                 <div className="flex flex-col items-center justify-center text-center h-full">
                   <Volume2 
-                    size={40} 
-                    className={`mb-3 ${gameMode === "shoutout" ? 'text-gray-700' : 'text-gray-400'}`} 
+                    size={32} 
+                    className={`mb-2 ${gameMode === "shoutout" ? 'text-gray-700' : 'text-gray-400'}`} 
                   />
-                  <div className="flex items-center gap-2 mb-2">
-                    <h4 className={`text-lg font-bold ${gameMode === "shoutout" ? 'text-gray-800' : 'text-gray-600'}`}>
+                  <div className="flex items-center gap-2">
+                    <div className={`text-sm font-semibold ${gameMode === "shoutout" ? 'text-gray-800' : 'text-gray-600'}`}>
                       Shoutout
-                    </h4>
+                    </div>
                     <Dialog open={showShoutoutModal} onOpenChange={setShowShoutoutModal}>
                       <DialogTrigger asChild>
                         <Button
