@@ -324,13 +324,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out">
             {teams.filter((team, index) => {
               if (teamsExpanded) return true;
-              // During transition, show both current and previous team to avoid jumping
-              if (teamTransitioning && prevTeamIndexRef.current !== null) {
-                return index === gameSession.currentTeamIndex || index === prevTeamIndexRef.current;
-              }
+              // Only show current team when collapsed (simplified logic to prevent bounce)
               return index === gameSession.currentTeamIndex;
             }).map((team, originalIndex) => {
               const index = teams.findIndex(t => t.id === team.id);
@@ -347,18 +344,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 ? 'animate-incorrect-shake bg-red-200 border-red-400 shadow-lg shadow-red-300/50' 
                 : '';
 
-              // Transition classes for team switching
+              // Transition classes for team switching - only when not expanding/collapsing
               const isCurrentTeam = index === gameSession.currentTeamIndex;
               const isPreviousTeam = teamTransitioning && prevTeamIndexRef.current !== null && index === prevTeamIndexRef.current;
               
-              const transitionClass = !teamsExpanded && teamTransitioning 
-                ? (isPreviousTeam ? 'animate-team-fade-out' : 'animate-team-fade-in')
-                : !teamsExpanded && !teamTransitioning && isCurrentTeam
-                ? 'animate-team-fade-in'
-                : '';
+              // Disable transition animations during expand/collapse to prevent bounce
+              const transitionClass = '';
               
               return (
-                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-300`}>
+                <div key={team.id} className={`${animationClass || colorClass} ${transitionClass} p-4 rounded-xl border-2 ${index === gameSession.currentTeamIndex ? 'ring-4 ring-gray-400' : ''} transition-all duration-200 ease-in-out`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1">
                       {editingTeamId === team.id ? (
@@ -414,7 +408,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           <div className="text-center mt-4">
             <Button
               onClick={() => setTeamsExpanded(!teamsExpanded)}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
             >
               {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
             </Button>

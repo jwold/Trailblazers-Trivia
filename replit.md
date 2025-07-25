@@ -179,3 +179,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Standardized all team background colors to consistent gray-100 with gray-300 borders for uniform appearance
 - **January 25, 2025**: Simplified team setup layout by removing outer wrapper div, keeping only flex container for cleaner interface
 - **January 25, 2025**: Moved team delete button to the right side of input field for better visual flow
+- **January 25, 2025**: Fixed team collapse/expand bounce animation by simplifying filtering logic and disabling conflicting transitions
