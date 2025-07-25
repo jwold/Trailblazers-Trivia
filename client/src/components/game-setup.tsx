@@ -122,7 +122,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
       {/* Team Setup Card */}
       <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
-          
+          <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Choose your team names</h3>
 
           <div className="space-y-4 mb-6">
             {teams.map((team, index) => {
