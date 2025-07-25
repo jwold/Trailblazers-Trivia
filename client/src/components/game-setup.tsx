@@ -58,6 +58,8 @@ const gameTypeConfig = {
 
 interface GameSetupProps {
   onGameStart: (gameCode: string) => void;
+  activeGameCode?: string;
+  onResumeGame?: () => void;
 }
 
 const categoryNames = {
@@ -96,7 +98,7 @@ const teamColors = [
   { name: "cyan", class: "bg-gray-600", bgClass: "bg-gray-100", borderClass: "border-gray-300", textClass: "text-gray-800" },
 ];
 
-export default function GameSetup({ onGameStart }: GameSetupProps) {
+export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }: GameSetupProps) {
   const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
   
   // Shuffle names for random assignment based on category
@@ -385,6 +387,16 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             </div>
           </div>
 
+          {/* Resume Game Button - Only show if there's an active game */}
+          {activeGameCode && onResumeGame && (
+            <Button
+              onClick={onResumeGame}
+              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 text-lg font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border-2 border-gray-300 mb-4"
+            >
+              Resume Game ({activeGameCode})
+            </Button>
+          )}
+
           {/* Start Game Button */}
           <Button
             onClick={handleStartGame}
@@ -394,7 +406,7 @@ export default function GameSetup({ onGameStart }: GameSetupProps) {
             {createGameMutation.isPending ? (
               "Creating Game..."
             ) : (
-              "Start"
+              "Start New Game"
             )}
           </Button>
         </CardContent>

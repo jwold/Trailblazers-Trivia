@@ -38,7 +38,13 @@ export default function Home() {
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
-            <div className="flex items-center gap-3">
+            <div 
+              className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              onClick={() => {
+                setGamePhase("setup");
+                setGameCode("");
+              }}
+            >
               <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                 <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" fill="currentColor">
                   <path d="M12 2L2 7V17C2 18.1 2.9 19 4 19H8V12H16V19H20C21.1 19 22 18.1 22 17V7L12 2Z"/>
@@ -138,7 +144,11 @@ export default function Home() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 max-w-3xl">
         {gamePhase === "setup" && (
-          <GameSetup onGameStart={handleGameStart} />
+          <GameSetup 
+            onGameStart={handleGameStart} 
+            activeGameCode={gameCode}
+            onResumeGame={() => setGamePhase("playing")}
+          />
         )}
         
         {gamePhase === "playing" && gameCode && (
