@@ -471,19 +471,32 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   {gameSession?.category === 'bible' && currentQuestion.reference && (
                     <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
                   )}
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="text-base text-gray-700 italic">Answer:</div>
-                    <div className={`text-base text-gray-700 italic transition-all duration-200 ${!answerVisible ? 'blur-sm select-none' : ''}`}>
-                      {currentQuestion.answer}
+                  {!answerVisible ? (
+                    <div className="text-center mt-4">
+                      <Button
+                        onClick={() => setAnswerVisible(true)}
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 text-sm font-medium"
+                      >
+                        Show Answer
+                      </Button>
                     </div>
-                    <Button
-                      onClick={() => setAnswerVisible(!answerVisible)}
-                      size="sm"
-                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
-                    >
-                      {answerVisible ? <EyeOff size={16} className="text-gray-700" /> : <Eye size={16} className="text-gray-700" />}
-                    </Button>
-                  </div>
+                  ) : (
+                    <div className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="text-base text-gray-700 font-semibold">Answer:</div>
+                        <div className="text-base text-gray-700 italic">
+                          {currentQuestion.answer}
+                        </div>
+                        <Button
+                          onClick={() => setAnswerVisible(false)}
+                          size="sm"
+                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-1 ml-2"
+                        >
+                          <EyeOff size={16} className="text-gray-700" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>
