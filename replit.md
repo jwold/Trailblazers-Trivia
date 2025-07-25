@@ -186,3 +186,4 @@ The application prioritizes simplicity and user experience while maintaining a c
 - **January 25, 2025**: Moved help button from bottom-right corner to top-right of header beside end game button
 - **January 25, 2025**: Modified team display logic to always show both teams when there are 2 teams during gameplay
 - **January 25, 2025**: Removed redundant "Hide History"/"Show History" button since history can be closed using the X button in the history card
+- **January 25, 2025**: Added conditional "Show History" button that only appears when history exists and is not currently displayed

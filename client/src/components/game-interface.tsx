@@ -574,14 +574,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
 
 
-      {/* Show History Button - Only when history is hidden */}
-      {!showHistory && (
-        <div className="text-center">
+      {/* Show History Button - Only when history exists and is hidden */}
+      {gameSession.detailedHistory && gameSession.detailedHistory.length > 0 && !showHistory && (
+        <div className="text-center mb-4">
           <Button
             onClick={() => setShowHistory(true)}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 font-semibold transition-all duration-200"
           >
-            <History className="mr-2" size={16} />
+            <History className="mr-2 text-gray-700" size={16} />
             Show History
           </Button>
         </div>
