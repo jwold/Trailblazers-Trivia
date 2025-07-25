@@ -271,24 +271,25 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
             
             <div className="mb-8">
               <div className="flex items-center gap-3">
-                <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
-                  <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
-                    <SelectValue>
-                      <div className="flex items-center gap-3">
-                        {gameMode === "regular" ? (
-                          <>
-                            <Gamepad2 size={24} className="text-gray-700" />
-                            <span className="text-lg font-semibold">Regular</span>
-                          </>
-                        ) : (
-                          <>
-                            <Volume2 size={24} className="text-gray-700" />
-                            <span className="text-lg font-semibold">Shoutout</span>
-                          </>
-                        )}
-                      </div>
-                    </SelectValue>
-                  </SelectTrigger>
+                <div className="flex-1">
+                  <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
+                    <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+                      <SelectValue>
+                        <div className="flex items-center gap-3">
+                          {gameMode === "regular" ? (
+                            <>
+                              <Gamepad2 size={24} className="text-gray-700" />
+                              <span className="text-lg font-semibold">Regular</span>
+                            </>
+                          ) : (
+                            <>
+                              <Volume2 size={24} className="text-gray-700" />
+                              <span className="text-lg font-semibold">Shoutout</span>
+                            </>
+                          )}
+                        </div>
+                      </SelectValue>
+                    </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="regular">
                       <div className="flex items-center gap-3">
@@ -303,7 +304,8 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                       </div>
                     </SelectItem>
                   </SelectContent>
-                </Select>
+                  </Select>
+                </div>
                 
                 <Button
                   variant="ghost"
