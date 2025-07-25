@@ -518,20 +518,25 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
           {/* Scoring buttons - Only visible when question is displayed */}
           {!questionAnswered && (
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <Button
-                onClick={() => markCorrect(false)}
-                className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              >
-                <Check size={24} />
-              </Button>
-              <Button
-                onClick={markIncorrect}
-                className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200"
-              >
-                <X size={24} />
-              </Button>
-            </div>
+            <>
+              <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">Choose the team's answer</h4>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <Button
+                  onClick={() => markCorrect(false)}
+                  className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-4 font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 flex flex-col items-center gap-1"
+                >
+                  <Check size={24} />
+                  <span className="text-sm">Answered correct</span>
+                </Button>
+                <Button
+                  onClick={markIncorrect}
+                  className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white py-4 px-4 font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-200 flex flex-col items-center gap-1"
+                >
+                  <X size={24} />
+                  <span className="text-sm">Answered wrong</span>
+                </Button>
+              </div>
+            </>
           )}
 
           {/* Next Question Button - Only visible after question is answered */}
