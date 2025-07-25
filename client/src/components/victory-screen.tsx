@@ -38,7 +38,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
   return (
     <div className="space-y-6">
       {/* Winner Announcement */}
-      <Card className="bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 text-white border-4 border-pastel-yellow shadow-xl">
+      <Card className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 text-white border-4 border-gray-200 shadow-xl">
         <CardContent className="p-8 text-center">
           <div className="bounce-slow mb-4">
             <Crown className="mx-auto" size={64} />
@@ -48,15 +48,17 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
         </CardContent>
       </Card>
       {/* Final Scoreboard */}
-      <Card className="border-4 border-pastel-blue shadow-xl bg-white/80 backdrop-blur-sm">
+      <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
           <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Final Scoreboard</h3>
           <div className="space-y-4">
             {sortedTeams.map((team, index) => {
-              const colorClass = index === 0 ? "bg-pastel-yellow border-pastel-yellow" :
-                               index === 1 ? "bg-pastel-blue border-pastel-blue" :
-                               index === 2 ? "bg-pastel-green border-pastel-green" :
-                               "bg-pastel-purple border-pastel-purple";
+              const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
+                               team.color === "green" ? "bg-gray-100 border-gray-300" :
+                               team.color === "yellow" ? "bg-gray-50 border-gray-200" :
+                               team.color === "red" ? "bg-gray-100 border-gray-300" :
+                               team.color === "purple" ? "bg-gray-100 border-gray-300" :
+                               "bg-gray-50 border-gray-200";
               
               const textClass = team.color === "blue" ? "text-gray-800" :
                                team.color === "green" ? "text-gray-800" :
@@ -120,7 +122,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* New Game Button */}
       <Button
         onClick={onNewGame}
-        className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-6 px-8 text-xl font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-green-300 mb-4"
+        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-6 px-8 text-xl font-bold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-gray-300 mb-4"
       >
         <Plus className="mr-3" size={24} />
         New Game
@@ -129,7 +131,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* Share Results Button */}
       <div className="text-center">
         <Button 
-          className="bg-pastel-blue hover:bg-pastel-blue-dark text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
           onClick={() => {
             const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
             if (navigator.share) {
