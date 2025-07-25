@@ -122,9 +122,8 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* New Game Button */}
       <Button
         onClick={onNewGame}
-        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-6 px-8 text-xl font-bold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg border-4 border-gray-300 mb-4"
+        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 text-xl font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 border-4 border-white/20 mb-4"
       >
-        <Plus className="mr-3" size={24} />
         New Game
       </Button>
       
