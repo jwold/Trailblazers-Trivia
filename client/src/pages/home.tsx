@@ -2,9 +2,10 @@ import { useState } from "react";
 import GameSetup from "../components/game-setup";
 import GameInterface from "../components/game-interface";
 import VictoryScreen from "../components/victory-screen";
-import { BookOpen, HelpCircle, X } from "lucide-react";
+import { BookOpen, HelpCircle, X, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "wouter";
 
 type GamePhase = "setup" | "playing" | "victory";
 
@@ -72,6 +73,15 @@ export default function Home() {
                   End Game
                 </Button>
               )}
+              <Link href="/admin">
+                <Button
+                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-lg p-2 transition-all duration-200"
+                  size="sm"
+                  title="Admin Panel"
+                >
+                  <Settings size={20} />
+                </Button>
+              </Link>
               <Button
                 onClick={() => setShowRules(!showRules)}
                 className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg p-2 transition-all duration-200"

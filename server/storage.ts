@@ -91,6 +91,35 @@ export class DatabaseStorage implements IStorage {
     const result = await db.delete(gameSession).where(eq(gameSession.gameCode, gameCode));
     return (result.rowCount ?? 0) > 0;
   }
+
+  // Admin methods for question management
+  async addQuestion(questionData: {
+    question: string;
+    answer: string;
+    difficulty: string;
+    reference: string;
+    category: string;
+  }): Promise<TriviaQuestion> {
+    const [newQuestion] = await db
+      .insert(triviaQuestions)
+      .values(questionData)
+      .returning();
+    return newQuestion;
+  }
+
+  async updateQuestion(id: number, updates: Partial<TriviaQuestion>): Promise<TriviaQuestion | undefined> {
+    const [updatedQuestion] = await db
+      .update(triviaQuestions)
+      .set(updates)
+      .where(eq(triviaQuestions.id, id))
+      .returning();
+    return updatedQuestion || undefined;
+  }
+
+  async deleteQuestion(id: number): Promise<boolean> {
+    const result = await db.delete(triviaQuestions).where(eq(triviaQuestions.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
 }
 
 export const storage = new DatabaseStorage();

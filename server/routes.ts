@@ -166,6 +166,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin API endpoints for question management
+  // Add a new question
+  app.post("/api/admin/questions", async (req, res) => {
+    try {
+      const { question, answer, difficulty, reference, category } = req.body;
+      
+      if (!question || !answer || !difficulty) {
+        return res.status(400).json({ message: "Question, answer, and difficulty are required" });
+      }
+
+      const newQuestion = await storage.addQuestion({
+        question,
+        answer,
+        difficulty,
+        reference: reference || "",
+        category: category || "bible"
+      });
+
+      res.json({ message: "Question added successfully", question: newQuestion });
+    } catch (error) {
+      console.error("Error adding question:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Update a question
+  app.put("/api/admin/questions/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { question, answer, difficulty, reference, category } = req.body;
+
+      const updatedQuestion = await storage.updateQuestion(parseInt(id), {
+        question,
+        answer,
+        difficulty,
+        reference,
+        category
+      });
+
+      if (!updatedQuestion) {
+        return res.status(404).json({ message: "Question not found" });
+      }
+
+      res.json({ message: "Question updated successfully", question: updatedQuestion });
+    } catch (error) {
+      console.error("Error updating question:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Delete a question
+  app.delete("/api/admin/questions/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await storage.deleteQuestion(parseInt(id));
+
+      if (!deleted) {
+        return res.status(404).json({ message: "Question not found" });
+      }
+
+      res.json({ message: "Question deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting question:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
