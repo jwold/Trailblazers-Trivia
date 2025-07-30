@@ -61,10 +61,18 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-  }, () => {
+  
+  console.log(`Starting server on port ${port}...`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`DATABASE_URL exists: ${!!process.env.DATABASE_URL}`);
+  
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`✅ Server successfully started on port ${port}`);
     log(`serving on port ${port}`);
+  });
+  
+  server.on('error', (error) => {
+    console.error('❌ Server startup error:', error);
+    process.exit(1);
   });
 })();
