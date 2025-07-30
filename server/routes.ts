@@ -150,6 +150,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Health check endpoint
+  app.get("/health", (req, res) => {
+    res.json({ status: "ok", message: "Server is running" });
+  });
+
   // Get all questions (for debugging)
   app.get("/api/questions", async (req, res) => {
     try {
