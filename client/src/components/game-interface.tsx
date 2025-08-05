@@ -922,8 +922,16 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         isOpen={showEditModal}
         onClose={() => setShowEditModal(false)}
         onSave={(updatedQuestion) => {
-          // Optionally refresh the current question data
-          // For now, we'll just close the modal
+          // Update the current question display immediately
+          if (currentQuestion && currentQuestion.id === updatedQuestion.id) {
+            // Update both Easy and Hard question states if they match
+            if (easyQuestion?.id === updatedQuestion.id) {
+              setEasyQuestion(updatedQuestion);
+            }
+            if (hardQuestion?.id === updatedQuestion.id) {
+              setHardQuestion(updatedQuestion);
+            }
+          }
           setShowEditModal(false);
         }}
       />
