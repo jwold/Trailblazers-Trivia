@@ -3,6 +3,7 @@ import GameSetup from "../components/game-setup";
 import GameInterface from "../components/game-interface";
 import VictoryScreen from "../components/victory-screen";
 import { BookOpen, X, Settings } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "wouter";
@@ -32,9 +33,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white border-b-4 border-gray-300">
+      <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b-4 border-gray-300 dark:border-gray-600">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
@@ -51,10 +52,10 @@ export default function Home() {
                   <path d="M8 19V21C8 22.1 8.9 23 10 23H14C15.1 23 16 22.1 16 21V19H8Z"/>
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-gray-800">Trailblazers Trivia</h1>
+              <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Trailblazers Trivia</h1>
             </div>
             
-            {/* Header Right Side - Resume Game, End Game and Help Buttons */}
+            {/* Header Right Side - Resume Game, End Game and Buttons */}
             <div className="flex items-center gap-3">
               {gamePhase === "setup" && gameCode && (
                 <Button
@@ -81,33 +82,34 @@ export default function Home() {
                   <Settings size={20} />
                 </Button>
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
       </header>
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
-        <div className="bg-gray-200 relative overflow-hidden border-b-2 border-gray-300">
+        <div className="bg-gray-200 dark:bg-gray-700 relative overflow-hidden border-b-2 border-gray-300 dark:border-gray-600">
           <div className="container mx-auto px-4 py-6 max-w-3xl relative z-10">
             <div className="text-center">
               {/* Floating Bible Icons */}
               <div className="absolute top-4 left-8 opacity-30 animate-bounce">
-                <BookOpen size={32} className="transform rotate-12 text-gray-500" />
+                <BookOpen size={32} className="transform rotate-12 text-gray-500 dark:text-gray-400" />
               </div>
               <div className="absolute top-8 right-12 opacity-30 animate-bounce delay-300">
-                <BookOpen size={24} className="transform -rotate-12 text-gray-500" />
+                <BookOpen size={24} className="transform -rotate-12 text-gray-500 dark:text-gray-400" />
               </div>
               <div className="absolute bottom-6 left-16 opacity-30 animate-bounce delay-500">
-                <BookOpen size={28} className="transform rotate-6 text-gray-500" />
+                <BookOpen size={28} className="transform rotate-6 text-gray-500 dark:text-gray-400" />
               </div>
               <div className="absolute bottom-4 right-8 opacity-30 animate-bounce delay-700">
-                <BookOpen size={20} className="transform -rotate-6 text-gray-500" />
+                <BookOpen size={20} className="transform -rotate-6 text-gray-500 dark:text-gray-400" />
               </div>
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">Epic Trivia Battles!</h2>
-                <p className="text-lg md:text-xl mb-4 text-gray-600 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 dark:text-gray-100">Epic Trivia Battles!</h2>
+                <p className="text-lg md:text-xl mb-4 text-gray-600 dark:text-gray-300 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
                 
               </div>
             </div>
@@ -129,7 +131,7 @@ export default function Home() {
         </div>
       )}
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 max-w-3xl">
+      <main className="container mx-auto px-4 py-6 max-w-3xl bg-white dark:bg-gray-900">
         {gamePhase === "setup" && (
           <GameSetup 
             onGameStart={handleGameStart} 
