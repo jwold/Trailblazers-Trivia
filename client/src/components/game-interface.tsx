@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
 import { QuestionEditModal } from "./question-edit-modal";
+import { isLocalhost } from "@/lib/environment";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
@@ -605,15 +606,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                           <h4 className="text-2xl font-bold text-gray-800 flex-1">
                             {currentQuestion.question}
                           </h4>
-                          <Button
-                            onClick={() => setShowEditModal(true)}
-                            size="sm"
-                            variant="ghost"
-                            className="text-gray-500 hover:text-gray-700 p-1 flex-shrink-0"
-                            title="Edit Question"
-                          >
-                            <Edit size={16} />
-                          </Button>
+                          {isLocalhost() && (
+                            <Button
+                              onClick={() => setShowEditModal(true)}
+                              size="sm"
+                              variant="ghost"
+                              className="text-gray-500 hover:text-gray-700 p-1 flex-shrink-0"
+                              title="Edit Question"
+                            >
+                              <Edit size={16} />
+                            </Button>
+                          )}
                         </div>
                         
                       </>

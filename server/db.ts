@@ -1,11 +1,6 @@
-// Import the correct schema based on environment
-const isUsingPostgres = process.env.NODE_ENV === 'production' || process.env.DATABASE_URL;
-const schema = isUsingPostgres 
-  ? await import("@shared/schema")
-  : await import("@shared/sqlite-schema");
-
-// Use SQLite for local development, PostgreSQL for production
-const isProduction = process.env.NODE_ENV === 'production' || process.env.DATABASE_URL;
+// Use SQLite for both development and production (simpler workflow)
+import * as schema from "@shared/sqlite-schema";
+const isProduction = false; // Always use SQLite
 
 async function createDB() {
   console.log(`🔄 Initializing database (production: ${isProduction})...`);
