@@ -66,7 +66,7 @@ app.use((req, res, next) => {
   console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   console.log(`DATABASE_URL exists: ${!!process.env.DATABASE_URL}`);
   
-  server.listen(port, "127.0.0.1", () => {
+  server.listen(port, "0.0.0.0", () => {
     console.log(`✅ Server successfully started on port ${port}`);
     console.log(`🌐 Access the app at: http://127.0.0.1:${port}`);
     log(`serving on port ${port}`);
