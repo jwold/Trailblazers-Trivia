@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { gameSetupSchema, type Team } from "@shared/schema";
+import { gameSetupSchema, type Team } from "@shared/sqlite-schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -30,12 +30,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isActive: true,
         category: gameData.category || 'bible',
         gameMode: gameData.gameMode || 'regular',
+        createdAt: new Date(),
       });
 
       res.json({ gameCode, session });
     } catch (error) {
       console.error("Error creating game:", error);
-      res.status(400).json({ message: "Invalid game data" });
+      if (error instanceof z.ZodError) {
+        const errorMessage = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        res.status(400).json({ message: `Validation error: ${errorMessage}` });
+      } else {
+        res.status(400).json({ message: "Invalid game data" });
+      }
     }
   });
 
@@ -166,6 +172,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get paginated questions
+  app.get("/api/questions/paginated", async (req, res) => {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 200;
+      const category = req.query.category as string;
+
+      if (page < 1 || limit < 1 || limit > 500) {
+        return res.status(400).json({ message: "Invalid page or limit parameters" });
+      }
+
+      const result = await storage.getPaginatedQuestions(page, limit, category);
+      res.json(result);
+    } catch (error) {
+      console.error("Error fetching paginated questions:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // Admin API endpoints for question management
   // Add a new question
   app.post("/api/admin/questions", async (req, res) => {
@@ -232,6 +257,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Internal server error" });
     }
   });
+
+
 
   const httpServer = createServer(app);
   return httpServer;

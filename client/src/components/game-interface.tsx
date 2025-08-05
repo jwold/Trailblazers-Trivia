@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Volume2, Mic } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
+import { QuestionEditModal } from "./question-edit-modal";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
@@ -44,8 +45,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [teamTransitioning, setTeamTransitioning] = useState(false);
   const [answerVisible, setAnswerVisible] = useState(false);
   const [questionVisible, setQuestionVisible] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isSpeakingAnswer, setIsSpeakingAnswer] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -86,25 +86,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     prevTeamIndexRef.current = currentTeamIndex;
   }, [gameSession?.currentTeamIndex, teamsExpanded]);
 
-  // Stop speech when question changes or component unmounts
-  useEffect(() => {
-    return () => {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-      setIsSpeaking(false);
-      setIsSpeakingAnswer(false);
-    };
-  }, [currentQuestion]);
-
-  // Stop speech on component unmount
-  useEffect(() => {
-    return () => {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
 
   const fetchQuestionMutation = useMutation({
     mutationFn: async (difficulty: Difficulty) => {
@@ -155,70 +136,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     },
   });
 
-  const readQuestion = () => {
-    if (!currentQuestion || !('speechSynthesis' in window)) return;
-    
-    // Stop any current speech
-    window.speechSynthesis.cancel();
-    
-    if (isSpeaking) {
-      setIsSpeaking(false);
-      return;
-    }
-    
-    // Create speech text
-    let textToRead = currentQuestion.question;
-    
-    // Add Bible reference for Bible category questions
-    if (gameSession?.category === 'bible' && currentQuestion.reference) {
-      textToRead += `. Reference: ${currentQuestion.reference}`;
-    }
-    
-    const utterance = new SpeechSynthesisUtterance(textToRead);
-    
-    // Configure speech settings
-    utterance.rate = 0.9; // Slightly slower for better comprehension
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    
-    // Handle speech events
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    
-    // Start speaking
-    window.speechSynthesis.speak(utterance);
-  };
-
-  const readAnswer = () => {
-    if (!currentQuestion || !('speechSynthesis' in window)) return;
-    
-    // Stop any current speech
-    window.speechSynthesis.cancel();
-    
-    if (isSpeakingAnswer) {
-      setIsSpeakingAnswer(false);
-      return;
-    }
-    
-    // Create speech text - just the answer
-    const textToRead = `The answer is: ${currentQuestion.answer}`;
-    
-    const utterance = new SpeechSynthesisUtterance(textToRead);
-    
-    // Configure speech settings
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    
-    // Handle speech events
-    utterance.onstart = () => setIsSpeakingAnswer(true);
-    utterance.onend = () => setIsSpeakingAnswer(false);
-    utterance.onerror = () => setIsSpeakingAnswer(false);
-    
-    // Start speaking
-    window.speechSynthesis.speak(utterance);
-  };
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
@@ -684,22 +601,21 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       </Button>
                     ) : (
                       <>
-                        <h4 className="text-2xl font-bold text-gray-800">
-                          {currentQuestion.question}
-                        </h4>
-                        
-                        {/* Text-to-Speech Button */}
-                        {'speechSynthesis' in window && (
+                        <div className="flex items-start justify-between gap-3">
+                          <h4 className="text-2xl font-bold text-gray-800 flex-1">
+                            {currentQuestion.question}
+                          </h4>
                           <Button
-                            onClick={readQuestion}
+                            onClick={() => setShowEditModal(true)}
                             size="sm"
-                            className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
-                              isSpeaking ? 'animate-pulse' : ''
-                            }`}
+                            variant="ghost"
+                            className="text-gray-500 hover:text-gray-700 p-1 flex-shrink-0"
+                            title="Edit Question"
                           >
-                            <Volume2 size={14} />
+                            <Edit size={16} />
                           </Button>
-                        )}
+                        </div>
+                        
                       </>
                     )}
                   </div>
@@ -727,21 +643,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                           {currentQuestion.answer}
                         </div>
                         
-                        {/* Text-to-Speech Button for Answer */}
-                        {'speechSynthesis' in window && (
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent hiding answer when clicking mic
-                              readAnswer();
-                            }}
-                            size="sm"
-                            className={`bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1 transition-all duration-200 ${
-                              isSpeakingAnswer ? 'animate-pulse' : ''
-                            }`}
-                          >
-                            <Volume2 size={14} />
-                          </Button>
-                        )}
                       </div>
                     </div>
                   )}
@@ -1011,6 +912,18 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       <div className="text-center mt-4 text-gray-600 hidden">
         <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800">{gameCode}</span></p>
       </div>
+
+      {/* Question Edit Modal */}
+      <QuestionEditModal
+        question={currentQuestion}
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSave={(updatedQuestion) => {
+          // Optionally refresh the current question data
+          // For now, we'll just close the modal
+          setShowEditModal(false);
+        }}
+      />
     </div>
   );
 }

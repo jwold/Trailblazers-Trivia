@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Trash2, Edit, Plus, Save, X, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 
@@ -31,6 +32,13 @@ export function AdminPage() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editForm, setEditForm] = useState<Question | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>('bible');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [updatingDifficulty, setUpdatingDifficulty] = useState<Set<number>>(new Set());
   const [newQuestion, setNewQuestion] = useState<NewQuestion>({
     question: '',
     answer: '',
@@ -39,12 +47,22 @@ export function AdminPage() {
     category: 'bible'
   });
 
-  // Fetch all questions
+  // Fetch paginated questions
   const fetchQuestions = async () => {
     try {
-      const response = await fetch('/api/questions');
+      setLoading(true);
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: '200',
+        ...(activeCategory && { category: activeCategory })
+      });
+      
+      const response = await fetch(`/api/questions/paginated?${params}`);
       const data = await response.json();
-      setQuestions(data);
+      
+      setQuestions(data.questions);
+      setTotalPages(data.totalPages);
+      setTotalQuestions(data.total);
     } catch (error) {
       console.error('Error fetching questions:', error);
     } finally {
@@ -52,9 +70,88 @@ export function AdminPage() {
     }
   };
 
+  // Fetch available categories and their counts
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/questions');
+      const allQuestions = await response.json();
+      const uniqueCategories = Array.from(new Set(allQuestions.map((q: Question) => q.category)));
+      
+      // Calculate counts for each category
+      const counts: Record<string, number> = {};
+      allQuestions.forEach((q: Question) => {
+        counts[q.category] = (counts[q.category] || 0) + 1;
+      });
+      
+      setAvailableCategories(uniqueCategories);
+      setCategoryCounts(counts);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   useEffect(() => {
     fetchQuestions();
-  }, []);
+  }, [currentPage, activeCategory]);
+
+  // Handle category change
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setCurrentPage(1); // Reset to first page when changing categories
+  };
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Toggle difficulty between Easy and Hard
+  const handleDifficultyToggle = async (questionId: number, currentDifficulty: string) => {
+    const newDifficulty = currentDifficulty === 'Easy' ? 'Hard' : 'Easy';
+    
+    // Add to updating set
+    setUpdatingDifficulty(prev => new Set(prev).add(questionId));
+    
+    try {
+      const question = questions.find(q => q.id === questionId);
+      if (!question) return;
+
+      const response = await fetch(`/api/admin/questions/${questionId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ...question,
+          difficulty: newDifficulty 
+        })
+      });
+
+      if (response.ok) {
+        // Update the question in the local state
+        setQuestions(prev => 
+          prev.map(q => q.id === questionId ? { ...q, difficulty: newDifficulty } : q)
+        );
+      } else {
+        const error = await response.json();
+        alert('Error updating difficulty: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Error updating difficulty:', error);
+      alert('Error updating difficulty');
+    } finally {
+      // Remove from updating set
+      setUpdatingDifficulty(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(questionId);
+        return newSet;
+      });
+    }
+  };
+
+
 
   // Add new question
   const handleAddQuestion = async () => {
@@ -138,14 +235,19 @@ export function AdminPage() {
 
   // Start editing
   const startEditing = (question: Question) => {
-    setEditingId(question.id);
-    setEditForm({ ...question });
+    // Use React.startTransition to make the edit mode switch non-blocking
+    React.startTransition(() => {
+      setEditingId(question.id);
+      setEditForm({ ...question });
+    });
   };
 
   // Cancel editing
   const cancelEditing = () => {
-    setEditingId(null);
-    setEditForm(null);
+    React.startTransition(() => {
+      setEditingId(null);
+      setEditForm(null);
+    });
   };
 
   if (loading) {
@@ -172,8 +274,8 @@ export function AdminPage() {
           <p className="text-blue-200">Manage trivia questions</p>
         </div>
 
-        {/* Add Question Button */}
-        <div className="mb-6">
+        {/* Admin Actions */}
+        <div className="mb-6 flex gap-4 flex-wrap">
           <Button 
             onClick={() => setShowAddForm(!showAddForm)}
             className="bg-green-600 hover:bg-green-700"
@@ -182,6 +284,7 @@ export function AdminPage() {
             Add New Question
           </Button>
         </div>
+
 
         {/* Add Question Form */}
         {showAddForm && (
@@ -220,7 +323,6 @@ export function AdminPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Easy">Easy</SelectItem>
-                      <SelectItem value="Medium">Medium</SelectItem>
                       <SelectItem value="Hard">Hard</SelectItem>
                     </SelectContent>
                   </Select>
@@ -266,9 +368,23 @@ export function AdminPage() {
           </Card>
         )}
 
-        {/* Questions List */}
-        <div className="space-y-4">
-          {questions.map((question) => (
+        {/* Category Tabs */}
+        <Tabs value={activeCategory} onValueChange={handleCategoryChange} className="mb-6">
+          <TabsList className="grid w-full grid-cols-5 mb-6 bg-white/20">
+            {availableCategories.map((category) => (
+              <TabsTrigger 
+                key={category} 
+                value={category} 
+                className="capitalize text-xs px-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:shadow-lg text-white/80 hover:text-white/90"
+              >
+                {`${category.replace('_', ' ')} (${(categoryCounts[category] || 0).toLocaleString()})`}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {/* Questions List */}
+          <div className="space-y-4">
+            {questions.map((question) => (
             <Card key={question.id} className="bg-white/90">
               <CardContent className="p-6">
                 {editingId === question.id && editForm ? (
@@ -300,7 +416,6 @@ export function AdminPage() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="Easy">Easy</SelectItem>
-                            <SelectItem value="Medium">Medium</SelectItem>
                             <SelectItem value="Hard">Hard</SelectItem>
                           </SelectContent>
                         </Select>
@@ -348,13 +463,26 @@ export function AdminPage() {
                       <div className="flex-1">
                         <h3 className="text-lg font-semibold mb-2">{question.question}</h3>
                         <p className="text-green-700 font-medium mb-2">Answer: {question.answer}</p>
-                        <div className="flex gap-4 text-sm text-gray-600">
-                          <span className="bg-blue-100 px-2 py-1 rounded">
-                            {question.difficulty}
-                          </span>
-                          <span className="bg-purple-100 px-2 py-1 rounded">
-                            {question.category}
-                          </span>
+                        <div className="flex gap-4 text-sm text-gray-600 items-center">
+                          {/* Clickable Difficulty Badge */}
+                          <button
+                            onClick={() => handleDifficultyToggle(question.id, question.difficulty)}
+                            disabled={updatingDifficulty.has(question.id)}
+                            className={`px-2 py-1 rounded cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 ${
+                              question.difficulty === 'Easy' 
+                                ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' 
+                                : 'bg-red-100 text-red-800 hover:bg-red-200'
+                            }`}
+                            title={`Click to change to ${question.difficulty === 'Easy' ? 'Hard' : 'Easy'}`}
+                          >
+                            <div className="flex items-center gap-1">
+                              {question.difficulty}
+                              {updatingDifficulty.has(question.id) && (
+                                <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin"></div>
+                              )}
+                            </div>
+                          </button>
+                          
                           {question.reference && (
                             <span className="bg-gray-100 px-2 py-1 rounded">
                               {question.reference}
@@ -384,15 +512,78 @@ export function AdminPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+          </div>
 
-        {questions.length === 0 && (
-          <Card>
-            <CardContent className="text-center py-12">
-              <p className="text-gray-500 text-lg">No questions found. Add some questions to get started!</p>
-            </CardContent>
-          </Card>
-        )}
+          {questions.length === 0 && !loading && (
+            <Card>
+              <CardContent className="text-center py-12">
+                <p className="text-gray-500 text-lg">
+                  No questions found in the {activeCategory.replace('_', ' ')} category.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-8">
+              <Button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                variant="outline"
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+              >
+                Previous
+              </Button>
+              
+              <div className="flex gap-2">
+                {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+                  let pageNumber;
+                  if (totalPages <= 7) {
+                    pageNumber = i + 1;
+                  } else if (currentPage <= 4) {
+                    pageNumber = i + 1;
+                  } else if (currentPage >= totalPages - 3) {
+                    pageNumber = totalPages - 6 + i;
+                  } else {
+                    pageNumber = currentPage - 3 + i;
+                  }
+                  
+                  return (
+                    <Button
+                      key={pageNumber}
+                      onClick={() => handlePageChange(pageNumber)}
+                      variant={currentPage === pageNumber ? "default" : "outline"}
+                      className={currentPage === pageNumber 
+                        ? "bg-blue-600 text-white" 
+                        : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                      }
+                      size="sm"
+                    >
+                      {pageNumber}
+                    </Button>
+                  );
+                })}
+              </div>
+              
+              <Button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                variant="outline"
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+              >
+                Next
+              </Button>
+            </div>
+          )}
+
+          {/* Pagination Info */}
+          <div className="text-center mt-4">
+            <p className="text-white/80 text-sm">
+              Showing {((currentPage - 1) * 200) + 1} to {Math.min(currentPage * 200, totalQuestions)} of {totalQuestions} questions
+            </p>
+          </div>
+        </Tabs>
       </div>
     </div>
   );

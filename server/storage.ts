@@ -1,6 +1,6 @@
-import { users, triviaQuestions, gameSession, type User, type InsertUser, type TriviaQuestion, type InsertTriviaQuestion, type GameSession, type InsertGameSession, type Team } from "@shared/schema";
+import { users, triviaQuestions, gameSession, type User, type InsertUser, type TriviaQuestion, type InsertTriviaQuestion, type GameSession, type InsertGameSession, type Team } from "@shared/sqlite-schema";
 import { db } from "./db";
-import { eq, and } from "drizzle-orm";
+import { eq, and, count } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -12,6 +12,10 @@ export interface IStorage {
   getQuestionsByDifficulty(difficulty: string): Promise<TriviaQuestion[]>;
   getQuestionsByDifficultyAndCategory(difficulty: string, category: string): Promise<TriviaQuestion[]>;
   getRandomQuestion(difficulty: string, excludeIds: number[], category?: string): Promise<TriviaQuestion | undefined>;
+  addQuestion(questionData: { question: string; answer: string; difficulty: string; reference: string; category: string }): Promise<TriviaQuestion>;
+  updateQuestion(id: number, updates: Partial<TriviaQuestion>): Promise<TriviaQuestion | undefined>;
+  deleteQuestion(id: number): Promise<boolean>;
+  getPaginatedQuestions(page: number, limit: number, category?: string): Promise<{ questions: TriviaQuestion[]; total: number; totalPages: number }>;
   
   // Game Sessions
   createGameSession(session: InsertGameSession): Promise<GameSession>;
@@ -117,9 +121,49 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteQuestion(id: number): Promise<boolean> {
-    const result = await db.delete(triviaQuestions).where(eq(triviaQuestions.id, id));
-    return (result.rowCount ?? 0) > 0;
+    try {
+      const result = await db.delete(triviaQuestions).where(eq(triviaQuestions.id, id));
+      // For better-sqlite3, check the changes property
+      return (result as any).changes > 0;
+    } catch (error) {
+      console.error('Error deleting question:', error);
+      return false;
+    }
   }
+
+  async getPaginatedQuestions(page: number, limit: number, category?: string): Promise<{ questions: TriviaQuestion[]; total: number; totalPages: number }> {
+    const offset = (page - 1) * limit;
+    
+    // Build the query
+    let query = db.select().from(triviaQuestions);
+    let countQuery = db.select({ count: count() }).from(triviaQuestions);
+    
+    // Add category filter if provided
+    if (category) {
+      query = query.where(eq(triviaQuestions.category, category));
+      countQuery = countQuery.where(eq(triviaQuestions.category, category));
+    }
+    
+    // Add pagination
+    query = query.limit(limit).offset(offset);
+    
+    // Execute both queries
+    const [questions, totalResult] = await Promise.all([
+      query,
+      countQuery
+    ]);
+    
+    const total = totalResult[0]?.count || 0;
+    const totalPages = Math.ceil(total / limit);
+    
+    return {
+      questions,
+      total,
+      totalPages
+    };
+  }
+
+
 }
 
 export const storage = new DatabaseStorage();

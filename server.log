@@ -1,0 +1,101 @@
+🔄 Initializing database (production: )...
+📁 Connecting to SQLite...
+✅ SQLite connection established
+Starting server on port 8000...
+NODE_ENV: development
+DATABASE_URL exists: false
+✅ Server successfully started on port 8000
+🌐 Access the app at: http://127.0.0.1:8000
+9:10:30 PM [express] serving on port 8000
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+9:10:42 PM [express] POST /api/games 200 in 7ms :: {"gameCode":"E0T3KM","session":{"id":1,"gameCode"…
+9:10:56 PM [express] POST /api/games 200 in 3ms :: {"gameCode":"7MET6N","session":{"id":2,"gameCode"…
+9:10:56 PM [express] GET /api/games/7MET6N 200 in 2ms :: {"id":2,"gameCode":"7MET6N","teams":[{"id":…
+9:10:56 PM [express] GET /api/games/7MET6N/question/Easy 200 in 7ms :: {"id":597,"difficulty":"Easy"…
+9:10:56 PM [express] GET /api/games/7MET6N/question/Hard 200 in 3ms :: {"id":705,"difficulty":"Hard"…
+9:10:57 PM [express] GET /api/games/7MET6N 304 in 3ms :: {"id":2,"gameCode":"7MET6N","teams":[{"id":…
+9:10:58 PM [express] GET /api/games/7MET6N 304 in 2ms :: {"id":2,"gameCode":"7MET6N","teams":[{"id":…
+9:11:49 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:13:06 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:13:12 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:13:24 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:13:44 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:18:29 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:18:30 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:18:30 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:19:15 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:19:59 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:20:09 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:22:07 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:23:31 PM [vite] hmr update /src/pages/home.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:24:25 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:25:01 PM [vite] hmr update /src/components/game-setup.tsx, /src/index.css?v=gL02bWX5OboZExnt5CCOB
+9:25:01 PM [vite] Internal server error: /Users/joshuawold/Claude Projects/Trailblazers-Trivia/client/src/components/game-setup.tsx: Unexpected token, expected "}" (267:10)
+
+  265 |           </div>
+  266 |
+> 267 |           {/* Game Mode Selection */}
+      |           ^
+  268 |           <div className="mb-8">
+  269 |             
+  270 |             <div className="mb-8">
+  Plugin: vite:react-babel
+  File: /Users/joshuawold/Claude Projects/Trailblazers-Trivia/client/src/components/game-setup.tsx:267:10
+  265|            </div>
+  266|  
+  267|            {/* Game Mode Selection */}
+     |            ^
+  268|            <div className="mb-8">
+  269|              
+      at toParseError (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at raise (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/tokenizer/index.ts:1497:19)
+      at unexpected (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/tokenizer/index.ts:1537:16)
+      at expect (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at jsxParseExpressionContainer (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:394:12)
+      at jsxParseElementAt (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:500:24)
+      at jsxParseElementAt (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:483:34)
+      at jsxParseElementAt (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:483:34)
+      at jsxParseElement (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:559:19)
+      at parseExprAtom (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:573:21)
+      at parseExprSubscripts (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:714:23)
+      at parseUpdate (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:693:21)
+      at parseMaybeUnary (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:655:23)
+      at parseMaybeUnary (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3735:20)
+      at parseMaybeUnaryOrPrivate (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:389:14)
+      at parseExprOps (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:401:23)
+      at parseMaybeConditional (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:356:23)
+      at parseMaybeAssign (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:298:21)
+      at fn (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3588:23)
+      at tryParse (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/util.ts:174:20)
+      at parseMaybeAssign (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3587:20)
+      at callback (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:252:12)
+      at allowInAnd (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:3117:12)
+      at parseMaybeAssignAllowIn (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:251:17)
+      at parseParenAndDistinguishExpression (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:1771:16)
+      at parseExprAtom (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:1131:21)
+      at parseExprAtom (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/jsx/index.ts:583:22)
+      at parseExprSubscripts (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:714:23)
+      at parseUpdate (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:693:21)
+      at parseMaybeUnary (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:655:23)
+      at parseMaybeUnary (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3735:20)
+      at parseMaybeUnaryOrPrivate (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:389:14)
+      at parseExprOps (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:401:23)
+      at parseMaybeConditional (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:356:23)
+      at parseMaybeAssign (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:298:21)
+      at parseMaybeAssign (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3607:22)
+      at parseExpressionBase (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:221:23)
+      at callback (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:212:39)
+      at allowInAnd (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:3112:16)
+      at parseExpression (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:212:17)
+      at parseReturnStatement (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:1091:28)
+      at parseStatementContent (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:498:21)
+      at parseStatementContent (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/plugins/typescript/index.ts:3056:20)
+      at parseStatementLike (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:437:17)
+      at parseStatementListItem (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:386:17)
+      at parseBlockOrModuleBlockBody (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:1420:16)
+      at parseBlockBody (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:1393:10)
+      at parseBlock (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/statement.ts:1361:10)
+      at parseFunctionBody (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:2557:24)
+      at parseFunctionBodyAndFinish (/Users/joshuawold/Claude Projects/Trailblazers-Trivia/node_modules/@babel/parser/src/parser/expression.ts:2526:10)

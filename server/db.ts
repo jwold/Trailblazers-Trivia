@@ -1,4 +1,4 @@
-import * as schema from "@shared/schema";
+import * as schema from "@shared/sqlite-schema";
 
 // Use SQLite for local development, PostgreSQL for production
 const isProduction = process.env.NODE_ENV === 'production' || process.env.DATABASE_URL;
