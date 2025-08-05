@@ -1,7 +1,7 @@
 import * as schema from "@shared/sqlite-schema";
 
-// Use SQLite for local development, PostgreSQL for production
-const isProduction = process.env.NODE_ENV === 'production' || process.env.DATABASE_URL;
+// Use SQLite for both development and production
+const isProduction = false; // Force SQLite for Railway deployment
 
 async function createDB() {
   console.log(`🔄 Initializing database (production: ${isProduction})...`);
