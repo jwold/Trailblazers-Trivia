@@ -27,6 +27,32 @@ interface NewQuestion {
 }
 
 export function AdminPage() {
+  // Static mode - show message instead of admin functionality
+  return (
+    <div className="container mx-auto p-8 max-w-2xl">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">Admin Panel</h1>
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-2">Static Mode</h2>
+          <p className="text-gray-700 dark:text-gray-300">
+            This app is running in static mode. Question editing is not available.
+          </p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            To edit questions, modify the JSON files in the <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">client/public/data</code> directory.
+          </p>
+        </div>
+        <Link href="/">
+          <Button className="mt-6">
+            Back to Game
+          </Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// Original admin code below (disabled for static mode)
+export function AdminPageDisabled() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<number | null>(null);

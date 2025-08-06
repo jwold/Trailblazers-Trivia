@@ -2,17 +2,20 @@ import { useState } from "react";
 import GameSetup from "../components/game-setup";
 import GameInterface from "../components/game-interface";
 import VictoryScreen from "../components/victory-screen";
-import { BookOpen, X, Settings } from "lucide-react";
+import { DebugPanel } from "../components/debug-panel";
+import { BookOpen, X, Settings, Bug } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "wouter";
+import { isLocalhost } from "@/lib/environment";
 
 type GamePhase = "setup" | "playing" | "victory";
 
 export default function Home() {
   const [gamePhase, setGamePhase] = useState<GamePhase>("setup");
   const [gameCode, setGameCode] = useState<string>("");
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
 
   const handleGameStart = (code: string) => {
     setGameCode(code);
@@ -33,9 +36,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-950 transition-colors">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b-4 border-gray-300 dark:border-gray-600">
+      <header className="sticky top-0 z-40 bg-white dark:bg-gray-900 border-b-4 border-gray-300 dark:border-gray-700">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
@@ -52,7 +55,7 @@ export default function Home() {
                   <path d="M8 19V21C8 22.1 8.9 23 10 23H14C15.1 23 16 22.1 16 21V19H8Z"/>
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Trailblazers Trivia</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Trailblazers Trivia</h1>
             </div>
             
             {/* Header Right Side - Resume Game, End Game and Buttons */}
@@ -60,7 +63,7 @@ export default function Home() {
               {gamePhase === "setup" && gameCode && (
                 <Button
                   onClick={() => setGamePhase("playing")}
-                  className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 font-semibold transition-all duration-200"
+                  className="bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white py-2 px-4 font-semibold transition-all duration-200"
                 >
                   Resume Game
                 </Button>
@@ -68,28 +71,38 @@ export default function Home() {
               {gamePhase === "playing" && (
                 <Button
                   onClick={handleGameEnd}
-                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 font-semibold transition-all duration-200"
+                  className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white py-2 px-4 font-semibold transition-all duration-200"
                 >
                   End Game
                 </Button>
               )}
               <Link href="/admin">
                 <Button
-                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-lg p-2 transition-all duration-200"
+                  className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg p-2 transition-all duration-200"
                   size="sm"
                   title="Admin Panel"
                 >
                   <Settings size={20} />
                 </Button>
               </Link>
-              <ThemeToggle />
+              {(isLocalhost() || showDebugPanel) && (
+                <Button
+                  onClick={() => setShowDebugPanel(!showDebugPanel)}
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg p-2 transition-all duration-200"
+                  size="sm"
+                  title="Debug Panel"
+                >
+                  <Bug size={20} />
+                </Button>
+              )}
+              {/* <ThemeToggle /> */}
             </div>
           </div>
         </div>
       </header>
       {/* Hero Banner - Only show on setup phase */}
       {gamePhase === "setup" && (
-        <div className="bg-gray-200 dark:bg-gray-700 relative overflow-hidden border-b-2 border-gray-300 dark:border-gray-600">
+        <div className="bg-gray-200 dark:bg-gray-800 relative overflow-hidden border-b-2 border-gray-300 dark:border-gray-700">
           <div className="container mx-auto px-4 py-6 max-w-3xl relative z-10">
             <div className="text-center">
               {/* Floating Bible Icons */}
@@ -108,8 +121,8 @@ export default function Home() {
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 dark:text-gray-100">Epic Trivia Battles!</h2>
-                <p className="text-lg md:text-xl mb-4 text-gray-600 dark:text-gray-300 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900 dark:text-white">Epic Trivia Battles!</h2>
+                <p className="text-lg md:text-xl mb-4 text-gray-700 dark:text-gray-300 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
                 
               </div>
             </div>
@@ -131,7 +144,7 @@ export default function Home() {
         </div>
       )}
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 max-w-3xl bg-white dark:bg-gray-900">
+      <main className="container mx-auto px-4 py-6 max-w-3xl bg-white dark:bg-gray-950">
         {gamePhase === "setup" && (
           <GameSetup 
             onGameStart={handleGameStart} 
@@ -156,6 +169,11 @@ export default function Home() {
       </main>
       {/* Confetti Container - Hidden */}
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50 hidden"></div>
+      
+      {/* Debug Panel */}
+      {showDebugPanel && (
+        <DebugPanel onClose={() => setShowDebugPanel(false)} />
+      )}
     </div>
   );
 }

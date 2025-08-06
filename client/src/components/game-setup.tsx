@@ -227,13 +227,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   return (
     <div className="space-y-6">
       {/* Combined Game Setup Card */}
-      <Card className="border-4 border-gray-200">
+      <Card className="border-4 border-gray-200 dark:border-gray-700">
         <CardContent className="p-6">
           {/* Game Category Selection */}
           
           <div className="mb-8">
             <Select value={selectedGameType} onValueChange={handleCategoryChange}>
-              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
                 <SelectValue>
                   <div className="flex items-center gap-3">
                     {selectedGameType && gameTypeConfig[selectedGameType] && (
@@ -269,7 +269,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
             
             <div className="mb-8">
               <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
-                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
+                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
                   <SelectValue>
                     <div className="flex items-center gap-3">
                       {gameMode === "regular" ? (
@@ -358,12 +358,12 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
 
           {/* Team Setup Section */}
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800">Choose your team names</h3>
+            <h3 className="text-xl font-bold text-gray-800 dark:text-white">Choose your team names</h3>
             {teams.length < 10 && (
               <Button
                 onClick={addTeam}
                 variant="ghost"
-                className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
               >
                 <Plus className="mr-1" size={20} />
                 Team
@@ -381,15 +381,15 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                     placeholder="Enter team name..."
                     value={team.name}
                     onChange={(e) => updateTeamName(team.id, e.target.value)}
-                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1`}
+                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
                   />
                   {index >= 1 && teams.length > 1 && (
                     <Button
                       onClick={() => removeTeam(team.id)}
                       size="sm"
-                      className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 flex-shrink-0"
+                      className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex-shrink-0"
                     >
-                      <X size={16} className="text-gray-700" />
+                      <X size={16} className="text-gray-700 dark:text-gray-300" />
                     </Button>
                   )}
                 </div>
@@ -406,23 +406,21 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                 onClick={() => setTargetScore(Math.max(10, targetScore - 5))}
                 disabled={targetScore <= 10}
                 size="lg"
-                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Minus size={20} className="text-gray-700" />
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                <Minus size={20} className="text-gray-700 dark:text-gray-300" />
               </Button>
               
-              <div className="bg-white border-2 border-gray-300 rounded-lg px-6 py-3 min-w-[120px] text-center">
-                <div className="text-2xl font-bold text-gray-800">{targetScore}</div>
-                <div className="text-sm text-gray-600">Points</div>
+              <div className="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg px-6 py-3 min-w-[120px] text-center">
+                <div className="text-2xl font-bold text-gray-800 dark:text-white">{targetScore}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Points</div>
               </div>
               
               <Button
                 onClick={() => setTargetScore(Math.min(50, targetScore + 5))}
                 disabled={targetScore >= 50}
                 size="lg"
-                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Plus size={20} className="text-gray-700" />
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                <Plus size={20} className="text-gray-700 dark:text-gray-300" />
               </Button>
             </div>
           </div>

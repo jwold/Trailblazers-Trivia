@@ -1,0 +1,3122 @@
+[
+  {
+    "id": 2981,
+    "question": "Who was the first President of the United States?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 2982,
+    "question": "In what year did the United States declare independence?",
+    "answer": "1776",
+    "reference": ""
+  },
+  {
+    "id": 2983,
+    "question": "What is the capital of the United States?",
+    "answer": "Washington D.C.",
+    "reference": ""
+  },
+  {
+    "id": 2984,
+    "question": "Which document begins with 'We the People'?",
+    "answer": "The Constitution",
+    "reference": ""
+  },
+  {
+    "id": 2985,
+    "question": "How many stars are on the American flag?",
+    "answer": "50",
+    "reference": ""
+  },
+  {
+    "id": 2987,
+    "question": "Who wrote the Declaration of Independence?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 2988,
+    "question": "What war was fought between the North and South in the US?",
+    "answer": "Civil War",
+    "reference": ""
+  },
+  {
+    "id": 2989,
+    "question": "Who was President during the Civil War?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 2990,
+    "question": "What holiday celebrates American independence?",
+    "answer": "Fourth of July",
+    "reference": ""
+  },
+  {
+    "id": 2991,
+    "question": "Which ocean is on the west coast of the United States?",
+    "answer": "Pacific Ocean",
+    "reference": ""
+  },
+  {
+    "id": 2992,
+    "question": "What is the longest river in the United States?",
+    "answer": "Missouri River",
+    "reference": ""
+  },
+  {
+    "id": 2993,
+    "question": "Which President is on Mount Rushmore along with Washington, Jefferson, and Roosevelt?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 2994,
+    "question": "What was the first permanent English settlement in America?",
+    "answer": "Jamestown",
+    "reference": ""
+  },
+  {
+    "id": 2995,
+    "question": "Which state is known as the Golden State?",
+    "answer": "California",
+    "reference": ""
+  },
+  {
+    "id": 2996,
+    "question": "What is the nickname for the American flag?",
+    "answer": "Old Glory",
+    "reference": ""
+  },
+  {
+    "id": 2997,
+    "question": "Who discovered America in 1492?",
+    "answer": "Christopher Columbus",
+    "reference": ""
+  },
+  {
+    "id": 2998,
+    "question": "What is the tallest monument in Washington D.C.?",
+    "answer": "Washington Monument",
+    "reference": ""
+  },
+  {
+    "id": 2999,
+    "question": "Which amendment gave women the right to vote?",
+    "answer": "19th Amendment",
+    "reference": ""
+  },
+  {
+    "id": 3000,
+    "question": "What was the name of the ship that brought the Pilgrims to America?",
+    "answer": "Mayflower",
+    "reference": ""
+  },
+  {
+    "id": 3001,
+    "question": "Who was the 16th President of the United States?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 3002,
+    "question": "What is the Liberty Bell famous for?",
+    "answer": "Its crack",
+    "reference": ""
+  },
+  {
+    "id": 3003,
+    "question": "In what city was the Declaration of Independence signed?",
+    "answer": "Philadelphia",
+    "reference": ""
+  },
+  {
+    "id": 3004,
+    "question": "Who was the main author of the US Constitution?",
+    "answer": "James Madison",
+    "reference": ""
+  },
+  {
+    "id": 3005,
+    "question": "What war did the US enter in 1941?",
+    "answer": "World War II",
+    "reference": ""
+  },
+  {
+    "id": 3006,
+    "question": "Who was the President during World War II?",
+    "answer": "Franklin D. Roosevelt",
+    "reference": ""
+  },
+  {
+    "id": 3007,
+    "question": "What is the national anthem of the United States?",
+    "answer": "The Star-Spangled Banner",
+    "reference": ""
+  },
+  {
+    "id": 3008,
+    "question": "Who sewed the first American flag?",
+    "answer": "Betsy Ross",
+    "reference": ""
+  },
+  {
+    "id": 3009,
+    "question": "What is the highest court in the United States?",
+    "answer": "Supreme Court",
+    "reference": ""
+  },
+  {
+    "id": 3010,
+    "question": "How many branches are there in the US government?",
+    "answer": "Three",
+    "reference": ""
+  },
+  {
+    "id": 3011,
+    "question": "What is the White House's address?",
+    "answer": "1600 Pennsylvania Avenue",
+    "reference": ""
+  },
+  {
+    "id": 3012,
+    "question": "Who was the first lady to appear on US currency?",
+    "answer": "Martha Washington",
+    "reference": ""
+  },
+  {
+    "id": 3013,
+    "question": "What event started the American Revolution?",
+    "answer": "Boston Tea Party",
+    "reference": ""
+  },
+  {
+    "id": 3014,
+    "question": "Who was the general of the Continental Army?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 3015,
+    "question": "What treaty ended the Revolutionary War?",
+    "answer": "Treaty of Paris",
+    "reference": ""
+  },
+  {
+    "id": 3016,
+    "question": "Which state was the first to ratify the Constitution?",
+    "answer": "Delaware",
+    "reference": ""
+  },
+  {
+    "id": 3017,
+    "question": "Who invented the cotton gin?",
+    "answer": "Eli Whitney",
+    "reference": ""
+  },
+  {
+    "id": 3018,
+    "question": "What purchase doubled the size of the US?",
+    "answer": "Louisiana Purchase",
+    "reference": ""
+  },
+  {
+    "id": 3019,
+    "question": "Who was President during the Louisiana Purchase?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 3020,
+    "question": "What war was fought in 1812?",
+    "answer": "War of 1812",
+    "reference": ""
+  },
+  {
+    "id": 3021,
+    "question": "Who wrote 'The Star-Spangled Banner'?",
+    "answer": "Francis Scott Key",
+    "reference": ""
+  },
+  {
+    "id": 3022,
+    "question": "What trail did pioneers take westward?",
+    "answer": "Oregon Trail",
+    "reference": ""
+  },
+  {
+    "id": 3023,
+    "question": "Who was the 'Father of Texas'?",
+    "answer": "Stephen F. Austin",
+    "reference": ""
+  },
+  {
+    "id": 3024,
+    "question": "What was the Alamo?",
+    "answer": "A mission in Texas",
+    "reference": ""
+  },
+  {
+    "id": 3025,
+    "question": "Which war was fought with Mexico in 1846?",
+    "answer": "Mexican-American War",
+    "reference": ""
+  },
+  {
+    "id": 3026,
+    "question": "What rush brought people to California in 1849?",
+    "answer": "Gold Rush",
+    "reference": ""
+  },
+  {
+    "id": 3027,
+    "question": "Who was Harriet Tubman?",
+    "answer": "Underground Railroad conductor",
+    "reference": ""
+  },
+  {
+    "id": 3028,
+    "question": "What was the Underground Railroad?",
+    "answer": "Escape network for slaves",
+    "reference": ""
+  },
+  {
+    "id": 3029,
+    "question": "Who gave the Gettysburg Address?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 3030,
+    "question": "What amendment abolished slavery?",
+    "answer": "13th Amendment",
+    "reference": ""
+  },
+  {
+    "id": 8221,
+    "question": "Who assassinated Abraham Lincoln?",
+    "answer": "John Wilkes Booth",
+    "reference": ""
+  },
+  {
+    "id": 8222,
+    "question": "What was Reconstruction?",
+    "answer": "Rebuilding after Civil War",
+    "reference": ""
+  },
+  {
+    "id": 8223,
+    "question": "Who invented the telephone?",
+    "answer": "Alexander Graham Bell",
+    "reference": ""
+  },
+  {
+    "id": 8224,
+    "question": "Who invented the light bulb?",
+    "answer": "Thomas Edison",
+    "reference": ""
+  },
+  {
+    "id": 8225,
+    "question": "What was the transcontinental railroad?",
+    "answer": "Railroad across US",
+    "reference": ""
+  },
+  {
+    "id": 8226,
+    "question": "Who was Sitting Bull?",
+    "answer": "Native American leader",
+    "reference": ""
+  },
+  {
+    "id": 8227,
+    "question": "What battle was Custer's Last Stand?",
+    "answer": "Little Bighorn",
+    "reference": ""
+  },
+  {
+    "id": 8228,
+    "question": "What island did immigrants enter through?",
+    "answer": "Ellis Island",
+    "reference": ""
+  },
+  {
+    "id": 8229,
+    "question": "Who was the 'Wizard of Menlo Park'?",
+    "answer": "Thomas Edison",
+    "reference": ""
+  },
+  {
+    "id": 8230,
+    "question": "What war was fought with Spain in 1898?",
+    "answer": "Spanish-American War",
+    "reference": ""
+  },
+  {
+    "id": 8231,
+    "question": "Who was Teddy Roosevelt?",
+    "answer": "26th President",
+    "reference": ""
+  },
+  {
+    "id": 8232,
+    "question": "What canal did the US build?",
+    "answer": "Panama Canal",
+    "reference": ""
+  },
+  {
+    "id": 8233,
+    "question": "Who flew the first airplane?",
+    "answer": "Wright Brothers",
+    "reference": ""
+  },
+  {
+    "id": 8234,
+    "question": "What amendment allowed women's suffrage?",
+    "answer": "19th Amendment",
+    "reference": ""
+  },
+  {
+    "id": 8235,
+    "question": "What was Prohibition?",
+    "answer": "Ban on alcohol",
+    "reference": ""
+  },
+  {
+    "id": 8236,
+    "question": "What was the Great Depression?",
+    "answer": "Economic crisis in 1930s",
+    "reference": ""
+  },
+  {
+    "id": 8237,
+    "question": "Who was President during the Great Depression?",
+    "answer": "Franklin D. Roosevelt",
+    "reference": ""
+  },
+  {
+    "id": 8238,
+    "question": "What was the New Deal?",
+    "answer": "FDR's recovery programs",
+    "reference": ""
+  },
+  {
+    "id": 8239,
+    "question": "What event started US involvement in WWII?",
+    "answer": "Pearl Harbor attack",
+    "reference": ""
+  },
+  {
+    "id": 8240,
+    "question": "Who was the US general in WWII?",
+    "answer": "Dwight D. Eisenhower",
+    "reference": ""
+  },
+  {
+    "id": 8241,
+    "question": "What was D-Day?",
+    "answer": "Invasion of Normandy",
+    "reference": ""
+  },
+  {
+    "id": 8242,
+    "question": "Who dropped atomic bombs on Japan?",
+    "answer": "United States",
+    "reference": ""
+  },
+  {
+    "id": 8243,
+    "question": "What was the Cold War?",
+    "answer": "US vs USSR tension",
+    "reference": ""
+  },
+  {
+    "id": 8244,
+    "question": "Who was the first man on the moon?",
+    "answer": "Neil Armstrong",
+    "reference": ""
+  },
+  {
+    "id": 8245,
+    "question": "What was the Civil Rights Movement?",
+    "answer": "Fight for equality",
+    "reference": ""
+  },
+  {
+    "id": 8246,
+    "question": "Who said 'I have a dream'?",
+    "answer": "Martin Luther King Jr.",
+    "reference": ""
+  },
+  {
+    "id": 8247,
+    "question": "What war was fought in Vietnam?",
+    "answer": "Vietnam War",
+    "reference": ""
+  },
+  {
+    "id": 8248,
+    "question": "Who was President during Watergate?",
+    "answer": "Richard Nixon",
+    "reference": ""
+  },
+  {
+    "id": 8249,
+    "question": "What was Watergate?",
+    "answer": "Political scandal",
+    "reference": ""
+  },
+  {
+    "id": 8250,
+    "question": "Who was the first Black President?",
+    "answer": "Barack Obama",
+    "reference": ""
+  },
+  {
+    "id": 8251,
+    "question": "What is Memorial Day for?",
+    "answer": "Honoring fallen soldiers",
+    "reference": ""
+  },
+  {
+    "id": 8252,
+    "question": "What is Labor Day?",
+    "answer": "Celebrating workers",
+    "reference": ""
+  },
+  {
+    "id": 8253,
+    "question": "Who was Paul Revere?",
+    "answer": "Midnight rider",
+    "reference": ""
+  },
+  {
+    "id": 8254,
+    "question": "What was the Boston Massacre?",
+    "answer": "Colonists killed by British",
+    "reference": ""
+  },
+  {
+    "id": 8255,
+    "question": "Who was Benjamin Franklin?",
+    "answer": "Inventor and statesman",
+    "reference": ""
+  },
+  {
+    "id": 8256,
+    "question": "What was the Missouri Compromise?",
+    "answer": "Slavery balance in states",
+    "reference": ""
+  },
+  {
+    "id": 8257,
+    "question": "Who was Frederick Douglass?",
+    "answer": "Abolitionist",
+    "reference": ""
+  },
+  {
+    "id": 8258,
+    "question": "What was the Emancipation Proclamation?",
+    "answer": "Freed slaves in Confederacy",
+    "reference": ""
+  },
+  {
+    "id": 8259,
+    "question": "Who was Ulysses S. Grant?",
+    "answer": "Civil War general and President",
+    "reference": ""
+  },
+  {
+    "id": 8260,
+    "question": "What was the 14th Amendment?",
+    "answer": "Citizenship rights",
+    "reference": ""
+  },
+  {
+    "id": 8261,
+    "question": "What was the 15th Amendment?",
+    "answer": "Voting rights for Black men",
+    "reference": ""
+  },
+  {
+    "id": 8262,
+    "question": "Who was Susan B. Anthony?",
+    "answer": "Women's rights activist",
+    "reference": ""
+  },
+  {
+    "id": 8263,
+    "question": "What was the Homestead Act?",
+    "answer": "Land for settlers",
+    "reference": ""
+  },
+  {
+    "id": 8264,
+    "question": "Who was Geronimo?",
+    "answer": "Apache leader",
+    "reference": ""
+  },
+  {
+    "id": 8265,
+    "question": "What was the Dawes Act?",
+    "answer": "Native American land division",
+    "reference": ""
+  },
+  {
+    "id": 8266,
+    "question": "Who was Andrew Carnegie?",
+    "answer": "Steel magnate",
+    "reference": ""
+  },
+  {
+    "id": 8267,
+    "question": "Who was John D. Rockefeller?",
+    "answer": "Oil tycoon",
+    "reference": ""
+  },
+  {
+    "id": 8268,
+    "question": "What was the Sherman Antitrust Act?",
+    "answer": "Anti-monopoly law",
+    "reference": ""
+  },
+  {
+    "id": 8269,
+    "question": "Who was Woodrow Wilson?",
+    "answer": "WWI President",
+    "reference": ""
+  },
+  {
+    "id": 8270,
+    "question": "What was the League of Nations?",
+    "answer": "Post-WWI organization",
+    "reference": ""
+  },
+  {
+    "id": 8271,
+    "question": "What was the Harlem Renaissance?",
+    "answer": "African American cultural movement",
+    "reference": ""
+  },
+  {
+    "id": 8272,
+    "question": "Who was Amelia Earhart?",
+    "answer": "Aviator",
+    "reference": ""
+  },
+  {
+    "id": 8273,
+    "question": "What was Black Tuesday?",
+    "answer": "Stock market crash",
+    "reference": ""
+  },
+  {
+    "id": 8274,
+    "question": "Who was Herbert Hoover?",
+    "answer": "President during Depression start",
+    "reference": ""
+  },
+  {
+    "id": 8275,
+    "question": "What was the Dust Bowl?",
+    "answer": "Drought in Great Plains",
+    "reference": ""
+  },
+  {
+    "id": 8276,
+    "question": "Who was Eleanor Roosevelt?",
+    "answer": "First Lady and activist",
+    "reference": ""
+  },
+  {
+    "id": 8277,
+    "question": "What was the Manhattan Project?",
+    "answer": "Atomic bomb development",
+    "reference": ""
+  },
+  {
+    "id": 8278,
+    "question": "Who was Harry Truman?",
+    "answer": "President who dropped atomic bomb",
+    "reference": ""
+  },
+  {
+    "id": 8279,
+    "question": "What was the Marshall Plan?",
+    "answer": "Aid to Europe after WWII",
+    "reference": ""
+  },
+  {
+    "id": 8280,
+    "question": "Who was Rosie the Riveter?",
+    "answer": "Symbol of women workers",
+    "reference": ""
+  },
+  {
+    "id": 8281,
+    "question": "What was McCarthyism?",
+    "answer": "Anti-communist hysteria",
+    "reference": ""
+  },
+  {
+    "id": 8282,
+    "question": "Who was Jackie Robinson?",
+    "answer": "First Black MLB player",
+    "reference": ""
+  },
+  {
+    "id": 8283,
+    "question": "What was Brown v. Board of Education?",
+    "answer": "Desegregation of schools",
+    "reference": ""
+  },
+  {
+    "id": 8284,
+    "question": "Who was Rosa Parks?",
+    "answer": "Civil rights activist",
+    "reference": ""
+  },
+  {
+    "id": 8285,
+    "question": "What was the Montgomery Bus Boycott?",
+    "answer": "Protest against segregation",
+    "reference": ""
+  },
+  {
+    "id": 8286,
+    "question": "Who was John F. Kennedy?",
+    "answer": "35th President",
+    "reference": ""
+  },
+  {
+    "id": 8287,
+    "question": "What was the Cuban Missile Crisis?",
+    "answer": "US-USSR standoff",
+    "reference": ""
+  },
+  {
+    "id": 8288,
+    "question": "Who assassinated JFK?",
+    "answer": "Lee Harvey Oswald",
+    "reference": ""
+  },
+  {
+    "id": 8289,
+    "question": "Who was Lyndon B. Johnson?",
+    "answer": "President after JFK",
+    "reference": ""
+  },
+  {
+    "id": 8290,
+    "question": "What was the Voting Rights Act?",
+    "answer": "Protected minority voting",
+    "reference": ""
+  },
+  {
+    "id": 8291,
+    "question": "Who was Malcolm X?",
+    "answer": "Civil rights leader",
+    "reference": ""
+  },
+  {
+    "id": 8292,
+    "question": "What was the Apollo 11 mission?",
+    "answer": "Moon landing",
+    "reference": ""
+  },
+  {
+    "id": 8293,
+    "question": "Who was Richard Nixon?",
+    "answer": "President who resigned",
+    "reference": ""
+  },
+  {
+    "id": 8294,
+    "question": "What was the EPA?",
+    "answer": "Environmental Protection Agency",
+    "reference": ""
+  },
+  {
+    "id": 8295,
+    "question": "Who was Gerald Ford?",
+    "answer": "President after Nixon",
+    "reference": ""
+  },
+  {
+    "id": 8296,
+    "question": "What was the Bicentennial?",
+    "answer": "200th anniversary of US",
+    "reference": ""
+  },
+  {
+    "id": 8297,
+    "question": "Who was Jimmy Carter?",
+    "answer": "39th President",
+    "reference": ""
+  },
+  {
+    "id": 8298,
+    "question": "What was the Iran Hostage Crisis?",
+    "answer": "US diplomats held captive",
+    "reference": ""
+  },
+  {
+    "id": 8299,
+    "question": "Who was Ronald Reagan?",
+    "answer": "40th President",
+    "reference": ""
+  },
+  {
+    "id": 8300,
+    "question": "What was the Challenger disaster?",
+    "answer": "Space shuttle explosion",
+    "reference": ""
+  },
+  {
+    "id": 8301,
+    "question": "Who was George H.W. Bush?",
+    "answer": "41st President",
+    "reference": ""
+  },
+  {
+    "id": 8302,
+    "question": "What was the Gulf War?",
+    "answer": "US vs Iraq in 1991",
+    "reference": ""
+  },
+  {
+    "id": 8303,
+    "question": "Who was Bill Clinton?",
+    "answer": "42nd President",
+    "reference": ""
+  },
+  {
+    "id": 8304,
+    "question": "What was NAFTA?",
+    "answer": "Trade agreement",
+    "reference": ""
+  },
+  {
+    "id": 8305,
+    "question": "Who was George W. Bush?",
+    "answer": "43rd President",
+    "reference": ""
+  },
+  {
+    "id": 8306,
+    "question": "What was 9/11?",
+    "answer": "Terrorist attacks",
+    "reference": ""
+  },
+  {
+    "id": 8307,
+    "question": "What war started in 2003?",
+    "answer": "Iraq War",
+    "reference": ""
+  },
+  {
+    "id": 8308,
+    "question": "Who was Barack Obama?",
+    "answer": "44th President",
+    "reference": ""
+  },
+  {
+    "id": 8309,
+    "question": "What was Obamacare?",
+    "answer": "Healthcare reform",
+    "reference": ""
+  },
+  {
+    "id": 8310,
+    "question": "Who was Donald Trump?",
+    "answer": "45th President",
+    "reference": ""
+  },
+  {
+    "id": 8311,
+    "question": "What was the Capitol riot?",
+    "answer": "January 6, 2021 event",
+    "reference": ""
+  },
+  {
+    "id": 8312,
+    "question": "Who is Joe Biden?",
+    "answer": "46th President",
+    "reference": ""
+  },
+  {
+    "id": 8313,
+    "question": "What is the Pledge of Allegiance?",
+    "answer": "Oath to the flag",
+    "reference": ""
+  },
+  {
+    "id": 8314,
+    "question": "Who was Sacagawea?",
+    "answer": "Lewis and Clark guide",
+    "reference": ""
+  },
+  {
+    "id": 8315,
+    "question": "What was the Lewis and Clark expedition?",
+    "answer": "Exploration of West",
+    "reference": ""
+  },
+  {
+    "id": 8316,
+    "question": "Who was Davy Crockett?",
+    "answer": "Frontiersman",
+    "reference": ""
+  },
+  {
+    "id": 8317,
+    "question": "What was the Battle of the Alamo?",
+    "answer": "Texas independence fight",
+    "reference": ""
+  },
+  {
+    "id": 8318,
+    "question": "Who was Brigham Young?",
+    "answer": "Mormon leader",
+    "reference": ""
+  },
+  {
+    "id": 8319,
+    "question": "What was the Pony Express?",
+    "answer": "Mail delivery service",
+    "reference": ""
+  },
+  {
+    "id": 8320,
+    "question": "Who was Clara Barton?",
+    "answer": "Red Cross founder",
+    "reference": ""
+  },
+  {
+    "id": 8321,
+    "question": "What was the 18th Amendment?",
+    "answer": "Prohibition",
+    "reference": ""
+  },
+  {
+    "id": 8322,
+    "question": "Who was Al Capone?",
+    "answer": "Gangster",
+    "reference": ""
+  },
+  {
+    "id": 8323,
+    "question": "What was the Scopes Trial?",
+    "answer": "Evolution teaching case",
+    "reference": ""
+  },
+  {
+    "id": 8324,
+    "question": "Who was Charles Lindbergh?",
+    "answer": "Transatlantic flyer",
+    "reference": ""
+  },
+  {
+    "id": 8325,
+    "question": "What was the Hindenburg?",
+    "answer": "Airship disaster",
+    "reference": ""
+  },
+  {
+    "id": 8326,
+    "question": "Who was Jesse Owens?",
+    "answer": "Olympic athlete",
+    "reference": ""
+  },
+  {
+    "id": 8327,
+    "question": "What was Pearl Harbor?",
+    "answer": "Japanese attack site",
+    "reference": ""
+  },
+  {
+    "id": 8328,
+    "question": "Who was Douglas MacArthur?",
+    "answer": "WWII general",
+    "reference": ""
+  },
+  {
+    "id": 8329,
+    "question": "What was the Holocaust?",
+    "answer": "Nazi genocide",
+    "reference": ""
+  },
+  {
+    "id": 8330,
+    "question": "Who was Anne Frank?",
+    "answer": "Diary writer",
+    "reference": ""
+  },
+  {
+    "id": 8331,
+    "question": "What was V-E Day?",
+    "answer": "Victory in Europe",
+    "reference": ""
+  },
+  {
+    "id": 8332,
+    "question": "What was V-J Day?",
+    "answer": "Victory over Japan",
+    "reference": ""
+  },
+  {
+    "id": 8333,
+    "question": "Who was Jackie Kennedy?",
+    "answer": "First Lady",
+    "reference": ""
+  },
+  {
+    "id": 8334,
+    "question": "What was the Bay of Pigs?",
+    "answer": "Failed Cuba invasion",
+    "reference": ""
+  },
+  {
+    "id": 8335,
+    "question": "Who was Neil Armstrong?",
+    "answer": "Moon walker",
+    "reference": ""
+  },
+  {
+    "id": 8336,
+    "question": "What was Woodstock?",
+    "answer": "Music festival",
+    "reference": ""
+  },
+  {
+    "id": 8337,
+    "question": "Who was Cesar Chavez?",
+    "answer": "Labor leader",
+    "reference": ""
+  },
+  {
+    "id": 8338,
+    "question": "What was the Kent State shooting?",
+    "answer": "Protest deaths",
+    "reference": ""
+  },
+  {
+    "id": 8339,
+    "question": "Who was Sally Ride?",
+    "answer": "First American woman in space",
+    "reference": ""
+  },
+  {
+    "id": 8340,
+    "question": "What was the Berlin Wall fall?",
+    "answer": "End of Cold War symbol",
+    "reference": ""
+  },
+  {
+    "id": 8341,
+    "question": "Who was Colin Powell?",
+    "answer": "Military leader",
+    "reference": ""
+  },
+  {
+    "id": 8342,
+    "question": "What was Hurricane Katrina?",
+    "answer": "New Orleans disaster",
+    "reference": ""
+  },
+  {
+    "id": 8343,
+    "question": "Who was Sonia Sotomayor?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8344,
+    "question": "What was the Affordable Care Act?",
+    "answer": "Healthcare law",
+    "reference": ""
+  },
+  {
+    "id": 8345,
+    "question": "Who was Kamala Harris?",
+    "answer": "First female VP",
+    "reference": ""
+  },
+  {
+    "id": 8346,
+    "question": "What is the Smithsonian?",
+    "answer": "Museum complex",
+    "reference": ""
+  },
+  {
+    "id": 8347,
+    "question": "Who was Pocahontas?",
+    "answer": "Native American princess",
+    "reference": ""
+  },
+  {
+    "id": 8348,
+    "question": "What was the Mayflower Compact?",
+    "answer": "Pilgrim agreement",
+    "reference": ""
+  },
+  {
+    "id": 8349,
+    "question": "Who was John Adams?",
+    "answer": "2nd President",
+    "reference": ""
+  },
+  {
+    "id": 8350,
+    "question": "What was the Alien and Sedition Acts?",
+    "answer": "Immigration laws",
+    "reference": ""
+  },
+  {
+    "id": 8351,
+    "question": "Who was Dolley Madison?",
+    "answer": "First Lady who saved portrait",
+    "reference": ""
+  },
+  {
+    "id": 8352,
+    "question": "What was the Monroe Doctrine?",
+    "answer": "Foreign policy statement",
+    "reference": ""
+  },
+  {
+    "id": 8353,
+    "question": "Who was Andrew Jackson?",
+    "answer": "7th President",
+    "reference": ""
+  },
+  {
+    "id": 8354,
+    "question": "What was the Trail of Tears?",
+    "answer": "Cherokee removal",
+    "reference": ""
+  },
+  {
+    "id": 8355,
+    "question": "Who was James K. Polk?",
+    "answer": "11th President",
+    "reference": ""
+  },
+  {
+    "id": 8356,
+    "question": "What was Manifest Destiny?",
+    "answer": "Westward expansion belief",
+    "reference": ""
+  },
+  {
+    "id": 8357,
+    "question": "Who was Zachary Taylor?",
+    "answer": "12th President",
+    "reference": ""
+  },
+  {
+    "id": 8358,
+    "question": "What was the Compromise of 1850?",
+    "answer": "Slavery deal",
+    "reference": ""
+  },
+  {
+    "id": 8359,
+    "question": "Who was Millard Fillmore?",
+    "answer": "13th President",
+    "reference": ""
+  },
+  {
+    "id": 8360,
+    "question": "What was the Kansas-Nebraska Act?",
+    "answer": "Territory organization",
+    "reference": ""
+  },
+  {
+    "id": 8361,
+    "question": "Who was Franklin Pierce?",
+    "answer": "14th President",
+    "reference": ""
+  },
+  {
+    "id": 8362,
+    "question": "What was Bleeding Kansas?",
+    "answer": "Violence over slavery",
+    "reference": ""
+  },
+  {
+    "id": 8363,
+    "question": "Who was James Buchanan?",
+    "answer": "15th President",
+    "reference": ""
+  },
+  {
+    "id": 8364,
+    "question": "What was the Dred Scott decision?",
+    "answer": "Slave rights ruling",
+    "reference": ""
+  },
+  {
+    "id": 8365,
+    "question": "Who was Jefferson Davis?",
+    "answer": "Confederate President",
+    "reference": ""
+  },
+  {
+    "id": 8366,
+    "question": "What was Fort Sumter?",
+    "answer": "Civil War start",
+    "reference": ""
+  },
+  {
+    "id": 8367,
+    "question": "Who was Stonewall Jackson?",
+    "answer": "Confederate general",
+    "reference": ""
+  },
+  {
+    "id": 8368,
+    "question": "What was the Battle of Antietam?",
+    "answer": "Bloodiest day",
+    "reference": ""
+  },
+  {
+    "id": 8369,
+    "question": "Who was Robert E. Lee?",
+    "answer": "Confederate commander",
+    "reference": ""
+  },
+  {
+    "id": 8370,
+    "question": "What was Appomattox?",
+    "answer": "Lee's surrender site",
+    "reference": ""
+  },
+  {
+    "id": 8371,
+    "question": "Who was Andrew Johnson?",
+    "answer": "17th President",
+    "reference": ""
+  },
+  {
+    "id": 8372,
+    "question": "What was impeachment?",
+    "answer": "Trial for removal",
+    "reference": ""
+  },
+  {
+    "id": 8373,
+    "question": "Who was Rutherford B. Hayes?",
+    "answer": "19th President",
+    "reference": ""
+  },
+  {
+    "id": 8374,
+    "question": "What was the Compromise of 1877?",
+    "answer": "End of Reconstruction",
+    "reference": ""
+  },
+  {
+    "id": 8375,
+    "question": "Who was James Garfield?",
+    "answer": "20th President",
+    "reference": ""
+  },
+  {
+    "id": 8376,
+    "question": "What was the Pendleton Act?",
+    "answer": "Civil service reform",
+    "reference": ""
+  },
+  {
+    "id": 8377,
+    "question": "Who was Chester A. Arthur?",
+    "answer": "21st President",
+    "reference": ""
+  },
+  {
+    "id": 8378,
+    "question": "What was the Chinese Exclusion Act?",
+    "answer": "Immigration ban",
+    "reference": ""
+  },
+  {
+    "id": 8379,
+    "question": "Who was Grover Cleveland?",
+    "answer": "22nd and 24th President",
+    "reference": ""
+  },
+  {
+    "id": 8380,
+    "question": "What was the Interstate Commerce Act?",
+    "answer": "Railroad regulation",
+    "reference": ""
+  },
+  {
+    "id": 8381,
+    "question": "Who was Benjamin Harrison?",
+    "answer": "23rd President",
+    "reference": ""
+  },
+  {
+    "id": 8382,
+    "question": "What was the Sherman Silver Purchase Act?",
+    "answer": "Silver coinage",
+    "reference": ""
+  },
+  {
+    "id": 8383,
+    "question": "Who was William McKinley?",
+    "answer": "25th President",
+    "reference": ""
+  },
+  {
+    "id": 8384,
+    "question": "What was the Open Door Policy?",
+    "answer": "China trade",
+    "reference": ""
+  },
+  {
+    "id": 8385,
+    "question": "Who was William Howard Taft?",
+    "answer": "27th President",
+    "reference": ""
+  },
+  {
+    "id": 8386,
+    "question": "What was dollar diplomacy?",
+    "answer": "Economic influence",
+    "reference": ""
+  },
+  {
+    "id": 8387,
+    "question": "Who was Warren G. Harding?",
+    "answer": "29th President",
+    "reference": ""
+  },
+  {
+    "id": 8388,
+    "question": "What was the Teapot Dome scandal?",
+    "answer": "Oil lease corruption",
+    "reference": ""
+  },
+  {
+    "id": 8389,
+    "question": "Who was Calvin Coolidge?",
+    "answer": "30th President",
+    "reference": ""
+  },
+  {
+    "id": 8390,
+    "question": "What was the Kellogg-Briand Pact?",
+    "answer": "Anti-war treaty",
+    "reference": ""
+  },
+  {
+    "id": 8391,
+    "question": "Who was John Quincy Adams?",
+    "answer": "6th President",
+    "reference": ""
+  },
+  {
+    "id": 8392,
+    "question": "What was the Erie Canal?",
+    "answer": "Waterway connection",
+    "reference": ""
+  },
+  {
+    "id": 8393,
+    "question": "Who was Martin Van Buren?",
+    "answer": "8th President",
+    "reference": ""
+  },
+  {
+    "id": 8394,
+    "question": "What was the Panic of 1837?",
+    "answer": "Economic depression",
+    "reference": ""
+  },
+  {
+    "id": 8395,
+    "question": "Who was William Henry Harrison?",
+    "answer": "9th President",
+    "reference": ""
+  },
+  {
+    "id": 8396,
+    "question": "What was 'Tippecanoe and Tyler Too'?",
+    "answer": "Campaign slogan",
+    "reference": ""
+  },
+  {
+    "id": 8397,
+    "question": "Who was John Tyler?",
+    "answer": "10th President",
+    "reference": ""
+  },
+  {
+    "id": 8398,
+    "question": "What was annexation of Texas?",
+    "answer": "Adding Texas to US",
+    "reference": ""
+  },
+  {
+    "id": 8399,
+    "question": "Who was Franklin D. Roosevelt?",
+    "answer": "32nd President",
+    "reference": ""
+  },
+  {
+    "id": 8400,
+    "question": "What was the Lend-Lease Act?",
+    "answer": "Aid to Allies",
+    "reference": ""
+  },
+  {
+    "id": 8401,
+    "question": "Who was Dwight D. Eisenhower?",
+    "answer": "34th President",
+    "reference": ""
+  },
+  {
+    "id": 8402,
+    "question": "What was the Interstate Highway System?",
+    "answer": "Road network",
+    "reference": ""
+  },
+  {
+    "id": 8403,
+    "question": "Who was Geraldine Ferraro?",
+    "answer": "First female VP candidate",
+    "reference": ""
+  },
+  {
+    "id": 8404,
+    "question": "What was the Space Race?",
+    "answer": "US vs USSR in space",
+    "reference": ""
+  },
+  {
+    "id": 8405,
+    "question": "Who was Thurgood Marshall?",
+    "answer": "First Black Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8406,
+    "question": "What was the War on Poverty?",
+    "answer": "LBJ's programs",
+    "reference": ""
+  },
+  {
+    "id": 8407,
+    "question": "Who was Henry Kissinger?",
+    "answer": "Secretary of State",
+    "reference": ""
+  },
+  {
+    "id": 8408,
+    "question": "What was detente?",
+    "answer": "Easing Cold War tensions",
+    "reference": ""
+  },
+  {
+    "id": 8409,
+    "question": "Who was Sandra Day O'Connor?",
+    "answer": "First female Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8410,
+    "question": "What was the Iran-Contra affair?",
+    "answer": "Reagan scandal",
+    "reference": ""
+  },
+  {
+    "id": 8411,
+    "question": "Who was Ruth Bader Ginsburg?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8412,
+    "question": "What was the Don't Ask Don't Tell policy?",
+    "answer": "Military gay policy",
+    "reference": ""
+  },
+  {
+    "id": 8413,
+    "question": "Who was Madeleine Albright?",
+    "answer": "First female Secretary of State",
+    "reference": ""
+  },
+  {
+    "id": 8414,
+    "question": "What was the Patriot Act?",
+    "answer": "Post-9/11 security law",
+    "reference": ""
+  },
+  {
+    "id": 8415,
+    "question": "Who was Condoleezza Rice?",
+    "answer": "Secretary of State",
+    "reference": ""
+  },
+  {
+    "id": 8416,
+    "question": "What was the Great Recession?",
+    "answer": "2008 financial crisis",
+    "reference": ""
+  },
+  {
+    "id": 8417,
+    "question": "Who was Hillary Clinton?",
+    "answer": "Secretary of State and candidate",
+    "reference": ""
+  },
+  {
+    "id": 8418,
+    "question": "What was DACA?",
+    "answer": "Immigrant protection",
+    "reference": ""
+  },
+  {
+    "id": 8419,
+    "question": "Who was John Roberts?",
+    "answer": "Chief Justice",
+    "reference": ""
+  },
+  {
+    "id": 8420,
+    "question": "What is the Electoral College?",
+    "answer": "Presidential election system",
+    "reference": ""
+  },
+  {
+    "id": 8455,
+    "question": "Which war was fought between the North and South in the US?",
+    "answer": "Civil War",
+    "reference": ""
+  },
+  {
+    "id": 8469,
+    "question": "Which President freed the slaves?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8470,
+    "question": "What is the Statue of Liberty a symbol of?",
+    "answer": "Freedom",
+    "reference": ""
+  },
+  {
+    "id": 8471,
+    "question": "In what city is the White House located?",
+    "answer": "Washington, D.C.",
+    "reference": ""
+  },
+  {
+    "id": 8472,
+    "question": "Who was the first woman to fly solo across the Atlantic?",
+    "answer": "Amelia Earhart",
+    "reference": ""
+  },
+  {
+    "id": 8473,
+    "question": "What war ended in 1945?",
+    "answer": "World War II",
+    "reference": ""
+  },
+  {
+    "id": 8474,
+    "question": "Which President is known as the Father of the Country?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 8478,
+    "question": "Which state was the 50th to join the Union?",
+    "answer": "Hawaii",
+    "reference": ""
+  },
+  {
+    "id": 8479,
+    "question": "Who was Martin Luther King Jr.?",
+    "answer": "Civil rights leader",
+    "reference": ""
+  },
+  {
+    "id": 8480,
+    "question": "What is Thanksgiving celebrated for?",
+    "answer": "Harvest and blessings",
+    "reference": ""
+  },
+  {
+    "id": 8481,
+    "question": "Which river did Lewis and Clark explore?",
+    "answer": "Missouri River",
+    "reference": ""
+  },
+  {
+    "id": 8482,
+    "question": "What is the Bill of Rights?",
+    "answer": "First 10 amendments",
+    "reference": ""
+  },
+  {
+    "id": 8483,
+    "question": "Who was the 16th President?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8484,
+    "question": "What war was in 1812?",
+    "answer": "War of 1812",
+    "reference": ""
+  },
+  {
+    "id": 8485,
+    "question": "Which city was the first capital of the US?",
+    "answer": "Philadelphia",
+    "reference": ""
+  },
+  {
+    "id": 8488,
+    "question": "Which President was assassinated in 1963?",
+    "answer": "John F. Kennedy",
+    "reference": ""
+  },
+  {
+    "id": 8491,
+    "question": "What is the Supreme Court?",
+    "answer": "Highest court",
+    "reference": ""
+  },
+  {
+    "id": 8492,
+    "question": "Which war involved Vietnam?",
+    "answer": "Vietnam War",
+    "reference": ""
+  },
+  {
+    "id": 8493,
+    "question": "Who was the first man on the moon from the US?",
+    "answer": "Neil Armstrong",
+    "reference": ""
+  },
+  {
+    "id": 8494,
+    "question": "What is the Gettysburg Address?",
+    "answer": "Lincoln's speech",
+    "reference": ""
+  },
+  {
+    "id": 8495,
+    "question": "Which state is known as the Lone Star State?",
+    "answer": "Texas",
+    "reference": ""
+  },
+  {
+    "id": 8496,
+    "question": "What was the Boston Tea Party?",
+    "answer": "Protest against tea tax",
+    "reference": ""
+  },
+  {
+    "id": 8498,
+    "question": "What is Labor Day for?",
+    "answer": "Honoring workers",
+    "reference": ""
+  },
+  {
+    "id": 8529,
+    "question": "Who was the second President?",
+    "answer": "John Adams",
+    "reference": ""
+  },
+  {
+    "id": 8530,
+    "question": "What is the Fourth of July?",
+    "answer": "Independence Day",
+    "reference": ""
+  },
+  {
+    "id": 8531,
+    "question": "Which war was between the US and Britain in 1812?",
+    "answer": "War of 1812",
+    "reference": ""
+  },
+  {
+    "id": 8533,
+    "question": "What is the Grand Canyon known for?",
+    "answer": "Natural wonder",
+    "reference": ""
+  },
+  {
+    "id": 8534,
+    "question": "Which President was on the $1 bill?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 8535,
+    "question": "What was the Gold Rush of 1849?",
+    "answer": "California gold discovery",
+    "reference": ""
+  },
+  {
+    "id": 8537,
+    "question": "What is Veterans Day for?",
+    "answer": "Honoring veterans",
+    "reference": ""
+  },
+  {
+    "id": 8538,
+    "question": "Which city hosted the first Olympics in the US?",
+    "answer": "St. Louis",
+    "reference": ""
+  },
+  {
+    "id": 8539,
+    "question": "Who was Betsy Ross?",
+    "answer": "Made first flag",
+    "reference": ""
+  },
+  {
+    "id": 8540,
+    "question": "What is the Alamo?",
+    "answer": "Texas mission battle",
+    "reference": ""
+  },
+  {
+    "id": 8541,
+    "question": "Which President was Teddy Roosevelt?",
+    "answer": "26th",
+    "reference": ""
+  },
+  {
+    "id": 8544,
+    "question": "What is Mount Rushmore?",
+    "answer": "Presidents carved in mountain",
+    "reference": ""
+  },
+  {
+    "id": 8545,
+    "question": "Which war was the Korean War?",
+    "answer": "1950-1953 conflict",
+    "reference": ""
+  },
+  {
+    "id": 8546,
+    "question": "Who was George Washington Carver?",
+    "answer": "Peanut scientist",
+    "reference": ""
+  },
+  {
+    "id": 8548,
+    "question": "Which state is the Empire State?",
+    "answer": "New York",
+    "reference": ""
+  },
+  {
+    "id": 8569,
+    "question": "Who was the 44th President?",
+    "answer": "Barack Obama",
+    "reference": ""
+  },
+  {
+    "id": 8570,
+    "question": "What is the Pentagon?",
+    "answer": "Defense headquarters",
+    "reference": ""
+  },
+  {
+    "id": 8571,
+    "question": "Which war was World War I?",
+    "answer": "1914-1918",
+    "reference": ""
+  },
+  {
+    "id": 8573,
+    "question": "What is Yellowstone?",
+    "answer": "First national park",
+    "reference": ""
+  },
+  {
+    "id": 8574,
+    "question": "Which President is on the $5 bill?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8576,
+    "question": "Who was Sojourner Truth?",
+    "answer": "Abolitionist",
+    "reference": ""
+  },
+  {
+    "id": 8577,
+    "question": "What is Presidents' Day for?",
+    "answer": "Washington and Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8578,
+    "question": "Which city was the Summer of Love in?",
+    "answer": "San Francisco",
+    "reference": ""
+  },
+  {
+    "id": 8579,
+    "question": "Who was Johnny Appleseed?",
+    "answer": "Planted apple trees",
+    "reference": ""
+  },
+  {
+    "id": 8580,
+    "question": "What is Pearl Harbor?",
+    "answer": "Japanese attack site",
+    "reference": ""
+  },
+  {
+    "id": 8581,
+    "question": "Which President was FDR?",
+    "answer": "32nd",
+    "reference": ""
+  },
+  {
+    "id": 8584,
+    "question": "What is the Hoover Dam?",
+    "answer": "Colorado River dam",
+    "reference": ""
+  },
+  {
+    "id": 8585,
+    "question": "Which war was the Gulf War?",
+    "answer": "1990-1991",
+    "reference": ""
+  },
+  {
+    "id": 8586,
+    "question": "Who was Thomas Paine?",
+    "answer": "Common Sense author",
+    "reference": ""
+  },
+  {
+    "id": 8587,
+    "question": "What is the Library of Congress?",
+    "answer": "National library",
+    "reference": ""
+  },
+  {
+    "id": 8588,
+    "question": "Which state is the Sunshine State?",
+    "answer": "Florida",
+    "reference": ""
+  },
+  {
+    "id": 8609,
+    "question": "Who was the 35th President?",
+    "answer": "John F. Kennedy",
+    "reference": ""
+  },
+  {
+    "id": 8610,
+    "question": "What is the Capitol Building?",
+    "answer": "Congress meets there",
+    "reference": ""
+  },
+  {
+    "id": 8611,
+    "question": "Which war was the Spanish-American War?",
+    "answer": "1898",
+    "reference": ""
+  },
+  {
+    "id": 8613,
+    "question": "What is Yosemite?",
+    "answer": "National park",
+    "reference": ""
+  },
+  {
+    "id": 8614,
+    "question": "Which President is on the $20 bill?",
+    "answer": "Andrew Jackson",
+    "reference": ""
+  },
+  {
+    "id": 8615,
+    "question": "What was the Red Scare?",
+    "answer": "Fear of communism",
+    "reference": ""
+  },
+  {
+    "id": 8617,
+    "question": "What is Columbus Day for?",
+    "answer": "Discovery of America",
+    "reference": ""
+  },
+  {
+    "id": 8618,
+    "question": "Which city was the Woodstock festival near?",
+    "answer": "Bethel, NY",
+    "reference": ""
+  },
+  {
+    "id": 8620,
+    "question": "What is Normandy?",
+    "answer": "D-Day landing",
+    "reference": ""
+  },
+  {
+    "id": 8621,
+    "question": "Which President was Ike?",
+    "answer": "Dwight D. Eisenhower",
+    "reference": ""
+  },
+  {
+    "id": 8624,
+    "question": "What is the Everglades?",
+    "answer": "Florida wetlands",
+    "reference": ""
+  },
+  {
+    "id": 8625,
+    "question": "Which war was the Iraq War?",
+    "answer": "2003-2011",
+    "reference": ""
+  },
+  {
+    "id": 8626,
+    "question": "Who was Patrick Henry?",
+    "answer": "Give me liberty or death",
+    "reference": ""
+  },
+  {
+    "id": 8627,
+    "question": "What is the National Archives?",
+    "answer": "Houses founding documents",
+    "reference": ""
+  },
+  {
+    "id": 8628,
+    "question": "Which state is the Peach State?",
+    "answer": "Georgia",
+    "reference": ""
+  },
+  {
+    "id": 8649,
+    "question": "Who was the 40th President?",
+    "answer": "Ronald Reagan",
+    "reference": ""
+  },
+  {
+    "id": 8650,
+    "question": "What is the Lincoln Memorial?",
+    "answer": "Statue of Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8651,
+    "question": "Which war was the Mexican-American War?",
+    "answer": "1846-1848",
+    "reference": ""
+  },
+  {
+    "id": 8652,
+    "question": "Who was Babe Ruth?",
+    "answer": "Baseball legend",
+    "reference": ""
+  },
+  {
+    "id": 8653,
+    "question": "What is the Badlands?",
+    "answer": "National park in South Dakota",
+    "reference": ""
+  },
+  {
+    "id": 8654,
+    "question": "Which President is on the $50 bill?",
+    "answer": "Ulysses S. Grant",
+    "reference": ""
+  },
+  {
+    "id": 8656,
+    "question": "Who was Dolores Huerta?",
+    "answer": "Labor activist",
+    "reference": ""
+  },
+  {
+    "id": 8657,
+    "question": "What is Martin Luther King Day for?",
+    "answer": "Civil rights",
+    "reference": ""
+  },
+  {
+    "id": 8658,
+    "question": "Which city was the capital during the Revolution?",
+    "answer": "Philadelphia",
+    "reference": ""
+  },
+  {
+    "id": 8659,
+    "question": "Who was Daniel Boone?",
+    "answer": "Pioneer",
+    "reference": ""
+  },
+  {
+    "id": 8660,
+    "question": "What is Hiroshima?",
+    "answer": "Atomic bomb site",
+    "reference": ""
+  },
+  {
+    "id": 8661,
+    "question": "Which President was Truman?",
+    "answer": "33rd",
+    "reference": ""
+  },
+  {
+    "id": 8664,
+    "question": "What is the Mississippi River?",
+    "answer": "Major US river",
+    "reference": ""
+  },
+  {
+    "id": 8665,
+    "question": "Which war was Afghanistan?",
+    "answer": "2001-2021",
+    "reference": ""
+  },
+  {
+    "id": 8666,
+    "question": "Who was John Hancock?",
+    "answer": "Signature on Declaration",
+    "reference": ""
+  },
+  {
+    "id": 8667,
+    "question": "What is the Census?",
+    "answer": "Population count",
+    "reference": ""
+  },
+  {
+    "id": 8668,
+    "question": "Which state is the Volunteer State?",
+    "answer": "Tennessee",
+    "reference": ""
+  },
+  {
+    "id": 8689,
+    "question": "Who was the 43rd President?",
+    "answer": "George W. Bush",
+    "reference": ""
+  },
+  {
+    "id": 8690,
+    "question": "What is the Washington Monument?",
+    "answer": "Obelisk for Washington",
+    "reference": ""
+  },
+  {
+    "id": 8691,
+    "question": "Which war was the Franco-American War?",
+    "answer": "Quasi-War",
+    "reference": ""
+  },
+  {
+    "id": 8692,
+    "question": "Who was Michael Jordan?",
+    "answer": "Basketball star",
+    "reference": ""
+  },
+  {
+    "id": 8693,
+    "question": "What is Denali?",
+    "answer": "Highest mountain",
+    "reference": ""
+  },
+  {
+    "id": 8694,
+    "question": "Which President is on the $100 bill?",
+    "answer": "Benjamin Franklin",
+    "reference": ""
+  },
+  {
+    "id": 8695,
+    "question": "What was the Watergate scandal?",
+    "answer": "Nixon break-in",
+    "reference": ""
+  },
+  {
+    "id": 8696,
+    "question": "Who was Gloria Steinem?",
+    "answer": "Feminist",
+    "reference": ""
+  },
+  {
+    "id": 8697,
+    "question": "What is Juneteenth?",
+    "answer": "End of slavery",
+    "reference": ""
+  },
+  {
+    "id": 8698,
+    "question": "Which city was the first US capital?",
+    "answer": "New York",
+    "reference": ""
+  },
+  {
+    "id": 8699,
+    "question": "Who was Lewis and Clark?",
+    "answer": "Explorers",
+    "reference": ""
+  },
+  {
+    "id": 8700,
+    "question": "What is Nagasaki?",
+    "answer": "Second atomic bomb",
+    "reference": ""
+  },
+  {
+    "id": 8701,
+    "question": "Which President was LBJ?",
+    "answer": "Lyndon B. Johnson",
+    "reference": ""
+  },
+  {
+    "id": 8702,
+    "question": "What was the Arms Race?",
+    "answer": "Nuclear buildup",
+    "reference": ""
+  },
+  {
+    "id": 8704,
+    "question": "What is the Colorado River?",
+    "answer": "Grand Canyon carver",
+    "reference": ""
+  },
+  {
+    "id": 8705,
+    "question": "Which war was the War on Terror?",
+    "answer": "Post-9/11",
+    "reference": ""
+  },
+  {
+    "id": 8706,
+    "question": "Who was Samuel Adams?",
+    "answer": "Revolutionary leader",
+    "reference": ""
+  },
+  {
+    "id": 8708,
+    "question": "Which state is the Granite State?",
+    "answer": "New Hampshire",
+    "reference": ""
+  },
+  {
+    "id": 8729,
+    "question": "Who was the 46th President?",
+    "answer": "Joe Biden",
+    "reference": ""
+  },
+  {
+    "id": 8730,
+    "question": "What is the Jefferson Memorial?",
+    "answer": "Statue of Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 8731,
+    "question": "Which war was the Barbary Wars?",
+    "answer": "Against pirates",
+    "reference": ""
+  },
+  {
+    "id": 8732,
+    "question": "Who was Elvis Presley?",
+    "answer": "Rock and roll king",
+    "reference": ""
+  },
+  {
+    "id": 8733,
+    "question": "What is the Appalachian Trail?",
+    "answer": "Hiking path",
+    "reference": ""
+  },
+  {
+    "id": 8734,
+    "question": "Which President is on the nickel?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 8736,
+    "question": "Who was Betty Friedan?",
+    "answer": "Feminist author",
+    "reference": ""
+  },
+  {
+    "id": 8737,
+    "question": "What is Black History Month?",
+    "answer": "February celebration",
+    "reference": ""
+  },
+  {
+    "id": 8738,
+    "question": "Which city is the City of Brotherly Love?",
+    "answer": "Philadelphia",
+    "reference": ""
+  },
+  {
+    "id": 8739,
+    "question": "Who was Meriwether Lewis?",
+    "answer": "Explorer",
+    "reference": ""
+  },
+  {
+    "id": 8740,
+    "question": "What is the Trinity test?",
+    "answer": "First atomic bomb",
+    "reference": ""
+  },
+  {
+    "id": 8741,
+    "question": "Which President was Nixon?",
+    "answer": "37th",
+    "reference": ""
+  },
+  {
+    "id": 8742,
+    "question": "What was the Iron Curtain?",
+    "answer": "Cold War divide",
+    "reference": ""
+  },
+  {
+    "id": 8743,
+    "question": "Who was Clarence Thomas?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8744,
+    "question": "What is the Ohio River?",
+    "answer": "Mississippi tributary",
+    "reference": ""
+  },
+  {
+    "id": 8745,
+    "question": "Which war was Operation Desert Storm?",
+    "answer": "Gulf War",
+    "reference": ""
+  },
+  {
+    "id": 8746,
+    "question": "Who was Alexander Hamilton?",
+    "answer": "Treasury Secretary",
+    "reference": ""
+  },
+  {
+    "id": 8747,
+    "question": "What is the Federal Reserve?",
+    "answer": "Central bank",
+    "reference": ""
+  },
+  {
+    "id": 8748,
+    "question": "Which state is the Badger State?",
+    "answer": "Wisconsin",
+    "reference": ""
+  },
+  {
+    "id": 8769,
+    "question": "Who was the 45th President?",
+    "answer": "Donald Trump",
+    "reference": ""
+  },
+  {
+    "id": 8770,
+    "question": "What is the FDR Memorial?",
+    "answer": "Statue of Roosevelt",
+    "reference": ""
+  },
+  {
+    "id": 8771,
+    "question": "Which war was the Tripolitan War?",
+    "answer": "Against Barbary pirates",
+    "reference": ""
+  },
+  {
+    "id": 8772,
+    "question": "Who was Marilyn Monroe?",
+    "answer": "Actress",
+    "reference": ""
+  },
+  {
+    "id": 8773,
+    "question": "What is the Pacific Crest Trail?",
+    "answer": "Hiking trail",
+    "reference": ""
+  },
+  {
+    "id": 8774,
+    "question": "Which President is on the dime?",
+    "answer": "Franklin D. Roosevelt",
+    "reference": ""
+  },
+  {
+    "id": 8775,
+    "question": "What was the S&L crisis?",
+    "answer": "Savings and loan scandal",
+    "reference": ""
+  },
+  {
+    "id": 8776,
+    "question": "Who was bell hooks?",
+    "answer": "Feminist writer",
+    "reference": ""
+  },
+  {
+    "id": 8777,
+    "question": "What is Women's History Month?",
+    "answer": "March celebration",
+    "reference": ""
+  },
+  {
+    "id": 8778,
+    "question": "Which city is the Windy City?",
+    "answer": "Chicago",
+    "reference": ""
+  },
+  {
+    "id": 8779,
+    "question": "Who was William Clark?",
+    "answer": "Explorer",
+    "reference": ""
+  },
+  {
+    "id": 8780,
+    "question": "What is Los Alamos?",
+    "answer": "Atomic bomb lab",
+    "reference": ""
+  },
+  {
+    "id": 8781,
+    "question": "Which President was Ford?",
+    "answer": "38th",
+    "reference": ""
+  },
+  {
+    "id": 8782,
+    "question": "What was the Berlin Wall?",
+    "answer": "Cold War symbol",
+    "reference": ""
+  },
+  {
+    "id": 8783,
+    "question": "Who was Antonin Scalia?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8784,
+    "question": "What is the Hudson River?",
+    "answer": "New York river",
+    "reference": ""
+  },
+  {
+    "id": 8785,
+    "question": "Which war was the Korean Conflict?",
+    "answer": "Korean War",
+    "reference": ""
+  },
+  {
+    "id": 8786,
+    "question": "Who was James Madison?",
+    "answer": "Constitution father",
+    "reference": ""
+  },
+  {
+    "id": 8787,
+    "question": "What is the IRS?",
+    "answer": "Tax agency",
+    "reference": ""
+  },
+  {
+    "id": 8788,
+    "question": "Which state is the Pelican State?",
+    "answer": "Louisiana",
+    "reference": ""
+  },
+  {
+    "id": 8809,
+    "question": "Who was the 41st President?",
+    "answer": "George H.W. Bush",
+    "reference": ""
+  },
+  {
+    "id": 8810,
+    "question": "What is the MLK Memorial?",
+    "answer": "Statue of King",
+    "reference": ""
+  },
+  {
+    "id": 8811,
+    "question": "Which war was the Quasi-War?",
+    "answer": "With France",
+    "reference": ""
+  },
+  {
+    "id": 8812,
+    "question": "Who was Frank Sinatra?",
+    "answer": "Singer",
+    "reference": ""
+  },
+  {
+    "id": 8813,
+    "question": "What is the Continental Divide?",
+    "answer": "Mountain watershed",
+    "reference": ""
+  },
+  {
+    "id": 8814,
+    "question": "Which President is on the quarter?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 8815,
+    "question": "What was the Lewinsky scandal?",
+    "answer": "Clinton affair",
+    "reference": ""
+  },
+  {
+    "id": 8816,
+    "question": "Who was Audre Lorde?",
+    "answer": "Poet and activist",
+    "reference": ""
+  },
+  {
+    "id": 8817,
+    "question": "What is Hispanic Heritage Month?",
+    "answer": "September-October",
+    "reference": ""
+  },
+  {
+    "id": 8818,
+    "question": "Which city is the Big Apple?",
+    "answer": "New York",
+    "reference": ""
+  },
+  {
+    "id": 8820,
+    "question": "What is Oak Ridge?",
+    "answer": "Atomic bomb site",
+    "reference": ""
+  },
+  {
+    "id": 8821,
+    "question": "Which President was Carter?",
+    "answer": "39th",
+    "reference": ""
+  },
+  {
+    "id": 8823,
+    "question": "Who was Neil Gorsuch?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8824,
+    "question": "What is the Potomac River?",
+    "answer": "Washington D.C. river",
+    "reference": ""
+  },
+  {
+    "id": 8825,
+    "question": "Which war was the Spanish-American?",
+    "answer": "1898",
+    "reference": ""
+  },
+  {
+    "id": 8826,
+    "question": "Who was John Jay?",
+    "answer": "First Chief Justice",
+    "reference": ""
+  },
+  {
+    "id": 8827,
+    "question": "What is the FBI?",
+    "answer": "Federal Bureau of Investigation",
+    "reference": ""
+  },
+  {
+    "id": 8828,
+    "question": "Which state is the Gem State?",
+    "answer": "Idaho",
+    "reference": ""
+  },
+  {
+    "id": 8849,
+    "question": "Who was the 42nd President?",
+    "answer": "Bill Clinton",
+    "reference": ""
+  },
+  {
+    "id": 8850,
+    "question": "What is the Korean War Memorial?",
+    "answer": "Wall for soldiers",
+    "reference": ""
+  },
+  {
+    "id": 8851,
+    "question": "Which war was the Algerine War?",
+    "answer": "Against pirates",
+    "reference": ""
+  },
+  {
+    "id": 8852,
+    "question": "Who was Walt Disney?",
+    "answer": "Animator",
+    "reference": ""
+  },
+  {
+    "id": 8853,
+    "question": "What is the John Muir Trail?",
+    "answer": "California hike",
+    "reference": ""
+  },
+  {
+    "id": 8854,
+    "question": "Which President is on the half dollar?",
+    "answer": "John F. Kennedy",
+    "reference": ""
+  },
+  {
+    "id": 8855,
+    "question": "What was the Monica Lewinsky affair?",
+    "answer": "Clinton scandal",
+    "reference": ""
+  },
+  {
+    "id": 8856,
+    "question": "Who was Maya Angelou?",
+    "answer": "Poet",
+    "reference": ""
+  },
+  {
+    "id": 8857,
+    "question": "What is Asian American Pacific Islander Month?",
+    "answer": "May celebration",
+    "reference": ""
+  },
+  {
+    "id": 8858,
+    "question": "Which city is the City of Angels?",
+    "answer": "Los Angeles",
+    "reference": ""
+  },
+  {
+    "id": 8859,
+    "question": "Who was York?",
+    "answer": "Slave on Lewis and Clark expedition",
+    "reference": ""
+  },
+  {
+    "id": 8860,
+    "question": "What is Hanford?",
+    "answer": "Atomic bomb plutonium site",
+    "reference": ""
+  },
+  {
+    "id": 8861,
+    "question": "Which President was Reagan?",
+    "answer": "40th",
+    "reference": ""
+  },
+  {
+    "id": 8862,
+    "question": "What was Star Wars?",
+    "answer": "Missile defense",
+    "reference": ""
+  },
+  {
+    "id": 8863,
+    "question": "Who was Brett Kavanaugh?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 8864,
+    "question": "What is the Rio Grande?",
+    "answer": "Texas border river",
+    "reference": ""
+  },
+  {
+    "id": 8865,
+    "question": "Which war was the Afghan War?",
+    "answer": "2001-2021",
+    "reference": ""
+  },
+  {
+    "id": 8866,
+    "question": "Who was Aaron Burr?",
+    "answer": "Duel with Hamilton",
+    "reference": ""
+  },
+  {
+    "id": 8867,
+    "question": "What is the CIA?",
+    "answer": "Central Intelligence Agency",
+    "reference": ""
+  },
+  {
+    "id": 8868,
+    "question": "Which state is the Magnolia State?",
+    "answer": "Mississippi",
+    "reference": ""
+  },
+  {
+    "id": 8889,
+    "question": "Who was the 39th President?",
+    "answer": "Jimmy Carter",
+    "reference": ""
+  },
+  {
+    "id": 8890,
+    "question": "What is the Vietnam Veterans Memorial?",
+    "answer": "Wall of names",
+    "reference": ""
+  },
+  {
+    "id": 8891,
+    "question": "Which war was the Undeclared War with France?",
+    "answer": "Quasi-War",
+    "reference": ""
+  },
+  {
+    "id": 8892,
+    "question": "Who was Oprah Winfrey?",
+    "answer": "Talk show host",
+    "reference": ""
+  },
+  {
+    "id": 8893,
+    "question": "What is the Natchez Trace?",
+    "answer": "Historic trail",
+    "reference": ""
+  },
+  {
+    "id": 8894,
+    "question": "Which President is on the $2 bill?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 8895,
+    "question": "What was the Oklahoma City bombing?",
+    "answer": "Terror attack",
+    "reference": ""
+  },
+  {
+    "id": 8896,
+    "question": "Who was Toni Morrison?",
+    "answer": "Author",
+    "reference": ""
+  },
+  {
+    "id": 8897,
+    "question": "What is Native American Heritage Month?",
+    "answer": "November",
+    "reference": ""
+  },
+  {
+    "id": 8898,
+    "question": "Which city is the Emerald City?",
+    "answer": "Seattle",
+    "reference": ""
+  },
+  {
+    "id": 8919,
+    "question": "Who was the 38th President?",
+    "answer": "Gerald Ford",
+    "reference": ""
+  },
+  {
+    "id": 8920,
+    "question": "What is the WWII Memorial?",
+    "answer": "Honors WWII vets",
+    "reference": ""
+  },
+  {
+    "id": 8921,
+    "question": "Which war was the War of Jenkin's Ear?",
+    "answer": "British-Spanish",
+    "reference": ""
+  },
+  {
+    "id": 8922,
+    "question": "Who was Michael Jackson?",
+    "answer": "Pop king",
+    "reference": ""
+  },
+  {
+    "id": 8923,
+    "question": "What is the Lewis and Clark Trail?",
+    "answer": "Expedition route",
+    "reference": ""
+  },
+  {
+    "id": 8924,
+    "question": "Which President is on the penny?",
+    "answer": "Abraham Lincoln",
+    "reference": ""
+  },
+  {
+    "id": 8925,
+    "question": "What was the Columbine shooting?",
+    "answer": "School tragedy",
+    "reference": ""
+  },
+  {
+    "id": 8926,
+    "question": "Who was Alice Walker?",
+    "answer": "Author",
+    "reference": ""
+  },
+  {
+    "id": 8927,
+    "question": "What is Pride Month?",
+    "answer": "June for LGBTQ",
+    "reference": ""
+  },
+  {
+    "id": 8928,
+    "question": "Which city is the Mile High City?",
+    "answer": "Denver",
+    "reference": ""
+  },
+  {
+    "id": 8969,
+    "question": "What is the name of the US national flower?",
+    "answer": "Rose",
+    "reference": ""
+  },
+  {
+    "id": 8970,
+    "question": "Who was the President during the Louisiana Purchase?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 8971,
+    "question": "What is the name of the famous speech by Lincoln at a battlefield?",
+    "answer": "Gettysburg Address",
+    "reference": ""
+  },
+  {
+    "id": 8972,
+    "question": "Which state is known as the Empire State?",
+    "answer": "New York",
+    "reference": ""
+  },
+  {
+    "id": 8973,
+    "question": "What is the name of the island where the Statue of Liberty stands?",
+    "answer": "Liberty Island",
+    "reference": ""
+  },
+  {
+    "id": 8974,
+    "question": "Who was the first African American President?",
+    "answer": "Barack Obama",
+    "reference": ""
+  },
+  {
+    "id": 8975,
+    "question": "What war was known as 'Mr. Madison's War'?",
+    "answer": "War of 1812",
+    "reference": ""
+  },
+  {
+    "id": 8976,
+    "question": "Which President is featured on the $2 bill?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 8977,
+    "question": "What is the name of the first national park?",
+    "answer": "Yellowstone",
+    "reference": ""
+  },
+  {
+    "id": 8978,
+    "question": "Who was the famous nurse during the Civil War?",
+    "answer": "Clara Barton",
+    "reference": ""
+  },
+  {
+    "id": 8979,
+    "question": "What is the name of the ship that exploded in Havana harbor?",
+    "answer": "USS Maine",
+    "reference": ""
+  },
+  {
+    "id": 8980,
+    "question": "Which amendment prohibits unreasonable searches?",
+    "answer": "4th Amendment",
+    "reference": ""
+  },
+  {
+    "id": 8981,
+    "question": "What was the name of the period after the Civil War?",
+    "answer": "Reconstruction",
+    "reference": ""
+  },
+  {
+    "id": 8982,
+    "question": "Who was the famous outlaw known as Billy the Kid?",
+    "answer": "William Bonney",
+    "reference": ""
+  },
+  {
+    "id": 8983,
+    "question": "What is the name of the famous bridge in San Francisco?",
+    "answer": "Golden Gate Bridge",
+    "reference": ""
+  },
+  {
+    "id": 8984,
+    "question": "Which President was known for the New Deal?",
+    "answer": "Franklin D. Roosevelt",
+    "reference": ""
+  },
+  {
+    "id": 8985,
+    "question": "What was the name of the project to build the atomic bomb?",
+    "answer": "Manhattan Project",
+    "reference": ""
+  },
+  {
+    "id": 8986,
+    "question": "Who was the famous pilot who disappeared?",
+    "answer": "Amelia Earhart",
+    "reference": ""
+  },
+  {
+    "id": 8987,
+    "question": "What is the name of the famous civil rights march?",
+    "answer": "March on Washington",
+    "reference": ""
+  },
+  {
+    "id": 8988,
+    "question": "Which war was called the Forgotten War?",
+    "answer": "Korean War",
+    "reference": ""
+  },
+  {
+    "id": 9020,
+    "question": "Which city was the 1968 DNC?",
+    "answer": "Chicago",
+    "reference": ""
+  },
+  {
+    "id": 9021,
+    "question": "Who was Jim Thorpe?",
+    "answer": "Athlete",
+    "reference": ""
+  },
+  {
+    "id": 9022,
+    "question": "What is Iwo Jima?",
+    "answer": "WWII battle",
+    "reference": ""
+  },
+  {
+    "id": 9055,
+    "question": "What is the Pacific Rim?",
+    "answer": "US west coast area",
+    "reference": ""
+  },
+  {
+    "id": 9058,
+    "question": "Who was Angela Davis?",
+    "answer": "Activist",
+    "reference": ""
+  },
+  {
+    "id": 9060,
+    "question": "Which city was the 1984 Olympics?",
+    "answer": "Los Angeles",
+    "reference": ""
+  },
+  {
+    "id": 9062,
+    "question": "What is Midway?",
+    "answer": "WWII battle",
+    "reference": ""
+  },
+  {
+    "id": 9069,
+    "question": "What is the FAA?",
+    "answer": "Aviation agency",
+    "reference": ""
+  },
+  {
+    "id": 9070,
+    "question": "Which state is the Show-Me State?",
+    "answer": "Missouri",
+    "reference": ""
+  },
+  {
+    "id": 9093,
+    "question": "Which war was the Philippine-American War?",
+    "answer": "1899-1902",
+    "reference": ""
+  },
+  {
+    "id": 9094,
+    "question": "Who was Muhammad Ali?",
+    "answer": "Boxer",
+    "reference": ""
+  },
+  {
+    "id": 9095,
+    "question": "What is the Great Lakes?",
+    "answer": "Five lakes",
+    "reference": ""
+  },
+  {
+    "id": 9097,
+    "question": "What was the dot-com bubble?",
+    "answer": "1990s tech boom",
+    "reference": ""
+  },
+  {
+    "id": 9100,
+    "question": "Which city was the 1996 Olympics?",
+    "answer": "Atlanta",
+    "reference": ""
+  },
+  {
+    "id": 9102,
+    "question": "What is Guadalcanal?",
+    "answer": "WWII battle",
+    "reference": ""
+  },
+  {
+    "id": 9103,
+    "question": "Which President was Bush Sr.?",
+    "answer": "41st",
+    "reference": ""
+  },
+  {
+    "id": 9104,
+    "question": "What was the Persian Gulf War?",
+    "answer": "1991 conflict",
+    "reference": ""
+  },
+  {
+    "id": 9105,
+    "question": "Who was Elena Kagan?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 9107,
+    "question": "Which war was the Syrian Civil War involvement?",
+    "answer": "2010s",
+    "reference": ""
+  },
+  {
+    "id": 9109,
+    "question": "What is the CDC?",
+    "answer": "Disease control",
+    "reference": ""
+  },
+  {
+    "id": 9110,
+    "question": "Which state is the Hawkeye State?",
+    "answer": "Iowa",
+    "reference": ""
+  },
+  {
+    "id": 9132,
+    "question": "What is the Vietnam War Memorial?",
+    "answer": "Wall with names",
+    "reference": ""
+  },
+  {
+    "id": 9133,
+    "question": "Which war was the Indian Wars?",
+    "answer": "Native conflicts",
+    "reference": ""
+  },
+  {
+    "id": 9134,
+    "question": "Who was Tiger Woods?",
+    "answer": "Golfer",
+    "reference": ""
+  },
+  {
+    "id": 9135,
+    "question": "What is the Rocky Mountains?",
+    "answer": "Western range",
+    "reference": ""
+  },
+  {
+    "id": 9137,
+    "question": "What was the housing bubble?",
+    "answer": "2000s crisis",
+    "reference": ""
+  },
+  {
+    "id": 9140,
+    "question": "Which city was the 2000 Olympics?",
+    "answer": "Sydney (but US: Salt Lake 2002)",
+    "reference": ""
+  },
+  {
+    "id": 9141,
+    "question": "Who was Lindbergh baby?",
+    "answer": "Kidnapped child",
+    "reference": ""
+  },
+  {
+    "id": 9142,
+    "question": "What is the Battle of the Bulge?",
+    "answer": "WWII battle",
+    "reference": ""
+  },
+  {
+    "id": 9143,
+    "question": "Which President was Bush Jr.?",
+    "answer": "43rd",
+    "reference": ""
+  },
+  {
+    "id": 9145,
+    "question": "Who was Amy Coney Barrett?",
+    "answer": "Supreme Court Justice",
+    "reference": ""
+  },
+  {
+    "id": 9147,
+    "question": "Which war was the Ukraine aid?",
+    "answer": "2020s",
+    "reference": ""
+  },
+  {
+    "id": 9148,
+    "question": "Who was James Monroe?",
+    "answer": "5th President",
+    "reference": ""
+  },
+  {
+    "id": 9149,
+    "question": "What is the EPA?",
+    "answer": "Environmental agency",
+    "reference": ""
+  },
+  {
+    "id": 9171,
+    "question": "Who was the 1st President?",
+    "answer": "George Washington",
+    "reference": ""
+  },
+  {
+    "id": 9172,
+    "question": "What is the Martin Luther King Memorial?",
+    "answer": "Statue in D.C.",
+    "reference": ""
+  },
+  {
+    "id": 9173,
+    "question": "Which war was the Boxer Rebellion?",
+    "answer": "China 1900",
+    "reference": ""
+  },
+  {
+    "id": 9174,
+    "question": "Who was Bill Gates?",
+    "answer": "Microsoft founder",
+    "reference": ""
+  },
+  {
+    "id": 9175,
+    "question": "What is the Sierra Nevada?",
+    "answer": "California mountains",
+    "reference": ""
+  },
+  {
+    "id": 9178,
+    "question": "Who was Michelle Obama?",
+    "answer": "First Lady",
+    "reference": ""
+  },
+  {
+    "id": 9180,
+    "question": "Which city was the 2012 Olympics?",
+    "answer": "London (US: Rio 2016)",
+    "reference": ""
+  },
+  {
+    "id": 9201,
+    "question": "Who was the 3rd President?",
+    "answer": "Thomas Jefferson",
+    "reference": ""
+  },
+  {
+    "id": 9202,
+    "question": "What is the World War II Memorial?",
+    "answer": "D.C. monument",
+    "reference": ""
+  },
+  {
+    "id": 9203,
+    "question": "Which war was the Seminole Wars?",
+    "answer": "Florida Native conflicts",
+    "reference": ""
+  },
+  {
+    "id": 9204,
+    "question": "Who was Steve Jobs?",
+    "answer": "Apple founder",
+    "reference": ""
+  },
+  {
+    "id": 9205,
+    "question": "What is the Ozarks?",
+    "answer": "Midwest mountains",
+    "reference": ""
+  },
+  {
+    "id": 9206,
+    "question": "Which President is on the $10 bill?",
+    "answer": "Alexander Hamilton",
+    "reference": ""
+  },
+  {
+    "id": 9207,
+    "question": "What was the subprime mortgage crisis?",
+    "answer": "2008 trigger",
+    "reference": ""
+  },
+  {
+    "id": 9210,
+    "question": "Which city was the 2008 Olympics?",
+    "answer": "Beijing (US: London 2012)",
+    "reference": ""
+  },
+  {
+    "id": 9231,
+    "question": "Who was the 4th President?",
+    "answer": "James Madison",
+    "reference": ""
+  }
+]

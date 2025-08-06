@@ -15,6 +15,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {
+    console.error('useTheme hook called outside of ThemeProvider. Component stack:', new Error().stack);
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
@@ -36,6 +37,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Load theme from localStorage on mount
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const savedTheme = localStorage.getItem('theme') as Theme;
     if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setThemeState(savedTheme);
@@ -44,6 +47,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Update resolved theme when theme changes or system preference changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const updateResolvedTheme = () => {
       const newResolvedTheme = theme === 'system' ? getSystemTheme() : theme;
       setResolvedTheme(newResolvedTheme);
@@ -72,7 +77,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem('theme', newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+    }
   };
 
   const toggleTheme = () => {

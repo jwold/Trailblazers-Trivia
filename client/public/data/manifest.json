@@ -1,0 +1,37 @@
+{
+  "categories": [
+    "animals",
+    "bible",
+    "geography",
+    "us_history",
+    "world_history"
+  ],
+  "totalQuestions": 3259,
+  "questionCounts": {
+    "animals": {
+      "easy": 479,
+      "hard": 502,
+      "total": 981
+    },
+    "bible": {
+      "easy": 208,
+      "hard": 258,
+      "total": 466
+    },
+    "geography": {
+      "easy": 241,
+      "hard": 205,
+      "total": 446
+    },
+    "us_history": {
+      "easy": 520,
+      "hard": 358,
+      "total": 878
+    },
+    "world_history": {
+      "easy": 268,
+      "hard": 220,
+      "total": 488
+    }
+  }
+}

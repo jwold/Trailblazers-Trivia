@@ -54,7 +54,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
   const { data: gameSession, isLoading } = useQuery<ClientGameSession>({
     queryKey: ["/api/games", gameCode],
-    refetchInterval: 1000,
+    refetchInterval: false, // Disable refetching in static mode
   });
 
   // Auto-load questions when game session is first loaded
@@ -511,20 +511,20 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   return (
     <div className="space-y-6">
       {/* Game Phase Banner - Always visible */}
-      <div className="bg-gray-200 relative overflow-hidden mb-6 rounded-xl border-2 border-gray-300">
+      <div className="bg-gray-200 dark:bg-gray-800 relative overflow-hidden mb-6 rounded-xl border-2 border-gray-300 dark:border-gray-700">
         <div className="px-6 py-8 relative z-10">
           <div className="text-center">
             {/* Floating Icons */}
             <div className="absolute top-2 left-4 opacity-30 animate-bounce">
-              <Gamepad2 size={20} className="transform rotate-12 text-gray-500" />
+              <Gamepad2 size={20} className="transform rotate-12 text-gray-500 dark:text-gray-400" />
             </div>
             <div className="absolute top-3 right-6 opacity-30 animate-bounce delay-300">
-              <Users size={18} className="transform -rotate-12 text-gray-500" />
+              <Users size={18} className="transform -rotate-12 text-gray-500 dark:text-gray-400" />
             </div>
             
             {/* Main Content */}
             <div className="relative">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 dark:text-white">
                 🎮 {gameSession?.gameMode === "shoutout" ? "All Teams Compete!" : 
                     `${gameSession?.teams[gameSession?.currentTeamIndex ?? 0]?.name || 'Team'}'s Turn`}
               </h3>
@@ -550,24 +550,24 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Loading state */}
       {(!easyQuestion && !hardQuestion && fetchQuestionMutation.isPending) && (
         <div className="text-center py-8">
-          <div className="text-xl font-semibold text-gray-600">Loading questions...</div>
+          <div className="text-xl font-semibold text-gray-600 dark:text-gray-400">Loading questions...</div>
         </div>
       )}
       {gamePhase === "question-display" && (easyQuestion || hardQuestion) && (
         <>
           {/* Difficulty Tabs */}
-          <Card className="border-4 border-gray-200 mb-6">
+          <Card className="border-4 border-gray-200 dark:border-gray-700 mb-6">
             <CardContent className="p-6">
               {/* Tab Navigation */}
-              <div className="border-b border-gray-200 mb-6">
+              <div className="border-b border-gray-200 dark:border-gray-700 mb-6">
                 <nav className="flex space-x-8">
                   <button
                     onClick={() => switchDifficulty("Easy")}
                     disabled={!easyQuestion}
                     className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
                       selectedDifficulty === "Easy"
-                        ? 'border-gray-600 text-gray-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'border-gray-600 text-gray-600 dark:text-gray-300'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600'
                     } ${!easyQuestion ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     Easy (1 Point)
@@ -577,8 +577,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     disabled={!hardQuestion}
                     className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
                       selectedDifficulty === "Hard"
-                        ? 'border-gray-600 text-gray-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'border-gray-600 text-gray-600 dark:text-gray-300'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600'
                     } ${!hardQuestion ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     Hard (3 Points)
@@ -589,21 +589,21 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               {/* Question Content */}
               {currentQuestion && (
                 <div className="text-center">
-                  <div className="text-sm font-semibold text-gray-600 mb-2">
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
                     {gameSession?.category ? gameSession.category.charAt(0).toUpperCase() + gameSession.category.slice(1).replace('_', ' ') : ''} Trivia
                   </div>
                   <div className="flex items-center justify-center gap-3 mb-4">
                     {!questionVisible ? (
                       <Button
                         onClick={() => setQuestionVisible(true)}
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 text-lg font-medium"
+                        className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white px-6 py-3 text-lg font-medium"
                       >
                         Show Question
                       </Button>
                     ) : (
                       <>
                         <div className="flex items-start justify-between gap-3">
-                          <h4 className="text-2xl font-bold text-gray-800 flex-1">
+                          <h4 className="text-2xl font-bold text-gray-800 dark:text-white flex-1">
                             {currentQuestion.question}
                           </h4>
                           {isLocalhost() && (
@@ -611,7 +611,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                               onClick={() => setShowEditModal(true)}
                               size="sm"
                               variant="ghost"
-                              className="text-gray-500 hover:text-gray-700 p-1 flex-shrink-0"
+                              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 flex-shrink-0"
                               title="Edit Question"
                             >
                               <Edit size={16} />
@@ -624,13 +624,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   </div>
                   
                   {questionVisible && gameSession?.category === 'bible' && currentQuestion.reference && (
-                    <div className="text-sm text-gray-600 mb-2">{currentQuestion.reference}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">{currentQuestion.reference}</div>
                   )}
                   {questionVisible && !answerVisible && (
                     <div className="text-center mt-4">
                       <Button
                         onClick={() => setAnswerVisible(true)}
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 text-sm font-medium"
+                        className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white px-6 py-2 text-sm font-medium"
                       >
                         Show Answer
                       </Button>
@@ -639,10 +639,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   {questionVisible && answerVisible && (
                     <div 
                       onClick={() => setAnswerVisible(false)}
-                      className="mt-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                      className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                     >
                       <div className="flex items-center justify-center gap-3">
-                        <div className="text-base text-gray-700 italic text-center">
+                        <div className="text-base text-gray-700 dark:text-gray-300 italic text-center">
                           {currentQuestion.answer}
                         </div>
                         
@@ -659,7 +659,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <>
               {gameSession.gameMode === "regular" ? (
                 <>
-                  <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-3 text-center">
                     Choose {currentTeam?.name}'s answer
                   </h4>
                   <div className="grid grid-cols-2 gap-6 mb-6">
@@ -683,8 +683,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div className="flex justify-center mb-6">
                     <Button
                       onClick={skipQuestion}
-                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
-                    >
+                      className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2">
                       <SkipForward size={20} />
                       Skip Question (Keep Turn)
                     </Button>
@@ -692,7 +691,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </>
               ) : (
                 <>
-                  <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-3 text-center">
                     Tap the team that answered first!
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -712,8 +711,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <div className="flex justify-center mb-6">
                     <Button
                       onClick={skipQuestion}
-                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2"
-                    >
+                      className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2">
                       <SkipForward size={20} />
                       Skip Question
                     </Button>
@@ -738,7 +736,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </>
       )}
       {/* Game Status - Combined Scores and History */}
-      <Card className="border-4 border-gray-200">
+      <Card className="border-4 border-gray-200 dark:border-gray-700">
         <CardContent className="p-6">
           {/* Tab Navigation */}
           <div className="border-b border-gray-200 mb-6">
@@ -780,7 +778,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   return index === gameSession.currentTeamIndex;
                 }).map((team, originalIndex) => {
                   const index = teams.findIndex(t => t.id === team.id);
-                  const textClass = "text-gray-800";
+                  const textClass = "text-gray-800 dark:text-white";
 
                   const progressWidth = (team.score / (gameSession.targetScore || 10)) * 100;
                   
@@ -807,22 +805,22 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                                   if (e.key === 'Enter') saveTeamName();
                                   if (e.key === 'Escape') cancelEditingTeamName();
                                 }}
-                                className="text-sm font-semibold border border-gray-400 focus:border-gray-600"
+                                className="text-sm font-semibold border border-gray-400 focus:border-gray-600 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                                 autoFocus
                               />
                               <Button
                                 onClick={saveTeamName}
                                 size="sm"
-                                className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
+                                className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white px-2 py-1"
                               >
                                 <Check size={12} />
                               </Button>
                               <Button
                                 onClick={cancelEditingTeamName}
                                 size="sm"
-                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1"
+                                className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1"
                               >
-                                <X size={12} className="text-gray-700" />
+                                <X size={12} className="text-gray-700 dark:text-gray-300" />
                               </Button>
                             </div>
                           ) : (
@@ -832,9 +830,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                               <Button
                                 onClick={() => startEditingTeamName(team.id, team.name)}
                                 size="sm"
-                                className="bg-transparent hover:bg-gray-200 text-gray-500 hover:text-gray-700 p-1"
+                                className="bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
                               >
-                                <Edit2 size={10} className="text-gray-500" />
+                                <Edit2 size={10} className="text-gray-500 dark:text-gray-400" />
                               </Button>
                             </div>
                           )}
@@ -851,7 +849,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 <div className="text-center mt-4">
                   <Button
                     onClick={() => setTeamsExpanded(!teamsExpanded)}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm transition-all duration-200"
+                    className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white text-sm transition-all duration-200"
                   >
                     {teamsExpanded ? "Collapse Teams" : "Expand Teams"}
                   </Button>
@@ -864,20 +862,20 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
           {showHistory && (
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {gameSession.detailedHistory.map((entry: QuestionHistoryEntry, index: number) => (
-                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-200'}`}>
+                <div key={index} className={`p-4 rounded-xl border-2 ${entry.wasCorrect ? 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700' : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className={`${entry.wasCorrect ? 'bg-gray-700' : 'bg-gray-600'} text-white`}>
+                        <Badge className={`${entry.wasCorrect ? 'bg-gray-700 dark:bg-gray-600' : 'bg-gray-600 dark:bg-gray-700'} text-white`}>
                           {entry.teamName}
                         </Badge>
                         <Badge variant="outline">{entry.difficulty}</Badge>
                         <Badge variant="outline">{entry.points} pts</Badge>
                       </div>
-                      <h4 className="font-semibold text-gray-800 mb-2">{entry.question}</h4>
-                      <p className="text-gray-600 mb-1"><strong>Answer:</strong> {entry.answer}</p>
+                      <h4 className="font-semibold text-gray-800 dark:text-white mb-2">{entry.question}</h4>
+                      <p className="text-gray-600 dark:text-gray-400 mb-1"><strong>Answer:</strong> {entry.answer}</p>
                       {gameSession?.category === 'bible' && entry.reference && (
-                        <p className="text-gray-500 text-sm">{entry.reference}</p>
+                        <p className="text-gray-500 dark:text-gray-500 text-sm">{entry.reference}</p>
                       )}
                     </div>
                     <div className="flex gap-2 ml-4">
@@ -885,16 +883,14 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         onClick={() => editHistoryEntry(index, true)}
                         disabled={entry.wasCorrect}
                         size="sm"
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1"
-                      >
+                        className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white px-2 py-1">
                         <Check size={14} />
                       </Button>
                       <Button
                         onClick={() => editHistoryEntry(index, false)}
                         disabled={!entry.wasCorrect}
                         size="sm"
-                        className="bg-gray-700 hover:bg-gray-800 text-white px-2 py-1"
-                      >
+                        className="bg-gray-700 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-2 py-1">
                         <X size={14} />
                       </Button>
                     </div>
@@ -902,7 +898,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 </div>
               ))}
               {gameSession.detailedHistory.length === 0 && (
-                <div className="text-center text-gray-500 py-8">
+                <div className="text-center text-gray-500 dark:text-gray-500 py-8">
                   No questions answered yet
                 </div>
               )}
@@ -913,7 +909,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       </Card>
       {/* Game Code Display */}
       <div className="text-center mt-4 text-gray-600 hidden">
-        <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800">{gameCode}</span></p>
+        <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800 dark:text-white">{gameCode}</span></p>
       </div>
 
       {/* Question Edit Modal */}

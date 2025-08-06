@@ -1,0 +1,1610 @@
+[
+  {
+    "id": 5096,
+    "question": "Which ancient wonder was located in Egypt?",
+    "answer": "The Great Pyramid of Giza",
+    "reference": ""
+  },
+  {
+    "id": 5097,
+    "question": "Who painted the Mona Lisa?",
+    "answer": "Leonardo da Vinci",
+    "reference": ""
+  },
+  {
+    "id": 5098,
+    "question": "In which country would you find Machu Picchu?",
+    "answer": "Peru",
+    "reference": ""
+  },
+  {
+    "id": 5099,
+    "question": "What year did World War II end?",
+    "answer": "1945",
+    "reference": ""
+  },
+  {
+    "id": 5100,
+    "question": "Which empire was ruled by Julius Caesar?",
+    "answer": "Roman Empire",
+    "reference": ""
+  },
+  {
+    "id": 5101,
+    "question": "What was the name of the ship that sank in 1912?",
+    "answer": "Titanic",
+    "reference": ""
+  },
+  {
+    "id": 5102,
+    "question": "Which country built the Great Wall?",
+    "answer": "China",
+    "reference": ""
+  },
+  {
+    "id": 5103,
+    "question": "Who was the first person to walk on the moon?",
+    "answer": "Neil Armstrong",
+    "reference": ""
+  },
+  {
+    "id": 5104,
+    "question": "In which city was Shakespeare born?",
+    "answer": "Stratford-upon-Avon",
+    "reference": ""
+  },
+  {
+    "id": 5105,
+    "question": "What does AD stand for in dates?",
+    "answer": "Anno Domini",
+    "reference": ""
+  },
+  {
+    "id": 5106,
+    "question": "Which explorer discovered America in 1492?",
+    "answer": "Christopher Columbus",
+    "reference": ""
+  },
+  {
+    "id": 5107,
+    "question": "What language did ancient Romans speak?",
+    "answer": "Latin",
+    "reference": ""
+  },
+  {
+    "id": 5108,
+    "question": "Which war lasted from 1939 to 1945?",
+    "answer": "World War II",
+    "reference": ""
+  },
+  {
+    "id": 5109,
+    "question": "What was the name of the ancient Greek city known for its warriors?",
+    "answer": "Sparta",
+    "reference": ""
+  },
+  {
+    "id": 5110,
+    "question": "Which Egyptian queen was known for her beauty and relationships with Roman leaders?",
+    "answer": "Cleopatra",
+    "reference": ""
+  },
+  {
+    "id": 5111,
+    "question": "What was the name of the pandemic that killed millions in Europe during the 14th century?",
+    "answer": "Black Death",
+    "reference": ""
+  },
+  {
+    "id": 5112,
+    "question": "Who was the first Holy Roman Emperor?",
+    "answer": "Charlemagne",
+    "reference": ""
+  },
+  {
+    "id": 5113,
+    "question": "What year did the French Revolution begin?",
+    "answer": "1789",
+    "reference": ""
+  },
+  {
+    "id": 5114,
+    "question": "Which battle marked the end of Napoleon's reign?",
+    "answer": "Battle of Waterloo",
+    "reference": ""
+  },
+  {
+    "id": 5115,
+    "question": "What was the name of the economic recovery plan for Europe after WWII?",
+    "answer": "Marshall Plan",
+    "reference": ""
+  },
+  {
+    "id": 5116,
+    "question": "Who was the last emperor of China?",
+    "answer": "Puyi",
+    "reference": ""
+  },
+  {
+    "id": 5117,
+    "question": "What was the main cause of World War I?",
+    "answer": "Assassination of Archduke Franz Ferdinand",
+    "reference": ""
+  },
+  {
+    "id": 5118,
+    "question": "Which civilization created the first known writing system?",
+    "answer": "Sumerians",
+    "reference": ""
+  },
+  {
+    "id": 5119,
+    "question": "What was the name of the trade route connecting Europe and Asia?",
+    "answer": "Silk Road",
+    "reference": ""
+  },
+  {
+    "id": 5120,
+    "question": "Who led the Mongol Empire at its peak?",
+    "answer": "Genghis Khan",
+    "reference": ""
+  },
+  {
+    "id": 5121,
+    "question": "What was the name of the ship on which Charles Darwin made his famous voyage?",
+    "answer": "HMS Beagle",
+    "reference": ""
+  },
+  {
+    "id": 5122,
+    "question": "Which treaty ended World War I?",
+    "answer": "Treaty of Versailles",
+    "reference": ""
+  },
+  {
+    "id": 5123,
+    "question": "Who was the last Tsar of Russia?",
+    "answer": "Nicholas II",
+    "reference": ""
+  },
+  {
+    "id": 5124,
+    "question": "In what year did the Berlin Wall fall?",
+    "answer": "1989",
+    "reference": ""
+  },
+  {
+    "id": 5125,
+    "question": "Which civilization built Angkor Wat?",
+    "answer": "Khmer Empire",
+    "reference": ""
+  },
+  {
+    "id": 5126,
+    "question": "Who was the first emperor of Rome?",
+    "answer": "Augustus",
+    "reference": ""
+  },
+  {
+    "id": 5127,
+    "question": "What was the name of the period of cultural rebirth in Europe?",
+    "answer": "Renaissance",
+    "reference": ""
+  },
+  {
+    "id": 5128,
+    "question": "Which king signed the Magna Carta?",
+    "answer": "King John",
+    "reference": ""
+  },
+  {
+    "id": 5129,
+    "question": "What was the name of the ancient city destroyed by a volcano?",
+    "answer": "Pompeii",
+    "reference": ""
+  },
+  {
+    "id": 5130,
+    "question": "Who was the famous nurse during the Crimean War?",
+    "answer": "Florence Nightingale",
+    "reference": ""
+  },
+  {
+    "id": 5131,
+    "question": "What was the name of the wall built by Hadrian?",
+    "answer": "Hadrian's Wall",
+    "reference": ""
+  },
+  {
+    "id": 5132,
+    "question": "Which country was known as the Land of the Rising Sun?",
+    "answer": "Japan",
+    "reference": ""
+  },
+  {
+    "id": 5133,
+    "question": "Who was the founder of Buddhism?",
+    "answer": "Siddhartha Gautama",
+    "reference": ""
+  },
+  {
+    "id": 5134,
+    "question": "What was the name of the ancient Egyptian writing system?",
+    "answer": "Hieroglyphics",
+    "reference": ""
+  },
+  {
+    "id": 5135,
+    "question": "Which explorer circumnavigated the globe?",
+    "answer": "Ferdinand Magellan",
+    "reference": ""
+  },
+  {
+    "id": 5136,
+    "question": "What was the name of the empire ruled by Montezuma?",
+    "answer": "Aztec Empire",
+    "reference": ""
+  },
+  {
+    "id": 5137,
+    "question": "Who was the famous queen of England during the Elizabethan era?",
+    "answer": "Elizabeth I",
+    "reference": ""
+  },
+  {
+    "id": 5138,
+    "question": "What was the name of the period of exploration in the 15th-17th centuries?",
+    "answer": "Age of Discovery",
+    "reference": ""
+  },
+  {
+    "id": 5139,
+    "question": "Which war was known as the Great War?",
+    "answer": "World War I",
+    "reference": ""
+  },
+  {
+    "id": 5140,
+    "question": "Who was the leader of the Bolshevik Revolution?",
+    "answer": "Vladimir Lenin",
+    "reference": ""
+  },
+  {
+    "id": 5141,
+    "question": "What was the name of the ancient Greek philosopher who taught Alexander the Great?",
+    "answer": "Aristotle",
+    "reference": ""
+  },
+  {
+    "id": 5142,
+    "question": "Which country was divided by the 38th parallel?",
+    "answer": "Korea",
+    "reference": ""
+  },
+  {
+    "id": 5143,
+    "question": "Who was the famous Carthaginian general who crossed the Alps?",
+    "answer": "Hannibal",
+    "reference": ""
+  },
+  {
+    "id": 5144,
+    "question": "What was the name of the code broken by the Allies in WWII?",
+    "answer": "Enigma",
+    "reference": ""
+  },
+  {
+    "id": 5145,
+    "question": "Which empire was known as the Sick Man of Europe?",
+    "answer": "Ottoman Empire",
+    "reference": ""
+  },
+  {
+    "id": 5176,
+    "question": "Who was the first emperor of unified China?",
+    "answer": "Qin Shi Huang",
+    "reference": ""
+  },
+  {
+    "id": 5177,
+    "question": "What was the name of the ancient library in Egypt?",
+    "answer": "Library of Alexandria",
+    "reference": ""
+  },
+  {
+    "id": 5178,
+    "question": "Which philosopher wrote 'The Republic'?",
+    "answer": "Plato",
+    "reference": ""
+  },
+  {
+    "id": 5179,
+    "question": "What was the name of the ship that Darwin sailed on?",
+    "answer": "HMS Beagle",
+    "reference": ""
+  },
+  {
+    "id": 5180,
+    "question": "Who was the famous queen of Palmyra?",
+    "answer": "Zenobia",
+    "reference": ""
+  },
+  {
+    "id": 5181,
+    "question": "What was the name of the war between Athens and Sparta?",
+    "answer": "Peloponnesian War",
+    "reference": ""
+  },
+  {
+    "id": 5182,
+    "question": "Which country was the origin of the Renaissance?",
+    "answer": "Italy",
+    "reference": ""
+  },
+  {
+    "id": 5183,
+    "question": "Who was the leader of the Protestant Reformation?",
+    "answer": "Martin Luther",
+    "reference": ""
+  },
+  {
+    "id": 5184,
+    "question": "What was the name of the famous battle in 1066?",
+    "answer": "Battle of Hastings",
+    "reference": ""
+  },
+  {
+    "id": 5185,
+    "question": "Which explorer discovered the sea route to India?",
+    "answer": "Vasco da Gama",
+    "reference": ""
+  },
+  {
+    "id": 5186,
+    "question": "What was the name of the Inca capital?",
+    "answer": "Cuzco",
+    "reference": ""
+  },
+  {
+    "id": 5187,
+    "question": "Who was the famous English king during the Hundred Years' War?",
+    "answer": "Henry V",
+    "reference": ""
+  },
+  {
+    "id": 5188,
+    "question": "What was the name of the period after the fall of Rome?",
+    "answer": "Middle Ages",
+    "reference": ""
+  },
+  {
+    "id": 5189,
+    "question": "Which country was ruled by Catherine the Great?",
+    "answer": "Russia",
+    "reference": ""
+  },
+  {
+    "id": 5190,
+    "question": "What was the name of the famous pirate known as Blackbeard?",
+    "answer": "Edward Teach",
+    "reference": ""
+  },
+  {
+    "id": 5191,
+    "question": "Who was the famous composer during the Baroque period?",
+    "answer": "Johann Sebastian Bach",
+    "reference": ""
+  },
+  {
+    "id": 5192,
+    "question": "What was the name of the treaty that ended the Napoleonic Wars?",
+    "answer": "Congress of Vienna",
+    "reference": ""
+  },
+  {
+    "id": 5193,
+    "question": "Which country was the setting for the Opium Wars?",
+    "answer": "China",
+    "reference": ""
+  },
+  {
+    "id": 5194,
+    "question": "Who was the famous abolitionist in Britain?",
+    "answer": "William Wilberforce",
+    "reference": ""
+  },
+  {
+    "id": 5195,
+    "question": "What was the name of the revolution in Russia in 1917?",
+    "answer": "Russian Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5216,
+    "question": "Who was the famous conqueror known as the Scourge of God?",
+    "answer": "Attila the Hun",
+    "reference": ""
+  },
+  {
+    "id": 5217,
+    "question": "What was the name of the ancient Roman arena?",
+    "answer": "Colosseum",
+    "reference": ""
+  },
+  {
+    "id": 5218,
+    "question": "Which philosopher was the teacher of Plato?",
+    "answer": "Socrates",
+    "reference": ""
+  },
+  {
+    "id": 5219,
+    "question": "What was the name of the ancient Persian capital?",
+    "answer": "Persepolis",
+    "reference": ""
+  },
+  {
+    "id": 5220,
+    "question": "Who was the famous African queen who fought Rome?",
+    "answer": "Amanirenas",
+    "reference": ""
+  },
+  {
+    "id": 5221,
+    "question": "What was the name of the war between Troy and Greece?",
+    "answer": "Trojan War",
+    "reference": ""
+  },
+  {
+    "id": 5222,
+    "question": "Which artist painted the Sistine Chapel ceiling?",
+    "answer": "Michelangelo",
+    "reference": ""
+  },
+  {
+    "id": 5223,
+    "question": "Who was the leader of the Spanish Inquisition?",
+    "answer": "Tomás de Torquemada",
+    "reference": ""
+  },
+  {
+    "id": 5224,
+    "question": "What was the name of the battle in 732 that stopped Muslim advance in Europe?",
+    "answer": "Battle of Tours",
+    "reference": ""
+  },
+  {
+    "id": 5225,
+    "question": "Which navigator discovered the Pacific Ocean?",
+    "answer": "Vasco Núñez de Balboa",
+    "reference": ""
+  },
+  {
+    "id": 5226,
+    "question": "What was the name of the Maya city-state?",
+    "answer": "Tikal",
+    "reference": ""
+  },
+  {
+    "id": 5227,
+    "question": "Who was the famous king during the Black Death?",
+    "answer": "Edward III",
+    "reference": ""
+  },
+  {
+    "id": 5228,
+    "question": "What was the name of the period of Japanese isolation?",
+    "answer": "Sakoku",
+    "reference": ""
+  },
+  {
+    "id": 5229,
+    "question": "Which country was ruled by Peter the Great?",
+    "answer": "Russia",
+    "reference": ""
+  },
+  {
+    "id": 5230,
+    "question": "What was the name of the famous buccaneer Henry Morgan?",
+    "answer": "Henry Morgan",
+    "reference": ""
+  },
+  {
+    "id": 5231,
+    "question": "Who was the famous composer during the Classical period?",
+    "answer": "Wolfgang Amadeus Mozart",
+    "reference": ""
+  },
+  {
+    "id": 5232,
+    "question": "What was the name of the congress that redrew Europe after Napoleon?",
+    "answer": "Congress of Vienna",
+    "reference": ""
+  },
+  {
+    "id": 5233,
+    "question": "Which country was the setting for the Boxer Rebellion?",
+    "answer": "China",
+    "reference": ""
+  },
+  {
+    "id": 5234,
+    "question": "Who was the famous suffragette in Britain?",
+    "answer": "Emmeline Pankhurst",
+    "reference": ""
+  },
+  {
+    "id": 5235,
+    "question": "What was the name of the revolution in Cuba in 1959?",
+    "answer": "Cuban Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5256,
+    "question": "Who was the famous warrior queen of Britain?",
+    "answer": "Boudica",
+    "reference": ""
+  },
+  {
+    "id": 5257,
+    "question": "What was the name of the ancient Greek theater?",
+    "answer": "Theatre of Dionysus",
+    "reference": ""
+  },
+  {
+    "id": 5258,
+    "question": "Which philosopher founded Taoism?",
+    "answer": "Laozi",
+    "reference": ""
+  },
+  {
+    "id": 5259,
+    "question": "What was the name of the ancient Hittite capital?",
+    "answer": "Hattusa",
+    "reference": ""
+  },
+  {
+    "id": 5260,
+    "question": "Who was the famous pharaoh who was a woman?",
+    "answer": "Hatshepsut",
+    "reference": ""
+  },
+  {
+    "id": 5261,
+    "question": "What was the name of the battle between Greeks and Persians at a pass?",
+    "answer": "Battle of Thermopylae",
+    "reference": ""
+  },
+  {
+    "id": 5262,
+    "question": "Which artist painted the Last Supper?",
+    "answer": "Leonardo da Vinci",
+    "reference": ""
+  },
+  {
+    "id": 5263,
+    "question": "Who was the leader of the Jesuits?",
+    "answer": "Ignatius of Loyola",
+    "reference": ""
+  },
+  {
+    "id": 5264,
+    "question": "What was the name of the crusade that captured Jerusalem?",
+    "answer": "First Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5265,
+    "question": "Which navigator discovered Brazil?",
+    "answer": "Pedro Álvares Cabral",
+    "reference": ""
+  },
+  {
+    "id": 5266,
+    "question": "What was the name of the Aztec capital?",
+    "answer": "Tenochtitlan",
+    "reference": ""
+  },
+  {
+    "id": 5267,
+    "question": "Who was the famous king during the Renaissance in France?",
+    "answer": "Francis I",
+    "reference": ""
+  },
+  {
+    "id": 5268,
+    "question": "What was the name of the period of Russian history under Ivan the Terrible?",
+    "answer": "Time of Troubles",
+    "reference": ""
+  },
+  {
+    "id": 5269,
+    "question": "Which country was ruled by Maria Theresa?",
+    "answer": "Austria",
+    "reference": ""
+  },
+  {
+    "id": 5270,
+    "question": "What was the name of the famous admiral Horatio Nelson?",
+    "answer": "Horatio Nelson",
+    "reference": ""
+  },
+  {
+    "id": 5271,
+    "question": "Who was the famous composer during the Romantic period?",
+    "answer": "Ludwig van Beethoven",
+    "reference": ""
+  },
+  {
+    "id": 5272,
+    "question": "What was the name of the revolution in France in 1848?",
+    "answer": "February Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5273,
+    "question": "Which country was the setting for the Taiping Rebellion?",
+    "answer": "China",
+    "reference": ""
+  },
+  {
+    "id": 5274,
+    "question": "Who was the famous chartist in Britain?",
+    "answer": "Feargus O'Connor",
+    "reference": ""
+  },
+  {
+    "id": 5275,
+    "question": "What was the name of the revolution in Hungary in 1956?",
+    "answer": "Hungarian Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5296,
+    "question": "Who was the famous emperor known as the Lionheart?",
+    "answer": "Richard I",
+    "reference": ""
+  },
+  {
+    "id": 5297,
+    "question": "What was the name of the ancient Egyptian temple?",
+    "answer": "Karnak",
+    "reference": ""
+  },
+  {
+    "id": 5298,
+    "question": "Which philosopher founded Confucianism?",
+    "answer": "Confucius",
+    "reference": ""
+  },
+  {
+    "id": 5299,
+    "question": "What was the name of the ancient Phoenician city?",
+    "answer": "Carthage",
+    "reference": ""
+  },
+  {
+    "id": 5300,
+    "question": "Who was the famous pharaoh who built Abu Simbel?",
+    "answer": "Ramesses II",
+    "reference": ""
+  },
+  {
+    "id": 5301,
+    "question": "What was the name of the battle between Alexander and Porus?",
+    "answer": "Battle of the Hydaspes",
+    "reference": ""
+  },
+  {
+    "id": 5302,
+    "question": "Which artist sculpted David?",
+    "answer": "Michelangelo",
+    "reference": ""
+  },
+  {
+    "id": 5303,
+    "question": "Who was the leader of the Counter-Reformation?",
+    "answer": "Pope Paul III",
+    "reference": ""
+  },
+  {
+    "id": 5304,
+    "question": "What was the name of the crusade led by Richard the Lionheart?",
+    "answer": "Third Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5305,
+    "question": "Which navigator discovered Newfoundland?",
+    "answer": "John Cabot",
+    "reference": ""
+  },
+  {
+    "id": 5306,
+    "question": "What was the name of the Olmec colossal heads?",
+    "answer": "Colossal Heads",
+    "reference": ""
+  },
+  {
+    "id": 5307,
+    "question": "Who was the famous king during the Age of Exploration?",
+    "answer": "Henry VIII",
+    "reference": ""
+  },
+  {
+    "id": 5308,
+    "question": "What was the name of the period of Ottoman decline?",
+    "answer": "Sick Man of Europe",
+    "reference": ""
+  },
+  {
+    "id": 5309,
+    "question": "Which country was ruled by Frederick the Great?",
+    "answer": "Prussia",
+    "reference": ""
+  },
+  {
+    "id": 5310,
+    "question": "What was the name of the famous corsair Barbarossa?",
+    "answer": "Hayreddin Barbarossa",
+    "reference": ""
+  },
+  {
+    "id": 5311,
+    "question": "Who was the famous composer during the Renaissance?",
+    "answer": "Claudio Monteverdi",
+    "reference": ""
+  },
+  {
+    "id": 5312,
+    "question": "What was the name of the revolution in America in 1776?",
+    "answer": "American Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5313,
+    "question": "Which country was the setting for the Sepoy Mutiny?",
+    "answer": "India",
+    "reference": ""
+  },
+  {
+    "id": 5314,
+    "question": "Who was the famous explorer James Cook?",
+    "answer": "James Cook",
+    "reference": ""
+  },
+  {
+    "id": 5315,
+    "question": "What was the name of the revolution in Czechoslovakia in 1989?",
+    "answer": "Velvet Revolution",
+    "reference": ""
+  },
+  {
+    "id": 5336,
+    "question": "Who was the famous knight known as El Cid?",
+    "answer": "El Cid",
+    "reference": ""
+  },
+  {
+    "id": 5337,
+    "question": "What was the name of the ancient Babylonian gardens?",
+    "answer": "Hanging Gardens",
+    "reference": ""
+  },
+  {
+    "id": 5338,
+    "question": "Which philosopher wrote 'The Prince'?",
+    "answer": "Niccolò Machiavelli",
+    "reference": ""
+  },
+  {
+    "id": 5339,
+    "question": "What was the name of the ancient Assyrian capital?",
+    "answer": "Nineveh",
+    "reference": ""
+  },
+  {
+    "id": 5340,
+    "question": "Who was the famous pharaoh who unified Egypt?",
+    "answer": "Menes",
+    "reference": ""
+  },
+  {
+    "id": 5341,
+    "question": "What was the name of the battle between Romans and Carthaginians at sea?",
+    "answer": "Battle of Cape Ecnomus",
+    "reference": ""
+  },
+  {
+    "id": 5342,
+    "question": "Which artist painted the Creation of Adam?",
+    "answer": "Michelangelo",
+    "reference": ""
+  },
+  {
+    "id": 5343,
+    "question": "Who was the leader of the Huguenots?",
+    "answer": "Henry IV",
+    "reference": ""
+  },
+  {
+    "id": 5344,
+    "question": "What was the name of the crusade that sacked Constantinople?",
+    "answer": "Fourth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5345,
+    "question": "Which navigator discovered the Strait of Magellan?",
+    "answer": "Ferdinand Magellan",
+    "reference": ""
+  },
+  {
+    "id": 5356,
+    "question": "Who was the famous sultan known as the Magnificent?",
+    "answer": "Suleiman the Magnificent",
+    "reference": ""
+  },
+  {
+    "id": 5357,
+    "question": "What was the name of the ancient Greek oracle?",
+    "answer": "Oracle of Delphi",
+    "reference": ""
+  },
+  {
+    "id": 5358,
+    "question": "Which philosopher founded Stoicism?",
+    "answer": "Zeno of Citium",
+    "reference": ""
+  },
+  {
+    "id": 5359,
+    "question": "What was the name of the ancient Celtic festival?",
+    "answer": "Samhain",
+    "reference": ""
+  },
+  {
+    "id": 5360,
+    "question": "Who was the famous queen who married Ferdinand?",
+    "answer": "Isabella I",
+    "reference": ""
+  },
+  {
+    "id": 5361,
+    "question": "What was the name of the battle between Napoleon and Wellington?",
+    "answer": "Battle of Waterloo",
+    "reference": ""
+  },
+  {
+    "id": 5362,
+    "question": "Which artist sculpted the Pietà?",
+    "answer": "Michelangelo",
+    "reference": ""
+  },
+  {
+    "id": 5363,
+    "question": "Who was the leader of the Roundheads?",
+    "answer": "Oliver Cromwell",
+    "reference": ""
+  },
+  {
+    "id": 5364,
+    "question": "What was the name of the crusade that failed miserably?",
+    "answer": "Children's Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5365,
+    "question": "Which navigator discovered Hawaii?",
+    "answer": "James Cook",
+    "reference": ""
+  },
+  {
+    "id": 5376,
+    "question": "Who was the famous emperor known as the Terrible?",
+    "answer": "Ivan the Terrible",
+    "reference": ""
+  },
+  {
+    "id": 5377,
+    "question": "What was the name of the ancient Roman forum?",
+    "answer": "Roman Forum",
+    "reference": ""
+  },
+  {
+    "id": 5378,
+    "question": "Which philosopher wrote 'Meditations'?",
+    "answer": "Marcus Aurelius",
+    "reference": ""
+  },
+  {
+    "id": 5379,
+    "question": "What was the name of the ancient Viking longship?",
+    "answer": "Longship",
+    "reference": ""
+  },
+  {
+    "id": 5380,
+    "question": "Who was the famous pharaoh who was young?",
+    "answer": "Tutankhamun",
+    "reference": ""
+  },
+  {
+    "id": 5381,
+    "question": "What was the name of the battle between Persians and Greeks at sea?",
+    "answer": "Battle of Salamis",
+    "reference": ""
+  },
+  {
+    "id": 5382,
+    "question": "Which artist painted the School of Athens?",
+    "answer": "Raphael",
+    "reference": ""
+  },
+  {
+    "id": 5383,
+    "question": "Who was the leader of the Jacobins?",
+    "answer": "Maximilien Robespierre",
+    "reference": ""
+  },
+  {
+    "id": 5384,
+    "question": "What was the name of the crusade that was diverted to Egypt?",
+    "answer": "Fifth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5385,
+    "question": "Which navigator discovered the Galapagos?",
+    "answer": "Tomás de Berlanga",
+    "reference": ""
+  },
+  {
+    "id": 5396,
+    "question": "Who was the famous khan known as the Great?",
+    "answer": "Kublai Khan",
+    "reference": ""
+  },
+  {
+    "id": 5397,
+    "question": "What was the name of the ancient Chinese wall?",
+    "answer": "Great Wall of China",
+    "reference": ""
+  },
+  {
+    "id": 5398,
+    "question": "Which philosopher founded Epicureanism?",
+    "answer": "Epicurus",
+    "reference": ""
+  },
+  {
+    "id": 5399,
+    "question": "What was the name of the ancient Mongol capital?",
+    "answer": "Karakorum",
+    "reference": ""
+  },
+  {
+    "id": 5400,
+    "question": "Who was the famous queen who was executed?",
+    "answer": "Marie Antoinette",
+    "reference": ""
+  },
+  {
+    "id": 5401,
+    "question": "What was the name of the battle between the British and Zulu?",
+    "answer": "Battle of Isandlwana",
+    "reference": ""
+  },
+  {
+    "id": 5402,
+    "question": "Which artist painted the Starry Night?",
+    "answer": "Vincent van Gogh",
+    "reference": ""
+  },
+  {
+    "id": 5403,
+    "question": "Who was the leader of the Bolsheviks?",
+    "answer": "Vladimir Lenin",
+    "reference": ""
+  },
+  {
+    "id": 5404,
+    "question": "What was the name of the crusade that was led by children?",
+    "answer": "Children's Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5405,
+    "question": "Which navigator discovered Australia?",
+    "answer": "James Cook",
+    "reference": ""
+  },
+  {
+    "id": 5416,
+    "question": "Who was the famous tsar known as the Great?",
+    "answer": "Peter the Great",
+    "reference": ""
+  },
+  {
+    "id": 5417,
+    "question": "What was the name of the ancient Persian road?",
+    "answer": "Royal Road",
+    "reference": ""
+  },
+  {
+    "id": 5418,
+    "question": "Which philosopher wrote 'Thus Spoke Zarathustra'?",
+    "answer": "Friedrich Nietzsche",
+    "reference": ""
+  },
+  {
+    "id": 5419,
+    "question": "What was the name of the ancient Samurai code?",
+    "answer": "Bushido",
+    "reference": ""
+  },
+  {
+    "id": 5420,
+    "question": "Who was the famous emperor who built the Colosseum?",
+    "answer": "Vespasian",
+    "reference": ""
+  },
+  {
+    "id": 5421,
+    "question": "What was the name of the battle between the French and English at Agincourt?",
+    "answer": "Battle of Agincourt",
+    "reference": ""
+  },
+  {
+    "id": 5422,
+    "question": "Which artist painted Guernica?",
+    "answer": "Pablo Picasso",
+    "reference": ""
+  },
+  {
+    "id": 5423,
+    "question": "Who was the leader of the Nazis?",
+    "answer": "Adolf Hitler",
+    "reference": ""
+  },
+  {
+    "id": 5424,
+    "question": "What was the name of the crusade that was the last?",
+    "answer": "Ninth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5425,
+    "question": "Which navigator discovered the Americas for Spain?",
+    "answer": "Christopher Columbus",
+    "reference": ""
+  },
+  {
+    "id": 5436,
+    "question": "Who was the famous caliph known as the Wise?",
+    "answer": "Harun al-Rashid",
+    "reference": ""
+  },
+  {
+    "id": 5437,
+    "question": "What was the name of the ancient Indian epic?",
+    "answer": "Mahabharata",
+    "reference": ""
+  },
+  {
+    "id": 5438,
+    "question": "Which philosopher founded Skepticism?",
+    "answer": "Pyrrho",
+    "reference": ""
+  },
+  {
+    "id": 5439,
+    "question": "What was the name of the ancient Maori settlement?",
+    "answer": "Pa",
+    "reference": ""
+  },
+  {
+    "id": 5440,
+    "question": "Who was the famous sultan who conquered Constantinople?",
+    "answer": "Mehmed II",
+    "reference": ""
+  },
+  {
+    "id": 5441,
+    "question": "What was the name of the battle between the Russians and Japanese?",
+    "answer": "Battle of Tsushima",
+    "reference": ""
+  },
+  {
+    "id": 5442,
+    "question": "Which artist painted the Persistence of Memory?",
+    "answer": "Salvador Dali",
+    "reference": ""
+  },
+  {
+    "id": 5443,
+    "question": "Who was the leader of the Fascists?",
+    "answer": "Benito Mussolini",
+    "reference": ""
+  },
+  {
+    "id": 5444,
+    "question": "What was the name of the crusade that was against heretics?",
+    "answer": "Albigensian Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5445,
+    "question": "Which navigator discovered the Philippines?",
+    "answer": "Ferdinand Magellan",
+    "reference": ""
+  },
+  {
+    "id": 5456,
+    "question": "Who was the famous pope known as the Great?",
+    "answer": "Pope Leo I",
+    "reference": ""
+  },
+  {
+    "id": 5457,
+    "question": "What was the name of the ancient Mayan calendar?",
+    "answer": "Long Count",
+    "reference": ""
+  },
+  {
+    "id": 5458,
+    "question": "Which philosopher wrote 'Being and Time'?",
+    "answer": "Martin Heidegger",
+    "reference": ""
+  },
+  {
+    "id": 5459,
+    "question": "What was the name of the ancient Aboriginal art?",
+    "answer": "Rock art",
+    "reference": ""
+  },
+  {
+    "id": 5460,
+    "question": "Who was the famous king who was excommunicated?",
+    "answer": "Henry IV",
+    "reference": ""
+  },
+  {
+    "id": 5461,
+    "question": "What was the name of the battle between the Allies and Axis at El Alamein?",
+    "answer": "Battle of El Alamein",
+    "reference": ""
+  },
+  {
+    "id": 5462,
+    "question": "Which artist painted the Scream?",
+    "answer": "Edvard Munch",
+    "reference": ""
+  },
+  {
+    "id": 5463,
+    "question": "Who was the leader of the Communists in China?",
+    "answer": "Mao Zedong",
+    "reference": ""
+  },
+  {
+    "id": 5464,
+    "question": "What was the name of the crusade that was the people's?",
+    "answer": "People's Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5465,
+    "question": "Which navigator discovered the Cape of Good Hope?",
+    "answer": "Bartolomeu Dias",
+    "reference": ""
+  },
+  {
+    "id": 5476,
+    "question": "Who was the famous emperor known as the Just?",
+    "answer": "Justinian I",
+    "reference": ""
+  },
+  {
+    "id": 5477,
+    "question": "What was the name of the ancient Sumerian epic?",
+    "answer": "Epic of Gilgamesh",
+    "reference": ""
+  },
+  {
+    "id": 5478,
+    "question": "Which philosopher founded Cynicism?",
+    "answer": "Diogenes",
+    "reference": ""
+  },
+  {
+    "id": 5479,
+    "question": "What was the name of the ancient Inca road?",
+    "answer": "Inca Road",
+    "reference": ""
+  },
+  {
+    "id": 5480,
+    "question": "Who was the famous queen who ruled England and Ireland?",
+    "answer": "Victoria",
+    "reference": ""
+  },
+  {
+    "id": 5481,
+    "question": "What was the name of the battle between the Germans and Russians at Tannenberg?",
+    "answer": "Battle of Tannenberg",
+    "reference": ""
+  },
+  {
+    "id": 5482,
+    "question": "Which artist painted the Night Watch?",
+    "answer": "Rembrandt",
+    "reference": ""
+  },
+  {
+    "id": 5483,
+    "question": "Who was the leader of the Soviets?",
+    "answer": "Joseph Stalin",
+    "reference": ""
+  },
+  {
+    "id": 5484,
+    "question": "What was the name of the crusade that was the second?",
+    "answer": "Second Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5496,
+    "question": "Who was the famous khalif known as the Rightly Guided?",
+    "answer": "Abu Bakr",
+    "reference": ""
+  },
+  {
+    "id": 5497,
+    "question": "What was the name of the ancient Roman aqueduct?",
+    "answer": "Pont du Gard",
+    "reference": ""
+  },
+  {
+    "id": 5498,
+    "question": "Which philosopher wrote 'The Social Contract'?",
+    "answer": "Jean-Jacques Rousseau",
+    "reference": ""
+  },
+  {
+    "id": 5499,
+    "question": "What was the name of the ancient Aztec game?",
+    "answer": "Tlachtli",
+    "reference": ""
+  },
+  {
+    "id": 5500,
+    "question": "Who was the famous emperor who was assassinated?",
+    "answer": "Julius Caesar",
+    "reference": ""
+  },
+  {
+    "id": 5501,
+    "question": "What was the name of the battle between the British and French at Waterloo?",
+    "answer": "Battle of Waterloo",
+    "reference": ""
+  },
+  {
+    "id": 5502,
+    "question": "Which artist painted the Girl with a Pearl Earring?",
+    "answer": "Johannes Vermeer",
+    "reference": ""
+  },
+  {
+    "id": 5503,
+    "question": "Who was the leader of the Taliban?",
+    "answer": "Mullah Omar",
+    "reference": ""
+  },
+  {
+    "id": 5504,
+    "question": "What was the name of the crusade that was the third?",
+    "answer": "Third Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5505,
+    "question": "Which navigator discovered the Hawaiian Islands?",
+    "answer": "James Cook",
+    "reference": ""
+  },
+  {
+    "id": 5516,
+    "question": "Who was the famous sultan known as the Lawgiver?",
+    "answer": "Suleiman the Magnificent",
+    "reference": ""
+  },
+  {
+    "id": 5517,
+    "question": "What was the name of the ancient Greek epic?",
+    "answer": "Iliad",
+    "reference": ""
+  },
+  {
+    "id": 5518,
+    "question": "Which philosopher founded Existentialism?",
+    "answer": "Søren Kierkegaard",
+    "reference": ""
+  },
+  {
+    "id": 5519,
+    "question": "What was the name of the ancient Egyptian god?",
+    "answer": "Ra",
+    "reference": ""
+  },
+  {
+    "id": 5520,
+    "question": "Who was the famous queen who was beheaded?",
+    "answer": "Anne Boleyn",
+    "reference": ""
+  },
+  {
+    "id": 5521,
+    "question": "What was the name of the battle between the Allies and Axis at Stalingrad?",
+    "answer": "Battle of Stalingrad",
+    "reference": ""
+  },
+  {
+    "id": 5522,
+    "question": "Which artist painted the Sunflowers?",
+    "answer": "Vincent van Gogh",
+    "reference": ""
+  },
+  {
+    "id": 5524,
+    "question": "What was the name of the crusade that was the fourth?",
+    "answer": "Fourth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5525,
+    "question": "Which navigator discovered Madagascar?",
+    "answer": "Diogo Dias",
+    "reference": ""
+  },
+  {
+    "id": 5536,
+    "question": "Who was the famous pharaoh known as the Great?",
+    "answer": "Ramesses the Great",
+    "reference": ""
+  },
+  {
+    "id": 5537,
+    "question": "What was the name of the ancient Assyrian library?",
+    "answer": "Library of Ashurbanipal",
+    "reference": ""
+  },
+  {
+    "id": 5538,
+    "question": "Which philosopher wrote 'Critique of Pure Reason'?",
+    "answer": "Immanuel Kant",
+    "reference": ""
+  },
+  {
+    "id": 5539,
+    "question": "What was the name of the ancient Roman festival?",
+    "answer": "Saturnalia",
+    "reference": ""
+  },
+  {
+    "id": 5540,
+    "question": "Who was the famous king who built Stonehenge?",
+    "answer": "Unknown",
+    "reference": ""
+  },
+  {
+    "id": 5541,
+    "question": "What was the name of the battle between the Spanish and English Armada?",
+    "answer": "Spanish Armada",
+    "reference": ""
+  },
+  {
+    "id": 5542,
+    "question": "Which artist painted the Venus de Milo?",
+    "answer": "Unknown",
+    "reference": ""
+  },
+  {
+    "id": 5543,
+    "question": "Who was the leader of the ANC?",
+    "answer": "Nelson Mandela",
+    "reference": ""
+  },
+  {
+    "id": 5544,
+    "question": "What was the name of the crusade that was the fifth?",
+    "answer": "Fifth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5545,
+    "question": "Which navigator discovered the Bering Strait?",
+    "answer": "Vitus Bering",
+    "reference": ""
+  },
+  {
+    "id": 5556,
+    "question": "Who was the famous caliph known as the Conqueror?",
+    "answer": "Umar",
+    "reference": ""
+  },
+  {
+    "id": 5557,
+    "question": "What was the name of the ancient Celtic druid?",
+    "answer": "Druid",
+    "reference": ""
+  },
+  {
+    "id": 5558,
+    "question": "Which philosopher founded Phenomenology?",
+    "answer": "Edmund Husserl",
+    "reference": ""
+  },
+  {
+    "id": 5559,
+    "question": "What was the name of the ancient Greek god?",
+    "answer": "Zeus",
+    "reference": ""
+  },
+  {
+    "id": 5560,
+    "question": "Who was the famous emperor who built the Pantheon?",
+    "answer": "Hadrian",
+    "reference": ""
+  },
+  {
+    "id": 5561,
+    "question": "What was the name of the battle between the Japanese and Russians at Port Arthur?",
+    "answer": "Siege of Port Arthur",
+    "reference": ""
+  },
+  {
+    "id": 5562,
+    "question": "Which artist painted the Blue Boy?",
+    "answer": "Thomas Gainsborough",
+    "reference": ""
+  },
+  {
+    "id": 5563,
+    "question": "Who was the leader of the IRA?",
+    "answer": "Michael Collins",
+    "reference": ""
+  },
+  {
+    "id": 5564,
+    "question": "What was the name of the crusade that was the sixth?",
+    "answer": "Sixth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5565,
+    "question": "Which navigator discovered the Northwest Passage?",
+    "answer": "Roald Amundsen",
+    "reference": ""
+  },
+  {
+    "id": 5576,
+    "question": "Who was the famous king known as the Fair?",
+    "answer": "Philip the Fair",
+    "reference": ""
+  },
+  {
+    "id": 5577,
+    "question": "What was the name of the ancient Persian religion?",
+    "answer": "Zoroastrianism",
+    "reference": ""
+  },
+  {
+    "id": 5578,
+    "question": "Which philosopher wrote 'Beyond Good and Evil'?",
+    "answer": "Friedrich Nietzsche",
+    "reference": ""
+  },
+  {
+    "id": 5579,
+    "question": "What was the name of the ancient Inca festival?",
+    "answer": "Inti Raymi",
+    "reference": ""
+  },
+  {
+    "id": 5580,
+    "question": "Who was the famous queen who was a patron of arts?",
+    "answer": "Catherine de' Medici",
+    "reference": ""
+  },
+  {
+    "id": 5581,
+    "question": "What was the name of the battle between the Turks and Austrians at Vienna?",
+    "answer": "Siege of Vienna",
+    "reference": ""
+  },
+  {
+    "id": 5582,
+    "question": "Which artist painted the Birth of Venus?",
+    "answer": "Sandro Botticelli",
+    "reference": ""
+  },
+  {
+    "id": 5583,
+    "question": "Who was the leader of the PLO?",
+    "answer": "Yasser Arafat",
+    "reference": ""
+  },
+  {
+    "id": 5584,
+    "question": "What was the name of the crusade that was the seventh?",
+    "answer": "Seventh Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5585,
+    "question": "Which navigator discovered the Cook Islands?",
+    "answer": "James Cook",
+    "reference": ""
+  },
+  {
+    "id": 5596,
+    "question": "Who was the famous pope known as the Warrior?",
+    "answer": "Pope Julius II",
+    "reference": ""
+  },
+  {
+    "id": 5597,
+    "question": "What was the name of the ancient Egyptian river?",
+    "answer": "Nile",
+    "reference": ""
+  },
+  {
+    "id": 5598,
+    "question": "Which philosopher founded Pragmatism?",
+    "answer": "William James",
+    "reference": ""
+  },
+  {
+    "id": 5599,
+    "question": "What was the name of the ancient Roman god?",
+    "answer": "Jupiter",
+    "reference": ""
+  },
+  {
+    "id": 5600,
+    "question": "Who was the famous king who was a pirate?",
+    "answer": "Henry IV",
+    "reference": ""
+  },
+  {
+    "id": 5601,
+    "question": "What was the name of the battle between the Mongols and Japanese?",
+    "answer": "Mongol invasions of Japan",
+    "reference": ""
+  },
+  {
+    "id": 5602,
+    "question": "Which artist painted the Last Judgment?",
+    "answer": "Michelangelo",
+    "reference": ""
+  },
+  {
+    "id": 5603,
+    "question": "Who was the leader of the ETA?",
+    "answer": "Josu Urrutikoetxea",
+    "reference": ""
+  },
+  {
+    "id": 5604,
+    "question": "What was the name of the crusade that was the eighth?",
+    "answer": "Eighth Crusade",
+    "reference": ""
+  },
+  {
+    "id": 5605,
+    "question": "Which navigator discovered the Falkland Islands?",
+    "answer": "John Strong",
+    "reference": ""
+  }
+]
