@@ -1,4 +1,4 @@
- name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
   on:
     push:
@@ -19,7 +19,9 @@
           with:
             node-version: '20'
         - run: npm install
-        - run: npm run build:gh-pages
+        - run: npm run build
+        - run: npm run build:gh-pages || vite build
+  --config vite.config.gh-pages.ts
         - uses: actions/upload-pages-artifact@v3
           with:
             path: ./dist
