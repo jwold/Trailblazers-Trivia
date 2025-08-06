@@ -8,6 +8,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import { AdminPage } from "@/pages/admin";
 import { staticGameService } from "@/services/static-game-service";
+import { DebugPanel } from "@/components/debug-panel";
+import { useState } from "react";
 
 function Router() {
   // Get base path for GitHub Pages
@@ -25,6 +27,8 @@ function Router() {
 }
 
 function App() {
+  const [showDebug, setShowDebug] = useState(true);
+  
   // Load manifest on app start
   useEffect(() => {
     console.log('App started, loading manifest...');
@@ -40,6 +44,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
+        {showDebug && <DebugPanel onClose={() => setShowDebug(false)} />}
         <Router />
       </TooltipProvider>
     </QueryClientProvider>
