@@ -68,13 +68,8 @@ class StaticGameService {
   
   // Get base path for GitHub Pages
   private getBasePath(): string {
-    // Check if we're running in a subdirectory (GitHub Pages style)
-    const pathname = window.location.pathname;
-    if (pathname.includes('/Trailblazers-Trivia/')) {
-      return '/Trailblazers-Trivia/';
-    }
-    // Use environment variable if available, fallback to root
-    return import.meta.env.BASE_URL || '/';
+    // Always use root path since we're deploying to custom domain
+    return '/';
   }
 
   async loadManifest(): Promise<Manifest> {
