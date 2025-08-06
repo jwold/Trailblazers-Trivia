@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Router as WouterRouter } from "wouter";
 import { useEffect } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -10,12 +10,17 @@ import { AdminPage } from "@/pages/admin";
 import { staticGameService } from "@/services/static-game-service";
 
 function Router() {
+  // Get base path for GitHub Pages
+  const base = import.meta.env.BASE_URL || '/';
+  
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/admin" component={AdminPage} />
-      <Route component={NotFound} />
-    </Switch>
+    <WouterRouter base={base}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/admin" component={AdminPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </WouterRouter>
   );
 }
 
