@@ -1,4 +1,47 @@
-import type { Team, TriviaQuestion, ClientGameSession, GameSetup, QuestionHistoryEntry } from "@shared/schema";
+// Define types locally since we removed the shared folder
+export interface Team {
+  id: string;
+  name: string;
+  color: string;
+  score: number;
+  correctAnswers: number;
+}
+
+export interface TriviaQuestion {
+  id: number;
+  question: string;
+  answer: string;
+  reference?: string;
+  difficulty: 'Easy' | 'Hard';
+  category: string;
+}
+
+export interface ClientGameSession {
+  id: number;
+  gameCode: string;
+  teams: Team[];
+  targetScore: number;
+  currentTeamIndex: number;
+  gamePhase: 'playing' | 'ended';
+  questionHistory: number[];
+  detailedHistory: QuestionHistoryEntry[];
+  gameMode: 'regular' | 'challenge';
+  category: string;
+}
+
+export interface GameSetup {
+  teams: Team[];
+  targetScore: number;
+  gameMode: 'regular' | 'challenge';
+}
+
+export interface QuestionHistoryEntry {
+  questionId: number;
+  teamId: string;
+  correct: boolean;
+  points: number;
+  timestamp: string;
+}
 
 interface QuestionData {
   id: number;

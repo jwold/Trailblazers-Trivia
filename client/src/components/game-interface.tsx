@@ -8,9 +8,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
-import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@shared/schema";
+import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@/services/static-game-service";
 import { QuestionEditModal } from "./question-edit-modal";
-import { isLocalhost } from "@/lib/environment";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {

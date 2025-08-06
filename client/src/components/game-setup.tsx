@@ -9,8 +9,11 @@ import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamep
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { type Team, type GameSetup as GameSetupType } from "@shared/schema";
-import { nanoid } from "nanoid";
+import { type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
+
+function nanoid() {
+  return Math.random().toString(36).substring(2, 11);
+}
 
 type GameType = "Bible" | "Animals" | "US History" | "World History" | "Geography";
 

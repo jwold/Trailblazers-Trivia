@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Crown, Trophy, Plus, Share } from "lucide-react";
-import { type Team, type ClientGameSession } from "@shared/schema";
+import { type Team, type ClientGameSession } from "@/services/static-game-service";
 // import { createConfetti } from "../lib/game-logic";
 import { useEffect } from "react";
 

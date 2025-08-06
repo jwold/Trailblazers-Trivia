@@ -2,20 +2,17 @@ import { useState } from "react";
 import GameSetup from "../components/game-setup";
 import GameInterface from "../components/game-interface";
 import VictoryScreen from "../components/victory-screen";
-import { DebugPanel } from "../components/debug-panel";
-import { BookOpen, X, Settings, Bug } from "lucide-react";
+import { BookOpen, X, Settings } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "wouter";
-import { isLocalhost } from "@/lib/environment";
 
 type GamePhase = "setup" | "playing" | "victory";
 
 export default function Home() {
   const [gamePhase, setGamePhase] = useState<GamePhase>("setup");
   const [gameCode, setGameCode] = useState<string>("");
-  const [showDebugPanel, setShowDebugPanel] = useState(false);
 
   const handleGameStart = (code: string) => {
     setGameCode(code);
@@ -85,17 +82,7 @@ export default function Home() {
                   <Settings size={20} />
                 </Button>
               </Link>
-              {(isLocalhost() || showDebugPanel) && (
-                <Button
-                  onClick={() => setShowDebugPanel(!showDebugPanel)}
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg p-2 transition-all duration-200"
-                  size="sm"
-                  title="Debug Panel"
-                >
-                  <Bug size={20} />
-                </Button>
-              )}
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -169,11 +156,6 @@ export default function Home() {
       </main>
       {/* Confetti Container - Hidden */}
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-50 hidden"></div>
-      
-      {/* Debug Panel */}
-      {showDebugPanel && (
-        <DebugPanel onClose={() => setShowDebugPanel(false)} />
-      )}
     </div>
   );
 }

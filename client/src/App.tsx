@@ -8,8 +8,6 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import { AdminPage } from "@/pages/admin";
 import { staticGameService } from "@/services/static-game-service";
-import { DebugPanel } from "@/components/debug-panel";
-import { useState } from "react";
 
 function Router() {
   // Get base path for GitHub Pages
@@ -27,16 +25,11 @@ function Router() {
 }
 
 function App() {
-  const [showDebug, setShowDebug] = useState(true);
-  
   // Load manifest on app start
   useEffect(() => {
-    console.log('App started, loading manifest...');
     staticGameService.loadManifest()
-      .then(() => console.log('Manifest loaded in App component'))
       .catch((error) => {
-        console.error('Failed to load manifest in App component:', error);
-        // Continue anyway - the error will be handled by individual components
+        console.error('Failed to load manifest:', error);
       });
   }, []);
   
@@ -44,7 +37,6 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        {showDebug && <DebugPanel onClose={() => setShowDebug(false)} />}
         <Router />
       </TooltipProvider>
     </QueryClientProvider>
