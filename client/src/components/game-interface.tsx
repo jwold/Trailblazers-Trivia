@@ -9,7 +9,6 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@/services/static-game-service";
-import { QuestionEditModal } from "./question-edit-modal";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
 interface GameInterfaceProps {
@@ -911,25 +910,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         <p className="text-sm">Game Code: <span className="font-mono font-semibold text-gray-800 dark:text-white">{gameCode}</span></p>
       </div>
 
-      {/* Question Edit Modal */}
-      <QuestionEditModal
-        question={currentQuestion}
-        isOpen={showEditModal}
-        onClose={() => setShowEditModal(false)}
-        onSave={(updatedQuestion) => {
-          // Update the current question display immediately
-          if (currentQuestion && currentQuestion.id === updatedQuestion.id) {
-            // Update both Easy and Hard question states if they match
-            if (easyQuestion?.id === updatedQuestion.id) {
-              setEasyQuestion(updatedQuestion);
-            }
-            if (hardQuestion?.id === updatedQuestion.id) {
-              setHardQuestion(updatedQuestion);
-            }
-          }
-          setShowEditModal(false);
-        }}
-      />
     </div>
   );
 }

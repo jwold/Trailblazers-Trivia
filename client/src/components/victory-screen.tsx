@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useQuery } from "@tanstack/react-query";
-import { Crown, Trophy, Plus, Share } from "lucide-react";
-import { type Team, type ClientGameSession } from "@/services/static-game-service";
-// import { createConfetti } from "../lib/game-logic";
-import { useEffect } from "react";
+import { Crown, Trophy, Share } from "lucide-react";
+import { type Team, type ClientGameSession, staticGameService } from "@/services/static-game-service";
+import { useEffect, useState } from "react";
 
 interface VictoryScreenProps {
   gameCode: string;
@@ -13,16 +10,22 @@ interface VictoryScreenProps {
 }
 
 export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProps) {
-  const { data: gameSession, isLoading } = useQuery<ClientGameSession>({
-    queryKey: ["/api/games", gameCode],
-  });
+  const [gameSession, setGameSession] = useState<ClientGameSession | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   // Create celebration effect on mount
-  //   createConfetti();
-  //   const interval = setInterval(createConfetti, 2000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const loadGame = async () => {
+      try {
+        const session = await staticGameService.getGame(gameCode);
+        setGameSession(session);
+      } catch (error) {
+        console.error('Failed to load game session:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadGame();
+  }, [gameCode]);
 
   if (isLoading || !gameSession) {
     return <div className="text-center py-8">Loading results...</div>;

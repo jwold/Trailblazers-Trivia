@@ -6,10 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Info, Mail } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
+import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
 
 function nanoid() {
   return Math.random().toString(36).substring(2, 11);
@@ -132,23 +130,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   const [targetScore, setTargetScore] = useState(10);
 
   const { toast } = useToast();
-
-  const createGameMutation = useMutation({
-    mutationFn: async (gameData: GameSetupType & { category: string }) => {
-      const response = await apiRequest("POST", "/api/games", gameData);
-      return response.json();
-    },
-    onSuccess: (data) => {
-      onGameStart(data.gameCode);
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to create game. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
+  const [isCreating, setIsCreating] = useState(false);
 
   const updateTeamName = (teamId: string, name: string) => {
     setTeams(teams.map(team => 
@@ -207,7 +189,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     }
   };
 
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
     // Use teams as they are (default names are fine)
     if (teams.length < 2) {
       toast({
@@ -219,12 +201,25 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     }
 
     const categoryParam = selectedGameType.toLowerCase().replace(/\s+/g, '_');
-    createGameMutation.mutate({
-      teams: teams,
-      targetScore,
-      category: categoryParam,
-      gameMode,
-    });
+    
+    setIsCreating(true);
+    try {
+      const result = await staticGameService.createGame({
+        teams: teams,
+        targetScore,
+        category: categoryParam,
+        gameMode,
+      });
+      onGameStart(result.gameCode);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create game. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (
@@ -441,10 +436,10 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           {/* Start Game Button */}
           <Button
             onClick={handleStartGame}
-            disabled={createGameMutation.isPending}
+            disabled={isCreating}
             className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-8 font-bold hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 text-[30px] pt-[32px] pb-[32px]"
           >
-            {createGameMutation.isPending ? (
+            {isCreating ? (
               "Creating Game..."
             ) : (
               "Start New Game!"
