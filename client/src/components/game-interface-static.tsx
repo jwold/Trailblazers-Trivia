@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
+import { Users, Gamepad2, Check, X, SkipForward, Square, Undo2, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, staticGameService } from "@/services/static-game-service";
 
 interface GameInterfaceProps {
@@ -28,7 +28,13 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("Easy");
   const [easyQuestion, setEasyQuestion] = useState<TriviaQuestion | null>(null);
   const [hardQuestion, setHardQuestion] = useState<TriviaQuestion | null>(null);
-  const [showHistory, setShowHistory] = useState(false);
+  const [canUndo, setCanUndo] = useState(false);
+  const [lastAction, setLastAction] = useState<{
+    teamId: string;
+    points: number;
+    correct: boolean;
+    questionId: number;
+  } | null>(null);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
@@ -100,6 +106,15 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     const currentTeam = gameSession.teams[gameSession.currentTeamIndex];
     const points = correct ? difficultyConfig[selectedDifficulty].points : 0;
 
+    // Save undo information
+    setLastAction({
+      teamId: currentTeam.id,
+      points,
+      correct,
+      questionId: currentQuestion.id
+    });
+    setCanUndo(true);
+
     // Update team score
     const updatedTeam = {
       ...currentTeam,
@@ -149,7 +164,50 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setAnswerVisible(false);
     setQuestionNumber(questionNumber + 1);
     setGamePhase('difficulty-selection');
+    setCanUndo(false); // Can't undo after moving to next question
+    setLastAction(null);
     await loadQuestions();
+  };
+
+  const handleUndo = async () => {
+    if (!gameSession || !lastAction || !canUndo) return;
+
+    // Find the team that answered
+    const teamIndex = gameSession.teams.findIndex(t => t.id === lastAction.teamId);
+    if (teamIndex === -1) return;
+
+    // Revert the team's score
+    const team = gameSession.teams[teamIndex];
+    const revertedTeam = {
+      ...team,
+      score: team.score - lastAction.points,
+      correctAnswers: team.correctAnswers - (lastAction.correct ? 1 : 0)
+    };
+
+    // Update teams array
+    const updatedTeams = [...gameSession.teams];
+    updatedTeams[teamIndex] = revertedTeam;
+
+    // Go back to previous team
+    const previousTeamIndex = teamIndex;
+
+    // Remove last question from history
+    const updatedQuestionHistory = gameSession.questionHistory.slice(0, -1);
+    const updatedDetailedHistory = gameSession.detailedHistory.slice(0, -1);
+
+    // Update game session
+    const updatedSession = await staticGameService.updateGame(gameCode, {
+      teams: updatedTeams,
+      currentTeamIndex: previousTeamIndex,
+      questionHistory: updatedQuestionHistory,
+      detailedHistory: updatedDetailedHistory
+    });
+
+    setGameSession(updatedSession);
+    setQuestionAnswered(false);
+    setCanUndo(false);
+    setLastAction(null);
+    setTeamAnimations({});
   };
 
   const handleSkipQuestion = () => {
@@ -223,14 +281,17 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               <Badge variant="outline" className="text-gray-700 dark:text-gray-300 border-gray-400">
                 {gameCode}
               </Badge>
-              <Button
-                onClick={() => setShowHistory(!showHistory)}
-                size="sm"
-                variant="ghost"
-                className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <History size={16} />
-              </Button>
+              {canUndo && (
+                <Button
+                  onClick={handleUndo}
+                  size="sm"
+                  variant="ghost"
+                  className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  title="Undo last answer"
+                >
+                  <Undo2 size={16} />
+                </Button>
+              )}
             </div>
           </div>
 
@@ -460,27 +521,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         </Card>
       )}
 
-      {/* History Modal */}
-      {showHistory && gameSession.detailedHistory.length > 0 && (
-        <Card className="border-2 border-gray-300 dark:border-gray-700">
-          <CardContent className="p-4">
-            <h3 className="font-bold mb-3">Question History</h3>
-            <div className="space-y-2 max-h-60 overflow-y-auto">
-              {gameSession.detailedHistory.map((entry, index) => {
-                const team = gameSession.teams.find(t => t.id === entry.teamId);
-                return (
-                  <div key={index} className="flex items-center justify-between text-sm">
-                    <span>{team?.name || 'Unknown'}</span>
-                    <span className={entry.correct ? 'text-green-600' : 'text-red-600'}>
-                      {entry.correct ? `+${entry.points}` : '0'} points
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
