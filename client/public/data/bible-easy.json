@@ -631,8 +631,8 @@
   },
   {
     "id": 704,
-    "question": "What type of tree did Zaccariah climb?",
-    "answer": "Mulberry-fig tree",
+    "question": "What tree did Zacchaeus climb?",
+    "answer": "Sycamore tree",
     "reference": ""
   },
   {
@@ -1048,12 +1048,6 @@
     "question": "Who said to whom: \"\"A person sees what is in front of his eyes but God sees the heart\"\"?",
     "answer": "God to Samuel",
     "reference": ""
-  },
-  {
-    "id": 889,
-    "question": "Who said",
-    "answer": "\"Lord",
-    "reference": "if it be thou"
   },
   {
     "id": 891,

@@ -41,39 +41,27 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
   return (
     <div className="space-y-6">
       {/* Winner Announcement */}
-      <Card className="bg-gray-200 border-4 border-gray-300 shadow-xl">
+      <Card className="bg-gray-200 dark:bg-gray-800 border-4 border-gray-300 dark:border-gray-700 shadow-xl">
         <CardContent className="p-8 text-center">
           <div className="bounce-slow mb-4">
-            <Crown className="mx-auto text-gray-600" size={64} />
+            <Crown className="mx-auto text-gray-600 dark:text-gray-400" size={64} />
           </div>
-          <h2 className="text-4xl font-bold mb-4 text-gray-800">🎉 Yay! 🎉</h2>
-          <h3 className="text-2xl font-semibold mb-2 text-gray-700">{winningTeam.name}</h3>
+          <h2 className="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">🎉 Yay! 🎉</h2>
+          <h3 className="text-2xl font-semibold mb-2 text-gray-700 dark:text-gray-200">{winningTeam.name}</h3>
         </CardContent>
       </Card>
       {/* Final Scoreboard */}
-      <Card className="border-4 border-gray-200 shadow-xl">
+      <Card className="border-4 border-gray-200 dark:border-gray-700 shadow-xl">
         <CardContent className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Final Scoreboard</h3>
+          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">Final Scoreboard</h3>
           <div className="space-y-4">
             {sortedTeams.map((team, index) => {
-              const colorClass = team.color === "blue" ? "bg-gray-50 border-gray-200" :
-                               team.color === "green" ? "bg-gray-100 border-gray-300" :
-                               team.color === "yellow" ? "bg-gray-50 border-gray-200" :
-                               team.color === "red" ? "bg-gray-100 border-gray-300" :
-                               team.color === "purple" ? "bg-gray-100 border-gray-300" :
-                               "bg-gray-50 border-gray-200";
-              
-              const textClass = team.color === "blue" ? "text-gray-800" :
-                               team.color === "green" ? "text-gray-800" :
-                               team.color === "yellow" ? "text-gray-700" :
-                               team.color === "red" ? "text-gray-800" :
-                               team.color === "purple" ? "text-gray-800" :
-                               "text-gray-800";
-
-              const medalColor = index === 0 ? "bg-gray-700" :
-                                index === 1 ? "bg-gray-500" :
-                                index === 2 ? "bg-gray-600" :
-                                "bg-gray-400";
+              const colorClass = "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700";
+              const textClass = "text-gray-800 dark:text-gray-200";
+              const medalColor = index === 0 ? "bg-yellow-500 dark:bg-yellow-600" :
+                                index === 1 ? "bg-gray-400 dark:bg-gray-500" :
+                                index === 2 ? "bg-orange-600 dark:bg-orange-700" :
+                                "bg-gray-300 dark:bg-gray-600";
 
               return (
                 <div key={team.id} className={`flex items-center justify-between ${colorClass} p-4 rounded-xl border-2`}>
@@ -83,13 +71,13 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
                     </div>
                     <div>
                       <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
-                      <p className={textClass.replace('800', '600')} style={{ fontSize: '0.875rem' }}>
+                      <p className="text-gray-600 dark:text-gray-400" style={{ fontSize: '0.875rem' }}>
                         {team.correctAnswers} correct
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    {index === 0 && <Trophy className="text-gray-700" size={24} />}
+                    {index === 0 && <Trophy className="text-yellow-600 dark:text-yellow-500" size={24} />}
                     <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
                   </div>
                 </div>
@@ -136,7 +124,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* Share Results Button */}
       <div className="text-center">
         <Button 
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
+          className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 py-4 px-6 font-semibold transition-all duration-200"
           onClick={() => {
             const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
             if (navigator.share) {
@@ -150,7 +138,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
             }
           }}
         >
-          <Share className="mr-2 text-gray-700" size={16} />
+          <Share className="mr-2" size={16} />
           Share Results
         </Button>
       </div>

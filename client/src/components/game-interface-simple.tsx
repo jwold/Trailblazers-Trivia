@@ -21,6 +21,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [answerVisible, setAnswerVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
+  const [teamsExpanded, setTeamsExpanded] = useState(false);
 
   const { toast } = useToast();
 
@@ -150,20 +151,41 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
   return (
     <div className="space-y-4">
-      {/* Current Player Card */}
-      <Card>
-        <CardContent className="p-6 text-center">
-          <h2 className="text-2xl font-bold mb-1">{currentTeam.name}'s turn</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {currentTeam.score}/{gameSession.targetScore} points
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Question Card */}
+      {/* Combined Card */}
       {!loadingQuestions && currentQuestion && (
-        <Card>
+        <Card className="border-4 border-gray-300 dark:border-gray-700">
           <CardContent className="p-6">
+            {/* Player Info - Clickable */}
+            <div 
+              className="text-center mb-6 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg p-4 -m-4 transition-colors"
+              onClick={() => setTeamsExpanded(!teamsExpanded)}
+            >
+              <h2 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{currentTeam.name}'s turn</h2>
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                {currentTeam.score}/{gameSession.targetScore} points
+              </p>
+            </div>
+
+            {/* Team Standings - Expandable */}
+            {teamsExpanded && (
+              <div className="mb-6 space-y-2 border-t-2 border-gray-200 dark:border-gray-700 pt-4">
+                {gameSession.teams
+                  .sort((a, b) => b.score - a.score)
+                  .map((team) => (
+                    <div 
+                      key={team.id} 
+                      className={`flex justify-between items-center p-3 rounded-lg ${
+                        team.id === currentTeam.id 
+                          ? 'bg-gray-200 dark:bg-gray-700' 
+                          : 'bg-gray-50 dark:bg-gray-800'
+                      }`}
+                    >
+                      <span className="font-medium text-gray-900 dark:text-white">{team.name}</span>
+                      <span className="text-gray-700 dark:text-gray-300">{team.score} points</span>
+                    </div>
+                  ))}
+              </div>
+            )}
             <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as Difficulty)}>
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="easy">Easy (1 point)</TabsTrigger>
@@ -171,42 +193,41 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               </TabsList>
               
               <TabsContent value={selectedTab} className="space-y-4">
-                <div className="text-xl font-medium leading-relaxed">
+                <div className="text-xl font-medium leading-relaxed text-gray-900 dark:text-white">
                   {currentQuestion.question}
                 </div>
 
                 <Button
                   onClick={() => setAnswerVisible(!answerVisible)}
                   variant="outline"
-                  className="w-full"
+                  className="w-full border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   {answerVisible ? 'Hide answer' : 'Show answer'}
                 </Button>
 
                 {answerVisible && (
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900 rounded-lg border border-blue-200 dark:border-blue-700">
-                    <div className="font-semibold mb-1">Answer:</div>
-                    <div>{currentQuestion.answer}</div>
+                  <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-600">
+                    <div className="text-gray-900 dark:text-white">{currentQuestion.answer}</div>
                     {currentQuestion.reference && (
-                      <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                      <div className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                         {currentQuestion.reference}
                       </div>
                     )}
                   </div>
                 )}
 
-                <div className="flex gap-3 justify-center pt-4">
+                <div className="flex gap-3 pt-4">
                   <Button
                     onClick={() => handleAnswer(true)}
                     size="lg"
-                    className="bg-green-600 hover:bg-green-700"
+                    className="bg-green-600 hover:bg-green-700 flex-1"
                   >
                     <Check size={24} />
                   </Button>
                   <Button
                     onClick={() => handleAnswer(false)}
                     size="lg"
-                    className="bg-red-600 hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 flex-1"
                   >
                     <X size={24} />
                   </Button>
@@ -214,8 +235,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                     onClick={handleSkip}
                     variant="outline"
                     size="lg"
+                    className="w-14"
                   >
-                    <SkipForward size={24} />
+                    <SkipForward size={20} />
                   </Button>
                 </div>
               </TabsContent>

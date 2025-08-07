@@ -73,15 +73,6 @@ export default function Home() {
                   End Game
                 </Button>
               )}
-              <Link href="/admin">
-                <Button
-                  className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg p-2 transition-all duration-200"
-                  size="sm"
-                  title="Admin Panel"
-                >
-                  <Settings size={20} />
-                </Button>
-              </Link>
               <ThemeToggle />
             </div>
           </div>
