@@ -97,7 +97,7 @@ export default function Home() {
               
               {/* Main Content */}
               <div className="relative">
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900">Epic Trivia Battles!</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900">Epic Trivia Battles</h2>
                 <p className="text-lg md:text-xl mb-4 text-gray-700 font-medium">Challenge your teams • Test knowledge • Have amazing fun!</p>
                 
               </div>
