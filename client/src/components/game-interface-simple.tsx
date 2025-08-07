@@ -155,15 +155,24 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {!loadingQuestions && currentQuestion && (
         <Card className="border-4 border-gray-300 dark:border-gray-700">
           <CardContent className="p-6">
-            {/* Player Info - Clickable */}
-            <div 
-              className="text-center mb-6 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg p-4 -m-4 transition-colors"
-              onClick={() => setTeamsExpanded(!teamsExpanded)}
-            >
-              <h2 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{currentTeam.name}'s turn</h2>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
-                {currentTeam.score}/{gameSession.targetScore} points
-              </p>
+            {/* Player Info and Tabs Header */}
+            <div className="flex items-start justify-between mb-6">
+              <div 
+                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg p-2 -m-2 transition-colors"
+                onClick={() => setTeamsExpanded(!teamsExpanded)}
+              >
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{currentTeam.name}'s turn</h2>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  {currentTeam.score}/{gameSession.targetScore} points
+                </p>
+              </div>
+              
+              <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as Difficulty)} className="w-auto">
+                <TabsList className="grid grid-cols-2 h-8">
+                  <TabsTrigger value="easy" className="text-xs px-3 py-1">Easy</TabsTrigger>
+                  <TabsTrigger value="hard" className="text-xs px-3 py-1">Hard</TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
 
             {/* Team Standings - Expandable */}
@@ -187,9 +196,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               </div>
             )}
             <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as Difficulty)}>
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="easy">Easy (1 point)</TabsTrigger>
-                <TabsTrigger value="hard">Hard (3 points)</TabsTrigger>
+              <TabsList className="hidden">
+                <TabsTrigger value="easy">Easy</TabsTrigger>
+                <TabsTrigger value="hard">Hard</TabsTrigger>
               </TabsList>
               
               <TabsContent value={selectedTab} className="space-y-4">
@@ -220,22 +229,21 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   <Button
                     onClick={() => handleAnswer(true)}
                     size="lg"
-                    className="bg-green-600 hover:bg-green-700 flex-1"
+                    className="bg-green-600 hover:bg-green-700 text-white flex-1"
                   >
                     <Check size={24} />
                   </Button>
                   <Button
                     onClick={() => handleAnswer(false)}
                     size="lg"
-                    className="bg-red-600 hover:bg-red-700 flex-1"
+                    className="bg-red-600 hover:bg-red-700 text-white flex-1"
                   >
                     <X size={24} />
                   </Button>
                   <Button
                     onClick={handleSkip}
-                    variant="outline"
                     size="lg"
-                    className="w-14"
+                    className="w-14 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                   >
                     <SkipForward size={20} />
                   </Button>
@@ -247,9 +255,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       )}
 
       {loadingQuestions && (
-        <Card>
+        <Card className="border-4 border-gray-300 dark:border-gray-700">
           <CardContent className="p-8 text-center">
-            <div className="text-xl">Loading questions...</div>
+            <div className="text-xl text-gray-900 dark:text-white">Loading questions...</div>
           </CardContent>
         </Card>
       )}
