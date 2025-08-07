@@ -14,6 +14,6 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
   },
-  // Set base path for GitHub Pages deployment
-  base: process.env.GITHUB_PAGES ? '/Trailblazers-Trivia/' : '/',
+  // Always use root path for custom domain
+  base: '/',
 });
