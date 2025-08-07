@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Check, X, SkipForward } from "lucide-react";
 import { type TriviaQuestion, type ClientGameSession, staticGameService } from "@/services/static-game-service";
 
 interface GameInterfaceProps {
@@ -17,7 +16,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
   const [gameSession, setGameSession] = useState<ClientGameSession | null>(null);
   const [easyQuestion, setEasyQuestion] = useState<TriviaQuestion | null>(null);
   const [hardQuestion, setHardQuestion] = useState<TriviaQuestion | null>(null);
-  const [selectedTab, setSelectedTab] = useState<Difficulty>("easy");
+  const [selectedTab, setSelectedTab] = useState<Difficulty>(() => {
+    const saved = localStorage.getItem('preferredDifficulty');
+    return (saved === 'easy' || saved === 'hard') ? saved : 'easy';
+  });
   const [answerVisible, setAnswerVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
@@ -58,7 +60,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       
       setEasyQuestion(easy);
       setHardQuestion(hard);
-      setSelectedTab('easy');
+      // Keep the saved preference, don't reset to 'easy'
       setAnswerVisible(false);
     } catch (error) {
       console.error('Failed to load questions:', error);
@@ -153,21 +155,25 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     <div className="space-y-4">
       {/* Combined Card */}
       {!loadingQuestions && currentQuestion && (
-        <Card className="border-4 border-gray-300 dark:border-gray-700">
+        <Card className="border-4 border-gray-300">
           <CardContent className="p-6">
             {/* Player Info and Tabs Header */}
             <div className="flex items-start justify-between mb-6">
               <div 
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg p-2 -m-2 transition-colors"
+                className="cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
                 onClick={() => setTeamsExpanded(!teamsExpanded)}
               >
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{currentTeam.name}'s turn</h2>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+                <h2 className="text-2xl font-bold text-gray-900">{currentTeam.name}'s turn</h2>
+                <p className="text-sm text-gray-700">
                   {currentTeam.score}/{gameSession.targetScore} points
                 </p>
               </div>
               
-              <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as Difficulty)} className="w-auto">
+              <Tabs value={selectedTab} onValueChange={(value) => {
+                const difficulty = value as Difficulty;
+                setSelectedTab(difficulty);
+                localStorage.setItem('preferredDifficulty', difficulty);
+              }} className="w-auto">
                 <TabsList className="grid grid-cols-2 h-8">
                   <TabsTrigger value="easy" className="text-xs px-3 py-1">Easy</TabsTrigger>
                   <TabsTrigger value="hard" className="text-xs px-3 py-1">Hard</TabsTrigger>
@@ -177,7 +183,7 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
             {/* Team Standings - Expandable */}
             {teamsExpanded && (
-              <div className="mb-6 space-y-2 border-t-2 border-gray-200 dark:border-gray-700 pt-4">
+              <div className="mb-6 space-y-2 border-t-2 border-gray-200 pt-4">
                 {gameSession.teams
                   .sort((a, b) => b.score - a.score)
                   .map((team) => (
@@ -185,40 +191,44 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                       key={team.id} 
                       className={`flex justify-between items-center p-3 rounded-lg ${
                         team.id === currentTeam.id 
-                          ? 'bg-gray-200 dark:bg-gray-700' 
-                          : 'bg-gray-50 dark:bg-gray-800'
+                          ? 'bg-gray-200' 
+                          : 'bg-gray-50'
                       }`}
                     >
-                      <span className="font-medium text-gray-900 dark:text-white">{team.name}</span>
-                      <span className="text-gray-700 dark:text-gray-300">{team.score} points</span>
+                      <span className="font-medium text-gray-900">{team.name}</span>
+                      <span className="text-gray-700">{team.score} points</span>
                     </div>
                   ))}
               </div>
             )}
-            <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as Difficulty)}>
+            <Tabs value={selectedTab} onValueChange={(value) => {
+              const difficulty = value as Difficulty;
+              setSelectedTab(difficulty);
+              localStorage.setItem('preferredDifficulty', difficulty);
+            }}>
               <TabsList className="hidden">
                 <TabsTrigger value="easy">Easy</TabsTrigger>
                 <TabsTrigger value="hard">Hard</TabsTrigger>
               </TabsList>
               
               <TabsContent value={selectedTab} className="space-y-4">
-                <div className="text-xl font-medium leading-relaxed text-gray-900 dark:text-white">
+                <div className="text-xl font-medium leading-relaxed text-gray-900">
                   {currentQuestion.question}
                 </div>
 
                 <Button
                   onClick={() => setAnswerVisible(!answerVisible)}
                   variant="outline"
-                  className="w-full border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="w-full border-2 border-gray-300 hover:bg-gray-100"
                 >
                   {answerVisible ? 'Hide answer' : 'Show answer'}
                 </Button>
 
                 {answerVisible && (
-                  <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-600">
-                    <div className="text-gray-900 dark:text-white">{currentQuestion.answer}</div>
+                  <div className="p-4 bg-gray-100 rounded-lg border-2 border-gray-300">
+                    <div className="text-gray-900">{currentQuestion.answer}</div>
                     {currentQuestion.reference && (
-                      <div className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                      <div className="text-sm text-gray-700 mt-2">
                         {currentQuestion.reference}
                       </div>
                     )}
@@ -228,24 +238,21 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 <div className="flex gap-3 pt-4">
                   <Button
                     onClick={() => handleAnswer(true)}
-                    size="lg"
-                    className="bg-green-600 hover:bg-green-700 text-white flex-1"
+                    className="bg-gradient-to-r from-green-600 to-green-800 text-white hover:from-green-700 hover:to-green-900 transition-all duration-200 border-4 border-green-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
                   >
-                    <Check size={24} />
+                    Correct
                   </Button>
                   <Button
                     onClick={() => handleAnswer(false)}
-                    size="lg"
-                    className="bg-red-600 hover:bg-red-700 text-white flex-1"
+                    className="bg-gradient-to-r from-red-600 to-red-800 text-white hover:from-red-700 hover:to-red-900 transition-all duration-200 border-4 border-red-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
                   >
-                    <X size={24} />
+                    Wrong
                   </Button>
                   <Button
                     onClick={handleSkip}
-                    size="lg"
-                    className="w-14 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    className="bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-600 hover:to-gray-800 transition-all duration-200 border-4 border-gray-400 min-w-[100px] text-[30px] font-bold pt-[32px] pb-[32px]"
                   >
-                    <SkipForward size={20} />
+                    Skip
                   </Button>
                 </div>
               </TabsContent>
@@ -255,9 +262,9 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       )}
 
       {loadingQuestions && (
-        <Card className="border-4 border-gray-300 dark:border-gray-700">
+        <Card className="border-4 border-gray-300">
           <CardContent className="p-8 text-center">
-            <div className="text-xl text-gray-900 dark:text-white">Loading questions...</div>
+            <div className="text-xl text-gray-900">Loading questions...</div>
           </CardContent>
         </Card>
       )}

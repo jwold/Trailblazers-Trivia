@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-import { Users, Plus, Minus, X, Check, BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Info, Mail } from "lucide-react";
+import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
 
@@ -125,20 +124,11 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
       { id: nanoid(), name: initialNames[1], color: "green", score: 0, correctAnswers: 0 },
     ];
   });
-  // Track which team names have been manually customized by users
-  const [customizedTeamNames, setCustomizedTeamNames] = useState<Set<string>>(new Set());
   const [targetScore, setTargetScore] = useState(10);
 
   const { toast } = useToast();
   const [isCreating, setIsCreating] = useState(false);
 
-  const updateTeamName = (teamId: string, name: string) => {
-    setTeams(teams.map(team => 
-      team.id === teamId ? { ...team, name } : team
-    ));
-    // Mark this team as having a custom name
-    setCustomizedTeamNames(prev => new Set(prev).add(teamId));
-  };
 
 
 
@@ -148,13 +138,8 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     const newNames = getShuffledNames(newCategory);
     setAvailableNames(newNames);
     
-    // Only update team names that haven't been manually customized
+    // Update team names with new category names
     setTeams(teams.map((team, index) => {
-      // If this team has been customized, keep the custom name
-      if (customizedTeamNames.has(team.id)) {
-        return team;
-      }
-      // Otherwise, update with category-appropriate name
       return {
         ...team,
         name: index < newNames.length ? newNames[index] : `Team ${index + 1}`
@@ -162,32 +147,6 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
     }));
   };
 
-  const addTeam = () => {
-    const usedColors = teams.map(team => team.color);
-    const availableColor = teamColors.find(color => !usedColors.includes(color.name))?.name || "gray";
-    const nextNameIndex = teams.length;
-    const teamName = nextNameIndex < availableNames.length ? availableNames[nextNameIndex] : `Team ${teams.length + 1}`;
-    
-    setTeams([...teams, { 
-      id: nanoid(), 
-      name: teamName, 
-      color: availableColor, 
-      score: 0, 
-      correctAnswers: 0 
-    }]);
-  };
-
-  const removeTeam = (teamId: string) => {
-    if (teams.length > 1) {
-      setTeams(teams.filter(team => team.id !== teamId));
-      // Remove the team from customized names tracking
-      setCustomizedTeamNames(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(teamId);
-        return newSet;
-      });
-    }
-  };
 
   const handleStartGame = async () => {
     // Use teams as they are (default names are fine)
@@ -225,13 +184,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   return (
     <div className="space-y-6">
       {/* Combined Game Setup Card */}
-      <Card className="border-4 border-gray-200 dark:border-gray-700">
+      <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
           {/* Game Category Selection */}
           
           <div className="mb-8">
             <Select value={selectedGameType} onValueChange={handleCategoryChange}>
-              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
                 <SelectValue>
                   <div className="flex items-center gap-3">
                     {selectedGameType && gameTypeConfig[selectedGameType] && (
@@ -267,7 +226,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
             
             <div className="mb-8">
               <Select value={gameMode} onValueChange={(value: "regular" | "shoutout") => setGameMode(value)}>
-                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+                <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
                   <SelectValue>
                     <div className="flex items-center gap-3">
                       {gameMode === "regular" ? (
@@ -354,45 +313,77 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
 
           </div>
 
-          {/* Team Setup Section */}
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800 dark:text-white">Choose your team names</h3>
-            {teams.length < 10 && (
+          {/* Team Count Selector */}
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Select number of teams</h3>
+            <div className="flex justify-center gap-2">
               <Button
-                onClick={addTeam}
-                variant="ghost"
-                className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
+                onClick={() => {
+                  const newTeams = [];
+                  for (let i = 0; i < 2; i++) {
+                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
+                    newTeams.push({
+                      id: nanoid(),
+                      name: suggestions[i],
+                      color: teamColors[i].name,
+                      score: 0,
+                      correctAnswers: 0
+                    });
+                  }
+                  setTeams(newTeams);
+                }}
+                variant={teams.length === 2 ? "default" : "outline"}
+                className={teams.length === 2 ? 
+                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
+                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
               >
-                <Plus className="mr-1" size={20} />
-                Team
+                2
               </Button>
-            )}
-          </div>
-
-          <div className="space-y-4 mb-6">
-            {teams.map((team, index) => {
-              const colorConfig = teamColors.find(c => c.name === team.color) || teamColors[0];
-              
-              return (
-                <div key={team.id} className="relative">
-                  <Input
-                    placeholder="Enter team name..."
-                    value={team.name}
-                    onChange={(e) => updateTeamName(team.id, e.target.value)}
-                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg pr-10 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
-                  />
-                  {index >= 1 && teams.length > 1 && (
-                    <Button
-                      onClick={() => removeTeam(team.id)}
-                      size="sm"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
-                    >
-                      <X size={14} />
-                    </Button>
-                  )}
-                </div>
-              );
-            })}
+              <Button
+                onClick={() => {
+                  const newTeams = [];
+                  for (let i = 0; i < 3; i++) {
+                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
+                    newTeams.push({
+                      id: nanoid(),
+                      name: suggestions[i],
+                      color: teamColors[i].name,
+                      score: 0,
+                      correctAnswers: 0
+                    });
+                  }
+                  setTeams(newTeams);
+                }}
+                variant={teams.length === 3 ? "default" : "outline"}
+                className={teams.length === 3 ? 
+                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
+                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
+              >
+                3
+              </Button>
+              <Button
+                onClick={() => {
+                  const newTeams = [];
+                  for (let i = 0; i < 4; i++) {
+                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
+                    newTeams.push({
+                      id: nanoid(),
+                      name: suggestions[i],
+                      color: teamColors[i].name,
+                      score: 0,
+                      correctAnswers: 0
+                    });
+                  }
+                  setTeams(newTeams);
+                }}
+                variant={teams.length === 4 ? "default" : "outline"}
+                className={teams.length === 4 ? 
+                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
+                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
+              >
+                4
+              </Button>
+            </div>
           </div>
 
 
@@ -404,34 +395,25 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                 onClick={() => setTargetScore(Math.max(10, targetScore - 5))}
                 disabled={targetScore <= 10}
                 size="lg"
-                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                <Minus size={20} className="text-gray-700 dark:text-gray-300" />
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                <Minus size={20} className="text-gray-700" />
               </Button>
               
-              <div className="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg px-6 py-3 min-w-[120px] text-center">
-                <div className="text-2xl font-bold text-gray-800 dark:text-white">{targetScore}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Points</div>
+              <div className="bg-white border-2 border-gray-300 rounded-lg px-6 py-3 min-w-[120px] text-center">
+                <div className="text-2xl font-bold text-gray-800">{targetScore}</div>
+                <div className="text-sm text-gray-600">Points</div>
               </div>
               
               <Button
                 onClick={() => setTargetScore(Math.min(50, targetScore + 5))}
                 disabled={targetScore >= 50}
                 size="lg"
-                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                <Plus size={20} className="text-gray-700 dark:text-gray-300" />
+                className="w-12 h-12 p-0 bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                <Plus size={20} className="text-gray-700" />
               </Button>
             </div>
           </div>
 
-          {/* Resume Game Button - Only show if there's an active game */}
-          {activeGameCode && onResumeGame && (
-            <Button
-              onClick={onResumeGame}
-              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-6 px-8 text-xl font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border-4 border-gray-400 mb-4"
-            >
-              Resume Game ({activeGameCode})
-            </Button>
-          )}
 
           {/* Start Game Button */}
           <Button

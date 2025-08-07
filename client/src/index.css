@@ -32,27 +32,6 @@
   --brand-purple: hsl(0, 0%, 45%);
 }
 
-.dark {
-  --background: hsl(0, 0%, 4%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(0, 0%, 16%);
-  --muted-foreground: hsl(0, 0%, 65%);
-  --popover: hsl(0, 0%, 4%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(0, 0%, 4%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(0, 0%, 16%);
-  --input: hsl(0, 0%, 16%);
-  --primary: hsl(0, 0%, 98%);
-  --primary-foreground: hsl(0, 0%, 9%);
-  --secondary: hsl(0, 0%, 16%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(0, 0%, 16%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 0%, 31%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(0, 0%, 84%);
-}
 
 @layer base {
   * {
@@ -60,7 +39,7 @@
   }
 
   html, body {
-    @apply font-sans antialiased bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 min-h-screen overflow-x-hidden;
+    @apply font-sans antialiased bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 min-h-screen overflow-x-hidden;
     max-width: 100vw;
   }
   

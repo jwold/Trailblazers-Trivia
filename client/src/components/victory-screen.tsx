@@ -40,28 +40,18 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
 
   return (
     <div className="space-y-6">
-      {/* Winner Announcement */}
-      <Card className="bg-gray-200 dark:bg-gray-800 border-4 border-gray-300 dark:border-gray-700 shadow-xl">
-        <CardContent className="p-8 text-center">
-          <div className="bounce-slow mb-4">
-            <Crown className="mx-auto text-gray-600 dark:text-gray-400" size={64} />
-          </div>
-          <h2 className="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">🎉 Yay! 🎉</h2>
-          <h3 className="text-2xl font-semibold mb-2 text-gray-700 dark:text-gray-200">{winningTeam.name}</h3>
-        </CardContent>
-      </Card>
       {/* Final Scoreboard */}
-      <Card className="border-4 border-gray-200 dark:border-gray-700 shadow-xl">
+      <Card className="border-4 border-gray-200 shadow-xl">
         <CardContent className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">Final Scoreboard</h3>
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Final Scoreboard</h3>
           <div className="space-y-4">
             {sortedTeams.map((team, index) => {
-              const colorClass = "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700";
-              const textClass = "text-gray-800 dark:text-gray-200";
-              const medalColor = index === 0 ? "bg-yellow-500 dark:bg-yellow-600" :
-                                index === 1 ? "bg-gray-400 dark:bg-gray-500" :
-                                index === 2 ? "bg-orange-600 dark:bg-orange-700" :
-                                "bg-gray-300 dark:bg-gray-600";
+              const colorClass = "bg-gray-50 border-gray-200";
+              const textClass = "text-gray-800";
+              const medalColor = index === 0 ? "bg-yellow-500" :
+                                index === 1 ? "bg-gray-400" :
+                                index === 2 ? "bg-orange-600" :
+                                "bg-gray-300";
 
               return (
                 <div key={team.id} className={`flex items-center justify-between ${colorClass} p-4 rounded-xl border-2`}>
@@ -71,13 +61,13 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
                     </div>
                     <div>
                       <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
-                      <p className="text-gray-600 dark:text-gray-400" style={{ fontSize: '0.875rem' }}>
+                      <p className="text-gray-600" style={{ fontSize: '0.875rem' }}>
                         {team.correctAnswers} correct
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    {index === 0 && <Trophy className="text-yellow-600 dark:text-yellow-500" size={24} />}
+                    {index === 0 && <Trophy className="text-yellow-600" size={24} />}
                     <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
                   </div>
                 </div>
@@ -114,8 +104,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       <div className="flex justify-center mb-4">
         <Button
           onClick={onNewGame}
-          className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-8 px-8 text-xl font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105 border-4 border-white/20"
-          style={{ minWidth: '200px' }}
+          className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-8 font-bold hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 text-[30px] pt-[32px] pb-[32px]"
         >
           New Game
         </Button>
@@ -124,7 +113,7 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
       {/* Share Results Button */}
       <div className="text-center">
         <Button 
-          className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 py-4 px-6 font-semibold transition-all duration-200"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
           onClick={() => {
             const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
             if (navigator.share) {
