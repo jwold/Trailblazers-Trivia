@@ -1,0 +1,1322 @@
+[
+  {
+    "id": 5149,
+    "question": "Which battle marked the end of Napoleon reign?",
+    "answer": "Battle of Waterloo",
+    "reference": ""
+  },
+  {
+    "id": 5161,
+    "question": "What was the name of the first university in the world?",
+    "answer": "University of Bologna",
+    "reference": ""
+  },
+  {
+    "id": 5162,
+    "question": "Who was the pharaoh who built the Great Pyramid?",
+    "answer": "Khufu",
+    "reference": ""
+  },
+  {
+    "id": 5163,
+    "question": "What was the name of the code of laws created by Hammurabi?",
+    "answer": "Code of Hammurabi",
+    "reference": ""
+  },
+  {
+    "id": 5164,
+    "question": "Which battle defeated the Spanish Armada?",
+    "answer": "Battle of Gravelines",
+    "reference": ""
+  },
+  {
+    "id": 5165,
+    "question": "Who was the first woman to win a Nobel Prize?",
+    "answer": "Marie Curie",
+    "reference": ""
+  },
+  {
+    "id": 5166,
+    "question": "What was the name of the treaty that ended the Thirty Years' War?",
+    "answer": "Peace of Westphalia",
+    "reference": ""
+  },
+  {
+    "id": 5167,
+    "question": "Which emperor built the Taj Mahal?",
+    "answer": "Shah Jahan",
+    "reference": ""
+  },
+  {
+    "id": 5168,
+    "question": "What was the name of the ship that carried the Pilgrims to America?",
+    "answer": "Mayflower",
+    "reference": ""
+  },
+  {
+    "id": 5169,
+    "question": "Who was the leader of the Haitian Revolution?",
+    "answer": "Toussaint Louverture",
+    "reference": ""
+  },
+  {
+    "id": 5170,
+    "question": "What was the name of the dynasty that ruled China during the Ming period?",
+    "answer": "Ming Dynasty",
+    "reference": ""
+  },
+  {
+    "id": 5171,
+    "question": "Which war was known as the War of the Roses?",
+    "answer": "War of the Roses",
+    "reference": ""
+  },
+  {
+    "id": 5172,
+    "question": "Who was the famous Viking explorer who reached North America?",
+    "answer": "Leif Erikson",
+    "reference": ""
+  },
+  {
+    "id": 5173,
+    "question": "What was the name of the council that split the Christian church?",
+    "answer": "Council of Chalcedon",
+    "reference": ""
+  },
+  {
+    "id": 5174,
+    "question": "Which king was known as the Sun King?",
+    "answer": "Louis XIV",
+    "reference": ""
+  },
+  {
+    "id": 5175,
+    "question": "What was the name of the battle where William the Conqueror defeated Harold?",
+    "answer": "Battle of Hastings",
+    "reference": ""
+  },
+  {
+    "id": 5196,
+    "question": "What was the name of the ancient Sumerian king who created a code of laws?",
+    "answer": "Hammurabi",
+    "reference": ""
+  },
+  {
+    "id": 5197,
+    "question": "Who was the Persian king who invaded Greece?",
+    "answer": "Xerxes",
+    "reference": ""
+  },
+  {
+    "id": 5198,
+    "question": "What was the name of the battle where Alexander the Great defeated Darius III?",
+    "answer": "Battle of Gaugamela",
+    "reference": ""
+  },
+  {
+    "id": 5199,
+    "question": "Which Roman emperor converted to Christianity?",
+    "answer": "Constantine",
+    "reference": ""
+  },
+  {
+    "id": 5200,
+    "question": "What was the name of the Viking settlement in North America?",
+    "answer": "Vinland",
+    "reference": ""
+  },
+  {
+    "id": 5201,
+    "question": "Who was the Mongol leader who conquered China?",
+    "answer": "Kublai Khan",
+    "reference": ""
+  },
+  {
+    "id": 5202,
+    "question": "What was the name of the plague that struck Europe in 1347?",
+    "answer": "Bubonic Plague",
+    "reference": ""
+  },
+  {
+    "id": 5203,
+    "question": "Which explorer was the first to reach the South Pole?",
+    "answer": "Roald Amundsen",
+    "reference": ""
+  },
+  {
+    "id": 5204,
+    "question": "What was the name of the treaty that ended the Crimean War?",
+    "answer": "Treaty of Paris",
+    "reference": ""
+  },
+  {
+    "id": 5205,
+    "question": "Who was the leader of the Taiping Rebellion?",
+    "answer": "Hong Xiuquan",
+    "reference": ""
+  },
+  {
+    "id": 5206,
+    "question": "What was the name of the ship that exploded in Havana, sparking the Spanish-American War?",
+    "answer": "USS Maine",
+    "reference": ""
+  },
+  {
+    "id": 5207,
+    "question": "Which conference divided Africa among European powers?",
+    "answer": "Berlin Conference",
+    "reference": ""
+  },
+  {
+    "id": 5208,
+    "question": "What was the name of the assassination that started World War I?",
+    "answer": "Assassination of Archduke Franz Ferdinand",
+    "reference": ""
+  },
+  {
+    "id": 5209,
+    "question": "Who was the British prime minister during most of World War II?",
+    "answer": "Winston Churchill",
+    "reference": ""
+  },
+  {
+    "id": 5210,
+    "question": "What was the name of the operation to evacuate Dunkirk?",
+    "answer": "Operation Dynamo",
+    "reference": ""
+  },
+  {
+    "id": 5211,
+    "question": "Which battle was the turning point in the Pacific during WWII?",
+    "answer": "Battle of Midway",
+    "reference": ""
+  },
+  {
+    "id": 5212,
+    "question": "What was the name of the plan to rebuild Europe after WWII?",
+    "answer": "Marshall Plan",
+    "reference": ""
+  },
+  {
+    "id": 5213,
+    "question": "Who was the first Secretary-General of the United Nations?",
+    "answer": "Trygve Lie",
+    "reference": ""
+  },
+  {
+    "id": 5214,
+    "question": "What was the name of the war between China and Japan in 1894?",
+    "answer": "First Sino-Japanese War",
+    "reference": ""
+  },
+  {
+    "id": 5215,
+    "question": "Which treaty ended the Russo-Japanese War?",
+    "answer": "Treaty of Portsmouth",
+    "reference": ""
+  },
+  {
+    "id": 5236,
+    "question": "What was the name of the ancient Assyrian king who built a library?",
+    "answer": "Ashurbanipal",
+    "reference": ""
+  },
+  {
+    "id": 5237,
+    "question": "Who was the Greek king who built the Pharos lighthouse?",
+    "answer": "Ptolemy II",
+    "reference": ""
+  },
+  {
+    "id": 5238,
+    "question": "What was the name of the battle where Octavian defeated Mark Antony?",
+    "answer": "Battle of Actium",
+    "reference": ""
+  },
+  {
+    "id": 5239,
+    "question": "Which Byzantine emperor reconquered Italy?",
+    "answer": "Justinian I",
+    "reference": ""
+  },
+  {
+    "id": 5240,
+    "question": "What was the name of the Norse saga that describes America?",
+    "answer": "Saga of the Greenlanders",
+    "reference": ""
+  },
+  {
+    "id": 5241,
+    "question": "Who was the Chinese admiral who sailed to Africa?",
+    "answer": "Zheng He",
+    "reference": ""
+  },
+  {
+    "id": 5242,
+    "question": "What was the name of the tax that caused the Peasants' Revolt in England?",
+    "answer": "Poll Tax",
+    "reference": ""
+  },
+  {
+    "id": 5243,
+    "question": "Which explorer was the first to reach Antarctica?",
+    "answer": "Fabian Gottlieb von Bellingshausen",
+    "reference": ""
+  },
+  {
+    "id": 5244,
+    "question": "What was the name of the alliance during the Crimean War?",
+    "answer": "Ottoman, British, French",
+    "reference": ""
+  },
+  {
+    "id": 5245,
+    "question": "Who was the leader of the Red Shirts in Italy?",
+    "answer": "Giuseppe Garibaldi",
+    "reference": ""
+  },
+  {
+    "id": 5246,
+    "question": "What was the name of the conference that partitioned Africa?",
+    "answer": "Berlin Conference",
+    "reference": ""
+  },
+  {
+    "id": 5247,
+    "question": "Which battle was the first use of tanks?",
+    "answer": "Battle of the Somme",
+    "reference": ""
+  },
+  {
+    "id": 5248,
+    "question": "Who was the Austrian chancellor during the 1848 revolutions?",
+    "answer": "Klemens von Metternich",
+    "reference": ""
+  },
+  {
+    "id": 5249,
+    "question": "What was the name of the operation to assassinate Hitler?",
+    "answer": "Operation Valkyrie",
+    "reference": ""
+  },
+  {
+    "id": 5250,
+    "question": "Which battle was the largest tank battle in history?",
+    "answer": "Battle of Kursk",
+    "reference": ""
+  },
+  {
+    "id": 5251,
+    "question": "What was the name of the agreement that divided Germany?",
+    "answer": "Yalta Conference",
+    "reference": ""
+  },
+  {
+    "id": 5252,
+    "question": "Who was the first president of the European Commission?",
+    "answer": "Walter Hallstein",
+    "reference": ""
+  },
+  {
+    "id": 5253,
+    "question": "What was the name of the war between Japan and Russia in 1904?",
+    "answer": "Russo-Japanese War",
+    "reference": ""
+  },
+  {
+    "id": 5254,
+    "question": "Which treaty ended the First Opium War?",
+    "answer": "Treaty of Nanking",
+    "reference": ""
+  },
+  {
+    "id": 5255,
+    "question": "Who was the leader of the Khmer Rouge?",
+    "answer": "Pol Pot",
+    "reference": ""
+  },
+  {
+    "id": 5276,
+    "question": "What was the name of the ancient Minoan palace?",
+    "answer": "Knossos",
+    "reference": ""
+  },
+  {
+    "id": 5277,
+    "question": "Who was the Babylonian king who conquered Jerusalem?",
+    "answer": "Nebuchadnezzar II",
+    "reference": ""
+  },
+  {
+    "id": 5278,
+    "question": "What was the name of the battle where Julius Caesar crossed the Rubicon?",
+    "answer": "Civil War start",
+    "reference": ""
+  },
+  {
+    "id": 5279,
+    "question": "Which Ottoman sultan conquered Constantinople?",
+    "answer": "Mehmed II",
+    "reference": ""
+  },
+  {
+    "id": 5280,
+    "question": "What was the name of the treaty that ended the Hundred Years' War?",
+    "answer": "Treaty of Picquigny",
+    "reference": ""
+  },
+  {
+    "id": 5281,
+    "question": "Who was the Japanese shogun who unified Japan?",
+    "answer": "Tokugawa Ieyasu",
+    "reference": ""
+  },
+  {
+    "id": 5282,
+    "question": "What was the name of the tax revolt in France before the Revolution?",
+    "answer": "Day of Tiles",
+    "reference": ""
+  },
+  {
+    "id": 5283,
+    "question": "Which explorer was the first to circumnavigate Australia?",
+    "answer": "Matthew Flinders",
+    "reference": ""
+  },
+  {
+    "id": 5284,
+    "question": "What was the name of the alliance during the Seven Years' War?",
+    "answer": "Anglo-Prussian alliance",
+    "reference": ""
+  },
+  {
+    "id": 5285,
+    "question": "Who was the leader of the Boxer Rebellion?",
+    "answer": "Empress Dowager Cixi",
+    "reference": ""
+  },
+  {
+    "id": 5286,
+    "question": "What was the name of the first Zionist congress?",
+    "answer": "Basel Congress",
+    "reference": ""
+  },
+  {
+    "id": 5287,
+    "question": "Which battle was the first major engagement of World War I?",
+    "answer": "Battle of the Marne",
+    "reference": ""
+  },
+  {
+    "id": 5288,
+    "question": "Who was the Italian prime minister during unification?",
+    "answer": "Camillo Benso, Count of Cavour",
+    "reference": ""
+  },
+  {
+    "id": 5289,
+    "question": "What was the name of the plot to kill Hitler in 1944?",
+    "answer": "20 July Plot",
+    "reference": ""
+  },
+  {
+    "id": 5290,
+    "question": "Which battle was the largest naval battle in history?",
+    "answer": "Battle of Leyte Gulf",
+    "reference": ""
+  },
+  {
+    "id": 5291,
+    "question": "What was the name of the conference that established the United Nations?",
+    "answer": "San Francisco Conference",
+    "reference": ""
+  },
+  {
+    "id": 5292,
+    "question": "Who was the first chancellor of West Germany?",
+    "answer": "Konrad Adenauer",
+    "reference": ""
+  },
+  {
+    "id": 5293,
+    "question": "What was the name of the war between Britain and China in 1839?",
+    "answer": "First Opium War",
+    "reference": ""
+  },
+  {
+    "id": 5294,
+    "question": "Which treaty ended the War of the Austrian Succession?",
+    "answer": "Treaty of Aix-la-Chapelle",
+    "reference": ""
+  },
+  {
+    "id": 5295,
+    "question": "Who was the leader of the Sandinistas?",
+    "answer": "Daniel Ortega",
+    "reference": ""
+  },
+  {
+    "id": 5316,
+    "question": "What was the name of the ancient Etruscan city?",
+    "answer": "Veii",
+    "reference": ""
+  },
+  {
+    "id": 5317,
+    "question": "Who was the Egyptian queen who allied with Antony?",
+    "answer": "Cleopatra",
+    "reference": ""
+  },
+  {
+    "id": 5318,
+    "question": "What was the name of the battle where Constantine saw the cross?",
+    "answer": "Battle of the Milvian Bridge",
+    "reference": ""
+  },
+  {
+    "id": 5319,
+    "question": "Which Holy Roman emperor was crowned by the Pope?",
+    "answer": "Charlemagne",
+    "reference": ""
+  },
+  {
+    "id": 5320,
+    "question": "What was the name of the treaty that ended the Investiture Controversy?",
+    "answer": "Concordat of Worms",
+    "reference": ""
+  },
+  {
+    "id": 5321,
+    "question": "Who was the African king who built rock churches?",
+    "answer": "Lalibela",
+    "reference": ""
+  },
+  {
+    "id": 5322,
+    "question": "What was the name of the English civil war in the 15th century?",
+    "answer": "Wars of the Roses",
+    "reference": ""
+  },
+  {
+    "id": 5323,
+    "question": "Which explorer was the first to reach India by sea?",
+    "answer": "Vasco da Gama",
+    "reference": ""
+  },
+  {
+    "id": 5324,
+    "question": "What was the name of the alliance during the Napoleonic Wars?",
+    "answer": "Seventh Coalition",
+    "reference": ""
+  },
+  {
+    "id": 5325,
+    "question": "Who was the leader of the Zulu nation?",
+    "answer": "Shaka Zulu",
+    "reference": ""
+  },
+  {
+    "id": 5326,
+    "question": "What was the name of the first international organization?",
+    "answer": "League of Nations",
+    "reference": ""
+  },
+  {
+    "id": 5327,
+    "question": "Which battle was the first use of poison gas?",
+    "answer": "Second Battle of Ypres",
+    "reference": ""
+  },
+  {
+    "id": 5328,
+    "question": "Who was the German chancellor during unification?",
+    "answer": "Otto von Bismarck",
+    "reference": ""
+  },
+  {
+    "id": 5329,
+    "question": "What was the name of the operation to liberate Paris?",
+    "answer": "Operation Overlord",
+    "reference": ""
+  },
+  {
+    "id": 5330,
+    "question": "Which battle was the longest in WWII?",
+    "answer": "Battle of the Atlantic",
+    "reference": ""
+  },
+  {
+    "id": 5331,
+    "question": "What was the name of the agreement that ended WWII in Europe?",
+    "answer": "Instrument of Surrender",
+    "reference": ""
+  },
+  {
+    "id": 5332,
+    "question": "Who was the first prime minister of India?",
+    "answer": "Jawaharlal Nehru",
+    "reference": ""
+  },
+  {
+    "id": 5333,
+    "question": "What was the name of the war between Britain and the Boers?",
+    "answer": "Second Boer War",
+    "reference": ""
+  },
+  {
+    "id": 5334,
+    "question": "Which treaty ended the Seven Years' War?",
+    "answer": "Treaty of Paris",
+    "reference": ""
+  },
+  {
+    "id": 5335,
+    "question": "Who was the leader of the African National Congress?",
+    "answer": "Nelson Mandela",
+    "reference": ""
+  },
+  {
+    "id": 5346,
+    "question": "What was the name of the ancient Mycenaean citadel?",
+    "answer": "Mycenae",
+    "reference": ""
+  },
+  {
+    "id": 5347,
+    "question": "Who was the Hittite king who fought Ramesses II?",
+    "answer": "Muwatalli II",
+    "reference": ""
+  },
+  {
+    "id": 5348,
+    "question": "What was the name of the battle where Mark Antony was defeated?",
+    "answer": "Battle of Actium",
+    "reference": ""
+  },
+  {
+    "id": 5349,
+    "question": "Which emperor divided the Roman Empire?",
+    "answer": "Diocletian",
+    "reference": ""
+  },
+  {
+    "id": 5350,
+    "question": "What was the name of the treaty that ended the Mongol invasions of Japan?",
+    "answer": "None (storms)",
+    "reference": ""
+  },
+  {
+    "id": 5351,
+    "question": "Who was the Mali emperor known for his wealth?",
+    "answer": "Mansa Musa",
+    "reference": ""
+  },
+  {
+    "id": 5352,
+    "question": "What was the name of the French wars of religion?",
+    "answer": "French Wars of Religion",
+    "reference": ""
+  },
+  {
+    "id": 5353,
+    "question": "Which explorer was the first to reach the North Pole?",
+    "answer": "Robert Peary",
+    "reference": ""
+  },
+  {
+    "id": 5354,
+    "question": "What was the name of the alliance during the Peloponnesian War?",
+    "answer": "Delian League",
+    "reference": ""
+  },
+  {
+    "id": 5355,
+    "question": "Who was the leader of the White Lotus Rebellion?",
+    "answer": "Wang Lun",
+    "reference": ""
+  },
+  {
+    "id": 5366,
+    "question": "What was the name of the ancient Indus Valley city?",
+    "answer": "Mohenjo-Daro",
+    "reference": ""
+  },
+  {
+    "id": 5367,
+    "question": "Who was the Chaldean king who rebuilt Babylon?",
+    "answer": "Nebuchadnezzar II",
+    "reference": ""
+  },
+  {
+    "id": 5368,
+    "question": "What was the name of the battle where the Romans defeated Hannibal?",
+    "answer": "Battle of Zama",
+    "reference": ""
+  },
+  {
+    "id": 5369,
+    "question": "Which emperor built the Theodosian Walls?",
+    "answer": "Theodosius II",
+    "reference": ""
+  },
+  {
+    "id": 5370,
+    "question": "What was the name of the treaty that ended the Crusades?",
+    "answer": "Treaty of Jaffa",
+    "reference": ""
+  },
+  {
+    "id": 5371,
+    "question": "Who was the Songhai emperor known for his pilgrimage?",
+    "answer": "Askia Muhammad",
+    "reference": ""
+  },
+  {
+    "id": 5372,
+    "question": "What was the name of the English civil war in the 17th century?",
+    "answer": "English Civil War",
+    "reference": ""
+  },
+  {
+    "id": 5373,
+    "question": "Which explorer was the first to reach the East Indies?",
+    "answer": "Vasco da Gama",
+    "reference": ""
+  },
+  {
+    "id": 5374,
+    "question": "What was the name of the alliance during the War of the Spanish Succession?",
+    "answer": "Grand Alliance",
+    "reference": ""
+  },
+  {
+    "id": 5375,
+    "question": "Who was the leader of the Mau Mau Rebellion?",
+    "answer": "Jomo Kenyatta",
+    "reference": ""
+  },
+  {
+    "id": 5386,
+    "question": "What was the name of the ancient Olmec city?",
+    "answer": "San Lorenzo",
+    "reference": ""
+  },
+  {
+    "id": 5387,
+    "question": "Who was the Lydian king known for his wealth?",
+    "answer": "Croesus",
+    "reference": ""
+  },
+  {
+    "id": 5388,
+    "question": "What was the name of the battle where the Romans lost to the Goths?",
+    "answer": "Battle of Adrianople",
+    "reference": ""
+  },
+  {
+    "id": 5389,
+    "question": "Which caliph conquered Persia?",
+    "answer": "Umar",
+    "reference": ""
+  },
+  {
+    "id": 5390,
+    "question": "What was the name of the treaty that ended the War of the Roses?",
+    "answer": "None (marriage)",
+    "reference": ""
+  },
+  {
+    "id": 5391,
+    "question": "Who was the Inca emperor captured by Pizarro?",
+    "answer": "Atahualpa",
+    "reference": ""
+  },
+  {
+    "id": 5392,
+    "question": "What was the name of the Scottish wars of independence?",
+    "answer": "Wars of Scottish Independence",
+    "reference": ""
+  },
+  {
+    "id": 5393,
+    "question": "Which explorer was the first to reach the Cape of Good Hope?",
+    "answer": "Bartolomeu Dias",
+    "reference": ""
+  },
+  {
+    "id": 5395,
+    "question": "Who was the leader of the Irish Easter Rising?",
+    "answer": "Patrick Pearse",
+    "reference": ""
+  },
+  {
+    "id": 5406,
+    "question": "What was the name of the ancient Harappan city?",
+    "answer": "Harappa",
+    "reference": ""
+  },
+  {
+    "id": 5407,
+    "question": "Who was the Scythian king who fought Alexander?",
+    "answer": "None (avoided)",
+    "reference": ""
+  },
+  {
+    "id": 5408,
+    "question": "What was the name of the battle where the Byzantines lost to the Seljuks?",
+    "answer": "Battle of Manzikert",
+    "reference": ""
+  },
+  {
+    "id": 5409,
+    "question": "Which sultan built the Blue Mosque?",
+    "answer": "Ahmed I",
+    "reference": ""
+  },
+  {
+    "id": 5410,
+    "question": "What was the name of the treaty that ended the English Civil War?",
+    "answer": "None (execution)",
+    "reference": ""
+  },
+  {
+    "id": 5411,
+    "question": "Who was the Aztec god of war?",
+    "answer": "Huitzilopochtli",
+    "reference": ""
+  },
+  {
+    "id": 5412,
+    "question": "What was the name of the Dutch wars of independence?",
+    "answer": "Eighty Years' War",
+    "reference": ""
+  },
+  {
+    "id": 5414,
+    "question": "What was the name of the alliance during the Thirty Years' War?",
+    "answer": "Protestant Union",
+    "reference": ""
+  },
+  {
+    "id": 5415,
+    "question": "Who was the leader of the Algerian War of Independence?",
+    "answer": "Ahmed Ben Bella",
+    "reference": ""
+  },
+  {
+    "id": 5426,
+    "question": "What was the name of the ancient Shang capital?",
+    "answer": "Anyang",
+    "reference": ""
+  },
+  {
+    "id": 5427,
+    "question": "Who was the Parthian king who fought Rome?",
+    "answer": "Orodes II",
+    "reference": ""
+  },
+  {
+    "id": 5428,
+    "question": "What was the name of the battle where the Ottomans defeated the Byzantines?",
+    "answer": "Fall of Constantinople",
+    "reference": ""
+  },
+  {
+    "id": 5429,
+    "question": "Which khan conquered Baghdad?",
+    "answer": "Hulagu Khan",
+    "reference": ""
+  },
+  {
+    "id": 5430,
+    "question": "What was the name of the treaty that ended the Reconquista?",
+    "answer": "Treaty of Granada",
+    "reference": ""
+  },
+  {
+    "id": 5431,
+    "question": "Who was the Maya king of Palenque?",
+    "answer": "Pakal the Great",
+    "reference": ""
+  },
+  {
+    "id": 5432,
+    "question": "What was the name of the Polish-Lithuanian union?",
+    "answer": "Union of Lublin",
+    "reference": ""
+  },
+  {
+    "id": 5433,
+    "question": "Which explorer was the first to reach the Arctic?",
+    "answer": "Robert Peary",
+    "reference": ""
+  },
+  {
+    "id": 5435,
+    "question": "Who was the leader of the Indonesian independence?",
+    "answer": "Sukarno",
+    "reference": ""
+  },
+  {
+    "id": 5446,
+    "question": "What was the name of the ancient Norse settlement?",
+    "answer": "L'Anse aux Meadows",
+    "reference": ""
+  },
+  {
+    "id": 5447,
+    "question": "Who was the Umayyad caliph who built the Dome of the Rock?",
+    "answer": "Abd al-Malik",
+    "reference": ""
+  },
+  {
+    "id": 5448,
+    "question": "What was the name of the battle where the French defeated the English in 1453?",
+    "answer": "Battle of Castillon",
+    "reference": ""
+  },
+  {
+    "id": 5449,
+    "question": "Which emperor built the Forbidden City?",
+    "answer": "Yongle Emperor",
+    "reference": ""
+  },
+  {
+    "id": 5451,
+    "question": "Who was the Vietnamese leader against France?",
+    "answer": "Ho Chi Minh",
+    "reference": ""
+  },
+  {
+    "id": 5452,
+    "question": "What was the name of the Spanish civil war?",
+    "answer": "Spanish Civil War",
+    "reference": ""
+  },
+  {
+    "id": 5453,
+    "question": "Which explorer was the first to reach the East by sea?",
+    "answer": "Vasco da Gama",
+    "reference": ""
+  },
+  {
+    "id": 5454,
+    "question": "What was the name of the alliance during the War of the Austrian Succession?",
+    "answer": "Pragmatic Allies",
+    "reference": ""
+  },
+  {
+    "id": 5455,
+    "question": "Who was the leader of the Vietnamese War of Independence?",
+    "answer": "Vo Nguyen Giap",
+    "reference": ""
+  },
+  {
+    "id": 5466,
+    "question": "What was the name of the ancient Egyptian city?",
+    "answer": "Thebes",
+    "reference": ""
+  },
+  {
+    "id": 5467,
+    "question": "Who was the Abbasid caliph who founded Baghdad?",
+    "answer": "Al-Mansur",
+    "reference": ""
+  },
+  {
+    "id": 5468,
+    "question": "What was the name of the battle where the Spaniards defeated the Aztecs?",
+    "answer": "Siege of Tenochtitlan",
+    "reference": ""
+  },
+  {
+    "id": 5469,
+    "question": "Which shogun ended the Sengoku period?",
+    "answer": "Tokugawa Ieyasu",
+    "reference": ""
+  },
+  {
+    "id": 5470,
+    "question": "What was the name of the treaty that ended the English-Scottish wars?",
+    "answer": "Treaty of Edinburgh",
+    "reference": ""
+  },
+  {
+    "id": 5471,
+    "question": "Who was the Ethiopian emperor who defeated Italy?",
+    "answer": "Menelik II",
+    "reference": ""
+  },
+  {
+    "id": 5472,
+    "question": "What was the name of the Irish civil war?",
+    "answer": "Irish Civil War",
+    "reference": ""
+  },
+  {
+    "id": 5473,
+    "question": "Which explorer was the first to reach the Antarctic Peninsula?",
+    "answer": "John Biscoe",
+    "reference": ""
+  },
+  {
+    "id": 5475,
+    "question": "Who was the leader of the Indian independence?",
+    "answer": "Mahatma Gandhi",
+    "reference": ""
+  },
+  {
+    "id": 5486,
+    "question": "What was the name of the ancient Phoenician colony?",
+    "answer": "Carthage",
+    "reference": ""
+  },
+  {
+    "id": 5487,
+    "question": "Who was the Seleucid king who fought Rome?",
+    "answer": "Antiochus III",
+    "reference": ""
+  },
+  {
+    "id": 5488,
+    "question": "What was the name of the battle where the Mongols were defeated in Vietnam?",
+    "answer": "Battle of Bạch Đằng",
+    "reference": ""
+  },
+  {
+    "id": 5489,
+    "question": "Which king built the Alhambra?",
+    "answer": "Muhammad V of Granada",
+    "reference": ""
+  },
+  {
+    "id": 5490,
+    "question": "What was the name of the treaty that ended the Italian Wars?",
+    "answer": "Treaty of Cateau-Cambrésis",
+    "reference": ""
+  },
+  {
+    "id": 5491,
+    "question": "Who was the Song emperor captured by the Jurchens?",
+    "answer": "Huizong",
+    "reference": ""
+  },
+  {
+    "id": 5492,
+    "question": "What was the name of the Bohemian wars of religion?",
+    "answer": "Hussite Wars",
+    "reference": ""
+  },
+  {
+    "id": 5493,
+    "question": "Which explorer was the first to reach Brazil?",
+    "answer": "Pedro Álvares Cabral",
+    "reference": ""
+  },
+  {
+    "id": 5494,
+    "question": "What was the name of the alliance during the War of the Polish Succession?",
+    "answer": "Bourbon alliance",
+    "reference": ""
+  },
+  {
+    "id": 5495,
+    "question": "Who was the leader of the Cambodian genocide?",
+    "answer": "Pol Pot",
+    "reference": ""
+  },
+  {
+    "id": 5506,
+    "question": "What was the name of the ancient Hittite law code?",
+    "answer": "Code of the Nesilim",
+    "reference": ""
+  },
+  {
+    "id": 5507,
+    "question": "Who was the Mauryan emperor who spread Buddhism?",
+    "answer": "Ashoka",
+    "reference": ""
+  },
+  {
+    "id": 5508,
+    "question": "What was the name of the battle where the Muslims defeated the Crusaders at Hattin?",
+    "answer": "Battle of Hattin",
+    "reference": ""
+  },
+  {
+    "id": 5509,
+    "question": "Which queen built the Palace of Versailles?",
+    "answer": "None (Louis XIV)",
+    "reference": ""
+  },
+  {
+    "id": 5510,
+    "question": "What was the name of the treaty that ended the Peloponnesian War?",
+    "answer": "Peace of Nicias",
+    "reference": ""
+  },
+  {
+    "id": 5511,
+    "question": "Who was the Ghana empire founder?",
+    "answer": "Kaya Magan Cissé",
+    "reference": ""
+  },
+  {
+    "id": 5512,
+    "question": "What was the name of the Swedish wars with Russia?",
+    "answer": "Russo-Swedish Wars",
+    "reference": ""
+  },
+  {
+    "id": 5513,
+    "question": "Which explorer was the first to reach the Azores?",
+    "answer": "Diogo de Silves",
+    "reference": ""
+  },
+  {
+    "id": 5514,
+    "question": "What was the name of the alliance during the War of the Quadruple Alliance?",
+    "answer": "Quadruple Alliance",
+    "reference": ""
+  },
+  {
+    "id": 5515,
+    "question": "Who was the leader of the Rwandan genocide?",
+    "answer": "Théoneste Bagosora",
+    "reference": ""
+  },
+  {
+    "id": 5526,
+    "question": "What was the name of the ancient Celtic tribe?",
+    "answer": "Iceni",
+    "reference": ""
+  },
+  {
+    "id": 5527,
+    "question": "Who was the Achaemenid king who built Persepolis?",
+    "answer": "Darius I",
+    "reference": ""
+  },
+  {
+    "id": 5528,
+    "question": "What was the name of the battle where the Venetians defeated the Ottomans?",
+    "answer": "Battle of Lepanto",
+    "reference": ""
+  },
+  {
+    "id": 5529,
+    "question": "Which emperor built the Terracotta Army?",
+    "answer": "Qin Shi Huang",
+    "reference": ""
+  },
+  {
+    "id": 5530,
+    "question": "What was the name of the treaty that ended the War of the Spanish Succession?",
+    "answer": "Treaty of Utrecht",
+    "reference": ""
+  },
+  {
+    "id": 5531,
+    "question": "Who was the leader of the Timurid empire?",
+    "answer": "Timur",
+    "reference": ""
+  },
+  {
+    "id": 5532,
+    "question": "What was the name of the Portuguese wars in Africa?",
+    "answer": "Portuguese Colonial War",
+    "reference": ""
+  },
+  {
+    "id": 5533,
+    "question": "Which explorer was the first to reach the Maldives?",
+    "answer": "Ibn Battuta",
+    "reference": ""
+  },
+  {
+    "id": 5534,
+    "question": "What was the name of the alliance during the War of the Bavarian Succession?",
+    "answer": "Prussian alliance",
+    "reference": ""
+  },
+  {
+    "id": 5535,
+    "question": "Who was the leader of the Bosnian War?",
+    "answer": "Radovan Karadžić",
+    "reference": ""
+  },
+  {
+    "id": 5546,
+    "question": "What was the name of the ancient Mayan ball game?",
+    "answer": "Pitz",
+    "reference": ""
+  },
+  {
+    "id": 5547,
+    "question": "Who was the Ottoman sultan who reformed the empire?",
+    "answer": "Mahmud II",
+    "reference": ""
+  },
+  {
+    "id": 5548,
+    "question": "What was the name of the battle where the British defeated the French in Canada?",
+    "answer": "Battle of Quebec",
+    "reference": ""
+  },
+  {
+    "id": 5549,
+    "question": "Which king built the Neuschwanstein Castle?",
+    "answer": "Ludwig II of Bavaria",
+    "reference": ""
+  },
+  {
+    "id": 5550,
+    "question": "What was the name of the treaty that ended the Franco-Prussian War?",
+    "answer": "Treaty of Frankfurt",
+    "reference": ""
+  },
+  {
+    "id": 5551,
+    "question": "Who was the leader of the Mughal empire at its peak?",
+    "answer": "Akbar",
+    "reference": ""
+  },
+  {
+    "id": 5552,
+    "question": "What was the name of the Finnish wars with Russia?",
+    "answer": "Winter War",
+    "reference": ""
+  },
+  {
+    "id": 5553,
+    "question": "Which explorer was the first to reach the Congo River?",
+    "answer": "Henry Morton Stanley",
+    "reference": ""
+  },
+  {
+    "id": 5555,
+    "question": "Who was the leader of the Sierra Leone Civil War?",
+    "answer": "Foday Sankoh",
+    "reference": ""
+  },
+  {
+    "id": 5566,
+    "question": "What was the name of the ancient Egyptian pyramid?",
+    "answer": "Pyramid of Djoser",
+    "reference": ""
+  },
+  {
+    "id": 5567,
+    "question": "Who was the Byzantine empress who married Justinian?",
+    "answer": "Theodora",
+    "reference": ""
+  },
+  {
+    "id": 5568,
+    "question": "What was the name of the battle where the Swedes defeated the Russians?",
+    "answer": "Battle of Poltava",
+    "reference": ""
+  },
+  {
+    "id": 5569,
+    "question": "Which queen built the Escorial?",
+    "answer": "None (Philip II)",
+    "reference": ""
+  },
+  {
+    "id": 5570,
+    "question": "What was the name of the treaty that ended the War of the Austrian Succession?",
+    "answer": "Treaty of Aix-la-Chapelle",
+    "reference": ""
+  },
+  {
+    "id": 5571,
+    "question": "Who was the leader of the Ashanti empire?",
+    "answer": "Osei Tutu",
+    "reference": ""
+  },
+  {
+    "id": 5572,
+    "question": "What was the name of the Belgian Congo independence?",
+    "answer": "Congo Crisis",
+    "reference": ""
+  },
+  {
+    "id": 5573,
+    "question": "Which explorer was the first to reach the Amazon River?",
+    "answer": "Francisco de Orellana",
+    "reference": ""
+  },
+  {
+    "id": 5574,
+    "question": "What was the name of the alliance during the War of the League of Augsburg?",
+    "answer": "Grand Alliance",
+    "reference": ""
+  },
+  {
+    "id": 5575,
+    "question": "Who was the leader of the Liberian Civil War?",
+    "answer": "Charles Taylor",
+    "reference": ""
+  },
+  {
+    "id": 5586,
+    "question": "What was the name of the ancient Greek colony?",
+    "answer": "Byzantium",
+    "reference": ""
+  },
+  {
+    "id": 5587,
+    "question": "Who was the Frankish king who defeated the Moors?",
+    "answer": "Charles Martel",
+    "reference": ""
+  },
+  {
+    "id": 5588,
+    "question": "What was the name of the battle where the Japanese defeated the Russians?",
+    "answer": "Battle of Tsushima",
+    "reference": ""
+  },
+  {
+    "id": 5589,
+    "question": "Which emperor built the Hagia Sophia?",
+    "answer": "Justinian I",
+    "reference": ""
+  },
+  {
+    "id": 5590,
+    "question": "What was the name of the treaty that ended the Spanish-American War?",
+    "answer": "Treaty of Paris",
+    "reference": ""
+  },
+  {
+    "id": 5591,
+    "question": "Who was the leader of the Ottoman Janissaries?",
+    "answer": "Grand Vizier",
+    "reference": ""
+  },
+  {
+    "id": 5592,
+    "question": "What was the name of the Algerian war with France?",
+    "answer": "Algerian War of Independence",
+    "reference": ""
+  },
+  {
+    "id": 5593,
+    "question": "Which explorer was the first to reach the Mississippi River?",
+    "answer": "Hernando de Soto",
+    "reference": ""
+  },
+  {
+    "id": 5594,
+    "question": "What was the name of the alliance during the War of the Grand Alliance?",
+    "answer": "Grand Alliance",
+    "reference": ""
+  },
+  {
+    "id": 5595,
+    "question": "Who was the leader of the Afghan War with the Soviets?",
+    "answer": "Ahmad Shah Massoud",
+    "reference": ""
+  }
+]
