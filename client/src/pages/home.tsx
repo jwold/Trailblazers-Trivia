@@ -1,6 +1,6 @@
 import { useState } from "react";
 import GameSetup from "../components/game-setup";
-import GameInterface from "../components/game-interface-static";
+import GameInterface from "../components/game-interface-simple";
 import VictoryScreen from "../components/victory-screen";
 import { BookOpen, X, Settings } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
