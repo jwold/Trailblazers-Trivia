@@ -374,20 +374,20 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
               const colorConfig = teamColors.find(c => c.name === team.color) || teamColors[0];
               
               return (
-                <div key={team.id} className="flex items-center gap-3">
+                <div key={team.id} className="relative">
                   <Input
                     placeholder="Enter team name..."
                     value={team.name}
                     onChange={(e) => updateTeamName(team.id, e.target.value)}
-                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg flex-1 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
+                    className={`border-2 ${colorConfig.borderClass.replace('border-', 'border-')} focus:border-opacity-75 text-lg pr-10 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
                   />
                   {index >= 1 && teams.length > 1 && (
                     <Button
                       onClick={() => removeTeam(team.id)}
                       size="sm"
-                      className="w-8 h-8 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex-shrink-0"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 p-0 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
                     >
-                      <X size={16} className="text-gray-700 dark:text-gray-300" />
+                      <X size={14} />
                     </Button>
                   )}
                 </div>
