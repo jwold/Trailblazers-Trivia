@@ -445,8 +445,23 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
               <Badge variant="outline">{currentQuestion.category}</Badge>
             </div>
 
-            <div className="text-2xl font-semibold mb-8 leading-relaxed">
-              {currentQuestion.question}
+            <div className="flex items-start gap-3 mb-8">
+              <div className="text-2xl font-semibold leading-relaxed flex-1">
+                {currentQuestion.question}
+              </div>
+              <Button
+                onClick={toggleAnswer}
+                variant="ghost"
+                size="sm"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                title={answerVisible ? "Hide answer" : "Show answer"}
+              >
+                {answerVisible ? (
+                  <EyeOff className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                ) : (
+                  <Eye className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                )}
+              </Button>
             </div>
 
             {answerVisible && (
@@ -464,15 +479,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
             <div className="flex gap-3 justify-center">
               {!questionAnswered ? (
                 <>
-                  <Button
-                    onClick={toggleAnswer}
-                    variant="outline"
-                    size="lg"
-                    className="min-w-[120px]"
-                  >
-                    {answerVisible ? <EyeOff className="mr-2" size={20} /> : <Eye className="mr-2" size={20} />}
-                    {answerVisible ? 'Hide' : 'Show'} Answer
-                  </Button>
                   <Button
                     onClick={() => handleAnswer(true)}
                     size="lg"
