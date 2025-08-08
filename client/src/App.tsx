@@ -28,9 +28,12 @@ function Router() {
 function App() {
   // Load manifest on app start
   useEffect(() => {
+    console.log('App starting, loading manifest...');
     staticGameService.loadManifest()
+      .then(() => console.log('Manifest loaded successfully'))
       .catch((error) => {
         console.error('Failed to load manifest:', error);
+        // Continue anyway - app can still function
       });
   }, []);
   
