@@ -236,16 +236,16 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                 )}
 
                 <div className="flex flex-col gap-3 pt-4">
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       onClick={() => handleAnswer(true)}
-                      className="bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
+                      className="bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 w-full sm:flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
                     >
                       Correct
                     </Button>
                     <Button
                       onClick={() => handleAnswer(false)}
-                      className="bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
+                      className="bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400 w-full sm:flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
                     >
                       Wrong
                     </Button>
