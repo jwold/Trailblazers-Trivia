@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2 } from "lucide-react";
+import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
 
@@ -186,39 +187,55 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
       {/* Combined Game Setup Card */}
       <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
-          {/* Game Category Selection */}
-          
+          {/* Header with Team Toggle */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Start your game</h2>
+            <Tabs value={teams.length === 3 ? "3" : "2"} onValueChange={(value) => {
+              const teamCount = parseInt(value);
+              const newTeams = [];
+              for (let i = 0; i < teamCount; i++) {
+                const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
+                newTeams.push({
+                  id: nanoid(),
+                  name: suggestions[i],
+                  color: teamColors[i].name,
+                  score: 0,
+                  correctAnswers: 0
+                });
+              }
+              setTeams(newTeams);
+            }}>
+              <TabsList className="grid grid-cols-2">
+                <TabsTrigger value="2">2 teams</TabsTrigger>
+                <TabsTrigger value="3">3 teams</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          {/* Game Category Grid */}
           <div className="mb-8">
-            <Select value={selectedGameType} onValueChange={handleCategoryChange}>
-              <SelectTrigger className="w-full border-2 border-gray-300 focus:border-gray-600 py-6">
-                <SelectValue>
-                  <div className="flex items-center gap-3">
-                    {selectedGameType && gameTypeConfig[selectedGameType] && (
-                      <>
-                        {(() => {
-                          const IconComponent = gameTypeConfig[selectedGameType].icon;
-                          return <IconComponent size={24} className={gameTypeConfig[selectedGameType].iconColor} />;
-                        })()}
-                        <span className="text-lg font-semibold">{gameTypeConfig[selectedGameType].label}</span>
-                      </>
-                    )}
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(gameTypeConfig).map(([gameType, config]) => {
-                  const IconComponent = config.icon;
-                  return (
-                    <SelectItem key={gameType} value={gameType}>
-                      <div className="flex items-center gap-3 py-2">
-                        <IconComponent size={20} className={config.iconColor} />
-                        <span className="font-medium">{config.label}</span>
-                      </div>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-3 gap-3">
+              {Object.entries(gameTypeConfig).map(([gameType, config]) => {
+                const IconComponent = config.icon;
+                const isSelected = selectedGameType === gameType;
+                return (
+                  <button
+                    key={gameType}
+                    onClick={() => handleCategoryChange(gameType as GameType)}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      isSelected 
+                        ? 'border-gray-600 bg-gray-100' 
+                        : 'border-gray-300 hover:border-gray-400 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      <IconComponent size={32} className={config.iconColor} />
+                      <span className="font-semibold text-gray-800">{config.label}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Game Mode Selection */}
@@ -313,78 +330,6 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
 
           </div>
 
-          {/* Team Count Selector */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Select number of teams</h3>
-            <div className="flex justify-center gap-2">
-              <Button
-                onClick={() => {
-                  const newTeams = [];
-                  for (let i = 0; i < 2; i++) {
-                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
-                    newTeams.push({
-                      id: nanoid(),
-                      name: suggestions[i],
-                      color: teamColors[i].name,
-                      score: 0,
-                      correctAnswers: 0
-                    });
-                  }
-                  setTeams(newTeams);
-                }}
-                variant={teams.length === 2 ? "default" : "outline"}
-                className={teams.length === 2 ? 
-                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
-                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
-              >
-                2
-              </Button>
-              <Button
-                onClick={() => {
-                  const newTeams = [];
-                  for (let i = 0; i < 3; i++) {
-                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
-                    newTeams.push({
-                      id: nanoid(),
-                      name: suggestions[i],
-                      color: teamColors[i].name,
-                      score: 0,
-                      correctAnswers: 0
-                    });
-                  }
-                  setTeams(newTeams);
-                }}
-                variant={teams.length === 3 ? "default" : "outline"}
-                className={teams.length === 3 ? 
-                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
-                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
-              >
-                3
-              </Button>
-              <Button
-                onClick={() => {
-                  const newTeams = [];
-                  for (let i = 0; i < 4; i++) {
-                    const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
-                    newTeams.push({
-                      id: nanoid(),
-                      name: suggestions[i],
-                      color: teamColors[i].name,
-                      score: 0,
-                      correctAnswers: 0
-                    });
-                  }
-                  setTeams(newTeams);
-                }}
-                variant={teams.length === 4 ? "default" : "outline"}
-                className={teams.length === 4 ? 
-                  "px-8 py-6 text-2xl font-bold bg-gray-600 text-white border-2 border-gray-700" : 
-                  "px-8 py-6 text-2xl font-bold border-2 border-gray-300 hover:bg-gray-100"}
-              >
-                4
-              </Button>
-            </div>
-          </div>
 
 
 

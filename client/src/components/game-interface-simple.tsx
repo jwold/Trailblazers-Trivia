@@ -235,24 +235,26 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   </div>
                 )}
 
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    onClick={() => handleAnswer(true)}
-                    className="bg-gradient-to-r from-green-600 to-green-800 text-white hover:from-green-700 hover:to-green-900 transition-all duration-200 border-4 border-green-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
-                  >
-                    Correct
-                  </Button>
-                  <Button
-                    onClick={() => handleAnswer(false)}
-                    className="bg-gradient-to-r from-red-600 to-red-800 text-white hover:from-red-700 hover:to-red-900 transition-all duration-200 border-4 border-red-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
-                  >
-                    Wrong
-                  </Button>
+                <div className="flex flex-col gap-3 pt-4">
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={() => handleAnswer(true)}
+                      className="bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
+                    >
+                      Correct
+                    </Button>
+                    <Button
+                      onClick={() => handleAnswer(false)}
+                      className="bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:from-gray-700 hover:to-gray-900 transition-all duration-200 border-4 border-gray-400 flex-1 text-[30px] font-bold pt-[32px] pb-[32px]"
+                    >
+                      Wrong
+                    </Button>
+                  </div>
                   <Button
                     onClick={handleSkip}
-                    className="bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-600 hover:to-gray-800 transition-all duration-200 border-4 border-gray-400 min-w-[100px] text-[30px] font-bold pt-[32px] pb-[32px]"
+                    className="bg-gray-500 hover:bg-gray-600 text-white transition-all duration-200 text-sm py-2 w-32 mx-auto"
                   >
-                    Skip
+                    Skip Question
                   </Button>
                 </div>
               </TabsContent>
