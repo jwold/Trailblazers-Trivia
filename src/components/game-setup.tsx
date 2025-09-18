@@ -187,33 +187,6 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
       {/* Combined Game Setup Card */}
       <Card className="border-4 border-gray-200">
         <CardContent className="p-6">
-          {/* Header with Team Toggle */}
-          <div className="flex justify-between items-center mb-6">
-            {/* <h2 className="text-2xl font-bold text-gray-800">Start your game</h2> */}
-            {/* Team toggle hidden
-            <Tabs value={teams.length === 3 ? "3" : "2"} onValueChange={(value) => {
-              const teamCount = parseInt(value);
-              const newTeams = [];
-              for (let i = 0; i < teamCount; i++) {
-                const suggestions = categoryNames[selectedGameType] || categoryNames["Bible"];
-                newTeams.push({
-                  id: nanoid(),
-                  name: suggestions[i],
-                  color: teamColors[i].name,
-                  score: 0,
-                  correctAnswers: 0
-                });
-              }
-              setTeams(newTeams);
-            }}>
-              <TabsList className="grid grid-cols-2">
-                <TabsTrigger value="2">2 teams</TabsTrigger>
-                <TabsTrigger value="3">3 teams</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            */}
-          </div>
-
           {/* Game Category Grid */}
           <div className="mb-8">
             <div className="grid grid-cols-3 gap-3">
