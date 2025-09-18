@@ -189,7 +189,8 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
         <CardContent className="p-6">
           {/* Header with Team Toggle */}
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">Start your game</h2>
+            {/* <h2 className="text-2xl font-bold text-gray-800">Start your game</h2> */}
+            {/* Team toggle hidden
             <Tabs value={teams.length === 3 ? "3" : "2"} onValueChange={(value) => {
               const teamCount = parseInt(value);
               const newTeams = [];
@@ -210,6 +211,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
                 <TabsTrigger value="3">3 teams</TabsTrigger>
               </TabsList>
             </Tabs>
+            */}
           </div>
 
           {/* Game Category Grid */}
