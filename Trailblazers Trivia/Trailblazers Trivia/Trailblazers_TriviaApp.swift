@@ -11,7 +11,7 @@ import SwiftUI
 struct Trailblazers_TriviaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Home()
         }
     }
 }
