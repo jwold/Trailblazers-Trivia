@@ -32,46 +32,49 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gray-50 transition-colors">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            {/* Logo and Title */}
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setGamePhase("setup");
-                // Keep gameCode so Resume button can appear in header
-              }}
-            >
-              <h1 className="text-xl font-semibold text-gray-900">Trailblazers Trivia</h1>
-            </div>
+    <div className="min-h-screen overflow-x-hidden bg-gray-50">
+      {/* iOS Style Navigation Bar */}
+      <header className="bg-white/80 backdrop-blur-md">
+        {/* Status Bar Space */}
+        <div className="h-12 bg-white/80" />
 
-            {/* Header Right Side - Resume Game, End Game and Buttons */}
-            <div className="flex items-center gap-2">
-              {gamePhase === "setup" && gameCode && (
-                <Button
-                  onClick={() => setGamePhase("playing")}
-                  className="bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-3 text-sm font-medium rounded-full transition-all duration-200"
-                >
-                  Resume
-                </Button>
-              )}
-              {gamePhase === "playing" && (
-                <Button
-                  onClick={handleGameEnd}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 py-1.5 px-3 text-sm font-medium rounded-full transition-all duration-200"
-                >
-                  End Game
-                </Button>
-              )}
+        {/* Navigation Content */}
+        <div className="px-4">
+          {gamePhase === "setup" ? (
+            // Large Title Style for Setup
+            <div className="py-2">
+              {/* Settings button hidden for now */}
+              <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+                Trailblazers Trivia
+              </h1>
             </div>
-          </div>
+          ) : (
+            // Compact Style for Playing/Victory
+            <div className="flex items-center justify-between py-3">
+              <button
+                onClick={() => setGamePhase("setup")}
+                className="text-blue-500 active:opacity-60 transition-opacity"
+              >
+                <span className="text-lg">‹ Back</span>
+              </button>
+              <h1 className="text-lg font-semibold text-gray-900">
+                {gamePhase === "playing" ? "Game" : "Results"}
+              </h1>
+              <button
+                onClick={() => gamePhase === "playing" ? handleGameEnd() : null}
+                className="text-blue-500 active:opacity-60 transition-opacity"
+              >
+                <span className="text-base">
+                  {gamePhase === "playing" ? "End" : ""}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
+        <div className="border-b border-gray-200/50" />
       </header>
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 max-w-lg">
+      {/* Main Content with iOS Safe Areas */}
+      <main className="flex-1 px-4 pb-8">
         {gamePhase === "setup" && (
           <GameSetup 
             onGameStart={handleGameStart} 

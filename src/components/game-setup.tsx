@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus, Check, Navigation, Crown } from "lucide-react";
+import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus, Check, Navigation, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
 import Paywall from "./paywall";
@@ -203,45 +203,50 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   };
 
   return (
-    <div className="space-y-6 bg-white rounded-2xl p-6">
-      {/* Game Category List */}
-      <div className="space-y-3">
+    <div className="mt-6 pb-32">
+      {/* Category Selection Cards */}
+      <div className="grid grid-cols-1 gap-3 mb-8">
         {Object.entries(gameTypeConfig).map(([gameType, config]) => {
           const IconComponent = config.icon;
           const isSelected = selectedGameType === gameType;
           const isLocked = config.isPremium && !isPremiumUnlocked;
 
           return (
-            <button
+            <Card
               key={gameType}
-              onClick={() => handleCategoryChange(gameType as GameType)}
-              className={`w-full p-4 rounded-2xl border transition-all flex items-center justify-between relative ${
-                isSelected
-                  ? 'border-blue-500 bg-white'
-                  : isLocked
-                  ? 'border-gray-200 bg-gray-50 hover:border-gray-300'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+              onClick={() => !isLocked && handleCategoryChange(gameType as GameType)}
+              className={`${
+                isSelected ? 'ring-2 ring-gray-600 shadow-lg' : 'hover:shadow-md'
+              } transition-all ${
+                isLocked ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <IconComponent size={24} className={isLocked ? "text-gray-400" : "text-gray-700"} />
-                <div className="text-left">
-                  <span className={`font-medium text-lg ${isLocked ? 'text-gray-500' : 'text-gray-900'}`}>
-                    {config.label}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {isLocked && (
-                  <Crown size={18} className="text-yellow-500" />
-                )}
-                {isSelected && !isLocked && (
-                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                    <Check size={16} className="text-white" />
+              <CardContent className="p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-lg ${
+                    isSelected ? 'bg-gray-700' : 'bg-gray-100'
+                  } flex items-center justify-center`}>
+                    <IconComponent size={20} className={isSelected ? "text-white" : config.iconColor} />
                   </div>
-                )}
-              </div>
-            </button>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{config.label}</h3>
+                    <p className="text-sm text-gray-600">{config.description}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {isLocked && (
+                    <span className="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full font-medium">
+                      Coming Soon
+                    </span>
+                  )}
+                  {!isLocked && isSelected && (
+                    <div className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center">
+                      <Check size={14} className="text-white" />
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
@@ -368,18 +373,18 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           </div>
 
 
-      {/* Start Game Button */}
-      <Button
-        onClick={handleStartGame}
-        disabled={isCreating}
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-6 font-semibold rounded-2xl text-lg transition-all duration-200 shadow-sm"
-      >
-        {isCreating ? (
-          "Creating Game..."
-        ) : (
-          "Start New Game!"
-        )}
-      </Button>
+      {/* iOS Style Bottom Fixed Button */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-gray-100">
+        <button
+          onClick={handleStartGame}
+          disabled={isCreating}
+          className="w-full bg-blue-500 active:bg-blue-600 disabled:bg-gray-300 text-white py-3.5 font-semibold rounded-xl text-lg transition-all"
+        >
+          {isCreating ? "Creating Game..." : "Start New Game"}
+        </button>
+        {/* Home Indicator Space */}
+        <div className="h-5" />
+      </div>
 
       {/* Paywall Modal */}
       <Paywall
