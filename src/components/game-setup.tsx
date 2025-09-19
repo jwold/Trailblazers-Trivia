@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus, Check, Navigation } from "lucide-react";
+import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus, Check, Navigation, Crown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
+import Paywall from "./paywall";
 
 function nanoid() {
   return Math.random().toString(36).substring(2, 11);
@@ -20,31 +21,36 @@ const gameTypeConfig = {
     icon: BookOpen,
     label: "Bible",
     description: "Test your biblical knowledge",
-    iconColor: "text-gray-700"
+    iconColor: "text-gray-700",
+    isPremium: false
   },
   "Animals": {
     icon: Cat,
     label: "Animals",
     description: "Explore the animal kingdom",
-    iconColor: "text-gray-700"
+    iconColor: "text-gray-700",
+    isPremium: true
   },
   "US History": {
     icon: Flag,
     label: "US History",
     description: "American historical events",
-    iconColor: "text-gray-700"
+    iconColor: "text-gray-700",
+    isPremium: true
   },
   "World History": {
     icon: Globe,
     label: "World History",
     description: "Global historical knowledge",
-    iconColor: "text-gray-700"
+    iconColor: "text-gray-700",
+    isPremium: true
   },
   "Geography": {
     icon: Navigation,
     label: "Geography",
     description: "World places and landmarks",
-    iconColor: "text-gray-700"
+    iconColor: "text-gray-700",
+    isPremium: true
   }
 };
 
@@ -92,6 +98,8 @@ const teamColors = [
 
 export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }: GameSetupProps) {
   const [selectedGameType, setSelectedGameType] = useState<GameType>("Bible");
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
   const [gameMode, setGameMode] = useState<"regular" | "shoutout">("regular");
   const [showRegularModal, setShowRegularModal] = useState(false);
   const [showShoutoutModal, setShowShoutoutModal] = useState(false);
@@ -120,15 +128,29 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   const { toast } = useToast();
   const [isCreating, setIsCreating] = useState(false);
 
+  useEffect(() => {
+    // Check if premium is unlocked
+    const unlocked = localStorage.getItem('premium_unlocked') === 'true';
+    setIsPremiumUnlocked(unlocked);
+  }, []);
+
 
 
 
   // Handle category change
   const handleCategoryChange = (newCategory: GameType) => {
+    const config = gameTypeConfig[newCategory];
+
+    // Check if it's premium and not unlocked
+    if (config.isPremium && !isPremiumUnlocked) {
+      setShowPaywall(true);
+      return;
+    }
+
     setSelectedGameType(newCategory);
     const newNames = getShuffledNames(newCategory);
     setAvailableNames(newNames);
-    
+
     // Update team names with new category names
     setTeams(teams.map((team, index) => {
       return {
@@ -136,6 +158,14 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
         name: index < newNames.length ? newNames[index] : `Team ${index + 1}`
       };
     }));
+  };
+
+  const handleUnlock = () => {
+    setIsPremiumUnlocked(true);
+    toast({
+      title: "Premium Unlocked!",
+      description: "You now have access to all categories.",
+    });
   };
 
 
@@ -179,25 +209,38 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
         {Object.entries(gameTypeConfig).map(([gameType, config]) => {
           const IconComponent = config.icon;
           const isSelected = selectedGameType === gameType;
+          const isLocked = config.isPremium && !isPremiumUnlocked;
+
           return (
             <button
               key={gameType}
               onClick={() => handleCategoryChange(gameType as GameType)}
-              className={`w-full p-4 rounded-2xl border transition-all flex items-center justify-between ${
+              className={`w-full p-4 rounded-2xl border transition-all flex items-center justify-between relative ${
                 isSelected
                   ? 'border-blue-500 bg-white'
+                  : isLocked
+                  ? 'border-gray-200 bg-gray-50 hover:border-gray-300'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
-                <IconComponent size={24} className="text-gray-700" />
-                <span className="font-medium text-gray-900 text-lg">{config.label}</span>
-              </div>
-              {isSelected && (
-                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Check size={16} className="text-white" />
+                <IconComponent size={24} className={isLocked ? "text-gray-400" : "text-gray-700"} />
+                <div className="text-left">
+                  <span className={`font-medium text-lg ${isLocked ? 'text-gray-500' : 'text-gray-900'}`}>
+                    {config.label}
+                  </span>
                 </div>
-              )}
+              </div>
+              <div className="flex items-center gap-2">
+                {isLocked && (
+                  <Crown size={18} className="text-yellow-500" />
+                )}
+                {isSelected && !isLocked && (
+                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Check size={16} className="text-white" />
+                  </div>
+                )}
+              </div>
             </button>
           );
         })}
@@ -337,6 +380,13 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           "Start New Game!"
         )}
       </Button>
+
+      {/* Paywall Modal */}
+      <Paywall
+        isOpen={showPaywall}
+        onClose={() => setShowPaywall(false)}
+        onUnlock={handleUnlock}
+      />
     </div>
   );
 }
