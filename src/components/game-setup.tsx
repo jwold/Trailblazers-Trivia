@@ -190,7 +190,7 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
         category: categoryParam,
         gameMode,
       });
-      onGameStart(result.gameCode);
+      onGameStart(result.gameCode, selectedGameType);
     } catch (error) {
       toast({
         title: "Error",

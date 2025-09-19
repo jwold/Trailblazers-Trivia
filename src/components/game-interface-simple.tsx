@@ -8,11 +8,12 @@ import { type TriviaQuestion, type ClientGameSession, staticGameService } from "
 interface GameInterfaceProps {
   gameCode: string;
   onGameEnd: () => void;
+  onTeamUpdate?: (teamName: string, score: number) => void;
 }
 
 type Difficulty = "easy" | "hard";
 
-export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProps) {
+export default function GameInterface({ gameCode, onGameEnd, onTeamUpdate }: GameInterfaceProps) {
   const [gameSession, setGameSession] = useState<ClientGameSession | null>(null);
   const [easyQuestion, setEasyQuestion] = useState<TriviaQuestion | null>(null);
   const [hardQuestion, setHardQuestion] = useState<TriviaQuestion | null>(null);
@@ -34,6 +35,10 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
         const session = await staticGameService.getGame(gameCode);
         if (session) {
           setGameSession(session);
+          const currentTeam = session.teams[session.currentTeamIndex];
+          if (onTeamUpdate) {
+            onTeamUpdate(currentTeam.name, currentTeam.score);
+          }
           await loadQuestions();
         }
       } catch (error) {
@@ -102,6 +107,12 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
 
     setGameSession(updatedSession);
 
+    // Update parent with new current team
+    const newCurrentTeam = updatedTeams[nextTeamIndex];
+    if (onTeamUpdate) {
+      onTeamUpdate(newCurrentTeam.name, newCurrentTeam.score);
+    }
+
     // Check for game end
     if (updatedTeam.score >= gameSession.targetScore) {
       await staticGameService.updateGame(gameCode, { gamePhase: 'ended' });
@@ -143,18 +154,8 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
       {/* Combined Card */}
       {!loadingQuestions && currentQuestion && (
         <div className="bg-white rounded-2xl p-6 shadow-sm">
-            {/* Player Info and Tabs Header */}
-            <div className="flex items-start justify-between mb-6">
-              <div
-                className="cursor-pointer"
-                onClick={() => setTeamsExpanded(!teamsExpanded)}
-              >
-                <h2 className="text-xl font-semibold text-gray-900">{currentTeam.name}'s turn</h2>
-                <p className="text-sm text-gray-500">
-                  {currentTeam.score} points
-                </p>
-              </div>
-
+            {/* Tabs Header */}
+            <div className="mb-6">
               <Tabs value={selectedTab} onValueChange={(value) => {
                 const difficulty = value as Difficulty;
                 setSelectedTab(difficulty);

@@ -12,10 +12,17 @@ type GamePhase = "setup" | "playing" | "victory";
 export default function Home() {
   const [gamePhase, setGamePhase] = useState<GamePhase>("setup");
   const [gameCode, setGameCode] = useState<string>("");
+  const [currentTeamName, setCurrentTeamName] = useState<string>("");
+  const [currentTeamScore, setCurrentTeamScore] = useState<number>(0);
 
   const handleGameStart = (code: string) => {
     setGameCode(code);
     setGamePhase("playing");
+  };
+
+  const handleTeamUpdate = (teamName: string, score: number) => {
+    setCurrentTeamName(teamName);
+    setCurrentTeamScore(score);
   };
 
   const handleGameEnd = () => {
@@ -55,10 +62,10 @@ export default function Home() {
                 onClick={() => setGamePhase("setup")}
                 className="text-blue-500 active:opacity-60 transition-opacity"
               >
-                <span className="text-lg">‹ Back</span>
+                <span className="text-lg">{gamePhase === "playing" ? "‹ Back" : ""}</span>
               </button>
               <h1 className="text-lg font-semibold text-gray-900">
-                {gamePhase === "playing" ? "Game" : "Results"}
+                {gamePhase === "playing" ? `${currentTeamName}'s Turn • ${currentTeamScore} Points` : ""}
               </h1>
               <button
                 onClick={() => gamePhase === "playing" ? handleGameEnd() : null}
@@ -84,9 +91,10 @@ export default function Home() {
         )}
         
         {gamePhase === "playing" && gameCode && (
-          <GameInterface 
-            gameCode={gameCode} 
+          <GameInterface
+            gameCode={gameCode}
             onGameEnd={handleGameEnd}
+            onTeamUpdate={handleTeamUpdate}
           />
         )}
         

@@ -9,174 +9,140 @@ import SwiftUI
 
 struct GameView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var currentScore = 5
-    @State private var totalPossiblePoints = 10
-    @State private var currentPlayer = "Team Alpha"
+    @State private var currentScore = 0
+    @State private var currentPlayer = "Rechabites's Turn"
     @State private var selectedDifficulty = "Easy"
     @State private var showAnswer = false
     @State private var gameEnded = false
     @State private var currentQuestion = TriviaQuestion(
-        question: "Who was the first king of Israel?",
-        answer: "Saul",
-        reference: "1 Samuel 10:1"
+        question: "Who restored Paul's sight after the Lord blinded him?",
+        answer: "Ananias",
+        reference: "Acts 9:17-18"
     )
     
     let selectedCategory: String
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                // Background gradient
-                LinearGradient(
-                    colors: [Color(red: 0.95, green: 0.95, blue: 0.97), Color.white],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        ZStack {
+            // Clean background
+            Color(.systemBackground)
                 .ignoresSafeArea()
-                
-                VStack(spacing: 30) {
-                    // Player Header
-                    VStack(spacing: 15) {
+            
+            VStack(spacing: 0) {
+                // Header Section
+                VStack(spacing: 16) {
+                    // Player info in center
+                    VStack(spacing: 4) {
                         Text(currentPlayer)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                        
-                        Text("\(currentScore)/\(totalPossiblePoints) points")
                             .font(.title2)
-                            .foregroundColor(.secondary)
+                            .fontWeight(.semibold)
                         
-                        // Difficulty Toggle
-                        HStack(spacing: 20) {
-                            Button("Easy") {
-                                selectedDifficulty = "Easy"
-                                resetGame()
-                            }
-                            .foregroundColor(selectedDifficulty == "Easy" ? .white : .blue)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(selectedDifficulty == "Easy" ? Color.blue : Color.clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.blue, lineWidth: 1)
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            
-                            Button("Hard") {
-                                selectedDifficulty = "Hard"
-                                resetGame()
-                            }
-                            .foregroundColor(selectedDifficulty == "Hard" ? .white : .blue)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(selectedDifficulty == "Hard" ? Color.blue : Color.clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.blue, lineWidth: 1)
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        }
+                        Text("\(currentScore) points")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
                     }
                     .padding(.top, 20)
                     
-                    Spacer()
+                    // Difficulty Toggle - matching screenshot style
+                    HStack(spacing: 0) {
+                        Button("Easy") {
+                            selectedDifficulty = "Easy"
+                            resetGame()
+                        }
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(selectedDifficulty == "Easy" ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 32)
+                        .background(selectedDifficulty == "Easy" ? Color.black : Color.clear)
+                        
+                        Button("Hard") {
+                            selectedDifficulty = "Hard"
+                            resetGame()
+                        }
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(selectedDifficulty == "Hard" ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 32)
+                        .background(selectedDifficulty == "Hard" ? Color.black : Color.clear)
+                    }
+                    .background(Color(.systemGray5))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .frame(width: 160)
+                }
+                .padding(.bottom, 40)
+                
+                // Content Section
+                VStack(alignment: .leading, spacing: 20) {
+                    // Question Text - larger and left aligned
+                    HStack {
+                        Text(currentQuestion.question)
+                            .font(.title)
+                            .fontWeight(.medium)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 20)
                     
-                    // Question Section
-                    if !gameEnded {
-                        VStack(spacing: 30) {
-                            // Question Card
-                            VStack(spacing: 20) {
-                                Text(currentQuestion.question)
-                                    .font(.title2)
-                                    .fontWeight(.medium)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 20)
-                                
-                                if !showAnswer {
-                                    Button("Show answer") {
-                                        showAnswer = true
-                                    }
-                                    .font(.headline)
-                                    .foregroundColor(.blue)
-                                    .padding(.horizontal, 30)
-                                    .padding(.vertical, 12)
-                                    .background(Color.blue.opacity(0.1))
-                                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                                } else {
-                                    VStack(spacing: 10) {
-                                        Text(currentQuestion.answer)
-                                            .font(.title2)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.primary)
-                                        
-                                        if !currentQuestion.reference.isEmpty {
-                                            Text(currentQuestion.reference)
-                                                .font(.subheadline)
-                                                .foregroundColor(.secondary)
-                                        }
-                                    }
-                                    .padding()
-                                    .background(Color.green.opacity(0.1))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    // Show Answer Button or Answer Display
+                    if !showAnswer {
+                        VStack(spacing: 12) {
+                            HStack {
+                                Button("Show answer") {
+                                    showAnswer = true
                                 }
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 25))
+                                Spacer()
                             }
-                            .padding(.vertical, 30)
-                            .padding(.horizontal, 20)
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(.regularMaterial)
-                                    .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
-                            )
-                            .padding(.horizontal, 20)
                             
-                            // Action Buttons (only show when answer is revealed)
-                            if showAnswer {
-                                VStack(spacing: 15) {
-                                    HStack(spacing: 15) {
-                                        Button("Correct") {
-                                            answerCorrect()
-                                        }
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 50)
-                                        .background(Color.blue)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                        
-                                        Button("Wrong") {
-                                            answerWrong()
-                                        }
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 50)
-                                        .background(Color.gray)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    }
-                                    
-                                    Button("Skip Question") {
-                                        skipQuestion()
-                                    }
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .padding(.vertical, 8)
+                            HStack {
+                                Button("End") {
+                                    dismiss()
                                 }
-                                .padding(.horizontal, 20)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.red)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 25))
+                                Spacer()
                             }
                         }
+                        .padding(.horizontal, 20)
                     } else {
-                        VStack(spacing: 20) {
-                            Text("Game Complete!")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text(currentQuestion.answer)
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                            }
                             
-                            Text("Final Score: \(currentScore)/\(totalPossiblePoints)")
-                                .font(.title2)
-                                .foregroundColor(.secondary)
-                            
-                            Button("Start New Game") {
-                                resetGame()
+                            if !currentQuestion.reference.isEmpty {
+                                HStack {
+                                    Text(currentQuestion.reference)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        
+                        // Action Buttons
+                        VStack(spacing: 12) {
+                            Button("Correct") {
+                                answerCorrect()
                             }
                             .font(.headline)
                             .fontWeight(.semibold)
@@ -184,39 +150,36 @@ struct GameView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 50)
                             .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .padding(.horizontal, 20)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                            
+                            Button("Wrong") {
+                                answerWrong()
+                            }
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.regularMaterial)
-                                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
-                        )
                         .padding(.horizontal, 20)
+                        .padding(.top, 20)
                     }
-                    
-                    Spacer()
                 }
+                
+                Spacer()
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                HStack {
-                    Image(systemName: "house.circle.fill")
-                        .font(.title2)
-                    Text("Trailblazers Trivia")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                }
-            }
-            
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("End Game") {
+                Button("End") {
                     dismiss()
                 }
-                .foregroundColor(.red)
+                .foregroundColor(.blue)
+                .font(.headline)
             }
         }
     }
@@ -224,7 +187,6 @@ struct GameView: View {
     // MARK: - Helper Functions
     private func resetGame() {
         currentScore = 0
-        totalPossiblePoints = 10
         showAnswer = false
         gameEnded = false
         currentQuestion = getNextQuestion()
@@ -239,22 +201,19 @@ struct GameView: View {
         nextQuestion()
     }
     
-    private func skipQuestion() {
-        nextQuestion()
-    }
-    
     private func nextQuestion() {
         showAnswer = false
         // For demo purposes, just cycle through a few questions
         let questions = [
-            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1"),
+            TriviaQuestion(question: "Who restored Paul's sight after the Lord blinded him?", answer: "Ananias", reference: "Acts 9:17-18"),
             TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
             TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51")
+            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
+            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
         ]
         
         // Simple logic to cycle through questions or end game
-        if currentScore >= 8 || totalPossiblePoints <= 0 {
+        if currentScore >= 10 {
             gameEnded = true
         } else {
             currentQuestion = questions.randomElement() ?? questions[0]
@@ -263,10 +222,11 @@ struct GameView: View {
     
     private func getNextQuestion() -> TriviaQuestion {
         let questions = [
-            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1"),
+            TriviaQuestion(question: "Who restored Paul's sight after the Lord blinded him?", answer: "Ananias", reference: "Acts 9:17-18"),
             TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
             TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51")
+            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
+            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
         ]
         return questions.randomElement() ?? questions[0]
     }
