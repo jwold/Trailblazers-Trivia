@@ -14,7 +14,7 @@ struct TriviaCategory {
     let isSelected: Bool
 }
 
-struct ContentView: View {
+struct Home: View {
     @State private var selectedCategory: String? = "Bible"
     @State private var categories = [
         TriviaCategory(name: "Bible", icon: "book.closed", isSelected: false),
@@ -179,5 +179,5 @@ struct CategoryCard: View {
 }
 
 #Preview {
-    ContentView()
+    Home()
 }

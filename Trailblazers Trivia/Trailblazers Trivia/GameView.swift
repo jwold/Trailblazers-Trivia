@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
-import Combine
 
 struct GameView: View {
-    @StateObject private var gameState = GameState()
     @Environment(\.dismiss) private var dismiss
+    @State private var currentScore = 5
+    @State private var totalPossiblePoints = 10
+    @State private var currentPlayer = "Team Alpha"
+    @State private var selectedDifficulty = "Easy"
+    @State private var showAnswer = false
+    @State private var gameEnded = false
+    @State private var currentQuestion = TriviaQuestion(
+        question: "Who was the first king of Israel?",
+        answer: "Saul",
+        reference: "1 Samuel 10:1"
+    )
     
-    let selectedCategory: TriviaGameCategory
+    let selectedCategory: String
     
     var body: some View {
         NavigationView {
@@ -28,24 +37,24 @@ struct GameView: View {
                 VStack(spacing: 30) {
                     // Player Header
                     VStack(spacing: 15) {
-                        Text(gameState.currentPlayer)
+                        Text(currentPlayer)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         
-                        Text("\(gameState.currentScore)/\(gameState.totalPossiblePoints) points")
+                        Text("\(currentScore)/\(totalPossiblePoints) points")
                             .font(.title2)
                             .foregroundColor(.secondary)
                         
                         // Difficulty Toggle
                         HStack(spacing: 20) {
                             Button("Easy") {
-                                gameState.selectedDifficulty = .easy
-                                gameState.startGame(with: selectedCategory, difficulty: .easy)
+                                selectedDifficulty = "Easy"
+                                resetGame()
                             }
-                            .foregroundColor(gameState.selectedDifficulty == .easy ? .white : .blue)
+                            .foregroundColor(selectedDifficulty == "Easy" ? .white : .blue)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 8)
-                            .background(gameState.selectedDifficulty == .easy ? Color.blue : Color.clear)
+                            .background(selectedDifficulty == "Easy" ? Color.blue : Color.clear)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.blue, lineWidth: 1)
@@ -53,13 +62,13 @@ struct GameView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             
                             Button("Hard") {
-                                gameState.selectedDifficulty = .hard
-                                gameState.startGame(with: selectedCategory, difficulty: .hard)
+                                selectedDifficulty = "Hard"
+                                resetGame()
                             }
-                            .foregroundColor(gameState.selectedDifficulty == .hard ? .white : .blue)
+                            .foregroundColor(selectedDifficulty == "Hard" ? .white : .blue)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 8)
-                            .background(gameState.selectedDifficulty == .hard ? Color.blue : Color.clear)
+                            .background(selectedDifficulty == "Hard" ? Color.blue : Color.clear)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.blue, lineWidth: 1)
@@ -72,19 +81,19 @@ struct GameView: View {
                     Spacer()
                     
                     // Question Section
-                    if let question = gameState.currentQuestion {
+                    if !gameEnded {
                         VStack(spacing: 30) {
                             // Question Card
                             VStack(spacing: 20) {
-                                Text(question.question)
+                                Text(currentQuestion.question)
                                     .font(.title2)
                                     .fontWeight(.medium)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 20)
                                 
-                                if !gameState.showAnswer {
+                                if !showAnswer {
                                     Button("Show answer") {
-                                        gameState.showAnswerToggle()
+                                        showAnswer = true
                                     }
                                     .font(.headline)
                                     .foregroundColor(.blue)
@@ -94,13 +103,13 @@ struct GameView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 25))
                                 } else {
                                     VStack(spacing: 10) {
-                                        Text(question.answer)
+                                        Text(currentQuestion.answer)
                                             .font(.title2)
                                             .fontWeight(.semibold)
                                             .foregroundColor(.primary)
                                         
-                                        if !question.reference.isEmpty {
-                                            Text(question.reference)
+                                        if !currentQuestion.reference.isEmpty {
+                                            Text(currentQuestion.reference)
                                                 .font(.subheadline)
                                                 .foregroundColor(.secondary)
                                         }
@@ -120,11 +129,11 @@ struct GameView: View {
                             .padding(.horizontal, 20)
                             
                             // Action Buttons (only show when answer is revealed)
-                            if gameState.showAnswer {
+                            if showAnswer {
                                 VStack(spacing: 15) {
                                     HStack(spacing: 15) {
                                         Button("Correct") {
-                                            gameState.answerCorrect()
+                                            answerCorrect()
                                         }
                                         .font(.headline)
                                         .fontWeight(.semibold)
@@ -135,7 +144,7 @@ struct GameView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 12))
                                         
                                         Button("Wrong") {
-                                            gameState.answerWrong()
+                                            answerWrong()
                                         }
                                         .font(.headline)
                                         .fontWeight(.semibold)
@@ -147,7 +156,7 @@ struct GameView: View {
                                     }
                                     
                                     Button("Skip Question") {
-                                        gameState.skipQuestion()
+                                        skipQuestion()
                                     }
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -156,18 +165,18 @@ struct GameView: View {
                                 .padding(.horizontal, 20)
                             }
                         }
-                    } else if gameState.gameEnded {
+                    } else {
                         VStack(spacing: 20) {
                             Text("Game Complete!")
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                             
-                            Text("Final Score: \(gameState.currentScore)/\(gameState.totalPossiblePoints)")
+                            Text("Final Score: \(currentScore)/\(totalPossiblePoints)")
                                 .font(.title2)
                                 .foregroundColor(.secondary)
                             
                             Button("Start New Game") {
-                                gameState.startGame(with: selectedCategory, difficulty: gameState.selectedDifficulty)
+                                resetGame()
                             }
                             .font(.headline)
                             .fontWeight(.semibold)
@@ -210,12 +219,66 @@ struct GameView: View {
                 .foregroundColor(.red)
             }
         }
-        .onAppear {
-            gameState.startGame(with: selectedCategory, difficulty: .easy)
+    }
+    
+    // MARK: - Helper Functions
+    private func resetGame() {
+        currentScore = 0
+        totalPossiblePoints = 10
+        showAnswer = false
+        gameEnded = false
+        currentQuestion = getNextQuestion()
+    }
+    
+    private func answerCorrect() {
+        currentScore += (selectedDifficulty == "Hard" ? 2 : 1)
+        nextQuestion()
+    }
+    
+    private func answerWrong() {
+        nextQuestion()
+    }
+    
+    private func skipQuestion() {
+        nextQuestion()
+    }
+    
+    private func nextQuestion() {
+        showAnswer = false
+        // For demo purposes, just cycle through a few questions
+        let questions = [
+            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1"),
+            TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
+            TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
+            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51")
+        ]
+        
+        // Simple logic to cycle through questions or end game
+        if currentScore >= 8 || totalPossiblePoints <= 0 {
+            gameEnded = true
+        } else {
+            currentQuestion = questions.randomElement() ?? questions[0]
         }
+    }
+    
+    private func getNextQuestion() -> TriviaQuestion {
+        let questions = [
+            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1"),
+            TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
+            TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
+            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51")
+        ]
+        return questions.randomElement() ?? questions[0]
     }
 }
 
+// MARK: - Supporting Types
+struct TriviaQuestion {
+    let question: String
+    let answer: String
+    let reference: String
+}
+
 #Preview {
-    GameView(selectedCategory: .bible)
+    GameView(selectedCategory: "Bible")
 }
