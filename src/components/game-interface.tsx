@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
+import { Users, Gamepad2, Check, X, Square, History, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, type QuestionHistoryEntry } from "@/services/static-game-service";
 // import { createConfetti, createEncouragement } from "../lib/game-logic";
 
@@ -394,35 +394,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     }, 100);
   };
 
-  const skipQuestion = () => {
-    if (!gameSession || !currentQuestion) return;
-    
-    // Add skipped question to history to prevent it from appearing again
-    const questionHistory: number[] = [...gameSession.questionHistory, currentQuestion.id];
-    
-    // Keep the same team's turn (don't change currentTeamIndex)
-    updateGameMutation.mutate({
-      questionHistory: questionHistory,
-    });
-    
-    // Reset question state without changing teams
-    setQuestionNumber(prev => prev + 1);
-    setGamePhase("question-display");
-    setCurrentQuestion(null);
-    setEasyQuestion(null);
-    setHardQuestion(null);
-    setSelectedDifficulty(lastSelectedDifficulty);
-    setQuestionAnswered(false);
-    setAnswerVisible(false);
-    setQuestionVisible(false);
-    setTeamAnimations({});
-    
-    // Auto-load new questions
-    setTimeout(() => {
-      fetchQuestionMutation.mutate("Easy");
-      fetchQuestionMutation.mutate("Hard");
-    }, 100);
-  };
 
   const endGame = () => {
     updateGameMutation.mutate({
@@ -703,16 +674,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                         {team.name}
                       </Button>
                     ))}
-                  </div>
-                  
-                  {/* Skip Question Button */}
-                  <div className="flex justify-center mb-6">
-                    <Button
-                      onClick={skipQuestion}
-                      className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white py-4 px-6 text-lg font-medium transition-all duration-200 flex items-center gap-2">
-                      <SkipForward size={20} />
-                      Skip Question
-                    </Button>
                   </div>
                 </>
               )}

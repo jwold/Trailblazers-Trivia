@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus } from "lucide-react";
+import { BookOpen, Cat, Flag, Globe, MapPin, Gamepad2, Volume2, Plus, Minus, Check, Navigation } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { staticGameService, type Team, type GameSetup as GameSetupType } from "@/services/static-game-service";
 
@@ -20,40 +20,30 @@ const gameTypeConfig = {
     icon: BookOpen,
     label: "Bible",
     description: "Test your biblical knowledge",
-    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-    borderColor: "border-gray-400",
     iconColor: "text-gray-700"
   },
   "Animals": {
     icon: Cat,
     label: "Animals",
     description: "Explore the animal kingdom",
-    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-    borderColor: "border-gray-400",
     iconColor: "text-gray-700"
   },
   "US History": {
     icon: Flag,
     label: "US History",
     description: "American historical events",
-    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-    borderColor: "border-gray-400",
     iconColor: "text-gray-700"
   },
   "World History": {
     icon: Globe,
     label: "World History",
     description: "Global historical knowledge",
-    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-    borderColor: "border-gray-400",
     iconColor: "text-gray-700"
   },
   "Geography": {
-    icon: MapPin,
+    icon: Navigation,
     label: "Geography",
     description: "World places and landmarks",
-    bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-    borderColor: "border-gray-400",
     iconColor: "text-gray-700"
   }
 };
@@ -183,35 +173,35 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
   };
 
   return (
-    <div className="space-y-6">
-      {/* Combined Game Setup Card */}
-      <Card className="border-4 border-gray-200">
-        <CardContent className="p-6">
-          {/* Game Category Grid */}
-          <div className="mb-8">
-            <div className="grid grid-cols-3 gap-3">
-              {Object.entries(gameTypeConfig).map(([gameType, config]) => {
-                const IconComponent = config.icon;
-                const isSelected = selectedGameType === gameType;
-                return (
-                  <button
-                    key={gameType}
-                    onClick={() => handleCategoryChange(gameType as GameType)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      isSelected 
-                        ? 'border-gray-600 bg-gray-100' 
-                        : 'border-gray-300 hover:border-gray-400 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <IconComponent size={32} className={config.iconColor} />
-                      <span className="font-semibold text-gray-800">{config.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+    <div className="space-y-6 bg-white rounded-2xl p-6">
+      {/* Game Category List */}
+      <div className="space-y-3">
+        {Object.entries(gameTypeConfig).map(([gameType, config]) => {
+          const IconComponent = config.icon;
+          const isSelected = selectedGameType === gameType;
+          return (
+            <button
+              key={gameType}
+              onClick={() => handleCategoryChange(gameType as GameType)}
+              className={`w-full p-4 rounded-2xl border transition-all flex items-center justify-between ${
+                isSelected
+                  ? 'border-blue-500 bg-white'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <IconComponent size={24} className="text-gray-700" />
+                <span className="font-medium text-gray-900 text-lg">{config.label}</span>
+              </div>
+              {isSelected && (
+                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                  <Check size={16} className="text-white" />
+                </div>
+              )}
+            </button>
+          );
+        })}
+      </div>
 
           {/* Game Mode Selection */}
           <div className="mb-8 hidden">
@@ -335,20 +325,18 @@ export default function GameSetup({ onGameStart, activeGameCode, onResumeGame }:
           </div>
 
 
-          {/* Start Game Button */}
-          <Button
-            onClick={handleStartGame}
-            disabled={isCreating}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-8 font-bold hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 text-[30px] pt-[32px] pb-[32px]"
-          >
-            {isCreating ? (
-              "Creating Game..."
-            ) : (
-              "Start New Game!"
-            )}
-          </Button>
-        </CardContent>
-      </Card>
+      {/* Start Game Button */}
+      <Button
+        onClick={handleStartGame}
+        disabled={isCreating}
+        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-6 font-semibold rounded-2xl text-lg transition-all duration-200 shadow-sm"
+      >
+        {isCreating ? (
+          "Creating Game..."
+        ) : (
+          "Start New Game!"
+        )}
+      </Button>
     </div>
   );
 }

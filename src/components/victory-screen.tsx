@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Crown, Trophy, Share } from "lucide-react";
+import { Crown, Trophy } from "lucide-react";
 import { type Team, type ClientGameSession, staticGameService } from "@/services/static-game-service";
 import { useEffect, useState } from "react";
 
@@ -40,97 +40,55 @@ export default function VictoryScreen({ gameCode, onNewGame }: VictoryScreenProp
 
   return (
     <div className="space-y-6">
-      {/* Final Scoreboard */}
-      <Card className="border-4 border-gray-200 shadow-xl">
-        <CardContent className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Final Scoreboard</h3>
-          <div className="space-y-4">
-            {sortedTeams.map((team, index) => {
-              const colorClass = "bg-gray-50 border-gray-200";
-              const textClass = "text-gray-800";
-              const medalColor = index === 0 ? "bg-yellow-500" :
-                                index === 1 ? "bg-gray-400" :
-                                index === 2 ? "bg-orange-600" :
-                                "bg-gray-300";
+      {/* Winner Announcement */}
+      <div className="bg-white rounded-2xl p-8 text-center shadow-sm">
+        <Trophy className="text-yellow-500 w-16 h-16 mx-auto mb-4" />
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">{winningTeam.name} Wins!</h2>
+        <p className="text-gray-500 text-lg">{winningTeam.score} points</p>
+      </div>
 
-              return (
-                <div key={team.id} className={`flex items-center justify-between ${colorClass} p-4 rounded-xl border-2`}>
-                  <div className="flex items-center">
-                    <div className={`${medalColor} text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4`}>
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h4 className={`font-bold ${textClass} text-lg`}>{team.name}</h4>
-                      <p className="text-gray-600" style={{ fontSize: '0.875rem' }}>
-                        {team.correctAnswers} correct
-                      </p>
-                    </div>
+      {/* Final Scoreboard */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">Final Scores</h3>
+        <div className="space-y-3">
+          {sortedTeams.map((team, index) => {
+            const isWinner = index === 0;
+            const bgColor = isWinner ? "bg-yellow-50 border-yellow-200" : "bg-gray-50";
+
+            return (
+              <div key={team.id} className={`flex items-center justify-between ${bgColor} p-4 rounded-xl ${isWinner ? 'border' : ''}`}>
+                <div className="flex items-center gap-3">
+                  <div className={`${
+                    index === 0 ? 'bg-yellow-500' :
+                    index === 1 ? 'bg-gray-400' :
+                    index === 2 ? 'bg-orange-500' :
+                    'bg-gray-300'
+                  } text-white w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm`}>
+                    {index + 1}
                   </div>
-                  <div className="flex items-center space-x-2">
-                    {index === 0 && <Trophy className="text-yellow-600" size={24} />}
-                    <div className={`text-3xl font-bold ${textClass}`}>{team.score}</div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">{team.name}</h4>
+                    <p className="text-sm text-gray-500">
+                      {team.correctAnswers} correct answers
+                    </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-      {/* Game Stats */}
-      <Card className="border-4 border-gray-200 shadow-xl hidden">
-        <CardContent className="p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Game Summary</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-gray-50 rounded-xl">
-              <div className="text-2xl font-bold text-gray-700">{totalQuestions}</div>
-              <p className="text-gray-800 font-medium">Questions Asked</p>
-            </div>
-            <div className="text-center p-4 bg-gray-100 rounded-xl">
-              <div className="text-2xl font-bold text-gray-700">{totalCorrectAnswers}</div>
-              <p className="text-gray-800 font-medium">Correct Answers</p>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-xl">
-              <div className="text-2xl font-bold text-gray-700">{winningTeam.score}</div>
-              <p className="text-gray-800 font-medium">Winning Score</p>
-            </div>
-            <div className="text-center p-4 bg-gray-100 rounded-xl">
-              <div className="text-2xl font-bold text-gray-700">{gameSession.targetScore}</div>
-              <p className="text-gray-800 font-medium">Target Score</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+                <div className="flex items-center gap-2">
+                  {isWinner && <Trophy className="text-yellow-500" size={20} />}
+                  <div className="text-2xl font-semibold text-gray-900">{team.score}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       {/* New Game Button */}
-      <div className="flex justify-center mb-4">
-        <Button
-          onClick={onNewGame}
-          className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-8 font-bold hover:from-blue-700 hover:to-blue-900 transition-all duration-200 border-4 border-blue-400 text-[30px] pt-[32px] pb-[32px]"
-        >
-          New Game
-        </Button>
-      </div>
-      
-      {/* Share Results Button */}
-      <div className="text-center">
-        <Button 
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 px-6 font-semibold transition-all duration-200"
-          onClick={() => {
-            const shareText = `🎉 ${winningTeam.name} won our Bible Trivia Quest with ${winningTeam.score} points! Can you beat our score? 📖✨`;
-            if (navigator.share) {
-              navigator.share({
-                title: "Bible Trivia Quest Victory!",
-                text: shareText,
-              });
-            } else {
-              navigator.clipboard.writeText(shareText);
-              alert("Victory message copied to clipboard!");
-            }
-          }}
-        >
-          <Share className="mr-2" size={16} />
-          Share Results
-        </Button>
-      </div>
+      <Button
+        onClick={onNewGame}
+        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-6 font-semibold rounded-2xl text-lg transition-all duration-200 shadow-sm"
+      >
+        Start New Game
+      </Button>
     </div>
   );
 }

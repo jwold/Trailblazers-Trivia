@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Gamepad2, Check, X, SkipForward, Square, Undo2, Edit2, Eye, EyeOff, Edit } from "lucide-react";
+import { Users, Gamepad2, Check, X, Square, Undo2, Edit2, Eye, EyeOff, Edit } from "lucide-react";
 import { type Team, type TriviaQuestion, type ClientGameSession, staticGameService } from "@/services/static-game-service";
 
 interface GameInterfaceProps {
@@ -210,9 +210,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
     setTeamAnimations({});
   };
 
-  const handleSkipQuestion = () => {
-    handleNextQuestion();
-  };
 
   const selectDifficulty = (difficulty: Difficulty) => {
     setSelectedDifficulty(difficulty);
@@ -494,14 +491,6 @@ export default function GameInterface({ gameCode, onGameEnd }: GameInterfaceProp
                   >
                     <X className="mr-2" size={20} />
                     Wrong
-                  </Button>
-                  <Button
-                    onClick={handleSkipQuestion}
-                    variant="outline"
-                    size="lg"
-                  >
-                    <SkipForward className="mr-2" size={20} />
-                    Skip
                   </Button>
                 </>
               ) : (
