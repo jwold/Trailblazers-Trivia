@@ -12,7 +12,7 @@ struct GameView: View {
 
     @State private var currentScore = 0
     @State private var currentPlayer = "Persians's Turn"
-    @State private var selectedDifficulty = "Hard"
+    @State private var selectedDifficulty = 1 // 0 = Easy, 1 = Hard
     @State private var showAnswer = false
     @State private var gameEnded = false
     @State private var currentQuestion = TriviaQuestion(
@@ -30,34 +30,17 @@ struct GameView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Difficulty Toggle - matching screenshot style
+                // Difficulty Segmented Control - Stocks app style
                 VStack(spacing: 16) {
-                    HStack(spacing: 0) {
-                        Button("Easy") {
-                            selectedDifficulty = "Easy"
-                            resetGame()
-                        }
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundColor(selectedDifficulty == "Easy" ? .white : .secondary)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 44)
-                        .background(selectedDifficulty == "Easy" ? Color.black : Color.clear)
-                        
-                        Button("Hard") {
-                            selectedDifficulty = "Hard"
-                            resetGame()
-                        }
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundColor(selectedDifficulty == "Hard" ? .white : .secondary)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 44)
-                        .background(selectedDifficulty == "Hard" ? Color.black : Color.clear)
+                    Picker("Difficulty", selection: $selectedDifficulty) {
+                        Text("Easy").tag(0)
+                        Text("Hard").tag(1)
                     }
-                    .background(Color(.systemGray5))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
+                    .onChange(of: selectedDifficulty) { _ in
+                        resetGame()
+                    }
                 }
                 .padding(.top, 20)
                 .padding(.bottom, 40)
@@ -190,7 +173,7 @@ struct GameView: View {
     }
     
     private func answerCorrect() {
-        currentScore += (selectedDifficulty == "Hard" ? 2 : 1)
+        currentScore += (selectedDifficulty == 1 ? 2 : 1)
         nextQuestion()
     }
     
