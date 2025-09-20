@@ -61,7 +61,7 @@ struct GameView: View {
                     HStack {
                         Spacer()
                         Text(currentQuestion.question)
-                            .font(.title)
+                            .font(.largeTitle)
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
@@ -71,26 +71,40 @@ struct GameView: View {
                     
                     // Answer Display (when shown)
                     if showAnswer {
-                        VStack(alignment: .center, spacing: 8) {
-                            HStack {
-                                Spacer()
-                                Text(currentQuestion.answer)
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.primary)
-                                Spacer()
-                            }
+                        VStack(spacing: 16) {
+                            Text(currentQuestion.answer)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.center)
 
                             if !currentQuestion.reference.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    Text(currentQuestion.reference)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
+                                Divider()
+                                    .frame(maxWidth: 60)
+
+                                Text(currentQuestion.reference)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
                             }
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 24)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .strokeBorder(
+                                    LinearGradient(
+                                        colors: [.white.opacity(0.3), .white.opacity(0.1)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 1
+                                )
+                        )
+                        .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
+                        .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
                         .padding(.horizontal, 20)
                     }
                 }
@@ -98,43 +112,102 @@ struct GameView: View {
                 Spacer()
                 
                 // Bottom Buttons Section
-                VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     if !showAnswer {
-                        Button("Show answer") {
+                        Button {
                             showAnswer = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "eye.fill")
+                                    .font(.headline)
+                                Text("Show Answer")
+                                    .fontWeight(.semibold)
+                            }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 28))
+                            .shadow(color: .blue.opacity(0.25), radius: 8, x: 0, y: 4)
                         }
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(Color.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 28))
                         .padding(.horizontal, 20)
                     } else {
                         // Action Buttons
-                        VStack(spacing: 20) {
-                            Button("Correct") {
+                        VStack(spacing: 16) {
+                            Button {
                                 answerCorrect()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.headline)
+                                    Text("Correct")
+                                        .fontWeight(.semibold)
+                                }
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.green, Color.green.opacity(0.8)]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 28))
+                                .shadow(color: .green.opacity(0.25), radius: 8, x: 0, y: 4)
                             }
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
                             
-                            Button("Wrong") {
+                            Button {
                                 answerWrong()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .font(.headline)
+                                    Text("Wrong")
+                                        .fontWeight(.semibold)
+                                }
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.red, Color.red.opacity(0.8)]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 28))
+                                .shadow(color: .red.opacity(0.25), radius: 8, x: 0, y: 4)
                             }
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(Color.red)
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
+                            
+                            Button {
+                                showAnswer = false
+                            } label: {
+                                HStack {
+                                    Image(systemName: "eye.slash.fill")
+                                        .font(.subheadline)
+                                    Text("Hide Answer")
+                                        .fontWeight(.medium)
+                                }
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 25))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .strokeBorder(.quaternary, lineWidth: 1)
+                                )
+                            }
                         }
                         .padding(.horizontal, 20)
                     }
