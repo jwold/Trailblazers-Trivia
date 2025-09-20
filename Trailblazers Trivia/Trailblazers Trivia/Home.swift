@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum Routes {
+    case game
+    case results
+}
+
 struct TriviaCategory {
     let id = UUID()
     let name: String
@@ -23,82 +28,62 @@ struct Home: View {
         TriviaCategory(name: "World History", icon: "globe", isAvailable: false),
         TriviaCategory(name: "Geography", icon: "location", isAvailable: false)
     ]
-    
+    @State private var path: [Routes] = []
+
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.white
-                    .ignoresSafeArea()
-                
+        NavigationStack(path: $path) {
+            VStack(spacing: 0) {
                 VStack(spacing: 0) {
-                    // Title
-                    HStack {
-                        Text("Trailblazers Trivia")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Spacer()
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
-                    
-                    // Category List
-                    VStack(spacing: 0) {
-                        ForEach(categories.indices, id: \.self) { index in
-                            CategoryCard(
-                                category: categories[index],
-                                isSelected: selectedCategory == categories[index].name
-                            ) {
-                                if categories[index].isAvailable {
-                                    selectCategory(categories[index].name)
-                                }
-                            }
-                            
-                            if index < categories.count - 1 {
-                                Divider()
+                    ForEach(categories.indices, id: \.self) { index in
+                        CategoryCard(
+                            category: categories[index],
+                            isSelected: selectedCategory == categories[index].name
+                        ) {
+                            if categories[index].isAvailable {
+                                selectCategory(categories[index].name)
                             }
                         }
+                        
+                        if index < categories.count - 1 {
+                            Divider()
+                        }
                     }
-                    .background(Color(.systemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
-                    .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
-                    .padding(.horizontal, 20)
-                    
-                    Spacer()
-                    
-                    // Start Game Button
-                    Button(action: startNewGame) {
-                        Text("Start New Game")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.blue)
-                            )
-                    }
-                    .disabled(selectedCategory == nil)
-                    .opacity(selectedCategory == nil ? 0.6 : 1.0)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
                 }
-            }
+                .background(Color(.systemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+                
+                Spacer()
+                
+                NavigationLink(value: Routes.game) {
+                    Text("Start New Game")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.blue)
+                        )
+                }
+            }.navigationTitle("Trailblazers Trivia")
+                .padding(.bottom, 40)
+                .padding(.horizontal, 20)
+                .navigationDestination(for: Routes.self) { route in
+                    switch route {
+                    case .game:
+                        GameView(path: $path, selectedCategory: "Bible")
+                    case .results:
+                        Results(path: $path)
+                    }
+                }
         }
     }
     
     private func selectCategory(_ categoryName: String) {
         selectedCategory = categoryName
-    }
-    
-    private func startNewGame() {
-        // Implement game start logic here
-        if let category = selectedCategory {
-            print("Starting new game with category: \(category)")
-        }
     }
 }
 

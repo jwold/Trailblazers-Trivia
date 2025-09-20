@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct Results: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @Binding var path: [Routes]
 
-#Preview {
-    Results()
+    var body: some View {
+            VStack(spacing: 20) {
+                Text("Quiz Results")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                // Your results content here
+                Text("Great job on completing the trivia!")
+                    .font(.title2)
+                
+                // Navigation buttons
+                VStack(spacing: 16) {
+                    Button(action: {
+                        path.removeLast(path.count)
+                    }) {
+                        Text("Play Again")
+                            .buttonStyle(.borderedProminent)
+                    }
+                }
+            }
+            .padding()
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+    }
 }
