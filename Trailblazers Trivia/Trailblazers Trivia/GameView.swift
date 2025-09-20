@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct GameView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Binding var path: [Routes]
+
     @State private var currentScore = 0
     @State private var currentPlayer = "Rechabites's Turn"
     @State private var selectedDifficulty = "Easy"
@@ -104,16 +105,16 @@ struct GameView: View {
                             }
                             
                             HStack {
-                                Button("End") {
-                                    dismiss()
+                                NavigationLink(value: Routes.results) {
+                                    Text("End")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.red)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 50)
+                                        .background(Color(.systemGray6))
+                                        .clipShape(RoundedRectangle(cornerRadius: 25))
                                 }
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .foregroundColor(.red)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                .background(Color(.systemGray6))
-                                .clipShape(RoundedRectangle(cornerRadius: 25))
                                 Spacer()
                             }
                         }
@@ -173,16 +174,8 @@ struct GameView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("End") {
-                    dismiss()
-                }
-                .foregroundColor(.blue)
-                .font(.headline)
-            }
-        }
     }
+    
     
     // MARK: - Helper Functions
     private func resetGame() {
@@ -232,13 +225,13 @@ struct GameView: View {
     }
 }
 
+struct ResultsScreenData: Hashable {
+    
+}
+
 // MARK: - Supporting Types
 struct TriviaQuestion {
     let question: String
     let answer: String
     let reference: String
-}
-
-#Preview {
-    GameView(selectedCategory: "Bible")
 }
