@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum Routes {
-    case game
-    case results
-}
-
 struct TriviaCategory {
     let id = UUID()
     let name: String
@@ -19,7 +14,9 @@ struct TriviaCategory {
     let isAvailable: Bool
 }
 
-struct Home: View {
+struct StartScreen: View {
+    @State private var path: [Routes] = []
+
     @State private var selectedCategory: String? = "Bible"
     @State private var categories = [
         TriviaCategory(name: "Bible", icon: "book.closed", isAvailable: true),
@@ -28,7 +25,6 @@ struct Home: View {
         TriviaCategory(name: "World History", icon: "globe", isAvailable: false),
         TriviaCategory(name: "Geography", icon: "location", isAvailable: false)
     ]
-    @State private var path: [Routes] = []
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -38,11 +34,7 @@ struct Home: View {
                         CategoryCard(
                             category: categories[index],
                             isSelected: selectedCategory == categories[index].name
-                        ) {
-                            if categories[index].isAvailable {
-                                selectCategory(categories[index].name)
-                            }
-                        }
+                        )
                         
                         if index < categories.count - 1 {
                             Divider()
@@ -68,32 +60,29 @@ struct Home: View {
                                 .fill(Color.blue)
                         )
                 }
-            }.navigationTitle("Trailblazers Trivia")
-                .padding(.bottom, 40)
-                .padding(.horizontal, 20)
-                .navigationDestination(for: Routes.self) { route in
-                    switch route {
-                    case .game:
-                        GameView(path: $path, selectedCategory: "Bible")
-                    case .results:
-                        Results(path: $path)
-                    }
+            }
+            .navigationTitle("Trailblazers Trivia")
+            .padding(.bottom, 40)
+            .padding(.horizontal, 20)
+            .navigationDestination(for: Routes.self) { route in
+                switch route {
+                case .game:
+                    GameScreen(path: $path)
+                case .results:
+                    EndScreen(path: $path)
                 }
+            }
+
         }
-    }
-    
-    private func selectCategory(_ categoryName: String) {
-        selectedCategory = categoryName
     }
 }
 
 struct CategoryCard: View {
     let category: TriviaCategory
     let isSelected: Bool
-    let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {}) {
             HStack(spacing: 16) {
                 // Icon with dark background for selected, light for others
                 ZStack {
@@ -146,5 +135,5 @@ struct CategoryCard: View {
 }
 
 #Preview {
-    Home()
+    StartScreen()
 }

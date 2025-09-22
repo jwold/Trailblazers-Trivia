@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameView: View {
+struct GameScreen: View {
     @Binding var path: [Routes]
 
     @State private var currentScore = 0
@@ -21,7 +21,7 @@ struct GameView: View {
         reference: "Matthew 10:1-4"
     )
     
-    let selectedCategory: String
+    let selectedCategory: String = "Bible"
     
     var body: some View {
         ZStack {

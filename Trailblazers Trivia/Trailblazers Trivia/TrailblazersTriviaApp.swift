@@ -8,10 +8,15 @@
 import SwiftUI
 
 @main
-struct Trailblazers_TriviaApp: App {
+struct TrailblazersTriviaApp: App {
     var body: some Scene {
         WindowGroup {
-            Home()
+            StartScreen()
         }
     }
+}
+
+enum Routes {
+    case game
+    case results
 }

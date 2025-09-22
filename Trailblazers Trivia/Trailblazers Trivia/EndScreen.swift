@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Results: View {
+struct EndScreen: View {
     @Binding var path: [Routes]
 
     var body: some View {
