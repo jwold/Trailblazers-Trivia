@@ -25,16 +25,11 @@ struct Question {
 
 struct Turn {
     let player: Player
-    let easyQuestion: Question
-    let hardQuestion: Question
-    var selectedDifficulty: Difficulty = .hard
+    let difficulty: Difficulty
+    let question: Question
     var isAnswered: Bool = false
     var wasCorrect: Bool = false
     let timestamp: Date
-    
-    var currentQuestion: Question {
-        selectedDifficulty == .easy ? easyQuestion : hardQuestion
-    }
 }
 
 struct AnsweredQuestion {
@@ -87,8 +82,11 @@ class GameViewModel {
         currentPlayerIndex == 0 ? player1 : player2
     }
     
+    var firstPlayer: Player { player1 }
+    var secondPlayer: Player { player2 }
+    
     var currentQuestion: Question {
-        currentTurn?.currentQuestion ?? easyQuestions[0]
+        currentTurn?.question ?? easyQuestions[0]
     }
     
     // Computed property for scores
@@ -110,6 +108,21 @@ class GameViewModel {
     
     var currentPlayerScore: Int {
         currentPlayerIndex == 0 ? player1Score : player2Score
+    }
+    
+    var gameWinner: String? {
+        if player1Score >= 10 && player2Score >= 10 {
+            return player1Score > player2Score ? player1.name : (player2Score > player1Score ? player2.name : nil)
+        } else if player1Score >= 10 {
+            return player1.name
+        } else if player2Score >= 10 {
+            return player2.name
+        }
+        return nil
+    }
+    
+    var shouldEndGame: Bool {
+        player1Score >= 10 || player2Score >= 10
     }
     
     init(player1Name: String = "Player 1", player2Name: String = "Player 2") {
@@ -145,29 +158,24 @@ class GameViewModel {
     }
     
     func startNewTurn() {
-        let easyQuestion = getQuestion(for: .easy)
-        let hardQuestion = getQuestion(for: .hard)
-        
+        let question = getQuestion(for: selectedDifficulty)
         currentTurn = Turn(
             player: currentPlayer,
-            easyQuestion: easyQuestion,
-            hardQuestion: hardQuestion,
-            selectedDifficulty: selectedDifficulty,
+            difficulty: selectedDifficulty,
+            question: question,
             timestamp: Date()
         )
     }
     
     func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) {
         selectedDifficulty = newDifficulty
-        // Only update the current turn's selected difficulty if it hasn't been answered yet
+        // Only update the current turn if it hasn't been answered yet
         if let turn = currentTurn, !turn.isAnswered {
+            let newQuestion = getQuestion(for: newDifficulty)
             currentTurn = Turn(
                 player: turn.player,
-                easyQuestion: turn.easyQuestion,
-                hardQuestion: turn.hardQuestion,
-                selectedDifficulty: newDifficulty,
-                isAnswered: turn.isAnswered,
-                wasCorrect: turn.wasCorrect,
+                difficulty: newDifficulty,
+                question: newQuestion,
                 timestamp: turn.timestamp
             )
         }
@@ -196,7 +204,7 @@ class GameViewModel {
         
         let answeredQuestion = AnsweredQuestion(
             player: turn.player,
-            question: turn.currentQuestion, // Use the question they actually answered
+            question: turn.question,
             wasCorrect: wasCorrect,
             timestamp: Date()
         )
@@ -205,9 +213,8 @@ class GameViewModel {
         // Mark current turn as answered
         currentTurn = Turn(
             player: turn.player,
-            easyQuestion: turn.easyQuestion,
-            hardQuestion: turn.hardQuestion,
-            selectedDifficulty: turn.selectedDifficulty,
+            difficulty: turn.difficulty,
+            question: turn.question,
             isAnswered: true,
             wasCorrect: wasCorrect,
             timestamp: turn.timestamp
@@ -217,15 +224,15 @@ class GameViewModel {
     }
     
     private func nextTurn() {
+        // Check if game should end (when a player reaches 10 points)
+        if shouldEndGame {
+            gameEnded = true
+            return
+        }
+        
         // Switch to next player
         currentPlayerIndex = (currentPlayerIndex + 1) % 2
-        
-        // Check if game should end (example: 10 total questions)
-        if answeredQuestions.count >= 10 {
-            gameEnded = true
-        } else {
-            startNewTurn()
-        }
+        startNewTurn()
     }
     
     func resetGame() {

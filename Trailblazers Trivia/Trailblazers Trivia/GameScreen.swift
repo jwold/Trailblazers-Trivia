@@ -195,6 +195,17 @@ struct GameScreen: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onChange(of: gameViewModel.gameEnded) { _, gameEnded in
+            if gameEnded {
+                path.append(Routes.results(
+                    player1Name: gameViewModel.firstPlayer.name,
+                    player1Score: gameViewModel.player1Score,
+                    player2Name: gameViewModel.secondPlayer.name,
+                    player2Score: gameViewModel.player2Score,
+                    winner: gameViewModel.gameWinner
+                ))
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Back") {
@@ -205,7 +216,13 @@ struct GameScreen: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(value: Routes.results) {
+                NavigationLink(value: Routes.results(
+                    player1Name: gameViewModel.firstPlayer.name,
+                    player1Score: gameViewModel.player1Score,
+                    player2Name: gameViewModel.secondPlayer.name,
+                    player2Score: gameViewModel.player2Score,
+                    winner: gameViewModel.gameWinner
+                )) {
                     Text("End")
                         .foregroundColor(.blue)
                         .font(.headline)
