@@ -15,10 +15,10 @@ struct GameScreen: View {
     @State private var selectedDifficulty = 1 // 0 = Easy, 1 = Hard
     @State private var showAnswer = false
     @State private var gameEnded = false
-    @State private var currentQuestion = TriviaQuestion(
+    @State private var currentQuestion = Question(
         question: "How many close disciples did Jesus have?",
         answer: "12",
-        reference: "Matthew 10:1-4"
+        difficulty: .easy
     )
     
     let selectedCategory: String = "Bible"
@@ -77,16 +77,6 @@ struct GameScreen: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)
                                 .multilineTextAlignment(.center)
-
-                            if !currentQuestion.reference.isEmpty {
-                                Divider()
-                                    .frame(maxWidth: 60)
-
-                                Text(currentQuestion.reference)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
-                            }
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 24)
@@ -261,37 +251,42 @@ struct GameScreen: View {
             gameEnded = true
         } else {
             let questions = [
-                TriviaQuestion(question: "How many close disciples did Jesus have?", answer: "12", reference: "Matthew 10:1-4"),
-                TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
-                TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-                TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
-                TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
+                Question(question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
+                Question(question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
+                Question(question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
+                Question(question: "Who led the Israelites out of Egypt?", answer: "Moses", difficulty: .easy),
+                Question(question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard)
             ]
             currentQuestion = questions.randomElement() ?? questions[0]
         }
     }
     
-    private func getNextQuestion() -> TriviaQuestion {
+    private func getNextQuestion() -> Question {
         let questions = [
-            TriviaQuestion(question: "How many close disciples did Jesus have?", answer: "12", reference: "Matthew 10:1-4"),
-            TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
-            TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
-            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
+            Question(question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
+            Question(question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
+            Question(question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
+            Question(question: "Who led the Israelites out of Egypt?", answer: "Moses", difficulty: .easy),
+            Question(question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard)
         ]
         return questions.randomElement() ?? questions[0]
     }
 }
 
-struct ResultsScreenData: Hashable {
-    
+struct Player {
+    let id: String
+    let name: String
 }
 
-// MARK: - Supporting Types
-struct TriviaQuestion {
+enum Difficulty {
+    case easy
+    case hard
+}
+
+struct Question {
     let question: String
     let answer: String
-    let reference: String
+    let difficulty: Difficulty
 }
 
 #Preview {
