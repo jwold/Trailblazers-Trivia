@@ -12,8 +12,6 @@ struct GameScreen: View {
     @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Player 2")
     @State private var selectedDifficulty: Difficulty = .hard
     
-    let selectedCategory: String = "Bible"
-    
     var body: some View {
         ZStack {
             // Clean background
