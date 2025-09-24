@@ -7,21 +7,9 @@
 
 import SwiftUI
 
-struct GameView: View {
+struct GameScreen: View {
     @Binding var path: [Routes]
-
-    @State private var currentScore = 0
-    @State private var currentPlayer = "Persians's Turn"
-    @State private var selectedDifficulty = 1 // 0 = Easy, 1 = Hard
-    @State private var showAnswer = false
-    @State private var gameEnded = false
-    @State private var currentQuestion = TriviaQuestion(
-        question: "How many close disciples did Jesus have?",
-        answer: "12",
-        reference: "Matthew 10:1-4"
-    )
-    
-    let selectedCategory: String
+    @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Player 2")
     
     var body: some View {
         ZStack {
@@ -32,14 +20,14 @@ struct GameView: View {
             VStack(spacing: 0) {
                 // Difficulty Segmented Control - Stocks app style
                 VStack(spacing: 16) {
-                    Picker("Difficulty", selection: $selectedDifficulty) {
-                        Text("Easy").tag(0)
-                        Text("Hard").tag(1)
+                    Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
+                        Text("Easy").tag(Difficulty.easy)
+                        Text("Hard").tag(Difficulty.hard)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
-                    .onChange(of: selectedDifficulty) { _ in
-                        resetGame()
+                    .onChange(of: gameViewModel.selectedDifficulty) {
+                        gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
                     }
                 }
                 .padding(.top, 20)
@@ -50,7 +38,7 @@ struct GameView: View {
                     // Player info above question
                     HStack {
                         Spacer()
-                        Text("\(currentPlayer) • \(currentScore) Points")
+                        Text("\(gameViewModel.currentPlayer.name)'s Turn • \(gameViewModel.currentPlayerScore) Points")
                             .font(.headline)
                             .foregroundColor(.primary)
                         Spacer()
@@ -60,7 +48,7 @@ struct GameView: View {
                     // Question Text - larger and centered
                     HStack {
                         Spacer()
-                        Text(currentQuestion.question)
+                        Text(gameViewModel.currentQuestion.question)
                             .font(.largeTitle)
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
@@ -70,23 +58,13 @@ struct GameView: View {
                     .padding(.horizontal, 20)
                     
                     // Answer Display (when shown)
-                    if showAnswer {
+                    if gameViewModel.showAnswer {
                         VStack(spacing: 16) {
-                            Text(currentQuestion.answer)
+                            Text(gameViewModel.currentQuestion.answer)
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)
                                 .multilineTextAlignment(.center)
-
-                            if !currentQuestion.reference.isEmpty {
-                                Divider()
-                                    .frame(maxWidth: 60)
-
-                                Text(currentQuestion.reference)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
-                            }
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 24)
@@ -113,9 +91,9 @@ struct GameView: View {
                 
                 // Bottom Buttons Section
                 VStack(spacing: 16) {
-                    if !showAnswer {
+                    if !gameViewModel.showAnswer {
                         Button {
-                            showAnswer = true
+                            gameViewModel.showAnswerToggle()
                         } label: {
                             HStack {
                                 Image(systemName: "eye.fill")
@@ -142,7 +120,7 @@ struct GameView: View {
                         // Action Buttons
                         VStack(spacing: 16) {
                             Button {
-                                answerCorrect()
+                                gameViewModel.answerCorrect()
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
@@ -166,7 +144,7 @@ struct GameView: View {
                             }
                             
                             Button {
-                                answerWrong()
+                                gameViewModel.answerWrong()
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
@@ -190,7 +168,7 @@ struct GameView: View {
                             }
                             
                             Button {
-                                showAnswer = false
+                                gameViewModel.showAnswerToggle()
                             } label: {
                                 HStack {
                                     Image(systemName: "eye.slash.fill")
@@ -217,6 +195,17 @@ struct GameView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onChange(of: gameViewModel.gameEnded) { _, gameEnded in
+            if gameEnded {
+                path.append(Routes.results(
+                    player1Name: gameViewModel.firstPlayer.name,
+                    player1Score: gameViewModel.player1Score,
+                    player2Name: gameViewModel.secondPlayer.name,
+                    player2Score: gameViewModel.player2Score,
+                    winner: gameViewModel.gameWinner
+                ))
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Back") {
@@ -227,7 +216,13 @@ struct GameView: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(value: Routes.results) {
+                NavigationLink(value: Routes.results(
+                    player1Name: gameViewModel.firstPlayer.name,
+                    player1Score: gameViewModel.player1Score,
+                    player2Name: gameViewModel.secondPlayer.name,
+                    player2Score: gameViewModel.player2Score,
+                    winner: gameViewModel.gameWinner
+                )) {
                     Text("End")
                         .foregroundColor(.blue)
                         .font(.headline)
@@ -235,61 +230,8 @@ struct GameView: View {
             }
         }
     }
-    
-    
-    // MARK: - Helper Functions
-    private func resetGame() {
-        currentScore = 0
-        showAnswer = false
-        gameEnded = false
-        currentQuestion = getNextQuestion()
-    }
-    
-    private func answerCorrect() {
-        currentScore += (selectedDifficulty == 1 ? 2 : 1)
-        nextQuestion()
-    }
-    
-    private func answerWrong() {
-        nextQuestion()
-    }
-    
-    private func nextQuestion() {
-        showAnswer = false
-        // Simple logic to cycle through questions or end game
-        if currentScore >= 10 {
-            gameEnded = true
-        } else {
-            let questions = [
-                TriviaQuestion(question: "How many close disciples did Jesus have?", answer: "12", reference: "Matthew 10:1-4"),
-                TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
-                TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-                TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
-                TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
-            ]
-            currentQuestion = questions.randomElement() ?? questions[0]
-        }
-    }
-    
-    private func getNextQuestion() -> TriviaQuestion {
-        let questions = [
-            TriviaQuestion(question: "How many close disciples did Jesus have?", answer: "12", reference: "Matthew 10:1-4"),
-            TriviaQuestion(question: "In what city was Jesus born?", answer: "Bethlehem", reference: "Matthew 2:1"),
-            TriviaQuestion(question: "How many days did it rain during the flood?", answer: "40 days", reference: "Genesis 7:12"),
-            TriviaQuestion(question: "Who led the Israelites out of Egypt?", answer: "Moses", reference: "Exodus 12:51"),
-            TriviaQuestion(question: "Who was the first king of Israel?", answer: "Saul", reference: "1 Samuel 10:1")
-        ]
-        return questions.randomElement() ?? questions[0]
-    }
 }
 
-struct ResultsScreenData: Hashable {
-    
-}
-
-// MARK: - Supporting Types
-struct TriviaQuestion {
-    let question: String
-    let answer: String
-    let reference: String
+#Preview {
+    GameScreen(path: .constant([]))
 }
