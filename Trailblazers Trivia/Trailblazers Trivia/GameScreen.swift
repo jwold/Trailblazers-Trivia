@@ -293,3 +293,7 @@ struct TriviaQuestion {
     let answer: String
     let reference: String
 }
+
+#Preview {
+    GameScreen(path: .constant([]))
+}

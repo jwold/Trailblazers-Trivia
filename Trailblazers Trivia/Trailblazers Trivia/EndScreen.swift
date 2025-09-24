@@ -35,3 +35,7 @@ struct EndScreen: View {
             .navigationBarBackButtonHidden(true)
     }
 }
+
+#Preview {
+    EndScreen(path: .constant([]))
+}
