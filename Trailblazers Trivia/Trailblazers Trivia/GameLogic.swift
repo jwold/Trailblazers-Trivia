@@ -23,6 +23,20 @@ struct Question {
     let difficulty: Difficulty
 }
 
+struct Turn {
+    let player: Player
+    let easyQuestion: Question
+    let hardQuestion: Question
+    var selectedDifficulty: Difficulty = .hard
+    var isAnswered: Bool = false
+    var wasCorrect: Bool = false
+    let timestamp: Date
+    
+    var currentQuestion: Question {
+        selectedDifficulty == .easy ? easyQuestion : hardQuestion
+    }
+}
+
 struct AnsweredQuestion {
     let player: Player
     let question: Question
@@ -37,9 +51,9 @@ class GameViewModel {
     private var currentPlayerIndex = 0
     
     var answeredQuestions: [AnsweredQuestion] = []
+    var currentTurn: Turn?
     var showAnswer = false
     var gameEnded = false
-    var currentQuestion: Question
     var selectedDifficulty: Difficulty = .hard
     
     // Easy questions pool
@@ -73,6 +87,10 @@ class GameViewModel {
         currentPlayerIndex == 0 ? player1 : player2
     }
     
+    var currentQuestion: Question {
+        currentTurn?.currentQuestion ?? easyQuestions[0]
+    }
+    
     // Computed property for scores
     var player1Score: Int {
         answeredQuestions
@@ -97,7 +115,7 @@ class GameViewModel {
     init(player1Name: String = "Player 1", player2Name: String = "Player 2") {
         self.player1 = Player(id: UUID().uuidString, name: player1Name)
         self.player2 = Player(id: UUID().uuidString, name: player2Name)
-        self.currentQuestion = easyQuestions[0] // Start with first easy question
+        startNewTurn()
     }
     
     func getNextEasyQuestion() -> Question? {
@@ -126,26 +144,41 @@ class GameViewModel {
         return hardQuestions[randomIndex]
     }
     
-    func setNextQuestion(difficulty: Difficulty) {
-        if difficulty == .easy {
-            if let nextQuestion = getNextEasyQuestion() {
-                currentQuestion = nextQuestion
-            }
-        } else {
-            if let nextQuestion = getNextHardQuestion() {
-                currentQuestion = nextQuestion
-            }
+    func startNewTurn() {
+        let easyQuestion = getQuestion(for: .easy)
+        let hardQuestion = getQuestion(for: .hard)
+        
+        currentTurn = Turn(
+            player: currentPlayer,
+            easyQuestion: easyQuestion,
+            hardQuestion: hardQuestion,
+            selectedDifficulty: selectedDifficulty,
+            timestamp: Date()
+        )
+    }
+    
+    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) {
+        selectedDifficulty = newDifficulty
+        // Only update the current turn's selected difficulty if it hasn't been answered yet
+        if let turn = currentTurn, !turn.isAnswered {
+            currentTurn = Turn(
+                player: turn.player,
+                easyQuestion: turn.easyQuestion,
+                hardQuestion: turn.hardQuestion,
+                selectedDifficulty: newDifficulty,
+                isAnswered: turn.isAnswered,
+                wasCorrect: turn.wasCorrect,
+                timestamp: turn.timestamp
+            )
         }
     }
     
-    func setNextQuestion() {
-        setNextQuestion(difficulty: selectedDifficulty)
-    }
-    
-    func changeDifficulty(to newDifficulty: Difficulty) {
-        selectedDifficulty = newDifficulty
-        resetGame()
-        setNextQuestion()
+    private func getQuestion(for difficulty: Difficulty) -> Question {
+        if difficulty == .easy {
+            return getNextEasyQuestion() ?? easyQuestions[0]
+        } else {
+            return getNextHardQuestion() ?? hardQuestions[0]
+        }
     }
     
     func answerCorrect() {
@@ -159,13 +192,27 @@ class GameViewModel {
     }
     
     private func recordAnswer(wasCorrect: Bool) {
+        guard let turn = currentTurn else { return }
+        
         let answeredQuestion = AnsweredQuestion(
-            player: currentPlayer,
-            question: currentQuestion,
+            player: turn.player,
+            question: turn.currentQuestion, // Use the question they actually answered
             wasCorrect: wasCorrect,
             timestamp: Date()
         )
         answeredQuestions.append(answeredQuestion)
+        
+        // Mark current turn as answered
+        currentTurn = Turn(
+            player: turn.player,
+            easyQuestion: turn.easyQuestion,
+            hardQuestion: turn.hardQuestion,
+            selectedDifficulty: turn.selectedDifficulty,
+            isAnswered: true,
+            wasCorrect: wasCorrect,
+            timestamp: turn.timestamp
+        )
+        
         showAnswer = false
     }
     
@@ -176,6 +223,8 @@ class GameViewModel {
         // Check if game should end (example: 10 total questions)
         if answeredQuestions.count >= 10 {
             gameEnded = true
+        } else {
+            startNewTurn()
         }
     }
     
@@ -186,7 +235,7 @@ class GameViewModel {
         currentPlayerIndex = 0
         showAnswer = false
         gameEnded = false
-        currentQuestion = easyQuestions[0]
+        startNewTurn()
     }
     
     func showAnswerToggle() {

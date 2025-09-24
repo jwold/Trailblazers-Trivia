@@ -27,7 +27,7 @@ struct GameScreen: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
                     .onChange(of: gameViewModel.selectedDifficulty) {
-                        gameViewModel.changeDifficulty(to: gameViewModel.selectedDifficulty)
+                        gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
                     }
                 }
                 .padding(.top, 20)
@@ -121,7 +121,6 @@ struct GameScreen: View {
                         VStack(spacing: 16) {
                             Button {
                                 gameViewModel.answerCorrect()
-                                gameViewModel.setNextQuestion()
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
@@ -146,7 +145,6 @@ struct GameScreen: View {
                             
                             Button {
                                 gameViewModel.answerWrong()
-                                gameViewModel.setNextQuestion()
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
