@@ -10,7 +10,6 @@ import SwiftUI
 struct GameScreen: View {
     @Binding var path: [Routes]
     @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Player 2")
-    @State private var selectedDifficulty: Difficulty = .hard
     
     var body: some View {
         ZStack {
@@ -21,15 +20,14 @@ struct GameScreen: View {
             VStack(spacing: 0) {
                 // Difficulty Segmented Control - Stocks app style
                 VStack(spacing: 16) {
-                    Picker("Difficulty", selection: $selectedDifficulty) {
+                    Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
                         Text("Easy").tag(Difficulty.easy)
                         Text("Hard").tag(Difficulty.hard)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
-                    .onChange(of: selectedDifficulty) {
-                        gameViewModel.resetGame()
-                        gameViewModel.setNextQuestion(difficulty: selectedDifficulty)
+                    .onChange(of: gameViewModel.selectedDifficulty) {
+                        gameViewModel.changeDifficulty(to: gameViewModel.selectedDifficulty)
                     }
                 }
                 .padding(.top, 20)
@@ -123,7 +121,7 @@ struct GameScreen: View {
                         VStack(spacing: 16) {
                             Button {
                                 gameViewModel.answerCorrect()
-                                gameViewModel.setNextQuestion(difficulty: selectedDifficulty)
+                                gameViewModel.setNextQuestion()
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
@@ -148,7 +146,7 @@ struct GameScreen: View {
                             
                             Button {
                                 gameViewModel.answerWrong()
-                                gameViewModel.setNextQuestion(difficulty: selectedDifficulty)
+                                gameViewModel.setNextQuestion()
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")

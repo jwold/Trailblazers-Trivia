@@ -40,6 +40,7 @@ class GameViewModel {
     var showAnswer = false
     var gameEnded = false
     var currentQuestion: Question
+    var selectedDifficulty: Difficulty = .hard
     
     // Easy questions pool
     private let easyQuestions = [
@@ -135,6 +136,16 @@ class GameViewModel {
                 currentQuestion = nextQuestion
             }
         }
+    }
+    
+    func setNextQuestion() {
+        setNextQuestion(difficulty: selectedDifficulty)
+    }
+    
+    func changeDifficulty(to newDifficulty: Difficulty) {
+        selectedDifficulty = newDifficulty
+        resetGame()
+        setNextQuestion()
     }
     
     func answerCorrect() {
