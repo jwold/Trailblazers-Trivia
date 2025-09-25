@@ -39,34 +39,41 @@ class GameViewModel {
     
     // Export all player scores for use in views
     func getAllPlayerScores() -> [PlayerScore] {
-        let winner = gameWinner
-        return players.map { player in
+        // First, get all player scores with isWinner hardcoded to false
+        var playerScores = players.map { player in
             PlayerScore(
                 name: player.name,
                 score: getPlayerScore(for: player),
-                isWinner: player.name == winner
+                isWinner: false
             )
         }
+        
+        // Find players with winning score (>= 10 points)
+        let playersWithWinningScore = playerScores.filter { $0.score >= 10 }
+        
+        guard !playersWithWinningScore.isEmpty else { return playerScores }
+        
+        // Find the maximum score among winning players
+        let maxScore = playersWithWinningScore.map { $0.score }.max() ?? 0
+        let winners = playersWithWinningScore.filter { $0.score == maxScore }
+        
+        // Only mark as winner if there's a clear winner (no tie)
+        if winners.count == 1, let winnerName = winners.first?.name {
+            // Update the playerScores array to mark the winner
+            playerScores = playerScores.map { playerScore in
+                PlayerScore(
+                    name: playerScore.name,
+                    score: playerScore.score,
+                    isWinner: playerScore.name == winnerName
+                )
+            }
+        }
+        
+        return playerScores
     }
     
     var currentPlayerScore: Int {
         getPlayerScore(for: currentPlayer)
-    }
-    
-    var gameWinner: String? {
-        let playerScores = players.map { player in
-            (player: player, score: getPlayerScore(for: player))
-        }
-        
-        let playersWithWinningScore = playerScores.filter { $0.score >= 10 }
-        
-        guard !playersWithWinningScore.isEmpty else { return nil }
-        
-        let maxScore = playersWithWinningScore.map { $0.score }.max() ?? 0
-        let winners = playersWithWinningScore.filter { $0.score == maxScore }
-        
-        // Return winner only if there's a clear winner (no tie)
-        return winners.count == 1 ? winners.first?.player.name : nil
     }
     
     var shouldEndGame: Bool {
