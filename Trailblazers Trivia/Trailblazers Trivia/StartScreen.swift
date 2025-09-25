@@ -68,8 +68,8 @@ struct StartScreen: View {
                 switch route {
                 case .game:
                     GameScreen(path: $path)
-                case .results(let player1Name, let player1Score, let player2Name, let player2Score, let winner):
-                    EndScreen(path: $path, player1Name: player1Name, player1Score: player1Score, player2Name: player2Name, player2Score: player2Score, winner: winner)
+                case .results(let playerScores):
+                    EndScreen(path: $path, playerScores: playerScores)
                 }
             }
 

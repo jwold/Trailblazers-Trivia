@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EndScreen: View {
     @Binding var path: [Routes]
-    let player1Name: String
-    let player1Score: Int
-    let player2Name: String
-    let player2Score: Int
-    let winner: String?
+    let playerScores: [PlayerScore]
+    
+    var winner: String? {
+        playerScores.first(where: { $0.isWinner })?.name
+    }
 
     var body: some View {
         VStack(spacing: 30) {
@@ -43,43 +43,40 @@ struct EndScreen: View {
                     .fontWeight(.semibold)
                 
                 VStack(spacing: 16) {
-                    // Player 1 Score
-                    HStack {
-                        Text(player1Name)
-                            .font(.headline)
-                            .fontWeight(.medium)
-                        Spacer()
-                        Text("\(player1Score) points")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(player1Score >= 10 ? .green : .primary)
+                    ForEach(playerScores, id: \.name) { playerScore in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    Text(playerScore.name)
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                    
+                                    if playerScore.isWinner {
+                                        Text("🎉 WINNER")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.green)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 2)
+                                            .background(.green.opacity(0.1))
+                                            .clipShape(Capsule())
+                                    }
+                                }
+                            }
+                            Spacer()
+                            Text("\(playerScore.score) points")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(playerScore.score >= 10 ? .green : .primary)
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 16)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .strokeBorder(playerScore.isWinner ? .green : .clear, lineWidth: 2)
+                        )
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 16)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(player1Name == winner ? .green : .clear, lineWidth: 2)
-                    )
-                    
-                    // Player 2 Score
-                    HStack {
-                        Text(player2Name)
-                            .font(.headline)
-                            .fontWeight(.medium)
-                        Spacer()
-                        Text("\(player2Score) points")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(player2Score >= 10 ? .green : .primary)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 16)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(player2Name == winner ? .green : .clear, lineWidth: 2)
-                    )
                 }
             }
             
@@ -111,5 +108,11 @@ struct EndScreen: View {
 }
 
 #Preview {
-    EndScreen(path: .constant([]), player1Name: "Persian", player1Score: 10, player2Name: "Player 2", player2Score: 7, winner: "Persian")
+    EndScreen(
+        path: .constant([]), 
+        playerScores: [
+            PlayerScore(name: "Persian", score: 10, isWinner: true),
+            PlayerScore(name: "Player 2", score: 7, isWinner: false)
+        ]
+    )
 }

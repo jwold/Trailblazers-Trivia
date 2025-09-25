@@ -18,5 +18,5 @@ struct TrailblazersTriviaApp: App {
 
 enum Routes: Hashable {
     case game
-    case results(player1Name: String, player1Score: Int, player2Name: String, player2Score: Int, winner: String?)
+    case results(playerScores: [PlayerScore])
 }

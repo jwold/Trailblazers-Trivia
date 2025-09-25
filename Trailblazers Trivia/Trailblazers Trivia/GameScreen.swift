@@ -27,7 +27,9 @@ struct GameScreen: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
                     .onChange(of: gameViewModel.selectedDifficulty) {
-                        gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
+                        Task {
+                            await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
+                        }
                     }
                 }
                 .padding(.top, 20)
@@ -120,7 +122,7 @@ struct GameScreen: View {
                         // Action Buttons
                         VStack(spacing: 16) {
                             Button {
-                                gameViewModel.answerCorrect()
+                                gameViewModel.answeredCorrect()
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
@@ -144,7 +146,7 @@ struct GameScreen: View {
                             }
                             
                             Button {
-                                gameViewModel.answerWrong()
+                                gameViewModel.answeredWrong()
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
@@ -197,13 +199,8 @@ struct GameScreen: View {
         .navigationBarBackButtonHidden(true)
         .onChange(of: gameViewModel.gameEnded) { _, gameEnded in
             if gameEnded {
-                path.append(Routes.results(
-                    player1Name: gameViewModel.firstPlayer.name,
-                    player1Score: gameViewModel.player1Score,
-                    player2Name: gameViewModel.secondPlayer.name,
-                    player2Score: gameViewModel.player2Score,
-                    winner: gameViewModel.gameWinner
-                ))
+                let playerScores = gameViewModel.getAllPlayerScores()
+                path.append(Routes.results(playerScores: playerScores))
             }
         }
         .toolbar {
@@ -217,11 +214,7 @@ struct GameScreen: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(value: Routes.results(
-                    player1Name: gameViewModel.firstPlayer.name,
-                    player1Score: gameViewModel.player1Score,
-                    player2Name: gameViewModel.secondPlayer.name,
-                    player2Score: gameViewModel.player2Score,
-                    winner: gameViewModel.gameWinner
+                    playerScores: gameViewModel.getAllPlayerScores()
                 )) {
                     Text("End")
                         .foregroundColor(.blue)

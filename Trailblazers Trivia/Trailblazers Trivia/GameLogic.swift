@@ -7,6 +7,189 @@
 
 import Foundation
 
+@Observable
+class GameViewModel {
+    private let players: [Player]
+    private let questionRepository: QuestionRepositoryProtocol
+    private var currentPlayerIndex = 0
+    
+    var turns: [Turn] = []
+    var currentTurn: Turn?
+    var showAnswer = false
+    var gameEnded = false
+    var selectedDifficulty: Difficulty = .hard
+    
+    var currentPlayer: Player {
+        players[currentPlayerIndex]
+    }
+    
+    var currentQuestion: Question {
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
+    }
+    
+    // Computed property for scores
+    func getPlayerScore(for player: Player) -> Int {
+        turns
+            .filter { $0.player.id == player.id && $0.wasCorrect }
+            .reduce(0) { total, turn in
+                guard let difficulty = turn.difficulty else { return total }
+                return total + (difficulty == .hard ? 3 : 1)
+            }
+    }
+    
+    // Export all player scores for use in views
+    func getAllPlayerScores() -> [PlayerScore] {
+        // First, get all player scores with isWinner hardcoded to false
+        var playerScores = players.map { player in
+            PlayerScore(
+                name: player.name,
+                score: getPlayerScore(for: player),
+                isWinner: false
+            )
+        }
+        
+        // Find players with winning score (>= 10 points)
+        let playersWithWinningScore = playerScores.filter { $0.score >= 10 }
+        
+        guard !playersWithWinningScore.isEmpty else { return playerScores }
+        
+        // Find the maximum score among winning players
+        let maxScore = playersWithWinningScore.map { $0.score }.max() ?? 0
+        let winners = playersWithWinningScore.filter { $0.score == maxScore }
+        
+        // Only mark as winner if there's a clear winner (no tie)
+        if winners.count == 1, let winnerName = winners.first?.name {
+            // Update the playerScores array to mark the winner
+            playerScores = playerScores.map { playerScore in
+                PlayerScore(
+                    name: playerScore.name,
+                    score: playerScore.score,
+                    isWinner: playerScore.name == winnerName
+                )
+            }
+        }
+        
+        return playerScores
+    }
+    
+    var currentPlayerScore: Int {
+        getPlayerScore(for: currentPlayer)
+    }
+    
+    var shouldEndGame: Bool {
+        players.contains { getPlayerScore(for: $0) >= 10 }
+    }
+    
+    init(
+        player1Name: String = "Player 1", 
+        player2Name: String = "Player 2",
+        questionRepository: QuestionRepositoryProtocol? = nil
+    ) {
+        self.players = [
+            Player(id: UUID().uuidString, name: player1Name),
+            Player(id: UUID().uuidString, name: player2Name)
+        ]
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .memory)
+        
+        Task {
+            await startNewTurn()
+        }
+    }
+    
+    @MainActor
+    func startNewTurn() async {
+        // Create turn with player first
+        currentTurn = Turn(player: currentPlayer)
+        
+        // Then load the question
+        do {
+            let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
+            currentTurn?.question = question
+        } catch {
+            print("Failed to get question: \(error)")
+            // Fallback to a default question or handle error appropriately
+        }
+    }
+    
+    @MainActor
+    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) async {
+        selectedDifficulty = newDifficulty
+        // Only update the current turn if it hasn't been answered yet
+        if let turn = currentTurn, !turn.isAnswered {
+            do {
+                let newQuestion = try await questionRepository.nextQuestion(for: newDifficulty)
+                currentTurn?.question = newQuestion
+            } catch {
+                print("Failed to get question for difficulty change: \(error)")
+            }
+        }
+    }
+    
+    func answeredCorrect() {
+        recordAnswer(wasCorrect: true)
+        Task {
+            await nextTurn()
+        }
+    }
+    
+    func answeredWrong() {
+        recordAnswer(wasCorrect: false)
+        Task {
+            await nextTurn()
+        }
+    }
+    
+    private func recordAnswer(wasCorrect: Bool) {
+        guard var turn = currentTurn else { return }
+        
+        // Update the current turn with answer information
+        turn.isAnswered = true
+        turn.wasCorrect = wasCorrect
+        
+        // Add the completed turn to answered questions
+        turns.append(turn)
+        
+        // Update current turn to reflect the answered state
+        currentTurn = turn
+        
+        showAnswer = false
+    }
+    
+    @MainActor
+    private func nextTurn() async {
+        // Check if game should end (when a player reaches 10 points)
+        if shouldEndGame {
+            gameEnded = true
+            return
+        }
+        
+        // Switch to next player
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.count
+        await startNewTurn()
+    }
+    
+    func resetGame() {
+        turns.removeAll()
+        questionRepository.resetUsedQuestions()
+        currentPlayerIndex = 0
+        showAnswer = false
+        gameEnded = false
+        Task {
+            await startNewTurn()
+        }
+    }
+    
+    func showAnswerToggle() {
+        showAnswer.toggle()
+    }
+}
+
+struct PlayerScore: Hashable {
+    let name: String
+    let score: Int
+    let isWinner: Bool
+}
+
 struct Player {
     let id: String
     let name: String
@@ -18,6 +201,7 @@ enum Difficulty {
 }
 
 struct Question {
+    let id: String
     let question: String
     let answer: String
     let difficulty: Difficulty
@@ -25,228 +209,11 @@ struct Question {
 
 struct Turn {
     let player: Player
-    let difficulty: Difficulty
-    let question: Question
+    var question: Question?
     var isAnswered: Bool = false
     var wasCorrect: Bool = false
-    let timestamp: Date
-}
-
-struct AnsweredQuestion {
-    let player: Player
-    let question: Question
-    let wasCorrect: Bool
-    let timestamp: Date
-}
-
-@Observable
-class GameViewModel {
-    private let player1: Player
-    private let player2: Player
-    private var currentPlayerIndex = 0
     
-    var answeredQuestions: [AnsweredQuestion] = []
-    var currentTurn: Turn?
-    var showAnswer = false
-    var gameEnded = false
-    var selectedDifficulty: Difficulty = .hard
-    
-    // Easy questions pool
-    private let easyQuestions = [
-        Question(question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
-        Question(question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
-        Question(question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
-        Question(question: "Who led the Israelites out of Egypt?", answer: "Moses", difficulty: .easy),
-        Question(question: "What did God create on the first day?", answer: "Light", difficulty: .easy),
-        Question(question: "How many books are in the New Testament?", answer: "27", difficulty: .easy),
-        Question(question: "Who was the first man?", answer: "Adam", difficulty: .easy),
-        Question(question: "What was the first miracle of Jesus?", answer: "Turning water into wine", difficulty: .easy)
-    ]
-    
-    // Hard questions pool
-    private let hardQuestions = [
-        Question(question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard),
-        Question(question: "What is the shortest book in the New Testament?", answer: "2 John", difficulty: .hard),
-        Question(question: "Who was the oldest man in the Bible?", answer: "Methuselah", difficulty: .hard),
-        Question(question: "In what city did Paul meet Priscilla and Aquila?", answer: "Corinth", difficulty: .hard),
-        Question(question: "What was the name of Abraham's nephew?", answer: "Lot", difficulty: .hard),
-        Question(question: "How many sons did Jacob have?", answer: "12", difficulty: .hard),
-        Question(question: "What was the name of the garden where Jesus prayed before his crucifixion?", answer: "Gethsemane", difficulty: .hard),
-        Question(question: "Who was the mother of John the Baptist?", answer: "Elizabeth", difficulty: .hard)
-    ]
-    
-    private var usedEasyQuestions: Set<Int> = []
-    private var usedHardQuestions: Set<Int> = []
-    
-    var currentPlayer: Player {
-        currentPlayerIndex == 0 ? player1 : player2
-    }
-    
-    var firstPlayer: Player { player1 }
-    var secondPlayer: Player { player2 }
-    
-    var currentQuestion: Question {
-        currentTurn?.question ?? easyQuestions[0]
-    }
-    
-    // Computed property for scores
-    var player1Score: Int {
-        answeredQuestions
-            .filter { $0.player.id == player1.id && $0.wasCorrect }
-            .reduce(0) { total, answered in
-                total + (answered.question.difficulty == .hard ? 3 : 1)
-            }
-    }
-    
-    var player2Score: Int {
-        answeredQuestions
-            .filter { $0.player.id == player2.id && $0.wasCorrect }
-            .reduce(0) { total, answered in
-                total + (answered.question.difficulty == .hard ? 3 : 1)
-            }
-    }
-    
-    var currentPlayerScore: Int {
-        currentPlayerIndex == 0 ? player1Score : player2Score
-    }
-    
-    var gameWinner: String? {
-        if player1Score >= 10 && player2Score >= 10 {
-            return player1Score > player2Score ? player1.name : (player2Score > player1Score ? player2.name : nil)
-        } else if player1Score >= 10 {
-            return player1.name
-        } else if player2Score >= 10 {
-            return player2.name
-        }
-        return nil
-    }
-    
-    var shouldEndGame: Bool {
-        player1Score >= 10 || player2Score >= 10
-    }
-    
-    init(player1Name: String = "Player 1", player2Name: String = "Player 2") {
-        self.player1 = Player(id: UUID().uuidString, name: player1Name)
-        self.player2 = Player(id: UUID().uuidString, name: player2Name)
-        startNewTurn()
-    }
-    
-    func getNextEasyQuestion() -> Question? {
-        let availableIndices = Set(0..<easyQuestions.count).subtracting(usedEasyQuestions)
-        
-        guard let randomIndex = availableIndices.randomElement() else {
-            // Reset if all questions used
-            usedEasyQuestions.removeAll()
-            return easyQuestions.randomElement()
-        }
-        
-        usedEasyQuestions.insert(randomIndex)
-        return easyQuestions[randomIndex]
-    }
-    
-    func getNextHardQuestion() -> Question? {
-        let availableIndices = Set(0..<hardQuestions.count).subtracting(usedHardQuestions)
-        
-        guard let randomIndex = availableIndices.randomElement() else {
-            // Reset if all questions used
-            usedHardQuestions.removeAll()
-            return hardQuestions.randomElement()
-        }
-        
-        usedHardQuestions.insert(randomIndex)
-        return hardQuestions[randomIndex]
-    }
-    
-    func startNewTurn() {
-        let question = getQuestion(for: selectedDifficulty)
-        currentTurn = Turn(
-            player: currentPlayer,
-            difficulty: selectedDifficulty,
-            question: question,
-            timestamp: Date()
-        )
-    }
-    
-    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) {
-        selectedDifficulty = newDifficulty
-        // Only update the current turn if it hasn't been answered yet
-        if let turn = currentTurn, !turn.isAnswered {
-            let newQuestion = getQuestion(for: newDifficulty)
-            currentTurn = Turn(
-                player: turn.player,
-                difficulty: newDifficulty,
-                question: newQuestion,
-                timestamp: turn.timestamp
-            )
-        }
-    }
-    
-    private func getQuestion(for difficulty: Difficulty) -> Question {
-        if difficulty == .easy {
-            return getNextEasyQuestion() ?? easyQuestions[0]
-        } else {
-            return getNextHardQuestion() ?? hardQuestions[0]
-        }
-    }
-    
-    func answerCorrect() {
-        recordAnswer(wasCorrect: true)
-        nextTurn()
-    }
-    
-    func answerWrong() {
-        recordAnswer(wasCorrect: false)
-        nextTurn()
-    }
-    
-    private func recordAnswer(wasCorrect: Bool) {
-        guard let turn = currentTurn else { return }
-        
-        let answeredQuestion = AnsweredQuestion(
-            player: turn.player,
-            question: turn.question,
-            wasCorrect: wasCorrect,
-            timestamp: Date()
-        )
-        answeredQuestions.append(answeredQuestion)
-        
-        // Mark current turn as answered
-        currentTurn = Turn(
-            player: turn.player,
-            difficulty: turn.difficulty,
-            question: turn.question,
-            isAnswered: true,
-            wasCorrect: wasCorrect,
-            timestamp: turn.timestamp
-        )
-        
-        showAnswer = false
-    }
-    
-    private func nextTurn() {
-        // Check if game should end (when a player reaches 10 points)
-        if shouldEndGame {
-            gameEnded = true
-            return
-        }
-        
-        // Switch to next player
-        currentPlayerIndex = (currentPlayerIndex + 1) % 2
-        startNewTurn()
-    }
-    
-    func resetGame() {
-        answeredQuestions.removeAll()
-        usedEasyQuestions.removeAll()
-        usedHardQuestions.removeAll()
-        currentPlayerIndex = 0
-        showAnswer = false
-        gameEnded = false
-        startNewTurn()
-    }
-    
-    func showAnswerToggle() {
-        showAnswer.toggle()
+    var difficulty: Difficulty? {
+        question?.difficulty
     }
 }
-
