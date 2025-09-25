@@ -27,7 +27,9 @@ struct GameScreen: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
                     .onChange(of: gameViewModel.selectedDifficulty) {
-                        gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
+                        Task {
+                            await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
+                        }
                     }
                 }
                 .padding(.top, 20)

@@ -24,6 +24,7 @@ enum Difficulty {
 }
 
 struct Question {
+    let id: String
     let question: String
     let answer: String
     let difficulty: Difficulty
@@ -41,6 +42,7 @@ struct Turn {
 @Observable
 class GameViewModel {
     private let players: [Player]
+    private let questionRepository: QuestionRepositoryProtocol
     private var currentPlayerIndex = 0
     
     var answeredQuestions: [Turn] = []
@@ -49,39 +51,14 @@ class GameViewModel {
     var gameEnded = false
     var selectedDifficulty: Difficulty = .hard
     
-    // Easy questions pool
-    private let easyQuestions = [
-        Question(question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
-        Question(question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
-        Question(question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
-        Question(question: "Who led the Israelites out of Egypt?", answer: "Moses", difficulty: .easy),
-        Question(question: "What did God create on the first day?", answer: "Light", difficulty: .easy),
-        Question(question: "How many books are in the New Testament?", answer: "27", difficulty: .easy),
-        Question(question: "Who was the first man?", answer: "Adam", difficulty: .easy),
-        Question(question: "What was the first miracle of Jesus?", answer: "Turning water into wine", difficulty: .easy)
-    ]
-    
-    // Hard questions pool
-    private let hardQuestions = [
-        Question(question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard),
-        Question(question: "What is the shortest book in the New Testament?", answer: "2 John", difficulty: .hard),
-        Question(question: "Who was the oldest man in the Bible?", answer: "Methuselah", difficulty: .hard),
-        Question(question: "In what city did Paul meet Priscilla and Aquila?", answer: "Corinth", difficulty: .hard),
-        Question(question: "What was the name of Abraham's nephew?", answer: "Lot", difficulty: .hard),
-        Question(question: "How many sons did Jacob have?", answer: "12", difficulty: .hard),
-        Question(question: "What was the name of the garden where Jesus prayed before his crucifixion?", answer: "Gethsemane", difficulty: .hard),
-        Question(question: "Who was the mother of John the Baptist?", answer: "Elizabeth", difficulty: .hard)
-    ]
-    
-    private var usedEasyQuestions: Set<Int> = []
-    private var usedHardQuestions: Set<Int> = []
+    private var usedQuestionIds: Set<String> = []
     
     var currentPlayer: Player {
         players[currentPlayerIndex]
     }
     
     var currentQuestion: Question {
-        currentTurn?.question ?? easyQuestions[0]
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
     }
     
     // Computed property for scores
@@ -129,80 +106,76 @@ class GameViewModel {
         players.contains { getPlayerScore(for: $0) >= 10 }
     }
     
-    init(player1Name: String = "Player 1", player2Name: String = "Player 2") {
+    init(
+        player1Name: String = "Player 1", 
+        player2Name: String = "Player 2",
+        questionRepository: QuestionRepositoryProtocol? = nil
+    ) {
         self.players = [
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        startNewTurn()
-    }
-    
-    func getNextEasyQuestion() -> Question? {
-        let availableIndices = Set(0..<easyQuestions.count).subtracting(usedEasyQuestions)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .memory)
         
-        guard let randomIndex = availableIndices.randomElement() else {
-            // Reset if all questions used
-            usedEasyQuestions.removeAll()
-            return easyQuestions.randomElement()
+        Task {
+            await startNewTurn()
         }
-        
-        usedEasyQuestions.insert(randomIndex)
-        return easyQuestions[randomIndex]
     }
     
-    func getNextHardQuestion() -> Question? {
-        let availableIndices = Set(0..<hardQuestions.count).subtracting(usedHardQuestions)
-        
-        guard let randomIndex = availableIndices.randomElement() else {
-            // Reset if all questions used
-            usedHardQuestions.removeAll()
-            return hardQuestions.randomElement()
+    @MainActor
+    func startNewTurn() async {
+        do {
+            if let question = try await questionRepository.getRandomQuestion(for: selectedDifficulty, excluding: usedQuestionIds) {
+                currentTurn = Turn(
+                    player: currentPlayer,
+                    difficulty: selectedDifficulty,
+                    question: question,
+                    timestamp: Date()
+                )
+                usedQuestionIds.insert(question.id)
+            }
+        } catch {
+            print("Failed to get question: \(error)")
+            // Fallback to a default question or handle error appropriately
         }
-        
-        usedHardQuestions.insert(randomIndex)
-        return hardQuestions[randomIndex]
     }
     
-    func startNewTurn() {
-        let question = getQuestion(for: selectedDifficulty)
-        currentTurn = Turn(
-            player: currentPlayer,
-            difficulty: selectedDifficulty,
-            question: question,
-            timestamp: Date()
-        )
-    }
-    
-    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) {
+    @MainActor
+    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) async {
         selectedDifficulty = newDifficulty
         // Only update the current turn if it hasn't been answered yet
         if let turn = currentTurn, !turn.isAnswered {
-            let newQuestion = getQuestion(for: newDifficulty)
-            currentTurn = Turn(
-                player: turn.player,
-                difficulty: newDifficulty,
-                question: newQuestion,
-                timestamp: turn.timestamp
-            )
-        }
-    }
-    
-    private func getQuestion(for difficulty: Difficulty) -> Question {
-        if difficulty == .easy {
-            return getNextEasyQuestion() ?? easyQuestions[0]
-        } else {
-            return getNextHardQuestion() ?? hardQuestions[0]
+            do {
+                if let newQuestion = try await questionRepository.getRandomQuestion(for: newDifficulty, excluding: usedQuestionIds) {
+                    // Remove the old question ID from used set since we're replacing it
+                    usedQuestionIds.remove(turn.question.id)
+                    
+                    currentTurn = Turn(
+                        player: turn.player,
+                        difficulty: newDifficulty,
+                        question: newQuestion,
+                        timestamp: turn.timestamp
+                    )
+                    usedQuestionIds.insert(newQuestion.id)
+                }
+            } catch {
+                print("Failed to get question for difficulty change: \(error)")
+            }
         }
     }
     
     func answerCorrect() {
         recordAnswer(wasCorrect: true)
-        nextTurn()
+        Task {
+            await nextTurn()
+        }
     }
     
     func answerWrong() {
         recordAnswer(wasCorrect: false)
-        nextTurn()
+        Task {
+            await nextTurn()
+        }
     }
     
     private func recordAnswer(wasCorrect: Bool) {
@@ -221,7 +194,8 @@ class GameViewModel {
         showAnswer = false
     }
     
-    private func nextTurn() {
+    @MainActor
+    private func nextTurn() async {
         // Check if game should end (when a player reaches 10 points)
         if shouldEndGame {
             gameEnded = true
@@ -230,17 +204,18 @@ class GameViewModel {
         
         // Switch to next player
         currentPlayerIndex = (currentPlayerIndex + 1) % players.count
-        startNewTurn()
+        await startNewTurn()
     }
     
     func resetGame() {
         answeredQuestions.removeAll()
-        usedEasyQuestions.removeAll()
-        usedHardQuestions.removeAll()
+        usedQuestionIds.removeAll()
         currentPlayerIndex = 0
         showAnswer = false
         gameEnded = false
-        startNewTurn()
+        Task {
+            await startNewTurn()
+        }
     }
     
     func showAnswerToggle() {
