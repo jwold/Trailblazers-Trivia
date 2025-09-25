@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct PlayerScore: Hashable {
+    let name: String
+    let score: Int
+    let isWinner: Bool
+}
+
 struct Player {
     let id: String
     let name: String
@@ -34,8 +40,7 @@ struct Turn {
 
 @Observable
 class GameViewModel {
-    private let player1: Player
-    private let player2: Player
+    private let players: [Player]
     private var currentPlayerIndex = 0
     
     var answeredQuestions: [Turn] = []
@@ -72,55 +77,63 @@ class GameViewModel {
     private var usedHardQuestions: Set<Int> = []
     
     var currentPlayer: Player {
-        currentPlayerIndex == 0 ? player1 : player2
+        players[currentPlayerIndex]
     }
-    
-    var firstPlayer: Player { player1 }
-    var secondPlayer: Player { player2 }
     
     var currentQuestion: Question {
         currentTurn?.question ?? easyQuestions[0]
     }
     
     // Computed property for scores
-    var player1Score: Int {
+    func getPlayerScore(for player: Player) -> Int {
         answeredQuestions
-            .filter { $0.player.id == player1.id && $0.wasCorrect }
+            .filter { $0.player.id == player.id && $0.wasCorrect }
             .reduce(0) { total, turn in
                 total + (turn.question.difficulty == .hard ? 3 : 1)
             }
     }
     
-    var player2Score: Int {
-        answeredQuestions
-            .filter { $0.player.id == player2.id && $0.wasCorrect }
-            .reduce(0) { total, turn in
-                total + (turn.question.difficulty == .hard ? 3 : 1)
-            }
+    // Export all player scores for use in views
+    func getAllPlayerScores() -> [PlayerScore] {
+        let winner = gameWinner
+        return players.map { player in
+            PlayerScore(
+                name: player.name,
+                score: getPlayerScore(for: player),
+                isWinner: player.name == winner
+            )
+        }
     }
     
     var currentPlayerScore: Int {
-        currentPlayerIndex == 0 ? player1Score : player2Score
+        getPlayerScore(for: currentPlayer)
     }
     
     var gameWinner: String? {
-        if player1Score >= 10 && player2Score >= 10 {
-            return player1Score > player2Score ? player1.name : (player2Score > player1Score ? player2.name : nil)
-        } else if player1Score >= 10 {
-            return player1.name
-        } else if player2Score >= 10 {
-            return player2.name
+        let playerScores = players.map { player in
+            (player: player, score: getPlayerScore(for: player))
         }
-        return nil
+        
+        let playersWithWinningScore = playerScores.filter { $0.score >= 10 }
+        
+        guard !playersWithWinningScore.isEmpty else { return nil }
+        
+        let maxScore = playersWithWinningScore.map { $0.score }.max() ?? 0
+        let winners = playersWithWinningScore.filter { $0.score == maxScore }
+        
+        // Return winner only if there's a clear winner (no tie)
+        return winners.count == 1 ? winners.first?.player.name : nil
     }
     
     var shouldEndGame: Bool {
-        player1Score >= 10 || player2Score >= 10
+        players.contains { getPlayerScore(for: $0) >= 10 }
     }
     
     init(player1Name: String = "Player 1", player2Name: String = "Player 2") {
-        self.player1 = Player(id: UUID().uuidString, name: player1Name)
-        self.player2 = Player(id: UUID().uuidString, name: player2Name)
+        self.players = [
+            Player(id: UUID().uuidString, name: player1Name),
+            Player(id: UUID().uuidString, name: player2Name)
+        ]
         startNewTurn()
     }
     
@@ -216,7 +229,7 @@ class GameViewModel {
         }
         
         // Switch to next player
-        currentPlayerIndex = (currentPlayerIndex + 1) % 2
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.count
         startNewTurn()
     }
     
