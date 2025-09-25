@@ -32,20 +32,13 @@ struct Turn {
     let timestamp: Date
 }
 
-struct AnsweredQuestion {
-    let player: Player
-    let question: Question
-    let wasCorrect: Bool
-    let timestamp: Date
-}
-
 @Observable
 class GameViewModel {
     private let player1: Player
     private let player2: Player
     private var currentPlayerIndex = 0
     
-    var answeredQuestions: [AnsweredQuestion] = []
+    var answeredQuestions: [Turn] = []
     var currentTurn: Turn?
     var showAnswer = false
     var gameEnded = false
@@ -93,16 +86,16 @@ class GameViewModel {
     var player1Score: Int {
         answeredQuestions
             .filter { $0.player.id == player1.id && $0.wasCorrect }
-            .reduce(0) { total, answered in
-                total + (answered.question.difficulty == .hard ? 3 : 1)
+            .reduce(0) { total, turn in
+                total + (turn.question.difficulty == .hard ? 3 : 1)
             }
     }
     
     var player2Score: Int {
         answeredQuestions
             .filter { $0.player.id == player2.id && $0.wasCorrect }
-            .reduce(0) { total, answered in
-                total + (answered.question.difficulty == .hard ? 3 : 1)
+            .reduce(0) { total, turn in
+                total + (turn.question.difficulty == .hard ? 3 : 1)
             }
     }
     
@@ -200,25 +193,17 @@ class GameViewModel {
     }
     
     private func recordAnswer(wasCorrect: Bool) {
-        guard let turn = currentTurn else { return }
+        guard var turn = currentTurn else { return }
         
-        let answeredQuestion = AnsweredQuestion(
-            player: turn.player,
-            question: turn.question,
-            wasCorrect: wasCorrect,
-            timestamp: Date()
-        )
-        answeredQuestions.append(answeredQuestion)
+        // Update the current turn with answer information
+        turn.isAnswered = true
+        turn.wasCorrect = wasCorrect
         
-        // Mark current turn as answered
-        currentTurn = Turn(
-            player: turn.player,
-            difficulty: turn.difficulty,
-            question: turn.question,
-            isAnswered: true,
-            wasCorrect: wasCorrect,
-            timestamp: turn.timestamp
-        )
+        // Add the completed turn to answered questions
+        answeredQuestions.append(turn)
+        
+        // Update current turn to reflect the answered state
+        currentTurn = turn
         
         showAnswer = false
     }
