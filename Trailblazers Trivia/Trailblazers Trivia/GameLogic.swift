@@ -7,38 +7,6 @@
 
 import Foundation
 
-struct PlayerScore: Hashable {
-    let name: String
-    let score: Int
-    let isWinner: Bool
-}
-
-struct Player {
-    let id: String
-    let name: String
-}
-
-enum Difficulty {
-    case easy
-    case hard
-}
-
-struct Question {
-    let id: String
-    let question: String
-    let answer: String
-    let difficulty: Difficulty
-}
-
-struct Turn {
-    let player: Player
-    let difficulty: Difficulty
-    let question: Question
-    var isAnswered: Bool = false
-    var wasCorrect: Bool = false
-    let timestamp: Date
-}
-
 @Observable
 class GameViewModel {
     private let players: [Player]
@@ -155,14 +123,14 @@ class GameViewModel {
         }
     }
     
-    func answerCorrect() {
+    func answeredCorrect() {
         recordAnswer(wasCorrect: true)
         Task {
             await nextTurn()
         }
     }
     
-    func answerWrong() {
+    func answeredWrong() {
         recordAnswer(wasCorrect: false)
         Task {
             await nextTurn()
@@ -214,3 +182,34 @@ class GameViewModel {
     }
 }
 
+struct PlayerScore: Hashable {
+    let name: String
+    let score: Int
+    let isWinner: Bool
+}
+
+struct Player {
+    let id: String
+    let name: String
+}
+
+enum Difficulty {
+    case easy
+    case hard
+}
+
+struct Question {
+    let id: String
+    let question: String
+    let answer: String
+    let difficulty: Difficulty
+}
+
+struct Turn {
+    let player: Player
+    let difficulty: Difficulty
+    let question: Question
+    var isAnswered: Bool = false
+    var wasCorrect: Bool = false
+    let timestamp: Date
+}

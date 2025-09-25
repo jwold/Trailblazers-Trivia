@@ -122,7 +122,7 @@ struct GameScreen: View {
                         // Action Buttons
                         VStack(spacing: 16) {
                             Button {
-                                gameViewModel.answerCorrect()
+                                gameViewModel.answeredCorrect()
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
@@ -146,7 +146,7 @@ struct GameScreen: View {
                             }
                             
                             Button {
-                                gameViewModel.answerWrong()
+                                gameViewModel.answeredWrong()
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
