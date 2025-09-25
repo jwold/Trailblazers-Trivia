@@ -48,19 +48,25 @@ struct JSONQuestion: Codable {
 /// JSON file-based implementation of the question repository
 class JSONQuestionRepository: QuestionRepositoryProtocol {
     
-    private let questions: [Question]
+    private var questions: [Question] = []
     private var usedQuestionIds: Set<String> = []
+    private var isLoaded = false
     
-    init() throws {
+    init() {
+        // Empty initializer - questions will be loaded lazily
+    }
+    
+    /// Loads and returns all questions from JSON files
+    private func loadAllQuestions() throws -> [Question] {
         var allQuestions: [Question] = []
         
         // Load easy questions
-        if let easyQuestions = try JSONQuestionRepository.loadQuestions(from: "bible-easy") {
+        if let easyQuestions = try loadQuestions(from: "bible-easy") {
             allQuestions.append(contentsOf: easyQuestions)
         }
         
         // Load hard questions
-        if let hardQuestions = try JSONQuestionRepository.loadQuestions(from: "bible-hard") {
+        if let hardQuestions = try loadQuestions(from: "bible-hard") {
             allQuestions.append(contentsOf: hardQuestions)
         }
         
@@ -68,10 +74,10 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             throw QuestionRepositoryError.noQuestionsFound
         }
         
-        self.questions = allQuestions
+        return allQuestions
     }
     
-    private static func loadQuestions(from fileName: String) throws -> [Question]? {
+    private func loadQuestions(from fileName: String) throws -> [Question]? {
         guard let path = Bundle.main.path(forResource: fileName, ofType: "json") else {
             print("Warning: Could not find \(fileName).json in bundle")
             return nil
@@ -99,6 +105,12 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     }
     
     func nextQuestion(for newDifficulty: Difficulty) async throws -> Question {
+        // Load questions if not already loaded
+        if !isLoaded {
+            self.questions = try loadAllQuestions()
+            self.isLoaded = true
+        }
+        
         let questionsForDifficulty = questions.filter { $0.difficulty == newDifficulty }
         
         guard !questionsForDifficulty.isEmpty else {
@@ -219,12 +231,7 @@ class QuestionRepositoryFactory {
     static func create(type: RepositoryType = .json) -> QuestionRepositoryProtocol {
         switch type {
         case .json:
-            do {
-                return try JSONQuestionRepository()
-            } catch {
-                print("Failed to load JSON questions, falling back to memory repository: \(error)")
-                return MemoryQuestionRepository()
-            }
+            return JSONQuestionRepository()
         case .memory:
             return MemoryQuestionRepository()
         }
