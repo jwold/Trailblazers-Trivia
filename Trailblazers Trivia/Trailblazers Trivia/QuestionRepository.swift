@@ -11,15 +11,6 @@ import Foundation
 
 /// Protocol defining the interface for question data sources
 protocol QuestionRepositoryProtocol {
-    /// Retrieve questions for a specific difficulty level
-    /// - Parameter difficulty: The difficulty level to filter by
-    /// - Returns: Array of questions matching the difficulty
-    func getQuestions(for difficulty: Difficulty) async throws -> [Question]
-    
-    /// Retrieve all questions regardless of difficulty
-    /// - Returns: Array of all available questions
-    func getAllQuestions() async throws -> [Question]
-    
     /// Get the next question for a specific difficulty, automatically managing used questions
     /// - Parameter newDifficulty: The difficulty level for the next question
     /// - Returns: The next available question, resetting the pool if all questions have been used
@@ -34,13 +25,13 @@ protocol QuestionRepositoryProtocol {
 /// In-memory implementation of the question repository
 class MemoryQuestionRepository: QuestionRepositoryProtocol {
     
-    private let easyQuestions: [Question]
-    private let hardQuestions: [Question]
+    private let questions: [Question]
     private var usedQuestionIds: Set<String> = []
     
     init() {
-        // Easy questions pool
-        self.easyQuestions = [
+        // All questions pool
+        self.questions = [
+            // Easy questions
             Question(id: "easy_1", question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
             Question(id: "easy_2", question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
             Question(id: "easy_3", question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
@@ -48,11 +39,9 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
             Question(id: "easy_5", question: "What did God create on the first day?", answer: "Light", difficulty: .easy),
             Question(id: "easy_6", question: "How many books are in the New Testament?", answer: "27", difficulty: .easy),
             Question(id: "easy_7", question: "Who was the first man?", answer: "Adam", difficulty: .easy),
-            Question(id: "easy_8", question: "What was the first miracle of Jesus?", answer: "Turning water into wine", difficulty: .easy)
-        ]
-        
-        // Hard questions pool
-        self.hardQuestions = [
+            Question(id: "easy_8", question: "What was the first miracle of Jesus?", answer: "Turning water into wine", difficulty: .easy),
+            
+            // Hard questions
             Question(id: "hard_1", question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard),
             Question(id: "hard_2", question: "What is the shortest book in the New Testament?", answer: "2 John", difficulty: .hard),
             Question(id: "hard_3", question: "Who was the oldest man in the Bible?", answer: "Methuselah", difficulty: .hard),
@@ -64,29 +53,16 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
         ]
     }
     
-    func getQuestions(for difficulty: Difficulty) async throws -> [Question] {
-        switch difficulty {
-        case .easy:
-            return easyQuestions
-        case .hard:
-            return hardQuestions
-        }
-    }
-    
-    func getAllQuestions() async throws -> [Question] {
-        return easyQuestions + hardQuestions
-    }
-    
     func nextQuestion(for newDifficulty: Difficulty) async throws -> Question {
-        let questions = try await getQuestions(for: newDifficulty)
-        let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
+        let questionsForDifficulty = questions.filter { $0.difficulty == newDifficulty }
+        let availableQuestions = questionsForDifficulty.filter { !usedQuestionIds.contains($0.id) }
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
             // If all questions have been used, reset and start over
             resetUsedQuestions()
-            selectedQuestion = questions.randomElement() ?? questions.first!
+            selectedQuestion = questionsForDifficulty.randomElement() ?? questionsForDifficulty.first!
         } else {
             selectedQuestion = availableQuestions.randomElement()!
         }
