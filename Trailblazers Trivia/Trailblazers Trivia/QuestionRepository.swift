@@ -20,12 +20,13 @@ protocol QuestionRepositoryProtocol {
     /// - Returns: Array of all available questions
     func getAllQuestions() async throws -> [Question]
     
-    /// Get a random question for a specific difficulty, excluding already used questions
-    /// - Parameters:
-    ///   - difficulty: The difficulty level
-    ///   - usedQuestionIds: Set of question IDs that have already been used
-    /// - Returns: A random unused question, or nil if no unused questions available
-    func getRandomQuestion(for difficulty: Difficulty, excluding usedQuestionIds: Set<String>) async throws -> Question?
+    /// Get the next question for a specific difficulty, automatically managing used questions
+    /// - Parameter newDifficulty: The difficulty level for the next question
+    /// - Returns: The next available question, resetting the pool if all questions have been used
+    func nextQuestion(for newDifficulty: Difficulty) async throws -> Question
+    
+    /// Reset the used questions tracking for a fresh start
+    func resetUsedQuestions()
 }
 
 // MARK: - Memory Question Repository
@@ -35,6 +36,7 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
     
     private let easyQuestions: [Question]
     private let hardQuestions: [Question]
+    private var usedQuestionIds: Set<String> = []
     
     init() {
         // Easy questions pool
@@ -75,16 +77,28 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
         return easyQuestions + hardQuestions
     }
     
-    func getRandomQuestion(for difficulty: Difficulty, excluding usedQuestionIds: Set<String>) async throws -> Question? {
-        let questions = try await getQuestions(for: difficulty)
+    func nextQuestion(for newDifficulty: Difficulty) async throws -> Question {
+        let questions = try await getQuestions(for: newDifficulty)
         let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
         
+        let selectedQuestion: Question
+        
         if availableQuestions.isEmpty {
-            // If all questions have been used, return a random question from the pool
-            return questions.randomElement()
+            // If all questions have been used, reset and start over
+            resetUsedQuestions()
+            selectedQuestion = questions.randomElement() ?? questions.first!
+        } else {
+            selectedQuestion = availableQuestions.randomElement()!
         }
         
-        return availableQuestions.randomElement()
+        // Mark the selected question as used
+        usedQuestionIds.insert(selectedQuestion.id)
+        
+        return selectedQuestion
+    }
+    
+    func resetUsedQuestions() {
+        usedQuestionIds.removeAll()
     }
 }
 

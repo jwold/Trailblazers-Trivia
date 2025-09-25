@@ -51,8 +51,6 @@ class GameViewModel {
     var gameEnded = false
     var selectedDifficulty: Difficulty = .hard
     
-    private var usedQuestionIds: Set<String> = []
-    
     var currentPlayer: Player {
         players[currentPlayerIndex]
     }
@@ -125,15 +123,13 @@ class GameViewModel {
     @MainActor
     func startNewTurn() async {
         do {
-            if let question = try await questionRepository.getRandomQuestion(for: selectedDifficulty, excluding: usedQuestionIds) {
-                currentTurn = Turn(
-                    player: currentPlayer,
-                    difficulty: selectedDifficulty,
-                    question: question,
-                    timestamp: Date()
-                )
-                usedQuestionIds.insert(question.id)
-            }
+            let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
+            currentTurn = Turn(
+                player: currentPlayer,
+                difficulty: selectedDifficulty,
+                question: question,
+                timestamp: Date()
+            )
         } catch {
             print("Failed to get question: \(error)")
             // Fallback to a default question or handle error appropriately
@@ -146,18 +142,13 @@ class GameViewModel {
         // Only update the current turn if it hasn't been answered yet
         if let turn = currentTurn, !turn.isAnswered {
             do {
-                if let newQuestion = try await questionRepository.getRandomQuestion(for: newDifficulty, excluding: usedQuestionIds) {
-                    // Remove the old question ID from used set since we're replacing it
-                    usedQuestionIds.remove(turn.question.id)
-                    
-                    currentTurn = Turn(
-                        player: turn.player,
-                        difficulty: newDifficulty,
-                        question: newQuestion,
-                        timestamp: turn.timestamp
-                    )
-                    usedQuestionIds.insert(newQuestion.id)
-                }
+                let newQuestion = try await questionRepository.nextQuestion(for: newDifficulty)
+                currentTurn = Turn(
+                    player: turn.player,
+                    difficulty: newDifficulty,
+                    question: newQuestion,
+                    timestamp: turn.timestamp
+                )
             } catch {
                 print("Failed to get question for difficulty change: \(error)")
             }
@@ -209,7 +200,7 @@ class GameViewModel {
     
     func resetGame() {
         answeredQuestions.removeAll()
-        usedQuestionIds.removeAll()
+        questionRepository.resetUsedQuestions()
         currentPlayerIndex = 0
         showAnswer = false
         gameEnded = false
