@@ -13,7 +13,7 @@ class GameViewModel {
     private let questionRepository: QuestionRepositoryProtocol
     private var currentPlayerIndex = 0
     
-    var answeredQuestions: [Turn] = []
+    var turns: [Turn] = []
     var currentTurn: Turn?
     var showAnswer = false
     var gameEnded = false
@@ -29,10 +29,11 @@ class GameViewModel {
     
     // Computed property for scores
     func getPlayerScore(for player: Player) -> Int {
-        answeredQuestions
+        turns
             .filter { $0.player.id == player.id && $0.wasCorrect }
             .reduce(0) { total, turn in
-                total + (turn.question.difficulty == .hard ? 3 : 1)
+                guard let difficulty = turn.difficulty else { return total }
+                return total + (difficulty == .hard ? 3 : 1)
             }
     }
     
@@ -90,14 +91,13 @@ class GameViewModel {
     
     @MainActor
     func startNewTurn() async {
+        // Create turn with player first
+        currentTurn = Turn(player: currentPlayer)
+        
+        // Then load the question
         do {
             let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
-            currentTurn = Turn(
-                player: currentPlayer,
-                difficulty: selectedDifficulty,
-                question: question,
-                timestamp: Date()
-            )
+            currentTurn?.question = question
         } catch {
             print("Failed to get question: \(error)")
             // Fallback to a default question or handle error appropriately
@@ -111,12 +111,7 @@ class GameViewModel {
         if let turn = currentTurn, !turn.isAnswered {
             do {
                 let newQuestion = try await questionRepository.nextQuestion(for: newDifficulty)
-                currentTurn = Turn(
-                    player: turn.player,
-                    difficulty: newDifficulty,
-                    question: newQuestion,
-                    timestamp: turn.timestamp
-                )
+                currentTurn?.question = newQuestion
             } catch {
                 print("Failed to get question for difficulty change: \(error)")
             }
@@ -145,7 +140,7 @@ class GameViewModel {
         turn.wasCorrect = wasCorrect
         
         // Add the completed turn to answered questions
-        answeredQuestions.append(turn)
+        turns.append(turn)
         
         // Update current turn to reflect the answered state
         currentTurn = turn
@@ -167,7 +162,7 @@ class GameViewModel {
     }
     
     func resetGame() {
-        answeredQuestions.removeAll()
+        turns.removeAll()
         questionRepository.resetUsedQuestions()
         currentPlayerIndex = 0
         showAnswer = false
@@ -207,9 +202,11 @@ struct Question {
 
 struct Turn {
     let player: Player
-    let difficulty: Difficulty
-    let question: Question
+    var question: Question?
     var isAnswered: Bool = false
     var wasCorrect: Bool = false
-    let timestamp: Date
+    
+    var difficulty: Difficulty? {
+        question?.difficulty
+    }
 }
