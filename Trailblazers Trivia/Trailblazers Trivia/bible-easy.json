@@ -1,0 +1,1238 @@
+[
+  {
+    "id": 1,
+    "question": "Who was the first man created by God?",
+    "answer": "Adam",
+    "reference": "Genesis 2:7"
+  },
+  {
+    "id": 2,
+    "question": "What did God create on the first day?",
+    "answer": "Light",
+    "reference": "Genesis 1:3"
+  },
+  {
+    "id": 3,
+    "question": "Who built an ark to survive the flood?",
+    "answer": "Noah",
+    "reference": "Genesis 6:14"
+  },
+  {
+    "id": 4,
+    "question": "What was the name of Abraham’s son?",
+    "answer": "Isaac",
+    "reference": "Genesis 21:3"
+  },
+  {
+    "id": 5,
+    "question": "What sign did God give after the flood?",
+    "answer": "Rainbow",
+    "reference": "Genesis 9:13"
+  },
+  {
+    "id": 6,
+    "question": "Who interpreted Pharaoh’s dreams about the famine?",
+    "answer": "Joseph",
+    "reference": "Genesis 41:15-16"
+  },
+  {
+    "id": 7,
+    "question": "What sea did Moses and the Israelites cross?",
+    "answer": "Red Sea",
+    "reference": "Exodus 14:21"
+  },
+  {
+    "id": 8,
+    "question": "Who led the Israelites into the Promised Land?",
+    "answer": "Joshua",
+    "reference": "Joshua 1:1-2"
+  },
+  {
+    "id": 9,
+    "question": "What food did God provide in the desert?",
+    "answer": "Manna",
+    "reference": "Exodus 16:15"
+  },
+  {
+    "id": 15,
+    "question": "Who was the high priest when Samuel was a boy?",
+    "answer": "Eli",
+    "reference": "1 Samuel 1:9"
+  },
+  {
+    "id": 505,
+    "question": "According to the Beatitudes who will be filled?",
+    "answer": "Those who hunger and thirst for righteousness",
+    "reference": ""
+  },
+  {
+    "id": 509,
+    "question": "After Jesus fed 5000+ people with two fish and five loaves of bread how many baskets were left over?",
+    "answer": "12",
+    "reference": ""
+  },
+  {
+    "id": 510,
+    "question": "After Jesus fed the 5",
+    "answer": "000 how many baskets were left over?",
+    "reference": "12"
+  },
+  {
+    "id": 511,
+    "question": "After Jesus was arrested",
+    "answer": "which apostle disowned him three times?",
+    "reference": "Peter"
+  },
+  {
+    "id": 512,
+    "question": "After Jesus’ arrest",
+    "answer": "one apostle allegedly disowned him three times - who was that apostle?",
+    "reference": "Peter"
+  },
+  {
+    "id": 513,
+    "question": "And they said one to another",
+    "answer": "Behold",
+    "reference": "this dreamer cometh Gen 37:19 Who is the dreamer in this verse?"
+  },
+  {
+    "id": 518,
+    "question": "Benjamin was the youngest son of which person from the Old Testament?",
+    "answer": "Jacob",
+    "reference": ""
+  },
+  {
+    "id": 521,
+    "question": "Complete the following `The light of the body is",
+    "answer": "The eye",
+    "reference": "Matthew 6:22"
+  },
+  {
+    "id": 524,
+    "question": "Complete this verse: \"\"How beautiful upon the mountains are the feet of him that bringeth…",
+    "answer": "good tidings",
+    "reference": "Isaiah 52:7"
+  },
+  {
+    "id": 527,
+    "question": "Even though Abram and Sarah were too old what did God promise them?",
+    "answer": "A son",
+    "reference": ""
+  },
+  {
+    "id": 528,
+    "question": "Finish this Proverb: \"\"Labour not to be ",
+    "answer": "rich",
+    "reference": "Proverbs 23:4"
+  },
+  {
+    "id": 529,
+    "question": "Finish this proverb: \"\"Where there is no vision ",
+    "answer": "the people perish",
+    "reference": "Proverbs 29:18"
+  },
+  {
+    "id": 531,
+    "question": "For how long did the flood rain fall?",
+    "answer": "40 days and 40 nights",
+    "reference": "Gen 7:12"
+  },
+  {
+    "id": 532,
+    "question": "For how many days did Jesus appear to his disciples after his resurrection?",
+    "answer": "40",
+    "reference": ""
+  },
+  {
+    "id": 533,
+    "question": "For which type of tree was Lebanon well known?",
+    "answer": "Cedar",
+    "reference": ""
+  },
+  {
+    "id": 538,
+    "question": "How did God appear to Moses in the wilderness?",
+    "answer": "A burning bush",
+    "reference": ""
+  },
+  {
+    "id": 542,
+    "question": "How did Judas end up revealing Jesus’s identity to the Roman officials?",
+    "answer": "He kisses him",
+    "reference": ""
+  },
+  {
+    "id": 544,
+    "question": "How did Moses make bitter water turn sweet?",
+    "answer": "Threw a piece of wood into it",
+    "reference": ""
+  },
+  {
+    "id": 546,
+    "question": "How did Stephanus die?",
+    "answer": "Stoned to death",
+    "reference": ""
+  },
+  {
+    "id": 553,
+    "question": "How long did the flood cover the earth?",
+    "answer": "150 days",
+    "reference": "Gen 7:24"
+  },
+  {
+    "id": 554,
+    "question": "How long was Jesus on the cross?",
+    "answer": "6 hours",
+    "reference": "Mark 15:25"
+  },
+  {
+    "id": 555,
+    "question": "How long was the ark?",
+    "answer": "300 cubits",
+    "reference": "Gen 6:15"
+  },
+  {
+    "id": 556,
+    "question": "How long were the children of Israel in captivity?",
+    "answer": "70 years",
+    "reference": "Jer 25:11"
+  },
+  {
+    "id": 558,
+    "question": "How many books are in the Bible?",
+    "answer": "66",
+    "reference": ""
+  },
+  {
+    "id": 559,
+    "question": "How many books are in the New Testament?",
+    "answer": "27",
+    "reference": ""
+  },
+  {
+    "id": 560,
+    "question": "How many books are in the Old Testament?",
+    "answer": "39",
+    "reference": ""
+  },
+  {
+    "id": 562,
+    "question": "How many books in the New Testament?",
+    "answer": "27",
+    "reference": ""
+  },
+  {
+    "id": 563,
+    "question": "How many books in the Old Testament?",
+    "answer": "39",
+    "reference": ""
+  },
+  {
+    "id": 567,
+    "question": "How many days and nights did it rain when Noah was on the ark?",
+    "answer": "40",
+    "reference": ""
+  },
+  {
+    "id": 568,
+    "question": "How many days and nights did Jesus fast for?",
+    "answer": "40 days & 40 nights",
+    "reference": ""
+  },
+  {
+    "id": 569,
+    "question": "How many days did God take to create the world?",
+    "answer": "6",
+    "reference": ""
+  },
+  {
+    "id": 570,
+    "question": "How many days did it take God to create the heavens and the earth?",
+    "answer": "Seven",
+    "reference": ""
+  },
+  {
+    "id": 573,
+    "question": "How many New Testament books are there?",
+    "answer": "27 books divided into 5 categories",
+    "reference": ""
+  },
+  {
+    "id": 574,
+    "question": "How many people boarded Noah’s Ark?",
+    "answer": "Eight",
+    "reference": ""
+  },
+  {
+    "id": 575,
+    "question": "How many people did Jesus feed with five loaves of bread and two fish?",
+    "answer": "5000+",
+    "reference": ""
+  },
+  {
+    "id": 576,
+    "question": "How many people were saved on the ark?",
+    "answer": "8",
+    "reference": ""
+  },
+  {
+    "id": 577,
+    "question": "How many plagues are in Exodus?",
+    "answer": "Ten",
+    "reference": ""
+  },
+  {
+    "id": 578,
+    "question": "How many sons did Abraham have?",
+    "answer": "Eight",
+    "reference": ""
+  },
+  {
+    "id": 579,
+    "question": "How many wise men visited the baby Jesus?",
+    "answer": "Three",
+    "reference": ""
+  },
+  {
+    "id": 581,
+    "question": "How many years of famine did Joseph prophesise to the Pharaohs?",
+    "answer": "seven",
+    "reference": ""
+  },
+  {
+    "id": 584,
+    "question": "How old was Jesus when he began his public ministry?",
+    "answer": "30 Years Old",
+    "reference": "Luke 3:23"
+  },
+  {
+    "id": 585,
+    "question": "How old was Jesus when he tarried behind in Jerusalem after having attended the Passover feast with Mary and Joseph?",
+    "answer": "12 Years Old",
+    "reference": "Luke 2:41-43"
+  },
+  {
+    "id": 587,
+    "question": "How old was Moses when he gave God’s message to Pharaoh: “Let my people go”?",
+    "answer": "80 years",
+    "reference": "Exod 7:7"
+  },
+  {
+    "id": 588,
+    "question": "How were sins forgiven in the Old Testament?",
+    "answer": "Animal sacrifice",
+    "reference": ""
+  },
+  {
+    "id": 595,
+    "question": "In what city did Mary Martha and Lazarus live?",
+    "answer": "Bethany",
+    "reference": "John 11:1"
+  },
+  {
+    "id": 596,
+    "question": "In what city was Jesus born?",
+    "answer": "Bethlehem",
+    "reference": ""
+  },
+  {
+    "id": 597,
+    "question": "In what language was most of the New Testament given?",
+    "answer": "Greek",
+    "reference": ""
+  },
+  {
+    "id": 598,
+    "question": "In what language was most of the Old Testament given?",
+    "answer": "Hebrew",
+    "reference": ""
+  },
+  {
+    "id": 599,
+    "question": "In what water was Jesus baptized?",
+    "answer": "River Jordan",
+    "reference": ""
+  },
+  {
+    "id": 602,
+    "question": "In which New Testament Book does Jesus say \"\"I and my Father are one\"\"?",
+    "answer": "Book of John",
+    "reference": ""
+  },
+  {
+    "id": 603,
+    "question": "Is Horeb the name of a town or a mountain?",
+    "answer": "A mountain",
+    "reference": ""
+  },
+  {
+    "id": 604,
+    "question": "Is the Old Testament bigger than the New Testament?",
+    "answer": "Yes",
+    "reference": ""
+  },
+  {
+    "id": 607,
+    "question": "Jesus was born in Bethlehem of Judea in the days of what king?",
+    "answer": "Herod",
+    "reference": "Matthew 2:1"
+  },
+  {
+    "id": 610,
+    "question": "Many of the New Testament's letters to churches were written by who?",
+    "answer": "Paul",
+    "reference": ""
+  },
+  {
+    "id": 611,
+    "question": "Matthew was a _________",
+    "answer": "Tax collector",
+    "reference": ""
+  },
+  {
+    "id": 613,
+    "question": "Name three of Jesus’ disciples whose names begin with „J”",
+    "answer": "Jacob",
+    "reference": "John and Judas"
+  },
+  {
+    "id": 615,
+    "question": "One title that God has is El Shaddai What does it mean?",
+    "answer": "Almighty God",
+    "reference": ""
+  },
+  {
+    "id": 619,
+    "question": "People who pray just to be seen of men are called what?",
+    "answer": "Hypocrites",
+    "reference": "Matthew 6:5"
+  },
+  {
+    "id": 622,
+    "question": "The disciples were on a ship when a great tempest arose and covered it with waves What was Jesus doing at this time?",
+    "answer": "Sleeping",
+    "reference": "Matthew 8:24"
+  },
+  {
+    "id": 623,
+    "question": "The Old Testament was written in which language?",
+    "answer": "In Hebrew",
+    "reference": ""
+  },
+  {
+    "id": 626,
+    "question": "Was Goliath a Philistine or an Egyptian?",
+    "answer": "Philistine",
+    "reference": ""
+  },
+  {
+    "id": 628,
+    "question": "What are Paul's letters called?",
+    "answer": "The Epistles",
+    "reference": ""
+  },
+  {
+    "id": 629,
+    "question": "What are the first five books of the Old Testament referred to?",
+    "answer": "Pentateuch",
+    "reference": ""
+  },
+  {
+    "id": 632,
+    "question": "What came first? Elias ascension or Enoch’s rapture?",
+    "answer": "Enoch’s rapture",
+    "reference": ""
+  },
+  {
+    "id": 633,
+    "question": "What day did God create man?",
+    "answer": "6th",
+    "reference": ""
+  },
+  {
+    "id": 638,
+    "question": "What did God divide when He created Earth?",
+    "answer": "The light from the darkness",
+    "reference": ""
+  },
+  {
+    "id": 640,
+    "question": "What did God use the rib of Adam to do?",
+    "answer": "Create Eve",
+    "reference": ""
+  },
+  {
+    "id": 644,
+    "question": "What did Jesus say to Mary and Martha before he raised Lazarus?",
+    "answer": "Jesus wept",
+    "reference": ""
+  },
+  {
+    "id": 645,
+    "question": "What did Jesus say would happen to the temple buildings?",
+    "answer": "Be demolished",
+    "reference": "Luke 21:6"
+  },
+  {
+    "id": 646,
+    "question": "What did Joseph's brothers do after they put him in the pit?",
+    "answer": "Sold him as a slave",
+    "reference": ""
+  },
+  {
+    "id": 649,
+    "question": "What did Moses receive on Mount Sinai?",
+    "answer": "The 10 commandments",
+    "reference": ""
+  },
+  {
+    "id": 651,
+    "question": "What did Solomon ask God to give him?",
+    "answer": "Wisdom",
+    "reference": ""
+  },
+  {
+    "id": 652,
+    "question": "What did the Israelites worship when Moses met God on Mount Sinai?",
+    "answer": "A Golden Calf",
+    "reference": ""
+  },
+  {
+    "id": 653,
+    "question": "What did the serpent tempt Eve to do in the Garden of Eden?",
+    "answer": "Eat the fruit from the trees that God forbid them to eat",
+    "reference": ""
+  },
+  {
+    "id": 654,
+    "question": "What does David bring to Jerusalem to bless the religious city?",
+    "answer": "The Ark of the Covenant",
+    "reference": ""
+  },
+  {
+    "id": 657,
+    "question": "What does Paul say is the fulfillment of the law?",
+    "answer": "Love",
+    "reference": "Rom 13:10"
+  },
+  {
+    "id": 659,
+    "question": "What does Simon Peter do for a living before he becomes an apostle?",
+    "answer": "Fisherman",
+    "reference": ""
+  },
+  {
+    "id": 660,
+    "question": "What does Solomon say about sin?",
+    "answer": "That no one does not sin",
+    "reference": "Ecclesiastes 7:20"
+  },
+  {
+    "id": 661,
+    "question": "What does the word gospel mean?",
+    "answer": "Good news",
+    "reference": ""
+  },
+  {
+    "id": 663,
+    "question": "What happened at the moment when Jesus died?",
+    "answer": "There was an earthquake and the temple veil tore",
+    "reference": "Matthew 27:51"
+  },
+  {
+    "id": 664,
+    "question": "What happened first? Jesus’ christening or the feeding of the 5000?",
+    "answer": "Jesus’ christening",
+    "reference": ""
+  },
+  {
+    "id": 665,
+    "question": "What happened first? Murder of Abel or the great flood?",
+    "answer": "Murder of Abel",
+    "reference": ""
+  },
+  {
+    "id": 666,
+    "question": "What happened first? The exodus of Egypt or the „fall of Jericho”?",
+    "answer": "Exodus",
+    "reference": ""
+  },
+  {
+    "id": 669,
+    "question": "What is the common name given to the first four books of the New Testament?",
+    "answer": "The Gospels",
+    "reference": ""
+  },
+  {
+    "id": 670,
+    "question": "What is the first book in the Bible?",
+    "answer": "Genesis",
+    "reference": ""
+  },
+  {
+    "id": 671,
+    "question": "What is the first commandment out of the Ten Commandments?",
+    "answer": "You shall have no other gods before me",
+    "reference": ""
+  },
+  {
+    "id": 672,
+    "question": "What is the Holy Trinity?",
+    "answer": "Father",
+    "reference": "Son"
+  },
+  {
+    "id": 673,
+    "question": "What is the last book in the Bible?",
+    "answer": "Revelation",
+    "reference": ""
+  },
+  {
+    "id": 674,
+    "question": "What is the last book in the New Testament?",
+    "answer": "Revelation",
+    "reference": ""
+  },
+  {
+    "id": 675,
+    "question": "What is the longest book in the Bible?",
+    "answer": "Psalms",
+    "reference": ""
+  },
+  {
+    "id": 685,
+    "question": "What is the second commandment out of the Ten Commandments?",
+    "answer": "You shall not make for yourself a carved image; Thou shall not make idols",
+    "reference": ""
+  },
+  {
+    "id": 686,
+    "question": "What is the shortest book in the Bible?",
+    "answer": "3 John",
+    "reference": ""
+  },
+  {
+    "id": 690,
+    "question": "What is the third commandment out of the Ten Commandments?",
+    "answer": "You shall not take the name of the Lord your God in vain",
+    "reference": ""
+  },
+  {
+    "id": 694,
+    "question": "What miracle did Jesus perform at the marriage in Cana?",
+    "answer": "Turning water into wine",
+    "reference": ""
+  },
+  {
+    "id": 703,
+    "question": "What type of insect did John the Baptist eat in the desert?",
+    "answer": "Locusts",
+    "reference": ""
+  },
+  {
+    "id": 704,
+    "question": "What tree did Zacchaeus climb?",
+    "answer": "Sycamore tree",
+    "reference": ""
+  },
+  {
+    "id": 706,
+    "question": "What was Abraham’s second wife?",
+    "answer": "Keturah",
+    "reference": ""
+  },
+  {
+    "id": 707,
+    "question": "What was Abram’s name changed to?",
+    "answer": "Abraham",
+    "reference": ""
+  },
+  {
+    "id": 710,
+    "question": "What was God's promise to never send a flood connected to?",
+    "answer": "A Rainbow",
+    "reference": ""
+  },
+  {
+    "id": 711,
+    "question": "What was God’s sign to Noah that he would never destroy the earth again?",
+    "answer": "A rainbow",
+    "reference": ""
+  },
+  {
+    "id": 712,
+    "question": "What was Hannah’s promise to God?",
+    "answer": "To dedicate her son Samuel",
+    "reference": ""
+  },
+  {
+    "id": 713,
+    "question": "What was Harn’s father called?",
+    "answer": "Noah",
+    "reference": ""
+  },
+  {
+    "id": 715,
+    "question": "What was Jacob’s brother called?",
+    "answer": "Esau",
+    "reference": ""
+  },
+  {
+    "id": 716,
+    "question": "What was Jacob’s eldest son called?",
+    "answer": "Rueben",
+    "reference": ""
+  },
+  {
+    "id": 717,
+    "question": "What was Jacob’s youngest son called?",
+    "answer": "Benjamin",
+    "reference": ""
+  },
+  {
+    "id": 726,
+    "question": "What was Ruth’s husband called?",
+    "answer": "Boas",
+    "reference": ""
+  },
+  {
+    "id": 728,
+    "question": "What was Sarai’s name changed to?",
+    "answer": "Sarah",
+    "reference": ""
+  },
+  {
+    "id": 730,
+    "question": "What was Simon Peter’s profession before becoming an apostle?",
+    "answer": "Fisherman",
+    "reference": ""
+  },
+  {
+    "id": 735,
+    "question": "What was the first of the Ten Commandments?",
+    "answer": "Thou shalt have no other gods before me",
+    "reference": ""
+  },
+  {
+    "id": 736,
+    "question": "What was the first of the ten plagues in Egypt?",
+    "answer": "Water turned into blood",
+    "reference": "Exod 7:20"
+  },
+  {
+    "id": 744,
+    "question": "What was the name of the angel of the Lord who appeared unto Zacharias?",
+    "answer": "Gabriel",
+    "reference": "Luke 1:19"
+  },
+  {
+    "id": 745,
+    "question": "What was the name of the blind beggar at the gate of Jericho?",
+    "answer": "Bartimaeus",
+    "reference": ""
+  },
+  {
+    "id": 760,
+    "question": "What was the second plague on Egypt?",
+    "answer": "Frogs",
+    "reference": ""
+  },
+  {
+    "id": 761,
+    "question": "What was the second son Abraham had?",
+    "answer": "Isaac",
+    "reference": ""
+  },
+  {
+    "id": 762,
+    "question": "What was the secret behind Samson’s great strength?",
+    "answer": "He would lose this strength if his hair got cut",
+    "reference": ""
+  },
+  {
+    "id": 767,
+    "question": "What were Isaac’s sons’ names?",
+    "answer": "Jacob and Esau",
+    "reference": ""
+  },
+  {
+    "id": 771,
+    "question": "What were the two sons of Zebadee (one of the disciples) called?",
+    "answer": "John and Jacob",
+    "reference": ""
+  },
+  {
+    "id": 772,
+    "question": "What’s the final book in the Old Testament called?",
+    "answer": "Malachi",
+    "reference": ""
+  },
+  {
+    "id": 774,
+    "question": "What’s the fourth book of the New Testament?",
+    "answer": "John",
+    "reference": ""
+  },
+  {
+    "id": 779,
+    "question": "When Christians observe Palm Sunday",
+    "answer": "what biblical narrative are they celebrating?",
+    "reference": "Jesus’ triumphal entry into Jerusalem"
+  },
+  {
+    "id": 785,
+    "question": "Where did a jailer find his faith?",
+    "answer": "Philippi",
+    "reference": ""
+  },
+  {
+    "id": 786,
+    "question": "Where did David work as a shepherd?",
+    "answer": "Bethlehem",
+    "reference": ""
+  },
+  {
+    "id": 789,
+    "question": "Where did Jesus grow up?",
+    "answer": "Nazareth",
+    "reference": ""
+  },
+  {
+    "id": 790,
+    "question": "Where did King Darius order Daniel to be thrown in after he prayed to the Lord?",
+    "answer": "The Lion's Den",
+    "reference": ""
+  },
+  {
+    "id": 792,
+    "question": "Where did Moses receive the Ten Commandments?",
+    "answer": "Mount Sinai",
+    "reference": ""
+  },
+  {
+    "id": 794,
+    "question": "Where did they live at the beginning of the world?",
+    "answer": "Garden of Eden",
+    "reference": ""
+  },
+  {
+    "id": 796,
+    "question": "Where was Jesus born?",
+    "answer": "Bethlehem",
+    "reference": ""
+  },
+  {
+    "id": 798,
+    "question": "Where was Jesus taken prisoner?",
+    "answer": "Gethsemane",
+    "reference": ""
+  },
+  {
+    "id": 805,
+    "question": "Which apostle was crucified upside down?",
+    "answer": "Peter",
+    "reference": ""
+  },
+  {
+    "id": 806,
+    "question": "Which biblical book tells of David and Goliath?",
+    "answer": "1 Samuel",
+    "reference": ""
+  },
+  {
+    "id": 809,
+    "question": "Which book did Jesus directly write?",
+    "answer": "None",
+    "reference": ""
+  },
+  {
+    "id": 811,
+    "question": "Which book reports on the missionary travels of Paul?",
+    "answer": "The Acts of the Apostles",
+    "reference": ""
+  },
+  {
+    "id": 812,
+    "question": "Which books come before and after the gospel according to Luke?",
+    "answer": "The gospels according to Mark and John",
+    "reference": ""
+  },
+  {
+    "id": 813,
+    "question": "Which commander had leprosy?",
+    "answer": "Naemann",
+    "reference": ""
+  },
+  {
+    "id": 814,
+    "question": "Which disciple found a coin in the mouth of a fish?",
+    "answer": "Peter",
+    "reference": ""
+  },
+  {
+    "id": 821,
+    "question": "Which illness did Mephiboseth suffer from?",
+    "answer": "He was lame",
+    "reference": ""
+  },
+  {
+    "id": 824,
+    "question": "Which king had a sundial?",
+    "answer": "Hezekiah",
+    "reference": ""
+  },
+  {
+    "id": 826,
+    "question": "Which New Testament book gives a prophecy on the end of the world?",
+    "answer": "Revelation",
+    "reference": ""
+  },
+  {
+    "id": 828,
+    "question": "Which NT book has Jesus’ Sermon on the Mount?",
+    "answer": "Matthew",
+    "reference": ""
+  },
+  {
+    "id": 837,
+    "question": "Which towns were destroyed by fire and brimstone?",
+    "answer": "Sodom and Gomorrah",
+    "reference": ""
+  },
+  {
+    "id": 838,
+    "question": "Which two birds did Noah send out of the ark as messengers?",
+    "answer": "Raven and dove",
+    "reference": ""
+  },
+  {
+    "id": 841,
+    "question": "Which type of animal did Balaam ride?",
+    "answer": "A donkey",
+    "reference": ""
+  },
+  {
+    "id": 843,
+    "question": "Who anointed Saul as king?",
+    "answer": "Samuel",
+    "reference": ""
+  },
+  {
+    "id": 844,
+    "question": "Who are the religious leaders who constantly tried to trap Jesus with their questions?",
+    "answer": "Pharisees",
+    "reference": ""
+  },
+  {
+    "id": 847,
+    "question": "Who asked Pilate for Jesus’ body after the crucifixion?",
+    "answer": "Joseph of Arimathea",
+    "reference": ""
+  },
+  {
+    "id": 848,
+    "question": "Who baptizes Jesus?",
+    "answer": "John the Baptizer",
+    "reference": ""
+  },
+  {
+    "id": 849,
+    "question": "Who begins their book with: \"\"Hear O heavens and give ear O earth: for the LORD hath spoken…",
+    "answer": "Isaiah",
+    "reference": "Isaiah 1:2"
+  },
+  {
+    "id": 852,
+    "question": "Who commanded the sun and moon to stay still?",
+    "answer": "Joshua",
+    "reference": ""
+  },
+  {
+    "id": 853,
+    "question": "Who did Abraham have his second son with?",
+    "answer": "Sarah",
+    "reference": ""
+  },
+  {
+    "id": 855,
+    "question": "Who did God call out of Ur to move to Canaan?",
+    "answer": "Abram",
+    "reference": ""
+  },
+  {
+    "id": 856,
+    "question": "Who did God tell to build an ark?",
+    "answer": "Noah",
+    "reference": ""
+  },
+  {
+    "id": 858,
+    "question": "Who did Jesus teach the Lord's Prayer to?",
+    "answer": "His disciples",
+    "reference": ""
+  },
+  {
+    "id": 861,
+    "question": "Who did Samuel anoint as the first King of Israel?",
+    "answer": "Saul",
+    "reference": ""
+  },
+  {
+    "id": 863,
+    "question": "Who does God call: \"\"my firstborn higher than the kings of the earth\"\"?",
+    "answer": "David",
+    "reference": "Psalms 89:27"
+  },
+  {
+    "id": 864,
+    "question": "Who had a coat made of camel hair and ate locusts and wild honey?",
+    "answer": "John the Baptist",
+    "reference": ""
+  },
+  {
+    "id": 866,
+    "question": "Who is \"\"the stone the builders rejected\"\"?",
+    "answer": "Jesus",
+    "reference": "Luke 20:9"
+  },
+  {
+    "id": 870,
+    "question": "Who is the first apostle to deny Jesus?",
+    "answer": "Peter",
+    "reference": ""
+  },
+  {
+    "id": 874,
+    "question": "Who lived in Ur and moved to a country he did not know?",
+    "answer": "Abraham",
+    "reference": ""
+  },
+  {
+    "id": 875,
+    "question": "Who made the golden calf and the bronze snake?",
+    "answer": "Aaron and Moses",
+    "reference": ""
+  },
+  {
+    "id": 878,
+    "question": "Who prophesised the coming of Jesus shortly beforehand?",
+    "answer": "John the Baptist",
+    "reference": ""
+  },
+  {
+    "id": 879,
+    "question": "Who ran to Jesus' empty tomb along with John?",
+    "answer": "Peter",
+    "reference": "John 20:3-4"
+  },
+  {
+    "id": 880,
+    "question": "Who recognized Jesus as the Messiah when he was presented at the Temple as a baby?",
+    "answer": "Simeon",
+    "reference": ""
+  },
+  {
+    "id": 885,
+    "question": "Who said \"\"But what things were gain to me",
+    "answer": "those I counted loss for Christ?\"\"",
+    "reference": "Paul"
+  },
+  {
+    "id": 886,
+    "question": "Who said Do unto others as you would have them to unto you?",
+    "answer": "Jesus",
+    "reference": "Matthew 7:12"
+  },
+  {
+    "id": 888,
+    "question": "Who said to whom: \"\"A person sees what is in front of his eyes but God sees the heart\"\"?",
+    "answer": "God to Samuel",
+    "reference": ""
+  },
+  {
+    "id": 891,
+    "question": "Who said: „How long will you waver between two opinions?”",
+    "answer": "Elijah on Mount Carmel",
+    "reference": ""
+  },
+  {
+    "id": 892,
+    "question": "Who said: \"\"I myself and my house want to serve the Lord!”?",
+    "answer": "Joshua",
+    "reference": ""
+  },
+  {
+    "id": 895,
+    "question": "Who takes Jesus’s body off the cross?",
+    "answer": "Joseph of Arimathea",
+    "reference": ""
+  },
+  {
+    "id": 897,
+    "question": "Who was Abram’s handmaid?",
+    "answer": "Hagar",
+    "reference": ""
+  },
+  {
+    "id": 898,
+    "question": "Who was Abram’s wife?",
+    "answer": "Sarai",
+    "reference": ""
+  },
+  {
+    "id": 899,
+    "question": "Who was assigned to make a sacrifice in behalf of all Israel during Old Testament times?",
+    "answer": "The High Priest",
+    "reference": ""
+  },
+  {
+    "id": 901,
+    "question": "Who was Caesar when Jesus was born?",
+    "answer": "Augustus",
+    "reference": "Luke 3:1"
+  },
+  {
+    "id": 902,
+    "question": "Who was David’s best friend?",
+    "answer": "Jonathan",
+    "reference": ""
+  },
+  {
+    "id": 905,
+    "question": "Who was Joseph’s master in Egypt?",
+    "answer": "Potiphar",
+    "reference": ""
+  },
+  {
+    "id": 909,
+    "question": "Who was the enemy who took the Ark of the Covenant?",
+    "answer": "Philistines",
+    "reference": ""
+  },
+  {
+    "id": 911,
+    "question": "Who was the father-in-law of Caiaphas",
+    "answer": "the high priest at the time of Jesus’ death?",
+    "reference": "Annas"
+  },
+  {
+    "id": 915,
+    "question": "Who was the first man?",
+    "answer": "Adam",
+    "reference": ""
+  },
+  {
+    "id": 918,
+    "question": "Who was the first son Jacob had with Rachel?",
+    "answer": "Joseph",
+    "reference": ""
+  },
+  {
+    "id": 919,
+    "question": "Who was the first woman?",
+    "answer": "Eve",
+    "reference": ""
+  },
+  {
+    "id": 924,
+    "question": "Who was the king of Judea at the time of Jesus’ birth?",
+    "answer": "Herod the Great",
+    "reference": ""
+  },
+  {
+    "id": 929,
+    "question": "Who was the mother of Moses?",
+    "answer": "Jochebed",
+    "reference": ""
+  },
+  {
+    "id": 933,
+    "question": "Who was the Roman ruler when John the Baptist began his ministry?",
+    "answer": "Tiberius",
+    "reference": ""
+  },
+  {
+    "id": 934,
+    "question": "Who was the sister of Moses?",
+    "answer": "Miriam",
+    "reference": ""
+  },
+  {
+    "id": 935,
+    "question": "Who was the tax collector that climbed up a tree so he could see Jesus?",
+    "answer": "Zacchaeus",
+    "reference": ""
+  },
+  {
+    "id": 936,
+    "question": "Who watched as Moses floated in the basket down the Nile?",
+    "answer": "His Sister Miriam",
+    "reference": "Exodus 2:4"
+  },
+  {
+    "id": 938,
+    "question": "Who were Adam & Eve’s first children?",
+    "answer": "Cain & Abel",
+    "reference": ""
+  },
+  {
+    "id": 940,
+    "question": "Who were the first apostles called to follow Jesus?",
+    "answer": "Peter & Andrew",
+    "reference": ""
+  },
+  {
+    "id": 947,
+    "question": "Who wrote the Gospel of Mark?",
+    "answer": "Mark",
+    "reference": ""
+  },
+  {
+    "id": 949,
+    "question": "Whow as the grandmother of Jacob?",
+    "answer": "Sara",
+    "reference": ""
+  },
+  {
+    "id": 1475,
+    "question": "After Jesus fed the 5,000 how many baskets were left over?",
+    "answer": "12",
+    "reference": ""
+  },
+  {
+    "id": 1476,
+    "question": "After Jesus was arrested, which apostle disowned him three times?",
+    "answer": "Peter",
+    "reference": ""
+  },
+  {
+    "id": 1477,
+    "question": "After Jesus’ arrest, one apostle allegedly disowned him three times - who was that apostle?",
+    "answer": "Peter",
+    "reference": ""
+  },
+  {
+    "id": 1478,
+    "question": "And they said one to another, Behold, this dreamer cometh Gen 37:19 Who is the dreamer in this verse?",
+    "answer": "Joseph",
+    "reference": "Genesis 37:19"
+  },
+  {
+    "id": 1744,
+    "question": "When Christians observe Palm Sunday, what biblical narrative are they celebrating?",
+    "answer": "Jesus’ triumphal entry into Jerusalem",
+    "reference": ""
+  },
+  {
+    "id": 1850,
+    "question": "Who said But what things were gain to me, those I counted loss for Christ?",
+    "answer": "Paul",
+    "reference": "Philippians 3:7"
+  },
+  {
+    "id": 1854,
+    "question": "Who said, Lord, if it be thou, bid me come unto thee on the water?",
+    "answer": "Peter",
+    "reference": "Matthew 14:28"
+  }
+]
