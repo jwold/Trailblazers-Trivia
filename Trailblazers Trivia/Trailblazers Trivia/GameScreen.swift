@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameScreen: View {
     @Binding var path: [Routes]
-    @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Player 2")
+    @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Hebrews")
     
     var body: some View {
         ZStack {
@@ -204,14 +204,6 @@ struct GameScreen: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Back") {
-                    path.removeLast()
-                }
-                .foregroundColor(.blue)
-                .font(.headline)
-            }
-
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(value: Routes.results(
                     playerScores: gameViewModel.getAllPlayerScores()
