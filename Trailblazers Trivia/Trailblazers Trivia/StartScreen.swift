@@ -41,7 +41,7 @@ struct StartScreen: View {
                         }
                     }
                 }
-                .background(Color(.systemBackground))
+                .background(.background)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
                 .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
@@ -87,19 +87,19 @@ struct CategoryCard: View {
                 // Icon with dark background for selected, light for others
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color.black : Color.gray.opacity(0.1))
+                        .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.12))
                         .frame(width: 44, height: 44)
                     
                     Image(systemName: category.icon)
                         .font(.system(size: 20))
-                        .foregroundColor(isSelected ? .white : .gray)
+                        .foregroundColor(isSelected ? .white : .secondary)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(category.name)
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundColor(category.isAvailable ? .black : .gray)
+                        .foregroundStyle(category.isAvailable ? .primary : .secondary)
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -110,7 +110,7 @@ struct CategoryCard: View {
                     if isSelected {
                         ZStack {
                             Circle()
-                                .fill(Color.black)
+                                .fill(Color.accentColor)
                                 .frame(width: 24, height: 24)
                             
                             Image(systemName: "checkmark")
@@ -121,7 +121,7 @@ struct CategoryCard: View {
                 } else {
                     Text("Coming Soon")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 20)

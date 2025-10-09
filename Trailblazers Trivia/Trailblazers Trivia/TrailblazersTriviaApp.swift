@@ -2,7 +2,7 @@
 //  Trailblazers_TriviaApp.swift
 //  Trailblazers Trivia
 //
-//  Created by Joshua Wold on 9/16/25.
+//  Created by Joshua Wold and Nathan Isaac on 9/16/25.
 //
 
 import SwiftUI
