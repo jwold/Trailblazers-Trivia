@@ -31,7 +31,7 @@
   },
   {
     "id": 501,
-    "question": "\"\"The wind bloweth where it listeth\"\" said Jesus to:",
+    "question": "Who did Jesus talk to about the wind blowing where it wants?",
     "answer": "Nicodemus",
     "reference": "John 3:4-8"
   },
@@ -49,9 +49,9 @@
   },
   {
     "id": 504,
-    "question": "According to Paul’s formulation in 1 Corinthians",
-    "answer": "which is the greatest of the imperishable qualities?",
-    "reference": "Love"
+    "question": "In 1 Corinthians, what is the greatest of the imperishable qualities?",
+    "answer": "Love",
+    "reference": ""
   },
   {
     "id": 506,
@@ -61,9 +61,9 @@
   },
   {
     "id": 508,
-    "question": "According to the NIV (New International Version) what is the shortest verse in the Bible?",
-    "answer": "Job 3:2",
-    "reference": ""
+    "question": "What is the shortest verse in the Bible?",
+    "answer": "Jesus Wept",
+    "reference": "John 11:35"
   },
   {
     "id": 514,
@@ -79,9 +79,9 @@
   },
   {
     "id": 516,
-    "question": "As Isaac was dying and blind",
-    "answer": "who suggested that Jacob should steal the blessing?",
-    "reference": "Rebekah"
+    "question": "Who helped Jacob steal the birthright from his older brother?",
+    "answer": "Rebekah",
+    "reference": ""
   },
   {
     "id": 517,
@@ -103,9 +103,9 @@
   },
   {
     "id": 522,
-    "question": "Complete the verse: \"\"For God so loved the world...",
-    "answer": "that he gave his one and only Son",
-    "reference": "that whoever believes in him shall not perish but have eternal life.\"\""
+    "question": "God loves the world so much that he did what?",
+    "answer": "Gave his son",
+    "reference": "John 3:16"
   },
   {
     "id": 523,
@@ -204,12 +204,6 @@
     "reference": ""
   },
   {
-    "id": 550,
-    "question": "How long did Jesus pray in Gethsemane?",
-    "answer": "The bible does not say",
-    "reference": ""
-  },
-  {
     "id": 551,
     "question": "How long did Moses’s mother hide him to escape the death edict of Pharaoh?",
     "answer": "3 months",
@@ -229,8 +223,8 @@
   },
   {
     "id": 561,
-    "question": "How many books does the Bible consist of?",
-    "answer": "66 books",
+    "question": "What's the second last book in the New Testament?",
+    "answer": "Jude",
     "reference": ""
   },
   {
@@ -348,12 +342,6 @@
     "reference": "James 5:13-18"
   },
   {
-    "id": 608,
-    "question": "Jesus' disciples were all:",
-    "answer": "(c) Jews",
-    "reference": ""
-  },
-  {
     "id": 609,
     "question": "Judas Iscariot betrayed Jesus for thirty pieces of silver What was thirty pieces of silver equivalent to in the OT?",
     "answer": "The price of a slave",
@@ -373,13 +361,13 @@
   },
   {
     "id": 616,
-    "question": "Paul and Silas were imprisoned during the second missionary journey",
-    "answer": "but in what city did this happen?",
-    "reference": "Philippi"
+    "question": "Which city were Paul and Silas imprisoned in during the second missionary journey?",
+    "answer": "Philippi",
+    "reference": ""
   },
   {
     "id": 617,
-    "question": "Paul says Christians should follow whose example? (Ephesians 5)",
+    "question": "Paul says Christians should follow whose example?",
     "answer": "Christ’s example",
     "reference": "Ephesians 5"
   },
@@ -391,13 +379,13 @@
   },
   {
     "id": 620,
-    "question": "Prior to raising Eutychus from the dead",
-    "answer": "Paul preached a lengthy sermon At what hour did he end his sermon?",
-    "reference": "Midnight"
+    "question": "Before raising Eutychus from the dead, Paul preached a long sermon. What time did it end?",
+    "answer": "Midnight",
+    "reference": ""
   },
   {
     "id": 621,
-    "question": "The Bible is divided into",
+    "question": "The Bible is divided into how many major parts?",
     "answer": "2 parts: Old Testament and New Testament",
     "reference": ""
   },
@@ -452,12 +440,12 @@
   {
     "id": 639,
     "question": "What did God tell Abraham to look at when he made him a promise?",
-    "answer": "To the stars in the sky",
-    "reference": "so that he could count them"
+    "answer": "To the stars in the sky so that he could count them",
+    "reference": ""
   },
   {
     "id": 641,
-    "question": "What did Herod and Pilate become when Jesus stood on trial before them? Friends or Enemies?",
+    "question": "What did Herod and Pilate become when Jesus stood on trial before them?",
     "answer": "Friends",
     "reference": "Luke 23:12"
   },
@@ -469,9 +457,9 @@
   },
   {
     "id": 643,
-    "question": "What did Jesus do before feeding the 5",
-    "answer": "000",
-    "reference": "Gave thanks"
+    "question": "What did Jesus do before feeding the 5,000",
+    "answer": "Pray to give thanks",
+    "reference": ""
   },
   {
     "id": 647,
@@ -558,12 +546,6 @@
     "reference": "Mark 4:35-41"
   },
   {
-    "id": 682,
-    "question": "What is the name of the town where Jesus was born?",
-    "answer": "Bethlehem",
-    "reference": "Matthew 2:1"
-  },
-  {
     "id": 683,
     "question": "What is the name of the village where Christ turned water into wine?",
     "answer": "Cana of Galilee",
@@ -578,7 +560,7 @@
   {
     "id": 687,
     "question": "What is the shortest book in the New Testament?",
-    "answer": "2 John",
+    "answer": "3 John",
     "reference": ""
   },
   {
@@ -588,16 +570,10 @@
     "reference": ""
   },
   {
-    "id": 689,
-    "question": "What is the shortest verse in the bible?",
-    "answer": "John 11:35 Jesus wept",
-    "reference": ""
-  },
-  {
     "id": 691,
     "question": "What king of Judah was overtaken by an invading army and had his eyes put out?",
     "answer": "Zedekiah",
-    "reference": "2 Kgs 25:7"
+    "reference": "2 Kings 25:7"
   },
   {
     "id": 692,
@@ -630,21 +606,9 @@
     "reference": "Luke 7:36-50"
   },
   {
-    "id": 700,
-    "question": "What should be the 3 attitudes of Jesus' followers?",
-    "answer": "Deny yourself",
-    "reference": "take up your cross daily"
-  },
-  {
     "id": 702,
     "question": "What tribe is Paul from?",
     "answer": "Benjamin",
-    "reference": ""
-  },
-  {
-    "id": 705,
-    "question": "What was a prophet’s usual task?",
-    "answer": "To pray and to be in the service of the priests",
     "reference": ""
   },
   {
@@ -664,12 +628,6 @@
     "question": "What was Isaiah’s father called?",
     "answer": "Amoz",
     "reference": ""
-  },
-  {
-    "id": 718,
-    "question": "What was Jesus' first miracle?",
-    "answer": "Turned water into wine at a wedding feast",
-    "reference": "John 2:1-11"
   },
   {
     "id": 719,
@@ -702,12 +660,6 @@
     "reference": ""
   },
   {
-    "id": 724,
-    "question": "What was Paul’s occupation?",
-    "answer": "Tentmaking",
-    "reference": "Acts 18:3"
-  },
-  {
     "id": 725,
     "question": "What was Peter's job before he became an apostle?",
     "answer": "Fisherman",
@@ -734,7 +686,7 @@
   {
     "id": 732,
     "question": "What was the “tabernacle” for?",
-    "answer": "The tabernacle was a portable sanctuary created by Moses as a place of worship for the Hebrew tribes throughout their wandering that preceded their arrival in the Promised Land",
+    "answer": "A portable sanctuary for worship for the Hebrew tribes before arriving in the Promised Land",
     "reference": ""
   },
   {
@@ -786,12 +738,6 @@
     "reference": ""
   },
   {
-    "id": 746,
-    "question": "What was the name of the blind man whom Jesus healed?",
-    "answer": "Bartimaeus",
-    "reference": "Mark 10:46-52"
-  },
-  {
     "id": 747,
     "question": "What was the name of the city founded by Cain after he left God's presence?",
     "answer": "Enoch",
@@ -820,12 +766,6 @@
     "question": "What was the name of the man who asked Pilate for Jesus' body?",
     "answer": "Joseph of Arimathea",
     "reference": "John 19:38-42"
-  },
-  {
-    "id": 753,
-    "question": "What was the name of the man who climbed a tree to see Jesus?",
-    "answer": "Zacchaeus",
-    "reference": "Luke 19:1-10"
   },
   {
     "id": 754,
@@ -882,15 +822,9 @@
     "reference": "Gen 46:27"
   },
   {
-    "id": 766,
-    "question": "What weapons did Gideon use to defeat the Midianites?",
-    "answer": "Trumpets",
-    "reference": "pitchers"
-  },
-  {
     "id": 768,
     "question": "What were men trying to do at the Tower of Babel?",
-    "answer": "Built a tower to reach to Heaven",
+    "answer": "Build a tower to reach to Heaven",
     "reference": ""
   },
   {
@@ -920,7 +854,7 @@
   {
     "id": 776,
     "question": "What’s the longest book in the Bible?",
-    "answer": "The book of Psalms is the longest book in the Old Testament",
+    "answer": "The book of Psalms",
     "reference": ""
   },
   {
@@ -932,7 +866,7 @@
   {
     "id": 778,
     "question": "What’s the shortest book in the Old Testament?",
-    "answer": "The book of Obadiah is the shortest book in the Old Testament",
+    "answer": "Obadiah",
     "reference": ""
   },
   {
@@ -943,9 +877,9 @@
   },
   {
     "id": 781,
-    "question": "When Jacob met Laban",
-    "answer": "which daughter did he want to marry?",
-    "reference": "Rachel"
+    "question": "When Jacob met Laban, which daughter did he want to marry?",
+    "answer": "Rachel",
+    "reference": ""
   },
   {
     "id": 782,
@@ -1038,12 +972,6 @@
     "reference": ""
   },
   {
-    "id": 808,
-    "question": "Which book comes last in the New Testament?",
-    "answer": "Revelation",
-    "reference": ""
-  },
-  {
     "id": 810,
     "question": "Which book of the bible begins with „In the beginning was the word“?",
     "answer": "John",
@@ -1092,12 +1020,6 @@
     "reference": ""
   },
   {
-    "id": 823,
-    "question": "Which is the longest and shortest chapter in the Bible?",
-    "answer": "The largest is Psalm 119 and the smallest is Psalm 117",
-    "reference": ""
-  },
-  {
     "id": 825,
     "question": "Which literary genre does Jesus implement to help preach his message?",
     "answer": "Parables",
@@ -1114,36 +1036,6 @@
     "question": "Which of the disciples denied Jesus?",
     "answer": "Peter",
     "reference": "Mark 14:66-72"
-  },
-  {
-    "id": 830,
-    "question": "Which of the following disciples never saw a vision of the kingdom of God coming with power before they tasted of death?",
-    "answer": "Andrew",
-    "reference": "Mark 9:1-2"
-  },
-  {
-    "id": 831,
-    "question": "Which of the following statements is not correct?",
-    "answer": "Moses was the author of the fewest books written in the Bible",
-    "reference": ""
-  },
-  {
-    "id": 832,
-    "question": "Which of these did not have their name changed in the Bible?",
-    "answer": "David",
-    "reference": ""
-  },
-  {
-    "id": 833,
-    "question": "Which of these disciples of Jesus used to be a disciple of John the Baptist?",
-    "answer": "Andrew",
-    "reference": "John 1:35"
-  },
-  {
-    "id": 834,
-    "question": "Which of these miracles did Jesus NOT perform?",
-    "answer": "Jesus turned a stone into bread",
-    "reference": ""
   },
   {
     "id": 835,
@@ -1176,12 +1068,6 @@
     "reference": "Luke 9:52-54"
   },
   {
-    "id": 846,
-    "question": "Who asked Pilate for Jesus’ body after he was crucified?",
-    "answer": "Joseph of Arimathea",
-    "reference": ""
-  },
-  {
     "id": 851,
     "question": "Who climbed a mountain at 120 years old and never came back?",
     "answer": "Moses",
@@ -1212,42 +1098,6 @@
     "reference": ""
   },
   {
-    "id": 862,
-    "question": "Who did the servant choose?",
-    "answer": "Rebekah",
-    "reference": ""
-  },
-  {
-    "id": 867,
-    "question": "Who is Abraham’s wife?",
-    "answer": "Sarah",
-    "reference": ""
-  },
-  {
-    "id": 868,
-    "question": "Who is Stephen in Acts of the Apostles?",
-    "answer": "First Christian martyr",
-    "reference": ""
-  },
-  {
-    "id": 869,
-    "question": "Who is the author of the Book of Revelation?",
-    "answer": "John",
-    "reference": ""
-  },
-  {
-    "id": 871,
-    "question": "Who is the high priest of Jerusalem that put Jesus on trial?",
-    "answer": "Caiaphas",
-    "reference": ""
-  },
-  {
-    "id": 872,
-    "question": "Who is the high priest of Jerusalem who put Jesus on trial?",
-    "answer": "Caiaphas",
-    "reference": ""
-  },
-  {
     "id": 876,
     "question": "Who murders John the Baptist?",
     "answer": "Herod Antipas",
@@ -1258,12 +1108,6 @@
     "question": "Who pretended to be mad to avoid capture and death at the hands of an enemy king?",
     "answer": "David",
     "reference": "1 Samuel 21:13"
-  },
-  {
-    "id": 881,
-    "question": "Who recognized Jesus as the Messiah when he was presented to the Temple as a baby?",
-    "answer": "Simeon",
-    "reference": ""
   },
   {
     "id": 882,
@@ -1282,12 +1126,6 @@
     "question": "Who rolled the stone closing Jesus' tomb?",
     "answer": "Joseph",
     "reference": "Matthew 27:59-60"
-  },
-  {
-    "id": 887,
-    "question": "Who said I say to my servant",
-    "answer": "Go",
-    "reference": "and he goes?"
   },
   {
     "id": 890,
@@ -1311,12 +1149,6 @@
     "id": 896,
     "question": "Who wanted to kill Jesus when he was a baby?",
     "answer": "Herod",
-    "reference": ""
-  },
-  {
-    "id": 900,
-    "question": "Who was born first?",
-    "answer": "Esau came first with Jacob grabbing his heel",
     "reference": ""
   },
   {
@@ -1494,12 +1326,6 @@
     "reference": ""
   },
   {
-    "id": 1472,
-    "question": "According to the Gospel of Matthew, where does Jesus’s first public sermon take place?",
-    "answer": "Mount",
-    "reference": ""
-  },
-  {
     "id": 1481,
     "question": "As Isaac was dying and blind, who suggested that Jacob should steal the blessing?",
     "answer": "Rebekah",
@@ -1516,12 +1342,6 @@
     "question": "Paul and Silas were imprisoned during the second missionary journey, but in what city did this happen?",
     "answer": "Philippi",
     "reference": ""
-  },
-  {
-    "id": 1585,
-    "question": "Prior to raising Eutychus from the dead, Paul preached a lengthy sermon At what hour did he end his sermon?",
-    "answer": "Midnight",
-    "reference": "Acts 20:7"
   },
   {
     "id": 1608,
