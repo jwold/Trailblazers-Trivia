@@ -72,28 +72,16 @@
     "reference": ""
   },
   {
-    "id": 510,
-    "question": "After Jesus fed the 5",
-    "answer": "000 how many baskets were left over?",
-    "reference": "12"
-  },
-  {
     "id": 511,
-    "question": "After Jesus was arrested",
-    "answer": "which apostle disowned him three times?",
-    "reference": "Peter"
-  },
-  {
-    "id": 512,
-    "question": "After Jesus’ arrest",
-    "answer": "one apostle allegedly disowned him three times - who was that apostle?",
-    "reference": "Peter"
+    "question": "After Jesus was arrested, which disciple disowned him three times?",
+    "answer": "Peter",
+    "reference": ""
   },
   {
     "id": 513,
-    "question": "And they said one to another",
-    "answer": "Behold",
-    "reference": "this dreamer cometh Gen 37:19 Who is the dreamer in this verse?"
+    "question": "Who was thrown into a pit by his brothers?",
+    "answer": "Joseph",
+    "reference": ""
   },
   {
     "id": 518,
@@ -158,7 +146,7 @@
   {
     "id": 542,
     "question": "How did Judas end up revealing Jesus’s identity to the Roman officials?",
-    "answer": "He kisses him",
+    "answer": "With a kiss",
     "reference": ""
   },
   {
@@ -169,7 +157,7 @@
   },
   {
     "id": 546,
-    "question": "How did Stephanus die?",
+    "question": "How did Stephen, one of the deacons in the New Testament, die?",
     "answer": "Stoned to death",
     "reference": ""
   },
@@ -181,8 +169,8 @@
   },
   {
     "id": 554,
-    "question": "How long was Jesus on the cross?",
-    "answer": "6 hours",
+    "question": "What time was it when Jesus was crucified?",
+    "answer": "Nine in the morning, or the third hour",
     "reference": "Mark 15:25"
   },
   {
@@ -193,7 +181,7 @@
   },
   {
     "id": 556,
-    "question": "How long were the children of Israel in captivity?",
+    "question": "How long were the children of Israel in Babylonian captivity?",
     "answer": "70 years",
     "reference": "Jer 25:11"
   },
@@ -216,63 +204,21 @@
     "reference": ""
   },
   {
-    "id": 562,
-    "question": "How many books in the New Testament?",
-    "answer": "27",
-    "reference": ""
-  },
-  {
-    "id": 563,
-    "question": "How many books in the Old Testament?",
-    "answer": "39",
-    "reference": ""
-  },
-  {
-    "id": 567,
-    "question": "How many days and nights did it rain when Noah was on the ark?",
-    "answer": "40",
-    "reference": ""
-  },
-  {
     "id": 568,
-    "question": "How many days and nights did Jesus fast for?",
+    "question": "How many days and nights did Jesus fast in the desert?",
     "answer": "40 days & 40 nights",
     "reference": ""
   },
   {
     "id": 569,
     "question": "How many days did God take to create the world?",
-    "answer": "6",
-    "reference": ""
-  },
-  {
-    "id": 570,
-    "question": "How many days did it take God to create the heavens and the earth?",
-    "answer": "Seven",
-    "reference": ""
-  },
-  {
-    "id": 573,
-    "question": "How many New Testament books are there?",
-    "answer": "27 books divided into 5 categories",
+    "answer": "6 (or 7 if you count resting)",
     "reference": ""
   },
   {
     "id": 574,
     "question": "How many people boarded Noah’s Ark?",
     "answer": "Eight",
-    "reference": ""
-  },
-  {
-    "id": 575,
-    "question": "How many people did Jesus feed with five loaves of bread and two fish?",
-    "answer": "5000+",
-    "reference": ""
-  },
-  {
-    "id": 576,
-    "question": "How many people were saved on the ark?",
-    "answer": "8",
     "reference": ""
   },
   {
@@ -290,12 +236,12 @@
   {
     "id": 579,
     "question": "How many wise men visited the baby Jesus?",
-    "answer": "Three",
+    "answer": "We don't actually know",
     "reference": ""
   },
   {
     "id": 581,
-    "question": "How many years of famine did Joseph prophesise to the Pharaohs?",
+    "question": "How many years of famine did Joseph prophecy to Pharaoh?",
     "answer": "seven",
     "reference": ""
   },
@@ -307,7 +253,7 @@
   },
   {
     "id": 585,
-    "question": "How old was Jesus when he tarried behind in Jerusalem after having attended the Passover feast with Mary and Joseph?",
+    "question": "How old was Jesus when he tarried behind in Jerusalem after attending the Passover feast with Mary and Joseph?",
     "answer": "12 Years Old",
     "reference": "Luke 2:41-43"
   },
@@ -325,7 +271,7 @@
   },
   {
     "id": 595,
-    "question": "In what city did Mary Martha and Lazarus live?",
+    "question": "In what city did Mary, Martha, and Lazarus live?",
     "answer": "Bethany",
     "reference": "John 11:1"
   },
@@ -361,14 +307,8 @@
   },
   {
     "id": 603,
-    "question": "Is Horeb the name of a town or a mountain?",
+    "question": "Horeb is the name of a what?",
     "answer": "A mountain",
-    "reference": ""
-  },
-  {
-    "id": 604,
-    "question": "Is the Old Testament bigger than the New Testament?",
-    "answer": "Yes",
     "reference": ""
   },
   {
@@ -385,15 +325,9 @@
   },
   {
     "id": 611,
-    "question": "Matthew was a _________",
+    "question": "What profession was Matthew in the New Testament?",
     "answer": "Tax collector",
     "reference": ""
-  },
-  {
-    "id": 613,
-    "question": "Name three of Jesus’ disciples whose names begin with „J”",
-    "answer": "Jacob",
-    "reference": "John and Judas"
   },
   {
     "id": 615,
@@ -409,20 +343,14 @@
   },
   {
     "id": 622,
-    "question": "The disciples were on a ship when a great tempest arose and covered it with waves What was Jesus doing at this time?",
+    "question": "What was Jesus doing when the boat with him and the disciples was in danger of sinking?",
     "answer": "Sleeping",
     "reference": "Matthew 8:24"
   },
   {
-    "id": 623,
-    "question": "The Old Testament was written in which language?",
-    "answer": "In Hebrew",
-    "reference": ""
-  },
-  {
     "id": 626,
-    "question": "Was Goliath a Philistine or an Egyptian?",
-    "answer": "Philistine",
+    "question": "What nation was Goliath from?",
+    "answer": "Philistines",
     "reference": ""
   },
   {
@@ -439,8 +367,8 @@
   },
   {
     "id": 632,
-    "question": "What came first? Elias ascension or Enoch’s rapture?",
-    "answer": "Enoch’s rapture",
+    "question": "Who was the first man to be taken into heaven?",
+    "answer": "Enoch",
     "reference": ""
   },
   {
@@ -459,12 +387,6 @@
     "id": 640,
     "question": "What did God use the rib of Adam to do?",
     "answer": "Create Eve",
-    "reference": ""
-  },
-  {
-    "id": 644,
-    "question": "What did Jesus say to Mary and Martha before he raised Lazarus?",
-    "answer": "Jesus wept",
     "reference": ""
   },
   {
@@ -540,21 +462,15 @@
     "reference": "Matthew 27:51"
   },
   {
-    "id": 664,
-    "question": "What happened first? Jesus’ christening or the feeding of the 5000?",
-    "answer": "Jesus’ christening",
-    "reference": ""
-  },
-  {
     "id": 665,
-    "question": "What happened first? Murder of Abel or the great flood?",
-    "answer": "Murder of Abel",
+    "question": "Who was the first man who was murdered?",
+    "answer": "Abel",
     "reference": ""
   },
   {
     "id": 666,
-    "question": "What happened first? The exodus of Egypt or the „fall of Jericho”?",
-    "answer": "Exodus",
+    "question": "Who led the Israelites around Jericho?",
+    "answer": "Joshua",
     "reference": ""
   },
   {
@@ -578,8 +494,8 @@
   {
     "id": 672,
     "question": "What is the Holy Trinity?",
-    "answer": "Father",
-    "reference": "Son"
+    "answer": "Father, Son, and Holy Spirit",
+    "reference": ""
   },
   {
     "id": 673,
@@ -602,7 +518,7 @@
   {
     "id": 685,
     "question": "What is the second commandment out of the Ten Commandments?",
-    "answer": "You shall not make for yourself a carved image; Thou shall not make idols",
+    "answer": "Thou shall not make idols",
     "reference": ""
   },
   {
@@ -630,14 +546,8 @@
     "reference": ""
   },
   {
-    "id": 704,
-    "question": "What tree did Zacchaeus climb?",
-    "answer": "Sycamore tree",
-    "reference": ""
-  },
-  {
     "id": 706,
-    "question": "What was Abraham’s second wife?",
+    "question": "Who was Abraham’s third wife?",
     "answer": "Keturah",
     "reference": ""
   },
@@ -654,12 +564,6 @@
     "reference": ""
   },
   {
-    "id": 711,
-    "question": "What was God’s sign to Noah that he would never destroy the earth again?",
-    "answer": "A rainbow",
-    "reference": ""
-  },
-  {
     "id": 712,
     "question": "What was Hannah’s promise to God?",
     "answer": "To dedicate her son Samuel",
@@ -667,13 +571,13 @@
   },
   {
     "id": 713,
-    "question": "What was Harn’s father called?",
-    "answer": "Noah",
+    "question": "Who was Abram's father?",
+    "answer": "Terah",
     "reference": ""
   },
   {
     "id": 715,
-    "question": "What was Jacob’s brother called?",
+    "question": "Who was Jacob’s brother?",
     "answer": "Esau",
     "reference": ""
   },
@@ -699,12 +603,6 @@
     "id": 728,
     "question": "What was Sarai’s name changed to?",
     "answer": "Sarah",
-    "reference": ""
-  },
-  {
-    "id": 730,
-    "question": "What was Simon Peter’s profession before becoming an apostle?",
-    "answer": "Fisherman",
     "reference": ""
   },
   {
@@ -758,7 +656,7 @@
   {
     "id": 771,
     "question": "What were the two sons of Zebadee (one of the disciples) called?",
-    "answer": "John and Jacob",
+    "answer": "James and John",
     "reference": ""
   },
   {
@@ -772,12 +670,6 @@
     "question": "What’s the fourth book of the New Testament?",
     "answer": "John",
     "reference": ""
-  },
-  {
-    "id": 779,
-    "question": "When Christians observe Palm Sunday",
-    "answer": "what biblical narrative are they celebrating?",
-    "reference": "Jesus’ triumphal entry into Jerusalem"
   },
   {
     "id": 785,
@@ -811,14 +703,8 @@
   },
   {
     "id": 794,
-    "question": "Where did they live at the beginning of the world?",
+    "question": "Where did Adam and Eve live at the beginning of the world?",
     "answer": "Garden of Eden",
-    "reference": ""
-  },
-  {
-    "id": 796,
-    "question": "Where was Jesus born?",
-    "answer": "Bethlehem",
     "reference": ""
   },
   {
@@ -840,27 +726,15 @@
     "reference": ""
   },
   {
-    "id": 809,
-    "question": "Which book did Jesus directly write?",
-    "answer": "None",
-    "reference": ""
-  },
-  {
     "id": 811,
     "question": "Which book reports on the missionary travels of Paul?",
     "answer": "The Acts of the Apostles",
     "reference": ""
   },
   {
-    "id": 812,
-    "question": "Which books come before and after the gospel according to Luke?",
-    "answer": "The gospels according to Mark and John",
-    "reference": ""
-  },
-  {
     "id": 813,
     "question": "Which commander had leprosy?",
-    "answer": "Naemann",
+    "answer": "Naaman",
     "reference": ""
   },
   {
@@ -932,7 +806,7 @@
   {
     "id": 848,
     "question": "Who baptizes Jesus?",
-    "answer": "John the Baptizer",
+    "answer": "John the Baptist",
     "reference": ""
   },
   {
@@ -991,7 +865,7 @@
   },
   {
     "id": 866,
-    "question": "Who is \"\"the stone the builders rejected\"\"?",
+    "question": "Who is the stone the builders rejected?",
     "answer": "Jesus",
     "reference": "Luke 20:9"
   },
@@ -1004,13 +878,13 @@
   {
     "id": 874,
     "question": "Who lived in Ur and moved to a country he did not know?",
-    "answer": "Abraham",
+    "answer": "Abram",
     "reference": ""
   },
   {
     "id": 875,
-    "question": "Who made the golden calf and the bronze snake?",
-    "answer": "Aaron and Moses",
+    "question": "Who made the bronze snake?",
+    "answer": "Moses",
     "reference": ""
   },
   {
@@ -1033,9 +907,9 @@
   },
   {
     "id": 885,
-    "question": "Who said \"\"But what things were gain to me",
-    "answer": "those I counted loss for Christ?\"\"",
-    "reference": "Paul"
+    "question": "Who said that the things gained were counted as lost for Christ?",
+    "answer": "Paul",
+    "reference": ""
   },
   {
     "id": 886,
@@ -1111,9 +985,9 @@
   },
   {
     "id": 911,
-    "question": "Who was the father-in-law of Caiaphas",
-    "answer": "the high priest at the time of Jesus’ death?",
-    "reference": "Annas"
+    "question": "Who was the father-in-law of Caiaphas, the high priest at the time of Jesus' death?",
+    "answer": "Annas",
+    "reference": ""
   },
   {
     "id": 915,
@@ -1171,8 +1045,8 @@
   },
   {
     "id": 938,
-    "question": "Who were Adam & Eve’s first children?",
-    "answer": "Cain & Abel",
+    "question": "Who was Adam & Eve’s first child?",
+    "answer": "Cain",
     "reference": ""
   },
   {
@@ -1189,7 +1063,7 @@
   },
   {
     "id": 949,
-    "question": "Whow as the grandmother of Jacob?",
+    "question": "Who was the grandmother of Jacob?",
     "answer": "Sara",
     "reference": ""
   },
@@ -1200,34 +1074,10 @@
     "reference": ""
   },
   {
-    "id": 1476,
-    "question": "After Jesus was arrested, which apostle disowned him three times?",
-    "answer": "Peter",
-    "reference": ""
-  },
-  {
-    "id": 1477,
-    "question": "After Jesus’ arrest, one apostle allegedly disowned him three times - who was that apostle?",
-    "answer": "Peter",
-    "reference": ""
-  },
-  {
-    "id": 1478,
-    "question": "And they said one to another, Behold, this dreamer cometh Gen 37:19 Who is the dreamer in this verse?",
-    "answer": "Joseph",
-    "reference": "Genesis 37:19"
-  },
-  {
     "id": 1744,
     "question": "When Christians observe Palm Sunday, what biblical narrative are they celebrating?",
     "answer": "Jesus’ triumphal entry into Jerusalem",
     "reference": ""
-  },
-  {
-    "id": 1850,
-    "question": "Who said But what things were gain to me, those I counted loss for Christ?",
-    "answer": "Paul",
-    "reference": "Philippians 3:7"
   },
   {
     "id": 1854,
