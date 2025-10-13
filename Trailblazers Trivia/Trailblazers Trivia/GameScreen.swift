@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+private extension Color {
+    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09) // #0F1218 approx
+    static let cardBackground = Color(red: 0.10, green: 0.12, blue: 0.15) // #1A1E27 approx
+    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85) // #5A8CD8 approx
+    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44) // #FF7F70 approx
+    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
+    static let controlShadow = Color.black.opacity(0.5)
+}
+
 struct GameScreen: View {
     @Binding var path: [Routes]
     @State private var gameViewModel = GameViewModel(player1Name: "Persians", player2Name: "Hebrews")
@@ -14,7 +23,7 @@ struct GameScreen: View {
     var body: some View {
         ZStack {
             // Clean background
-            Color(.systemBackground)
+            Color.appBackground
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -25,14 +34,26 @@ struct GameScreen: View {
                     HStack(alignment: .center, spacing: 12) {
                         Text("\(gameViewModel.currentPlayer.name) \(gameViewModel.currentPlayerScore)/10")
                             .font(.headline)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color.white.opacity(0.9))
                         Spacer()
                         Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
-                            Text("Easy").tag(Difficulty.easy)
-                            Text("Hard").tag(Difficulty.hard)
+                            Text("Easy")
+                                .tag(Difficulty.easy)
+                            Text("Hard")
+                                .tag(Difficulty.hard)
                         }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .frame(width: 140)
+                        .pickerStyle(.segmented)
+                        .tint(Color.chipBlue)
+                        .frame(width: 180)
+                        .padding(6)
+                        .background(
+                            Capsule().fill(Color.controlTrack)
+                                .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
+                        )
+                        .clipShape(Capsule())
+                        .onAppear { UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.chipBlue) }
+                        .onAppear { UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black.withAlphaComponent(0.85)], for: .selected) }
+                        .onAppear { UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemGray.withAlphaComponent(0.7)], for: .normal) }
                         .onChange(of: gameViewModel.selectedDifficulty) {
                             Task {
                                 await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
@@ -48,12 +69,13 @@ struct GameScreen: View {
                                 Text("Bible History")
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.black.opacity(0.85))
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 8)
                                     .background(
-                                        Capsule().fill(Color.blue.opacity(0.25))
+                                        Capsule().fill(Color.chipBlue)
                                     )
+                                    .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
                                 // Question text
                                 Text(gameViewModel.currentQuestion.question)
                                     .font(.largeTitle)
@@ -62,12 +84,14 @@ struct GameScreen: View {
                                     .fixedSize(horizontal: false, vertical: true)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .frame(maxHeight: .infinity, alignment: .topLeading)
+                                    .foregroundColor(Color.white.opacity(0.88))
                             } else {
                                 // Answer text (answer state)
                                 Text(gameViewModel.currentQuestion.answer)
                                     .font(.system(size: 48, weight: .semibold))
                                     .multilineTextAlignment(.center)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                    .foregroundColor(Color.white.opacity(0.9))
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -76,18 +100,21 @@ struct GameScreen: View {
                     .padding(.vertical, 24)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity, alignment: .center)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+                    .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 24))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: 24)
                             .strokeBorder(
                                 LinearGradient(
-                                    colors: [.white.opacity(0.3), .white.opacity(0.1)],
+                                    colors: [.white.opacity(0.12), .white.opacity(0.04)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 lineWidth: 1
                             )
                     )
+                    .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+                    .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
+                    .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
                     .overlay(alignment: .bottomTrailing) {
                         if !gameViewModel.showAnswer {
                             Button {
@@ -95,11 +122,12 @@ struct GameScreen: View {
                             } label: {
                                 Image(systemName: "eye.fill")
                                     .font(.title3)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.black.opacity(0.85))
                                     .frame(width: 44, height: 44)
                                     .background(
-                                        Circle().fill(Color.blue.opacity(0.25))
+                                        Circle().fill(Color.chipBlue)
                                     )
+                                    .shadow(color: Color.chipBlue.opacity(0.35), radius: 16, x: 0, y: 8)
                             }
                             .padding(16)
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
@@ -109,18 +137,17 @@ struct GameScreen: View {
                             } label: {
                                 Image(systemName: "arrow.left")
                                     .font(.title3)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.black.opacity(0.85))
                                     .frame(width: 44, height: 44)
                                     .background(
-                                        Circle().fill(Color.blue.opacity(0.25))
+                                        Circle().fill(Color.chipBlue)
                                     )
+                                    .shadow(color: Color.chipBlue.opacity(0.35), radius: 16, x: 0, y: 8)
                             }
                             .padding(16)
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
                         }
                     }
-                    .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
-                    .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
                     
                     Spacer()
                 }
@@ -164,18 +191,18 @@ struct GameScreen: View {
                                     .fontWeight(.semibold)
                             }
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(.black.opacity(0.9))
                             .frame(maxWidth: .infinity)
                             .frame(height: 56)
                             .background(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.green, Color.green.opacity(0.8)]),
+                                    gradient: Gradient(colors: [Color.chipBlue, Color.chipBlue.opacity(0.9)]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
-                            .shadow(color: .green.opacity(0.25), radius: 8, x: 0, y: 4)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
                         }
                         
                         Button {
@@ -188,24 +215,26 @@ struct GameScreen: View {
                                     .fontWeight(.semibold)
                             }
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(.black.opacity(0.9))
                             .frame(maxWidth: .infinity)
                             .frame(height: 56)
                             .background(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.red, Color.red.opacity(0.8)]),
+                                    gradient: Gradient(colors: [Color.coral, Color.coral.opacity(0.9)]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
-                            .shadow(color: .red.opacity(0.25), radius: 8, x: 0, y: 4)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .shadow(color: Color.coral.opacity(0.25), radius: 8, x: 0, y: 4)
                         }
                     }
                 }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
+            .background(Color.appBackground)
+            .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
         }
     }
 }
