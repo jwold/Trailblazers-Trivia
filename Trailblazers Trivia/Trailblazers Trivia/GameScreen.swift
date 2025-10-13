@@ -198,26 +198,6 @@ struct GameScreen: View {
                 if true {
                     HStack(spacing: 16) {
                         Button {
-                            gameViewModel.answeredCorrect()
-                        } label: {
-                            Text("Correct")
-                                .fontWeight(.semibold)
-                        }
-                        .font(.headline)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.chipBlue, Color.chipBlue.opacity(0.9)]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
-                        
-                        Button {
                             gameViewModel.answeredWrong()
                         } label: {
                             Text("Wrong")
@@ -236,6 +216,26 @@ struct GameScreen: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                         .shadow(color: Color.coral.opacity(0.25), radius: 8, x: 0, y: 4)
+                        
+                        Button {
+                            gameViewModel.answeredCorrect()
+                        } label: {
+                            Text("Correct")
+                                .fontWeight(.semibold)
+                        }
+                        .font(.headline)
+                        .foregroundColor(.black.opacity(0.9))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 56)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.chipBlue, Color.chipBlue.opacity(0.9)]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
                     }
                 }
             }

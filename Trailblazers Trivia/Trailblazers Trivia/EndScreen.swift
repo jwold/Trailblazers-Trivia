@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+private extension Color {
+    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09)
+    static let cardBackground = Color(red: 0.14, green: 0.16, blue: 0.20)
+    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85)
+    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44)
+    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
+    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83)
+}
+
 struct EndScreen: View {
     @Binding var path: [Routes]
     let playerScores: [PlayerScore]
@@ -16,92 +25,105 @@ struct EndScreen: View {
     }
 
     var body: some View {
-        VStack(spacing: 30) {
-            // Title
-            VStack(spacing: 8) {
-                Text("Game Over!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                if let winner = winner {
-                    Text("🎉 \(winner) Wins! 🎉")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.green)
-                } else {
-                    Text("It's a Tie!")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.blue)
+        ZStack {
+            Color.appBackground.ignoresSafeArea()
+            VStack(spacing: 0) {
+                // Header (no card)
+                VStack(alignment: .leading, spacing: 12) {
+                    EmptyView()
                 }
-            }
-            
-            // Scores
-            VStack(spacing: 20) {
-                Text("Final Scores")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                
-                VStack(spacing: 16) {
-                    ForEach(playerScores, id: \.name) { playerScore in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(playerScore.name)
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                    
-                                    if playerScore.isWinner {
-                                        Text("🎉 WINNER")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.green)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 2)
-                                            .background(.green.opacity(0.1))
-                                            .clipShape(Capsule())
-                                    }
-                                }
-                            }
-                            Spacer()
-                            Text("\(playerScore.score) points")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(playerScore.score >= 10 ? .green : .primary)
-                        }
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 16)
-                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .strokeBorder(playerScore.isWinner ? .green : .clear, lineWidth: 2)
-                        )
-                    }
-                }
-            }
-            
-            Spacer()
-            
-            // Navigation buttons
-            VStack(spacing: 16) {
-                Button(action: {
-                    path.removeLast(path.count)
-                }) {
-                    Text("Play Again")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 20)
+
+                // Scores card
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Final Scores")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.blue)
-                        )
+                        .foregroundColor(Color.labelPrimary)
+                    VStack(spacing: 12) {
+                        ForEach(playerScores, id: \.name) { playerScore in
+                            HStack(alignment: .center, spacing: 12) {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    HStack(spacing: 8) {
+                                        Text(playerScore.name)
+                                            .font(.headline)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color.labelPrimary)
+                                        if playerScore.isWinner {
+                                            Text("WINNER")
+                                                .font(.caption)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.black.opacity(0.85))
+                                                .padding(.horizontal, 10)
+                                                .padding(.vertical, 4)
+                                                .background(Capsule().fill(Color.chipBlue))
+                                                .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: 3)
+                                        }
+                                    }
+                                }
+                                Spacer()
+                                Text("\(playerScore.score) points")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(Color.labelPrimary)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 14)
+                            .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 16))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.white.opacity(0.06), lineWidth: 1)
+                            )
+                        }
+                    }
                 }
+                .padding(20)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 24))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24)
+                        .strokeBorder(
+                            LinearGradient(
+                                colors: [.white.opacity(0.12), .white.opacity(0.04)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+                .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+                .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+                .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+                .padding(.top, 20)
+
+                Spacer()
             }
-            .padding(.bottom, 40)
+            .padding(.horizontal, 20)
+            .safeAreaInset(edge: .bottom) {
+                VStack(spacing: 16) {
+                    Button(action: {
+                        path.removeLast(path.count)
+                    }) {
+                        Text("Play Again")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black.opacity(0.9))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .fill(Color.chipBlue)
+                            )
+                            .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 40)
+                .background(Color.appBackground)
+                .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
+            }
         }
-        .padding(.horizontal, 20)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
     }
@@ -116,3 +138,4 @@ struct EndScreen: View {
         ]
     )
 }
+
