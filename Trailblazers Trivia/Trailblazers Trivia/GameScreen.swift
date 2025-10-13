@@ -45,8 +45,8 @@ struct GameScreen: View {
                         }
                         .pickerStyle(.segmented)
                         .tint(Color.chipBlue)
-                        .frame(width: 180)
-                        .padding(6)
+                        .frame(width: 150)
+                        .padding(4)
                         .background(
                             Capsule().fill(Color.controlTrack)
                                 .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
@@ -98,12 +98,27 @@ struct GameScreen: View {
                                     .frame(maxHeight: .infinity, alignment: .topLeading)
                                     .foregroundColor(Color.labelPrimary)
                             } else {
-                                // Answer text (answer state)
-                                Text(gameViewModel.currentQuestion.answer)
-                                    .font(.system(size: 50, weight: .semibold))
-                                    .multilineTextAlignment(.center)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                    .foregroundColor(Color.labelPrimary)
+                                // Answer state with category chip
+                                VStack(alignment: .leading, spacing: 12) {
+                                    // Category chip (also shown in answer state)
+                                    Text("Bible History")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.black.opacity(0.85))
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            Capsule().fill(Color.chipBlue)
+                                        )
+                                        .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
+                                    
+                                    // Answer text
+                                    Text(gameViewModel.currentQuestion.answer)
+                                        .font(.system(size: 50, weight: .semibold))
+                                        .multilineTextAlignment(.center)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                        .foregroundColor(Color.labelPrimary)
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -235,3 +250,4 @@ struct GameScreen: View {
 #Preview {
     GameScreen(path: .constant([]))
 }
+
