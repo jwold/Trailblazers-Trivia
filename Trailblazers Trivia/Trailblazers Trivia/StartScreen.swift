@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+private extension Color {
+    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09) // #0F1218 approx
+    static let cardBackground = Color(red: 0.14, green: 0.16, blue: 0.20) // #242833 approx
+    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85) // #5A8CD8 approx
+    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83) // #BEC3D4
+}
+
 struct TriviaCategory {
     let id = UUID()
     let name: String
@@ -28,42 +35,53 @@ struct StartScreen: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 0) {
+            ZStack {
+                Color.appBackground.ignoresSafeArea()
+                
                 VStack(spacing: 0) {
-                    ForEach(categories.indices, id: \.self) { index in
-                        CategoryCard(
-                            category: categories[index],
-                            isSelected: selectedCategory == categories[index].name
-                        )
-                        
-                        if index < categories.count - 1 {
-                            Divider()
+                    Text("Trailblazers Trivia")
+                        .font(.largeTitle).fontWeight(.semibold)
+                        .foregroundColor(Color.labelPrimary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, 20)
+                    
+                    VStack(spacing: 0) {
+                        ForEach(categories.indices, id: \.self) { index in
+                            CategoryCard(
+                                category: categories[index],
+                                isSelected: selectedCategory == categories[index].name
+                            )
+                            
+                            if index < categories.count - 1 {
+                                Divider()
+                            }
                         }
                     }
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+                    .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+                    .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+                    
+                    Spacer()
+                    
+                    NavigationLink(value: Routes.game) {
+                        Text("Start New Game")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black.opacity(0.9))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .fill(Color.chipBlue)
+                            )
+                            .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
+                    }
                 }
-                .background(.background)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
-                .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
-                
-                Spacer()
-                
-                NavigationLink(value: Routes.game) {
-                    Text("Start New Game")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.blue)
-                        )
-                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 40)
             }
-            .navigationTitle("Trailblazers Trivia")
-            .padding(.bottom, 40)
-            .padding(.horizontal, 20)
             .navigationDestination(for: Routes.self) { route in
                 switch route {
                 case .game:
@@ -72,7 +90,6 @@ struct StartScreen: View {
                     EndScreen(path: $path, playerScores: playerScores)
                 }
             }
-
         }
     }
 }
@@ -87,19 +104,19 @@ struct CategoryCard: View {
                 // Icon with dark background for selected, light for others
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.12))
+                        .fill(isSelected ? Color.chipBlue : Color.white.opacity(0.06))
                         .frame(width: 44, height: 44)
                     
                     Image(systemName: category.icon)
                         .font(.system(size: 20))
-                        .foregroundColor(isSelected ? .white : .secondary)
+                        .foregroundColor(isSelected ? .black : .secondary)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(category.name)
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundStyle(category.isAvailable ? .primary : .secondary)
+                        .foregroundColor(category.isAvailable ? Color.labelPrimary : Color.labelPrimary.opacity(0.6))
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -110,24 +127,26 @@ struct CategoryCard: View {
                     if isSelected {
                         ZStack {
                             Circle()
-                                .fill(Color.accentColor)
+                                .fill(Color.chipBlue)
                                 .frame(width: 24, height: 24)
                             
                             Image(systemName: "checkmark")
                                 .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                         }
                     }
                 } else {
                     Text("Coming Soon")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundColor(Color.labelPrimary.opacity(0.6))
                 }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.clear)
+            .background(Color.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.06), lineWidth: 1))
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!category.isAvailable)
