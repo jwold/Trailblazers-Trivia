@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameScreen: View {
     @Binding var path: [Routes]
-    @State private var gameViewModel = GameViewModel(player1Name: "Persian", player2Name: "Hebrews")
+    @State private var gameViewModel = GameViewModel(player1Name: "Persians", player2Name: "Hebrews")
     
     var body: some View {
         ZStack {
@@ -18,181 +18,117 @@ struct GameScreen: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Difficulty Segmented Control - Stocks app style
-                VStack(spacing: 16) {
-                    Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
-                        Text("Easy").tag(Difficulty.easy)
-                        Text("Hard").tag(Difficulty.hard)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .frame(width: 200)
-                    .onChange(of: gameViewModel.selectedDifficulty) {
-                        Task {
-                            await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
-                        }
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 40)
-                
+                                
                 // Content Section
                 VStack(alignment: .leading, spacing: 20) {
                     // Player info above question
-                    HStack {
-                        Spacer()
-                        Text("\(gameViewModel.currentPlayer.name)'s Turn • \(gameViewModel.currentPlayerScore) Points")
+                    HStack(alignment: .center, spacing: 12) {
+                        Text("\(gameViewModel.currentPlayer.name) \(gameViewModel.currentPlayerScore)/10")
                             .font(.headline)
                             .foregroundColor(.primary)
                         Spacer()
+                        Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
+                            Text("Easy").tag(Difficulty.easy)
+                            Text("Hard").tag(Difficulty.hard)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 140)
+                        .onChange(of: gameViewModel.selectedDifficulty) {
+                            Task {
+                                await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
+                            }
+                        }
                     }
-                    .padding(.horizontal, 20)
-                    
+                    Spacer()
                     // Question Text - larger and centered
-                    HStack {
-                        Spacer()
-                        Text(gameViewModel.currentQuestion.question)
-                            .font(.largeTitle)
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Spacer()
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 12) {
+                            if !gameViewModel.showAnswer {
+                                // Category chip (question state)
+                                Text("Bible History")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 8)
+                                    .background(
+                                        Capsule().fill(Color.blue.opacity(0.25))
+                                    )
+                                // Question text
+                                Text(gameViewModel.currentQuestion.question)
+                                    .font(.largeTitle)
+                                    .fontWeight(.medium)
+                                    .multilineTextAlignment(.leading)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .frame(maxHeight: .infinity, alignment: .topLeading)
+                            } else {
+                                // Answer text (answer state)
+                                Text(gameViewModel.currentQuestion.answer)
+                                    .font(.system(size: 48, weight: .semibold))
+                                    .multilineTextAlignment(.center)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     }
                     .padding(.horizontal, 20)
-                    
-                    // Answer Display (when shown)
-                    if gameViewModel.showAnswer {
-                        VStack(spacing: 16) {
-                            Text(gameViewModel.currentQuestion.answer)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 24)
-                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .strokeBorder(
-                                    LinearGradient(
-                                        colors: [.white.opacity(0.3), .white.opacity(0.1)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    ),
-                                    lineWidth: 1
-                                )
-                        )
-                        .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
-                        .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
-                        .padding(.horizontal, 20)
-                    }
-                }
-                
-                Spacer()
-                
-                // Bottom Buttons Section
-                VStack(spacing: 16) {
-                    if !gameViewModel.showAnswer {
-                        Button {
-                            gameViewModel.showAnswerToggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "eye.fill")
-                                    .font(.headline)
-                                Text("Show Answer")
-                                    .fontWeight(.semibold)
-                            }
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(
+                    .padding(.vertical, 24)
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity, alignment: .center)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .strokeBorder(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
+                                    colors: [.white.opacity(0.3), .white.opacity(0.1)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
                             )
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
-                            .shadow(color: .blue.opacity(0.25), radius: 8, x: 0, y: 4)
-                        }
-                        .padding(.horizontal, 20)
-                    } else {
-                        // Action Buttons
-                        VStack(spacing: 16) {
-                            Button {
-                                gameViewModel.answeredCorrect()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.headline)
-                                    Text("Correct")
-                                        .fontWeight(.semibold)
-                                }
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 56)
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.green, Color.green.opacity(0.8)]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 28))
-                                .shadow(color: .green.opacity(0.25), radius: 8, x: 0, y: 4)
-                            }
-                            
-                            Button {
-                                gameViewModel.answeredWrong()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.headline)
-                                    Text("Wrong")
-                                        .fontWeight(.semibold)
-                                }
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 56)
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.red, Color.red.opacity(0.8)]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 28))
-                                .shadow(color: .red.opacity(0.25), radius: 8, x: 0, y: 4)
-                            }
-                            
+                    )
+                    .overlay(alignment: .bottomTrailing) {
+                        if !gameViewModel.showAnswer {
                             Button {
                                 gameViewModel.showAnswerToggle()
                             } label: {
-                                HStack {
-                                    Image(systemName: "eye.slash.fill")
-                                        .font(.subheadline)
-                                    Text("Hide Answer")
-                                        .fontWeight(.medium)
-                                }
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 25))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 25)
-                                        .strokeBorder(.quaternary, lineWidth: 1)
-                                )
+                                Image(systemName: "eye.fill")
+                                    .font(.title3)
+                                    .foregroundColor(.primary)
+                                    .frame(width: 44, height: 44)
+                                    .background(
+                                        Circle().fill(Color.blue.opacity(0.25))
+                                    )
                             }
+                            .padding(16)
+                            .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
+                        } else {
+                            Button {
+                                gameViewModel.showAnswerToggle()
+                            } label: {
+                                Image(systemName: "arrow.left")
+                                    .font(.title3)
+                                    .foregroundColor(.primary)
+                                    .frame(width: 44, height: 44)
+                                    .background(
+                                        Circle().fill(Color.blue.opacity(0.25))
+                                    )
+                            }
+                            .padding(16)
+                            .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
                         }
-                        .padding(.horizontal, 20)
                     }
+                    .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
+                    .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
+                    
+                    Spacer()
                 }
-                .padding(.bottom, 40)
+                .padding(.horizontal, 20)
+                .frame(maxHeight: .infinity)
+                
+                // Removed the standalone Spacer() here
+                
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -213,6 +149,63 @@ struct GameScreen: View {
                         .font(.headline)
                 }
             }
+        }
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 16) {
+                if true {
+                    HStack(spacing: 16) {
+                        Button {
+                            gameViewModel.answeredCorrect()
+                        } label: {
+                            HStack {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.headline)
+                                Text("Correct")
+                                    .fontWeight(.semibold)
+                            }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.green, Color.green.opacity(0.8)]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 28))
+                            .shadow(color: .green.opacity(0.25), radius: 8, x: 0, y: 4)
+                        }
+                        
+                        Button {
+                            gameViewModel.answeredWrong()
+                        } label: {
+                            HStack {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.headline)
+                                Text("Wrong")
+                                    .fontWeight(.semibold)
+                            }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.red, Color.red.opacity(0.8)]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 28))
+                            .shadow(color: .red.opacity(0.25), radius: 8, x: 0, y: 4)
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 40)
         }
     }
 }
