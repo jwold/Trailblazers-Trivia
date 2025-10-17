@@ -80,6 +80,7 @@ struct StartScreen: View {
                     }
                 }
                 .padding(.horizontal, 20)
+                .padding(.top, 40)
                 .padding(.bottom, 40)
             }
             .navigationDestination(for: Routes.self) { route in

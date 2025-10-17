@@ -179,6 +179,7 @@ struct GameScreen: View {
                     Spacer()
                 }
                 .padding(.horizontal, 20)
+                .padding(.top, 60)
                 .frame(maxHeight: .infinity)
                 
                 // Removed the standalone Spacer() here

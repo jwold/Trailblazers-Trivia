@@ -33,7 +33,7 @@ struct EndScreen: View {
                     EmptyView()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 20)
+                .padding(.top, 40)
 
                 // Scores card
                 VStack(alignment: .leading, spacing: 16) {
