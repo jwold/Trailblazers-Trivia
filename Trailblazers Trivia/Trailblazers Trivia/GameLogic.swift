@@ -23,18 +23,32 @@ class GameViewModel {
         players[currentPlayerIndex]
     }
     
+    var player1: Player {
+        players[0]
+    }
+    
+    var player2: Player {
+        players[1]
+    }
+    
     var currentQuestion: Question {
         currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
     }
     
     // Computed property for scores
-    func getPlayerScore(for player: Player) -> Int {
-        turns
-            .filter { $0.player.id == player.id && $0.wasCorrect }
-            .reduce(0) { total, turn in
-                guard let difficulty = turn.difficulty else { return total }
-                return total + (difficulty == .hard ? 3 : 1)
+    func getPlayerScore(for player: Player) -> Double {
+        let playerTurns = turns.filter { $0.player.id == player.id }
+        var score: Double = 0.0
+        
+        for turn in playerTurns {
+            if turn.wasCorrect {
+                score += 1.0 // +1 point for correct
+            } else {
+                score -= 0.5 // -0.5 points for wrong
             }
+        }
+        
+        return max(0, score) // Can't go below 0
     }
     
     // Export all player scores for use in views
@@ -186,7 +200,7 @@ class GameViewModel {
 
 struct PlayerScore: Hashable {
     let name: String
-    let score: Int
+    let score: Double
     let isWinner: Bool
 }
 

@@ -33,10 +33,6 @@ struct GameScreen: View {
                 VStack(alignment: .leading, spacing: 20) {
                     // Player info above question
                     HStack(alignment: .center, spacing: 12) {
-                        Text("\(gameViewModel.currentPlayer.name) \(gameViewModel.currentPlayerScore)/10")
-                            .font(.headline)
-                            .foregroundColor(Color.labelPrimary)
-                        Spacer()
                         Button {
                             path = []
                         } label: {
@@ -47,6 +43,59 @@ struct GameScreen: View {
                                 .background(
                                     RoundedRectangle(cornerRadius: 12).fill(Color.controlTrack)
                                 )
+                        }
+                        
+                        // Connected team boxes spanning the width
+                        HStack(spacing: 0) {
+                            // Player 1 box
+                            VStack(spacing: 6) {
+                                Text(gameViewModel.player1.name)
+                                    .font(.headline)
+                                    .fontWeight(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .bold : .medium)
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.labelPrimary.opacity(0.7))
+                                
+                                Text(String(format: "%.1f/10 pts", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(Color.labelPrimary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                UnevenRoundedRectangle(
+                                    topLeadingRadius: 20,
+                                    bottomLeadingRadius: 20,
+                                    bottomTrailingRadius: 0,
+                                    topTrailingRadius: 0
+                                )
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.controlTrack.opacity(0.8) : Color.controlTrack.opacity(0.4))
+                            )
+                            
+                            // Player 2 box
+                            VStack(spacing: 6) {
+                                Text(gameViewModel.player2.name)
+                                    .font(.headline)
+                                    .fontWeight(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .bold : .medium)
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.labelPrimary.opacity(0.7))
+                                
+                                Text(String(format: "%.1f/10 pts", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(Color.labelPrimary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                UnevenRoundedRectangle(
+                                    topLeadingRadius: 0,
+                                    bottomLeadingRadius: 0,
+                                    bottomTrailingRadius: 20,
+                                    topTrailingRadius: 20
+                                )
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.controlTrack.opacity(0.8) : Color.controlTrack.opacity(0.4))
+                            )
                         }
                     }
                     Spacer()
