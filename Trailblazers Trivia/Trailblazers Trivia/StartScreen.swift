@@ -25,6 +25,7 @@ struct StartScreen: View {
     @State private var path: [Routes] = []
 
     @State private var selectedCategory: String? = "Bible"
+    @State private var selectedPlayerMode: PlayerMode = .twoPlayer
     @State private var categories = [
         TriviaCategory(name: "Bible", icon: "book.closed", isAvailable: true),
         TriviaCategory(name: "Animals", icon: "pawprint", isAvailable: false),
@@ -32,6 +33,17 @@ struct StartScreen: View {
         TriviaCategory(name: "World History", icon: "globe", isAvailable: false),
         TriviaCategory(name: "Geography", icon: "location", isAvailable: false)
     ]
+
+    enum PlayerMode {
+        case onePlayer, twoPlayer
+        
+        var displayName: String {
+            switch self {
+            case .onePlayer: return "1 Player"
+            case .twoPlayer: return "2 Players"
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -80,6 +92,61 @@ struct StartScreen: View {
                     .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
                     .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
                     
+                    // Player Mode Switcher
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 0) {
+                            // Two Player Button
+                            Button {
+                                selectedPlayerMode = .twoPlayer
+                            } label: {
+                                Text("2 Players")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(selectedPlayerMode == .twoPlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 44)
+                                    .background(
+                                        Capsule()
+                                            .fill(selectedPlayerMode == .twoPlayer ? Color.chipBlue : Color.clear)
+                                    )
+                                    .padding(.horizontal, 4)
+                            }
+                            
+                            // One Player Button
+                            Button {
+                                selectedPlayerMode = .onePlayer
+                            } label: {
+                                VStack(spacing: 4) {
+                                    Text("1 Player")
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.4))
+                                    
+                                    Text("Coming Soon")
+                                        .font(.system(size: 11, weight: .medium))
+                                        .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.7) : Color.labelPrimary.opacity(0.4))
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 44)
+                                .padding(.vertical, 4)
+                                .background(
+                                    Capsule()
+                                        .fill(selectedPlayerMode == .onePlayer ? Color.chipBlue : Color.clear)
+                                )
+                                .padding(.horizontal, 4)
+                            }
+                            .disabled(true)
+                        }
+                        .background(
+                            Capsule()
+                                .fill(Color.cardBackground)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.white.opacity(0.06), lineWidth: 1)
+                                )
+                        )
+                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 2)
+                    }
+                    .padding(.top, 20)
+                    
                     Spacer()
                     
                     NavigationLink(value: Routes.game) {
@@ -124,7 +191,7 @@ struct CategoryCard: View {
                 // Icon with dark background for selected, light for others
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color.chipBlue : Color.white.opacity(0.06))
+                        .fill(isSelected ? Color.white : Color.white.opacity(0.06))
                         .frame(width: 44, height: 44)
                     
                     Image(systemName: category.icon)
@@ -157,7 +224,7 @@ struct CategoryCard: View {
                     }
                 } else {
                     Text("Coming Soon")
-                        .font(.subheadline)
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundColor(Color.labelPrimary.opacity(0.6))
                 }
             }

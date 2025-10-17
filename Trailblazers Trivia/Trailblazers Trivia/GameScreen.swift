@@ -38,101 +38,59 @@ struct GameScreen: View {
                         } label: {
                             Image(systemName: "xmark")
                                 .font(.headline)
-                                .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                .foregroundColor(.black.opacity(0.85))
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle().fill(Color.labelPrimary.opacity(0.15))
+                                )
                         }
                         
                         Spacer()
                         
-                        // Connected team boxes centered
-                        HStack(spacing: 2) { // Reduced spacing for tighter connection
-                            // Player 1 box
-                            VStack(spacing: 4) { // Reduced spacing for tighter layout
+                        // Connected team boxes centered - unified design
+                        HStack(spacing: 0) {
+                            // Player 1 section
+                            HStack(spacing: 8) {
                                 Text(gameViewModel.player1.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                 
-                                Text(String(format: "%.1f/10", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
-                                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                Text(String(format: "%.0f", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12) // Increased padding for better touch target
                             .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
                             .background(
-                                UnevenRoundedRectangle(
-                                    topLeadingRadius: 16,
-                                    bottomLeadingRadius: 16,
-                                    bottomTrailingRadius: 0,
-                                    topTrailingRadius: 0
-                                )
-                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
-                                      Color.controlTrack.opacity(0.9) : Color.controlTrack.opacity(0.5))
-                            )
-                            .overlay(
-                                // Active player accent line
-                                UnevenRoundedRectangle(
-                                    topLeadingRadius: 16,
-                                    bottomLeadingRadius: 16,
-                                    bottomTrailingRadius: 0,
-                                    topTrailingRadius: 0
-                                )
-                                .strokeBorder(
-                                    gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
-                                    Color.chipBlue.opacity(0.6) : Color.clear,
-                                    lineWidth: 2
-                                )
-                            )
-                            .shadow(
-                                color: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
-                                Color.chipBlue.opacity(0.2) : Color.black.opacity(0.1),
-                                radius: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 8 : 4,
-                                x: 0, y: 2
+                                Capsule()
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.clear)
                             )
                             
-                            // Player 2 box
-                            VStack(spacing: 4) { // Reduced spacing for tighter layout
+                            // Player 2 section
+                            HStack(spacing: 8) {
                                 Text(gameViewModel.player2.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                 
-                                Text(String(format: "%.1f/10", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
-                                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                Text(String(format: "%.0f", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12) // Increased padding for better touch target
                             .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
                             .background(
-                                UnevenRoundedRectangle(
-                                    topLeadingRadius: 0,
-                                    bottomLeadingRadius: 0,
-                                    bottomTrailingRadius: 16,
-                                    topTrailingRadius: 16
-                                )
-                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
-                                      Color.controlTrack.opacity(0.9) : Color.controlTrack.opacity(0.5))
-                            )
-                            .overlay(
-                                // Active player accent line
-                                UnevenRoundedRectangle(
-                                    topLeadingRadius: 0,
-                                    bottomLeadingRadius: 0,
-                                    bottomTrailingRadius: 16,
-                                    topTrailingRadius: 16
-                                )
-                                .strokeBorder(
-                                    gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
-                                    Color.chipBlue.opacity(0.6) : Color.clear,
-                                    lineWidth: 2
-                                )
-                            )
-                            .shadow(
-                                color: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
-                                Color.chipBlue.opacity(0.2) : Color.black.opacity(0.1),
-                                radius: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 8 : 4,
-                                x: 0, y: 2
+                                Capsule()
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.clear)
                             )
                         }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.controlTrack.opacity(0.6))
+                                .stroke(Color.labelPrimary.opacity(0.1), lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                         .frame(maxWidth: 280) // Limit the width of the score boxes
                         .padding(.bottom, 8) // Add small bottom padding to score boxes
                         
@@ -151,7 +109,7 @@ struct GameScreen: View {
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 8)
                                     .background(
-                                        Capsule().fill(Color.chipBlue)
+                                        Capsule().fill(Color.white)
                                     )
                                     .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
                                 // Question text
@@ -174,7 +132,7 @@ struct GameScreen: View {
                                         .padding(.horizontal, 14)
                                         .padding(.vertical, 8)
                                         .background(
-                                            Capsule().fill(Color.chipBlue)
+                                            Capsule().fill(Color.white)
                                         )
                                         .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
                                     
