@@ -39,11 +39,28 @@ struct StartScreen: View {
                 Color.appBackground.ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    Text("Trailblazers Trivia")
-                        .font(.largeTitle).fontWeight(.semibold)
-                        .foregroundColor(Color.labelPrimary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 20)
+                    HStack {
+                        Text("Trailblazers Trivia")
+                            .font(.largeTitle).fontWeight(.semibold)
+                            .foregroundColor(Color.labelPrimary)
+                        
+                        Spacer()
+                        
+                        NavigationLink(value: Routes.about) {
+                            Image(systemName: "gearshape")
+                                .font(.title2)
+                                .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle().fill(Color.cardBackground)
+                                )
+                                .overlay(
+                                    Circle().stroke(Color.white.opacity(0.06), lineWidth: 1)
+                                )
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    .padding(.bottom, 20)
                     
                     VStack(spacing: 0) {
                         ForEach(categories.indices, id: \.self) { index in
@@ -89,6 +106,8 @@ struct StartScreen: View {
                     GameScreen(path: $path)
                 case .results(let playerScores):
                     EndScreen(path: $path, playerScores: playerScores)
+                case .about:
+                    AboutScreen(path: $path)
                 }
             }
         }
