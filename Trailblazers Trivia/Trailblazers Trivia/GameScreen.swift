@@ -39,64 +39,104 @@ struct GameScreen: View {
                             Image(systemName: "xmark")
                                 .font(.headline)
                                 .foregroundColor(Color.labelPrimary.opacity(0.7))
-                                .frame(width: 36, height: 36)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.controlTrack)
-                                )
                         }
                         
-                        // Connected team boxes spanning the width
-                        HStack(spacing: 0) {
+                        Spacer()
+                        
+                        // Connected team boxes centered
+                        HStack(spacing: 2) { // Reduced spacing for tighter connection
                             // Player 1 box
-                            VStack(spacing: 6) {
+                            VStack(spacing: 4) { // Reduced spacing for tighter layout
                                 Text(gameViewModel.player1.name)
-                                    .font(.headline)
-                                    .fontWeight(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .bold : .medium)
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.labelPrimary.opacity(0.7))
+                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.labelPrimary.opacity(0.8))
                                 
-                                Text(String(format: "%.1f/10 pts", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.labelPrimary)
+                                Text(String(format: "%.1f/10", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
                             }
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
+                            .padding(.vertical, 12) // Increased padding for better touch target
+                            .padding(.horizontal, 16)
                             .background(
                                 UnevenRoundedRectangle(
-                                    topLeadingRadius: 20,
-                                    bottomLeadingRadius: 20,
+                                    topLeadingRadius: 16,
+                                    bottomLeadingRadius: 16,
                                     bottomTrailingRadius: 0,
                                     topTrailingRadius: 0
                                 )
-                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.controlTrack.opacity(0.8) : Color.controlTrack.opacity(0.4))
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
+                                      Color.controlTrack.opacity(0.9) : Color.controlTrack.opacity(0.5))
+                            )
+                            .overlay(
+                                // Active player accent line
+                                UnevenRoundedRectangle(
+                                    topLeadingRadius: 16,
+                                    bottomLeadingRadius: 16,
+                                    bottomTrailingRadius: 0,
+                                    topTrailingRadius: 0
+                                )
+                                .strokeBorder(
+                                    gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
+                                    Color.chipBlue.opacity(0.6) : Color.clear,
+                                    lineWidth: 2
+                                )
+                            )
+                            .shadow(
+                                color: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 
+                                Color.chipBlue.opacity(0.2) : Color.black.opacity(0.1),
+                                radius: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? 8 : 4,
+                                x: 0, y: 2
                             )
                             
                             // Player 2 box
-                            VStack(spacing: 6) {
+                            VStack(spacing: 4) { // Reduced spacing for tighter layout
                                 Text(gameViewModel.player2.name)
-                                    .font(.headline)
-                                    .fontWeight(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .bold : .medium)
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.labelPrimary.opacity(0.7))
+                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.labelPrimary.opacity(0.8))
                                 
-                                Text(String(format: "%.1f/10 pts", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.labelPrimary)
+                                Text(String(format: "%.1f/10", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
                             }
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
+                            .padding(.vertical, 12) // Increased padding for better touch target
+                            .padding(.horizontal, 16)
                             .background(
                                 UnevenRoundedRectangle(
                                     topLeadingRadius: 0,
                                     bottomLeadingRadius: 0,
-                                    bottomTrailingRadius: 20,
-                                    topTrailingRadius: 20
+                                    bottomTrailingRadius: 16,
+                                    topTrailingRadius: 16
                                 )
-                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.controlTrack.opacity(0.8) : Color.controlTrack.opacity(0.4))
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
+                                      Color.controlTrack.opacity(0.9) : Color.controlTrack.opacity(0.5))
+                            )
+                            .overlay(
+                                // Active player accent line
+                                UnevenRoundedRectangle(
+                                    topLeadingRadius: 0,
+                                    bottomLeadingRadius: 0,
+                                    bottomTrailingRadius: 16,
+                                    topTrailingRadius: 16
+                                )
+                                .strokeBorder(
+                                    gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
+                                    Color.chipBlue.opacity(0.6) : Color.clear,
+                                    lineWidth: 2
+                                )
+                            )
+                            .shadow(
+                                color: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 
+                                Color.chipBlue.opacity(0.2) : Color.black.opacity(0.1),
+                                radius: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? 8 : 4,
+                                x: 0, y: 2
                             )
                         }
+                        .frame(maxWidth: 280) // Limit the width of the score boxes
+                        .padding(.bottom, 8) // Add small bottom padding to score boxes
+                        
+                        Spacer()
                     }
                     Spacer()
                     // Question Text - larger and centered
@@ -204,7 +244,7 @@ struct GameScreen: View {
                     
                     Spacer()
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 12) // Reduced from 20 to 12
                 .padding(.top, 60)
                 .frame(maxHeight: .infinity)
                 
@@ -266,7 +306,7 @@ struct GameScreen: View {
                     }
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 12) // Reduced from 20 to 12
             .padding(.bottom, 40)
             .background(Color.appBackground)
             .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)

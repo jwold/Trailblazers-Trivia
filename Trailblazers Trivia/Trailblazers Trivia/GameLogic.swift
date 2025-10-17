@@ -86,7 +86,7 @@ class GameViewModel {
         return playerScores
     }
     
-    var currentPlayerScore: Int {
+    var currentPlayerScore: Double {
         getPlayerScore(for: currentPlayer)
     }
     
