@@ -63,7 +63,7 @@ struct GameScreen: View {
                             .padding(.vertical, 12)
                             .background(
                                 Capsule()
-                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? Color.chipBlue : Color.clear)
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .white : Color.clear)
                             )
                             
                             // Player 2 section
