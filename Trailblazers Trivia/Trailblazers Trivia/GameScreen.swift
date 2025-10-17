@@ -37,29 +37,6 @@ struct GameScreen: View {
                             .font(.headline)
                             .foregroundColor(Color.labelPrimary)
                         Spacer()
-                        Picker("Difficulty", selection: $gameViewModel.selectedDifficulty) {
-                            Text("Easy")
-                                .tag(Difficulty.easy)
-                            Text("Hard")
-                                .tag(Difficulty.hard)
-                        }
-                        .pickerStyle(.segmented)
-                        .tint(Color.chipBlue)
-                        .frame(width: 150)
-                        .padding(4)
-                        .background(
-                            Capsule().fill(Color.controlTrack)
-                                .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
-                        )
-                        .clipShape(Capsule())
-                        .onAppear { UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.chipBlue) }
-                        .onAppear { UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black.withAlphaComponent(0.85)], for: .selected) }
-                        .onAppear { UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemGray.withAlphaComponent(0.7)], for: .normal) }
-                        .onChange(of: gameViewModel.selectedDifficulty) {
-                            Task {
-                                await gameViewModel.changeDifficultyForCurrentTurn(to: gameViewModel.selectedDifficulty)
-                            }
-                        }
                         Button {
                             path = []
                         } label: {

@@ -30,7 +30,7 @@ struct JSONQuestion: Codable {
     let reference: String
     
     /// Convert to domain Question model with UUID
-    func toQuestion() -> Question {
+    func toQuestion(difficulty: Difficulty) -> Question {
         // Generate a UUID for the question since we don't trust the original IDs
         let uuid = UUID().uuidString
         
@@ -38,7 +38,7 @@ struct JSONQuestion: Codable {
             id: uuid,
             question: question,
             answer: answer,
-            difficulty: .easy // All questions in bible-easy.json are easy difficulty
+            difficulty: difficulty
         )
     }
 }
@@ -60,12 +60,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     private func loadAllQuestions() throws -> [Question] {
         var allQuestions: [Question] = []
         
-        // Load easy questions
-        if let easyQuestions = try loadQuestions(from: "bible-easy") {
-            allQuestions.append(contentsOf: easyQuestions)
-        }
-        
-        // Load hard questions
+        // Only load hard questions
         if let hardQuestions = try loadQuestions(from: "bible-hard") {
             allQuestions.append(contentsOf: hardQuestions)
         }
@@ -87,9 +82,12 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let data = try Data(contentsOf: url)
         let jsonQuestions = try JSONDecoder().decode([JSONQuestion].self, from: data)
         
+        // Determine difficulty based on file name
+        let difficulty: Difficulty = fileName.contains("hard") ? .hard : .easy
+        
         // Filter out malformed questions and convert to Question model
         return jsonQuestions.compactMap { jsonQuestion in
-            let question = jsonQuestion.toQuestion()
+            let question = jsonQuestion.toQuestion(difficulty: difficulty)
             
             // Basic validation to filter out incomplete or malformed questions
             guard !question.question.isEmpty,
