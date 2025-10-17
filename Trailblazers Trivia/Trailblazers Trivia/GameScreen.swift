@@ -32,22 +32,8 @@ struct GameScreen: View {
                 // Content Section
                 VStack(alignment: .leading, spacing: 20) {
                     // Player info above question
-                    HStack(alignment: .center, spacing: 12) {
-                        Button {
-                            path = []
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.headline)
-                                .foregroundColor(.black.opacity(0.85))
-                                .frame(width: 44, height: 44)
-                                .background(
-                                    Circle().fill(Color.labelPrimary.opacity(0.15))
-                                )
-                        }
-                        
-                        Spacer()
-                        
-                        // Connected team boxes centered - unified design
+                    HStack(alignment: .center, spacing: 0) {
+                        // Connected team boxes - aligned with question card
                         HStack(spacing: 0) {
                             // Player 1 section
                             HStack(spacing: 8) {
@@ -83,7 +69,8 @@ struct GameScreen: View {
                                     .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.clear)
                             )
                         }
-                        .padding(.horizontal, 8)
+                        .padding(.leading, 12) // Align with question card
+                        .padding(.trailing, 0)
                         .padding(.vertical, 8)
                         .background(
                             Capsule()
@@ -95,6 +82,19 @@ struct GameScreen: View {
                         .padding(.bottom, 8) // Add small bottom padding to score boxes
                         
                         Spacer()
+                        
+                        Button {
+                            path = []
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.headline)
+                                .foregroundColor(.black.opacity(0.85))
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle().fill(Color.labelPrimary.opacity(0.15))
+                                )
+                        }
+                        .padding(.trailing, 12) // Align with question card
                     }
                     Spacer()
                     // Question Text - larger and centered
@@ -199,10 +199,10 @@ struct GameScreen: View {
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
                         }
                     }
-                    
+                    .padding(.horizontal, 12) // Add padding back for question card
                     Spacer()
                 }
-                .padding(.horizontal, 12) // Reduced from 20 to 12
+                .padding(.horizontal, 0) // Remove horizontal padding to allow score box to go to edge
                 .padding(.top, 60)
                 .frame(maxHeight: .infinity)
                 
