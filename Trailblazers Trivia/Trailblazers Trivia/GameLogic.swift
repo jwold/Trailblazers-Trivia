@@ -231,3 +231,202 @@ struct Turn {
         question?.difficulty
     }
 }
+
+@Observable
+class SinglePlayerGameViewModel {
+    let player: Player
+    private let questionRepository: QuestionRepositoryProtocol
+    private var gameStartTime: Date?
+    private var timer: Timer?
+    
+    var turns: [Turn] = []
+    var currentTurn: Turn?
+    var gameEnded = false
+    var selectedDifficulty: Difficulty = .hard
+    var hasAnswered = false
+    var selectedAnswer: String?
+    var currentAnswerOptions: [String] = []
+    var elapsedTime: TimeInterval = 0
+    
+    var currentQuestion: Question {
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
+    }
+    
+    // Computed property for score
+    func getPlayerScore() -> Double {
+        let playerTurns = turns.filter { $0.player.id == player.id }
+        var score: Double = 0.0
+        
+        for turn in playerTurns {
+            if turn.wasCorrect {
+                score += 1.0 // +1 point for correct
+            } else {
+                score -= 0.5 // -0.5 points for wrong
+            }
+        }
+        
+        return max(0, score) // Can't go below 0
+    }
+    
+    // Export player score for results screen
+    func getAllPlayerScores() -> [PlayerScore] {
+        let finalScore = getPlayerScore()
+        return [PlayerScore(
+            name: player.name,
+            score: finalScore,
+            isWinner: true // Single player is always the "winner"
+        )]
+    }
+    
+    var shouldEndGame: Bool {
+        getPlayerScore() >= 10 || turns.count >= 20 // End after 10 points or 20 questions
+    }
+    
+    init(
+        playerName: String = "Player",
+        questionRepository: QuestionRepositoryProtocol? = nil
+    ) {
+        self.player = Player(id: UUID().uuidString, name: playerName)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .memory)
+        
+        startTimer()
+        
+        Task {
+            await startNewTurn()
+        }
+    }
+    
+    @MainActor
+    func startNewTurn() async {
+        hasAnswered = false
+        selectedAnswer = nil
+        
+        // Create turn with player first
+        currentTurn = Turn(player: player)
+        
+        // Then load the question
+        do {
+            let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
+            currentTurn?.question = question
+            generateAnswerOptions()
+        } catch {
+            print("Failed to get question: \(error)")
+            // Fallback to a default question or handle error appropriately
+        }
+    }
+    
+    private func generateAnswerOptions() {
+        guard let question = currentTurn?.question else { return }
+        
+        // For now, let's create some sample wrong answers
+        // In a real app, you'd want to have these in your question data
+        let wrongAnswers = generateWrongAnswers(for: question)
+        
+        // Combine correct answer with wrong answers and shuffle
+        var options = wrongAnswers + [question.answer]
+        options.shuffle()
+        
+        currentAnswerOptions = options
+    }
+    
+    private func generateWrongAnswers(for question: Question) -> [String] {
+        // This is a simple implementation - in a real app you'd want these in your data
+        let biblicalNames = ["David", "Solomon", "Moses", "Abraham", "Isaac", "Jacob", "Joseph", "Joshua", "Samuel", "Daniel"]
+        let biblicalPlaces = ["Jerusalem", "Bethlehem", "Nazareth", "Egypt", "Babylon", "Canaan", "Jordan", "Galilee"]
+        
+        let allOptions = biblicalNames + biblicalPlaces
+        let wrongOptions = allOptions.filter { $0 != question.answer }
+        
+        return Array(wrongOptions.shuffled().prefix(2)) // Only 2 wrong answers now
+    }
+    
+    func selectAnswer(_ answer: String) {
+        guard !hasAnswered else { return }
+        
+        hasAnswered = true
+        selectedAnswer = answer
+        
+        let wasCorrect = answer == currentQuestion.answer
+        recordAnswer(wasCorrect: wasCorrect)
+        
+        // Don't automatically progress - wait for Continue button
+    }
+    
+    @MainActor
+    func continueToNextQuestion() async {
+        // Check if game should end
+        if shouldEndGame {
+            gameEnded = true
+            return
+        }
+        
+        await startNewTurn()
+    }
+    
+    private func recordAnswer(wasCorrect: Bool) {
+        guard var turn = currentTurn else { return }
+        
+        // Update the current turn with answer information
+        turn.isAnswered = true
+        turn.wasCorrect = wasCorrect
+        
+        // Add the completed turn to answered questions
+        turns.append(turn)
+        
+        // Update current turn to reflect the answered state
+        currentTurn = turn
+    }
+    
+    @MainActor
+    private func nextTurn() async {
+        // Check if game should end
+        if shouldEndGame {
+            stopTimer()
+            gameEnded = true
+            return
+        }
+        
+        await startNewTurn()
+    }
+    
+    private func startTimer() {
+        gameStartTime = Date()
+        elapsedTime = 0
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self, let startTime = self.gameStartTime else { return }
+            DispatchQueue.main.async {
+                self.elapsedTime = Date().timeIntervalSince(startTime)
+            }
+        }
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    // Format elapsed time as MM:SS
+    func formatElapsedTime() -> String {
+        let minutes = Int(elapsedTime) / 60
+        let seconds = Int(elapsedTime) % 60
+        return String(format: "%d:%02d", minutes, seconds)
+    }
+    
+    func resetGame() {
+        turns.removeAll()
+        questionRepository.resetUsedQuestions()
+        hasAnswered = false
+        selectedAnswer = nil
+        gameEnded = false
+        stopTimer()
+        startTimer()
+        Task {
+            await startNewTurn()
+        }
+    }
+    
+    deinit {
+        stopTimer()
+    }
+}

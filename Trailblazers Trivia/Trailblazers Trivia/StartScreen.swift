@@ -115,25 +115,17 @@ struct StartScreen: View {
                             Button {
                                 selectedPlayerMode = .onePlayer
                             } label: {
-                                VStack(spacing: 4) {
-                                    Text("1 Player")
-                                        .font(.system(size: 16, weight: .semibold))
-                                        .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.4))
-                                    
-                                    Text("Coming Soon")
-                                        .font(.system(size: 11, weight: .medium))
-                                        .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.7) : Color.labelPrimary.opacity(0.4))
-                                }
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 44)
-                                .padding(.vertical, 4)
-                                .background(
-                                    Capsule()
-                                        .fill(selectedPlayerMode == .onePlayer ? Color.chipBlue : Color.clear)
-                                )
-                                .padding(.horizontal, 4)
+                                Text("1 Player")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 44)
+                                    .background(
+                                        Capsule()
+                                            .fill(selectedPlayerMode == .onePlayer ? Color.chipBlue : Color.clear)
+                                    )
+                                    .padding(.horizontal, 4)
                             }
-                            .disabled(true)
                         }
                         .background(
                             Capsule()
@@ -149,7 +141,7 @@ struct StartScreen: View {
                     
                     Spacer()
                     
-                    NavigationLink(value: Routes.game) {
+                    NavigationLink(value: selectedPlayerMode == .onePlayer ? Routes.gameOnePlayer : Routes.gameTwoPlayer) {
                         Text("Start New Game")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -169,10 +161,14 @@ struct StartScreen: View {
             }
             .navigationDestination(for: Routes.self) { route in
                 switch route {
-                case .game:
+                case .gameOnePlayer:
+                    SinglePlayerGameScreen(path: $path)
+                case .gameTwoPlayer:
                     GameScreen(path: $path)
                 case .results(let playerScores):
                     EndScreen(path: $path, playerScores: playerScores)
+                case .singlePlayerResults(let finalScore, let questionsAnswered, let elapsedTime):
+                    SinglePlayerEndScreen(path: $path, finalScore: finalScore, questionsAnswered: questionsAnswered, elapsedTime: elapsedTime)
                 case .about:
                     AboutScreen(path: $path)
                 }
