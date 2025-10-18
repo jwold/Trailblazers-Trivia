@@ -20,6 +20,21 @@ struct EndScreen: View {
     @Binding var path: [Routes]
     let playerScores: [PlayerScore]
     
+    // Function to format scores with fractions instead of decimals
+    private func formatScore(_ score: Double) -> String {
+        let wholeNumber = Int(score)
+        let remainder = score - Double(wholeNumber)
+        
+        if remainder == 0.5 {
+            return "\(wholeNumber)½"
+        } else if remainder == 0 {
+            return "\(wholeNumber)"
+        } else {
+            // For any other fractional values, fall back to decimal
+            return String(format: "%.1f", score)
+        }
+    }
+    
     var winner: String? {
         playerScores.first(where: { $0.isWinner })?.name
     }
@@ -63,7 +78,7 @@ struct EndScreen: View {
                                     }
                                 }
                                 Spacer()
-                                Text("\(playerScore.score) points")
+                                Text("\(formatScore(playerScore.score)) points")
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(Color.labelPrimary)

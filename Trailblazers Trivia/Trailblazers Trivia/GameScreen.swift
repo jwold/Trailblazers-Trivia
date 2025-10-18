@@ -21,6 +21,21 @@ struct GameScreen: View {
     @Binding var path: [Routes]
     @State private var gameViewModel = GameViewModel(player1Name: "Persians", player2Name: "Hebrews")
     
+    // Function to format scores with fractions instead of decimals
+    private func formatScore(_ score: Double) -> String {
+        let wholeNumber = Int(score)
+        let remainder = score - Double(wholeNumber)
+        
+        if remainder == 0.5 {
+            return "\(wholeNumber)½"
+        } else if remainder == 0 {
+            return "\(wholeNumber)"
+        } else {
+            // For any other fractional values, fall back to decimal
+            return String(format: "%.1f", score)
+        }
+    }
+    
     var body: some View {
         ZStack {
             // Clean background
@@ -40,8 +55,9 @@ struct GameScreen: View {
                                 Text(gameViewModel.player1.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .lineLimit(1)
                                 
-                                Text(String(format: "%.0f", gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                Text(formatScore(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
@@ -57,8 +73,9 @@ struct GameScreen: View {
                                 Text(gameViewModel.player2.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .lineLimit(1)
                                 
-                                Text(String(format: "%.0f", gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                Text(formatScore(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
@@ -70,7 +87,7 @@ struct GameScreen: View {
                             )
                         }
                         .padding(.leading, 12) // Align with question card
-                        .padding(.trailing, 0)
+                        .padding(.trailing, 12) // Match left padding
                         .padding(.vertical, 8)
                         .background(
                             Capsule()
