@@ -32,7 +32,7 @@ class GameViewModel {
     }
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."], difficulty: .easy)
     }
     
     // Computed property for scores
@@ -218,6 +218,7 @@ struct Question {
     let id: String
     let question: String
     let answer: String
+    let wrongAnswers: [String]
     let difficulty: Difficulty
 }
 
@@ -249,7 +250,7 @@ class SinglePlayerGameViewModel {
     var elapsedTime: TimeInterval = 0
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", difficulty: .easy)
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."], difficulty: .easy)
     }
     
     // Computed property for score
@@ -318,9 +319,8 @@ class SinglePlayerGameViewModel {
     private func generateAnswerOptions() {
         guard let question = currentTurn?.question else { return }
         
-        // For now, let's create some sample wrong answers
-        // In a real app, you'd want to have these in your question data
-        let wrongAnswers = generateWrongAnswers(for: question)
+        // Use the wrong answers from the question data
+        let wrongAnswers = question.wrongAnswers
         
         // Combine correct answer with wrong answers and shuffle
         var options = wrongAnswers + [question.answer]
@@ -328,17 +328,7 @@ class SinglePlayerGameViewModel {
         
         currentAnswerOptions = options
     }
-    
-    private func generateWrongAnswers(for question: Question) -> [String] {
-        // This is a simple implementation - in a real app you'd want these in your data
-        let biblicalNames = ["David", "Solomon", "Moses", "Abraham", "Isaac", "Jacob", "Joseph", "Joshua", "Samuel", "Daniel"]
-        let biblicalPlaces = ["Jerusalem", "Bethlehem", "Nazareth", "Egypt", "Babylon", "Canaan", "Jordan", "Galilee"]
-        
-        let allOptions = biblicalNames + biblicalPlaces
-        let wrongOptions = allOptions.filter { $0 != question.answer }
-        
-        return Array(wrongOptions.shuffled().prefix(2)) // Only 2 wrong answers now
-    }
+
     
     func selectAnswer(_ answer: String) {
         guard !hasAnswered else { return }

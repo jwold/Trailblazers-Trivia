@@ -27,6 +27,7 @@ struct JSONQuestion: Codable {
     let id: Int
     let question: String
     let answer: String
+    let wrongAnswers: [String]
     let reference: String
     
     /// Convert to domain Question model with UUID
@@ -38,6 +39,7 @@ struct JSONQuestion: Codable {
             id: uuid,
             question: question,
             answer: answer,
+            wrongAnswers: wrongAnswers,
             difficulty: difficulty
         )
     }
@@ -172,24 +174,24 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
         // All questions pool - fallback questions
         self.questions = [
             // Easy questions
-            Question(id: "easy_1", question: "How many close disciples did Jesus have?", answer: "12", difficulty: .easy),
-            Question(id: "easy_2", question: "In what city was Jesus born?", answer: "Bethlehem", difficulty: .easy),
-            Question(id: "easy_3", question: "How many days did it rain during the flood?", answer: "40 days", difficulty: .easy),
-            Question(id: "easy_4", question: "Who led the Israelites out of Egypt?", answer: "Moses", difficulty: .easy),
-            Question(id: "easy_5", question: "What did God create on the first day?", answer: "Light", difficulty: .easy),
-            Question(id: "easy_6", question: "How many books are in the New Testament?", answer: "27", difficulty: .easy),
-            Question(id: "easy_7", question: "Who was the first man?", answer: "Adam", difficulty: .easy),
-            Question(id: "easy_8", question: "What was the first miracle of Jesus?", answer: "Turning water into wine", difficulty: .easy),
+            Question(id: "easy_1", question: "How many close disciples did Jesus have?", answer: "12", wrongAnswers: ["10", "7"], difficulty: .easy),
+            Question(id: "easy_2", question: "In what city was Jesus born?", answer: "Bethlehem", wrongAnswers: ["Nazareth", "Jerusalem"], difficulty: .easy),
+            Question(id: "easy_3", question: "How many days did it rain during the flood?", answer: "40 days", wrongAnswers: ["30 days", "50 days"], difficulty: .easy),
+            Question(id: "easy_4", question: "Who led the Israelites out of Egypt?", answer: "Moses", wrongAnswers: ["Abraham", "Joshua"], difficulty: .easy),
+            Question(id: "easy_5", question: "What did God create on the first day?", answer: "Light", wrongAnswers: ["Earth", "Animals"], difficulty: .easy),
+            Question(id: "easy_6", question: "How many books are in the New Testament?", answer: "27", wrongAnswers: ["39", "66"], difficulty: .easy),
+            Question(id: "easy_7", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Noah", "Abraham"], difficulty: .easy),
+            Question(id: "easy_8", question: "What was the first miracle of Jesus?", answer: "Turning water into wine", wrongAnswers: ["Healing the blind", "Walking on water"], difficulty: .easy),
             
             // Hard questions
-            Question(id: "hard_1", question: "Who was the first king of Israel?", answer: "Saul", difficulty: .hard),
-            Question(id: "hard_2", question: "What is the shortest book in the New Testament?", answer: "2 John", difficulty: .hard),
-            Question(id: "hard_3", question: "Who was the oldest man in the Bible?", answer: "Methuselah", difficulty: .hard),
-            Question(id: "hard_4", question: "In what city did Paul meet Priscilla and Aquila?", answer: "Corinth", difficulty: .hard),
-            Question(id: "hard_5", question: "What was the name of Abraham's nephew?", answer: "Lot", difficulty: .hard),
-            Question(id: "hard_6", question: "How many sons did Jacob have?", answer: "12", difficulty: .hard),
-            Question(id: "hard_7", question: "What was the name of the garden where Jesus prayed before his crucifixion?", answer: "Gethsemane", difficulty: .hard),
-            Question(id: "hard_8", question: "Who was the mother of John the Baptist?", answer: "Elizabeth", difficulty: .hard)
+            Question(id: "hard_1", question: "Who was the first king of Israel?", answer: "Saul", wrongAnswers: ["David", "Solomon"], difficulty: .hard),
+            Question(id: "hard_2", question: "What is the shortest book in the New Testament?", answer: "2 John", wrongAnswers: ["3 John", "Jude"], difficulty: .hard),
+            Question(id: "hard_3", question: "Who was the oldest man in the Bible?", answer: "Methuselah", wrongAnswers: ["Noah", "Adam"], difficulty: .hard),
+            Question(id: "hard_4", question: "In what city did Paul meet Priscilla and Aquila?", answer: "Corinth", wrongAnswers: ["Rome", "Athens"], difficulty: .hard),
+            Question(id: "hard_5", question: "What was the name of Abraham's nephew?", answer: "Lot", wrongAnswers: ["Isaac", "Jacob"], difficulty: .hard),
+            Question(id: "hard_6", question: "How many sons did Jacob have?", answer: "12", wrongAnswers: ["10", "7"], difficulty: .hard),
+            Question(id: "hard_7", question: "What was the name of the garden where Jesus prayed before his crucifixion?", answer: "Gethsemane", wrongAnswers: ["Eden", "Galilee"], difficulty: .hard),
+            Question(id: "hard_8", question: "Who was the mother of John the Baptist?", answer: "Elizabeth", wrongAnswers: ["Mary", "Sarah"], difficulty: .hard)
         ]
     }
     
