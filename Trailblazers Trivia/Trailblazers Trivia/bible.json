@@ -91,13 +91,13 @@
   },
   {
     "id": 521,
-    "question": "Complete the following `The light of the body is",
+    "question": "Complete the following: \"The light of the body is…\"",
     "answer": "The eye",
     "reference": "Matthew 6:22"
   },
   {
     "id": 524,
-    "question": "Complete this verse: \"\"How beautiful upon the mountains are the feet of him that bringeth…",
+    "question": "Complete this verse: \"How beautiful upon the mountains are the feet of him that bringeth…\"",
     "answer": "good tidings",
     "reference": "Isaiah 52:7"
   },
@@ -109,13 +109,13 @@
   },
   {
     "id": 528,
-    "question": "Finish this Proverb: \"\"Labour not to be ",
+    "question": "Finish this Proverb: \"Labour not to be rich\"",
     "answer": "rich",
     "reference": "Proverbs 23:4"
   },
   {
     "id": 529,
-    "question": "Finish this proverb: \"\"Where there is no vision ",
+    "question": "Finish this proverb: \"Where there is no vision, the people perish\"",
     "answer": "the people perish",
     "reference": "Proverbs 29:18"
   },
@@ -811,7 +811,7 @@
   },
   {
     "id": 849,
-    "question": "Who begins their book with: \"\"Hear O heavens and give ear O earth: for the LORD hath spoken…",
+    "question": "Who begins their book with: \"Hear O heavens and give ear O earth: for the LORD hath spoken…\"",
     "answer": "Isaiah",
     "reference": "Isaiah 1:2"
   },
@@ -1084,7 +1084,7 @@
     "question": "Who said, Lord, if it be thou, bid me come unto thee on the water?",
     "answer": "Peter",
     "reference": "Matthew 14:28"
-  }
+  },
   {
     "id": 10,
     "question": "Which woman became queen and saved her people?",
@@ -1141,9 +1141,9 @@
   },
   {
     "id": 506,
-    "question": "According to the Gospel of Matthew",
-    "answer": "where does Jesus give his first public sermon?",
-    "reference": "On the mount"
+    "question": "According to the Gospel of Matthew, where does Jesus give his first public sermon?",
+    "answer": "On the mount",
+    "reference": ""
   },
   {
     "id": 508,
@@ -1219,8 +1219,8 @@
   },
   {
     "id": 534,
-    "question": "How and where did Paul's conversion take place?",
-    "answer": "He had a vision after falling to the ground near Damascus",
+    "question": "Where did Paul's conversion take place?",
+    "answer": "Road to Damascus",
     "reference": ""
   },
   {
@@ -1399,9 +1399,9 @@
   },
   {
     "id": 594,
-    "question": "In the Gospel of Mark",
-    "answer": "how does the Virgin Mary learn of her pregnancy",
-    "reference": "From the angel Gabriel"
+    "question": "In the Gospel of Mark, how does the Virgin Mary learn of her pregnancy?",
+    "answer": "From the angel Gabriel",
+    "reference": ""
   },
   {
     "id": 600,
@@ -1417,9 +1417,9 @@
   },
   {
     "id": 605,
-    "question": "Jacob sent Joseph to his brothers",
-    "answer": "where did he find them?",
-    "reference": "Dothan"
+    "question": "Jacob sent Joseph to his brothers, where did he find them?",
+    "answer": "Dothan",
+    "reference": ""
   },
   {
     "id": 606,
@@ -1957,9 +1957,9 @@
   },
   {
     "id": 780,
-    "question": "When God showed Abram the stars in the sky",
-    "answer": "what did he promise?",
-    "reference": "Abram would have more descendants than the number of stars"
+    "question": "When God showed Abram the stars in the sky, what did he promise?",
+    "answer": "Abram would have more descendants than the number of stars",
+    "reference": ""
   },
   {
     "id": 781,

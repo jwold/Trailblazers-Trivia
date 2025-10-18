@@ -103,7 +103,7 @@ class GameViewModel {
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .memory)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json)
         
         Task {
             await startNewTurn()
@@ -287,7 +287,7 @@ class SinglePlayerGameViewModel {
         questionRepository: QuestionRepositoryProtocol? = nil
     ) {
         self.player = Player(id: UUID().uuidString, name: playerName)
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .memory)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json)
         
         startTimer()
         

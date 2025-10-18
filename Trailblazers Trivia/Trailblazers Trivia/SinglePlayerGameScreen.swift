@@ -50,27 +50,18 @@ struct SinglePlayerGameScreen: View {
                     // Player info above question
                     HStack(alignment: .center, spacing: 0) {
                         // Single player score box - matching two-player style
-                        HStack(spacing: 0) {
-                            HStack(spacing: 8) {
-                                Text("\(formatScore(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.labelPrimary)
-                                    .lineLimit(1)
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                Capsule()
-                                    .fill(Color.lightCardBackground)
-                            )
+                        HStack(spacing: 8) {
+                            Text("\(formatScore(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.labelPrimary)
+                                .lineLimit(1)
                         }
-                        .padding(.leading, 12)
-                        .padding(.trailing, 12)
-                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
                         .background(
                             Capsule()
-                                .fill(Color.controlTrack.opacity(0.6))
+                                .fill(Color.lightCardBackground)
                                 .stroke(Color.labelPrimary.opacity(0.1), lineWidth: 1)
                         )
                         .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
@@ -89,8 +80,8 @@ struct SinglePlayerGameScreen: View {
                                     Circle().fill(Color.labelPrimary.opacity(0.15))
                                 )
                         }
-                        .padding(.trailing, 12)
                     }
+                    .padding(.horizontal, 12)
                     
                     Spacer()
                     

@@ -60,9 +60,9 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     private func loadAllQuestions() throws -> [Question] {
         var allQuestions: [Question] = []
         
-        // Only load hard questions
-        if let hardQuestions = try loadQuestions(from: "bible-hard") {
-            allQuestions.append(contentsOf: hardQuestions)
+        // Load questions from bible.json (treat all as hard difficulty)
+        if let bibleQuestions = try loadQuestions(from: "bible") {
+            allQuestions.append(contentsOf: bibleQuestions)
         }
         
         guard !allQuestions.isEmpty else {
@@ -82,8 +82,8 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let data = try Data(contentsOf: url)
         let jsonQuestions = try JSONDecoder().decode([JSONQuestion].self, from: data)
         
-        // Determine difficulty based on file name
-        let difficulty: Difficulty = fileName.contains("hard") ? .hard : .easy
+        // Determine difficulty based on file name (all bible questions treated as hard)
+        let difficulty: Difficulty = .hard
         
         // Filter out malformed questions and convert to Question model
         return jsonQuestions.compactMap { jsonQuestion in
