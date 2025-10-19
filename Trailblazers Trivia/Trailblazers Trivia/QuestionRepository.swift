@@ -60,14 +60,19 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     
     /// Loads and returns all questions from JSON files
     private func loadAllQuestions() throws -> [Question] {
+        print("loadAllQuestions called")
         var allQuestions: [Question] = []
         
         // Load questions from bible.json (treat all as hard difficulty)
         if let bibleQuestions = try loadQuestions(from: "bible") {
             allQuestions.append(contentsOf: bibleQuestions)
+            print("Added \(bibleQuestions.count) bible questions")
         }
         
+        print("Total questions loaded: \(allQuestions.count)")
+        
         guard !allQuestions.isEmpty else {
+            print("Error: No questions found after loading")
             throw QuestionRepositoryError.noQuestionsFound
         }
         
@@ -75,20 +80,27 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     }
     
     private func loadQuestions(from fileName: String) throws -> [Question]? {
+        print("Loading questions from \(fileName).json...")
+        
         guard let path = Bundle.main.path(forResource: fileName, ofType: "json") else {
-            print("Warning: Could not find \(fileName).json in bundle")
-            return nil
+            print("Error: Could not find \(fileName).json in bundle")
+            throw QuestionRepositoryError.fileNotFound(fileName)
         }
+        
+        print("Found file at path: \(path)")
         
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
+        print("Successfully loaded \(data.count) bytes of data")
+        
         let jsonQuestions = try JSONDecoder().decode([JSONQuestion].self, from: data)
+        print("Successfully decoded \(jsonQuestions.count) questions from JSON")
         
         // Determine difficulty based on file name (all bible questions treated as hard)
         let difficulty: Difficulty = .hard
         
         // Filter out malformed questions and convert to Question model
-        return jsonQuestions.compactMap { jsonQuestion in
+        let validQuestions = jsonQuestions.compactMap { jsonQuestion in
             let question = jsonQuestion.toQuestion(difficulty: difficulty)
             
             // Basic validation to filter out incomplete or malformed questions
@@ -102,27 +114,38 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             
             return question
         }
+        
+        print("Successfully processed \(validQuestions.count) valid questions")
+        return validQuestions
     }
     
     func nextQuestion(for newDifficulty: Difficulty) async throws -> Question {
+        print("nextQuestion called for difficulty: \(newDifficulty)")
+        
         // Load questions if not already loaded
         if !isLoaded {
+            print("Questions not loaded yet, loading...")
             self.questions = try loadAllQuestions()
             self.isLoaded = true
+            print("Questions loaded successfully. Total: \(self.questions.count)")
         }
         
         let questionsForDifficulty = questions.filter { $0.difficulty == newDifficulty }
+        print("Found \(questionsForDifficulty.count) questions for difficulty \(newDifficulty)")
         
         guard !questionsForDifficulty.isEmpty else {
+            print("Error: No questions found for difficulty \(newDifficulty)")
             throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
         }
         
         let availableQuestions = questionsForDifficulty.filter { !usedQuestionIds.contains($0.id) }
+        print("Available questions: \(availableQuestions.count), Used questions: \(usedQuestionIds.count)")
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
             // If all questions have been used, reset and start over
+            print("All questions used, resetting...")
             resetUsedQuestions()
             selectedQuestion = questionsForDifficulty.randomElement()!
         } else {
@@ -132,6 +155,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         // Mark the selected question as used
         usedQuestionIds.insert(selectedQuestion.id)
         
+        print("Selected question: \(selectedQuestion.question)")
         return selectedQuestion
     }
     

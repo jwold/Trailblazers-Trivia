@@ -34,16 +34,7 @@ struct StartScreen: View {
         TriviaCategory(name: "Geography", icon: "location", isAvailable: false)
     ]
 
-    enum PlayerMode {
-        case onePlayer, twoPlayer
-        
-        var displayName: String {
-            switch self {
-            case .onePlayer: return "1 Player"
-            case .twoPlayer: return "2 Players"
-            }
-        }
-    }
+
 
     var body: some View {
         NavigationStack(path: $path) {

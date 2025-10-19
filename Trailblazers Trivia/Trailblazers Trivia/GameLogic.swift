@@ -248,6 +248,8 @@ class SinglePlayerGameViewModel {
     var selectedAnswer: String?
     var currentAnswerOptions: [String] = []
     var elapsedTime: TimeInterval = 0
+    var isLoading = true
+    var loadingError: String?
     
     var currentQuestion: Question {
         currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."], difficulty: .easy)
@@ -299,6 +301,7 @@ class SinglePlayerGameViewModel {
     
     @MainActor
     func startNewTurn() async {
+        isLoading = true
         hasAnswered = false
         selectedAnswer = nil
         
@@ -310,10 +313,23 @@ class SinglePlayerGameViewModel {
             let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
             currentTurn?.question = question
             generateAnswerOptions()
+            loadingError = nil
         } catch {
             print("Failed to get question: \(error)")
-            // Fallback to a default question or handle error appropriately
+            loadingError = "Failed to load question: \(error.localizedDescription)"
+            // Provide a fallback question to keep the game playable
+            let fallbackQuestion = Question(
+                id: "fallback",
+                question: "Who was the first man created by God?",
+                answer: "Adam",
+                wrongAnswers: ["Seth", "Noah"],
+                difficulty: .hard
+            )
+            currentTurn?.question = fallbackQuestion
+            generateAnswerOptions()
         }
+        
+        isLoading = false
     }
     
     private func generateAnswerOptions() {

@@ -43,6 +43,44 @@ struct SinglePlayerGameScreen: View {
             Color.appBackground
                 .ignoresSafeArea()
             
+            if singlePlayerViewModel.isLoading {
+                // Loading state
+                VStack(spacing: 20) {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color.chipBlue))
+                        .scaleEffect(1.5)
+                    
+                    Text("Loading Questions...")
+                        .font(.headline)
+                        .foregroundColor(Color.labelPrimary)
+                    
+                    if let error = singlePlayerViewModel.loadingError {
+                        Text("Error: \(error)")
+                            .font(.caption)
+                            .foregroundColor(Color.coral)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                // Game content
+                gameContentView
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .onChange(of: singlePlayerViewModel.gameEnded) { _, gameEnded in
+            if gameEnded {
+                let finalScore = singlePlayerViewModel.getPlayerScore()
+                let questionsAnswered = singlePlayerViewModel.turns.count
+                let elapsedTime = singlePlayerViewModel.elapsedTime
+                path.append(Routes.singlePlayerResults(finalScore: finalScore, questionsAnswered: questionsAnswered, elapsedTime: elapsedTime))
+            }
+        }
+    }
+    
+    private var gameContentView: some View {
             VStack(spacing: 0) {
                                 
                 // Content Section
@@ -154,18 +192,14 @@ struct SinglePlayerGameScreen: View {
                 .padding(.top, 60)
                 .frame(maxHeight: .infinity)
             }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .onChange(of: singlePlayerViewModel.gameEnded) { _, gameEnded in
-            if gameEnded {
-                let finalScore = singlePlayerViewModel.getPlayerScore()
-                let questionsAnswered = singlePlayerViewModel.turns.count
-                let elapsedTime = singlePlayerViewModel.elapsedTime
-                path.append(Routes.singlePlayerResults(finalScore: finalScore, questionsAnswered: questionsAnswered, elapsedTime: elapsedTime))
+        .safeAreaInset(edge: .bottom) {
+            if !singlePlayerViewModel.isLoading {
+                bottomActionsView
             }
         }
-        .safeAreaInset(edge: .bottom) {
+    }
+    
+    private var bottomActionsView: some View {
             VStack(spacing: 16) {
                 // Multiple choice answers
                 VStack(spacing: 12) {
@@ -243,7 +277,6 @@ struct SinglePlayerGameScreen: View {
             .background(Color.appBackground)
             .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
         }
-    }
     
     private func buttonColor(for option: String) -> Color {
         if !singlePlayerViewModel.hasAnswered {
