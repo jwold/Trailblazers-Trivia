@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StartScreen: View {
     @State private var path: [Routes] = []
-    @State private var selectedPlayerMode: PlayerMode = .twoPlayer
+    @State private var selectedPlayerMode: PlayerMode = .onePlayer
 
 
 
@@ -94,23 +94,7 @@ struct StartScreen: View {
                     // Player Mode Switcher
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(spacing: 0) {
-                            // Two Player Button
-                            Button {
-                                selectedPlayerMode = .twoPlayer
-                            } label: {
-                                Text("2 Players")
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .foregroundColor(selectedPlayerMode == .twoPlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 44)
-                                    .background(
-                                        Capsule()
-                                            .fill(selectedPlayerMode == .twoPlayer ? Color.chipBlue : Color.clear)
-                                    )
-                                    .padding(.horizontal, 4)
-                            }
-                            
-                            // One Player Button
+                            // One Player Button (now first)
                             Button {
                                 selectedPlayerMode = .onePlayer
                             } label: {
@@ -122,6 +106,22 @@ struct StartScreen: View {
                                     .background(
                                         Capsule()
                                             .fill(selectedPlayerMode == .onePlayer ? Color.chipBlue : Color.clear)
+                                    )
+                                    .padding(.horizontal, 4)
+                            }
+                            
+                            // Two Player Button (now second)
+                            Button {
+                                selectedPlayerMode = .twoPlayer
+                            } label: {
+                                Text("2 Players")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(selectedPlayerMode == .twoPlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 44)
+                                    .background(
+                                        Capsule()
+                                            .fill(selectedPlayerMode == .twoPlayer ? Color.chipBlue : Color.clear)
                                     )
                                     .padding(.horizontal, 4)
                             }

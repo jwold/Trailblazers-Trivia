@@ -38,17 +38,8 @@ class GameViewModel {
     // Computed property for scores
     func getPlayerScore(for player: Player) -> Double {
         let playerTurns = turns.filter { $0.player.id == player.id }
-        var score: Double = 0.0
-        
-        for turn in playerTurns {
-            if turn.wasCorrect {
-                score += GameConstants.Scoring.correctAnswerPoints
-            } else {
-                score += GameConstants.Scoring.wrongAnswerPenalty
-            }
-        }
-        
-        return max(GameConstants.Scoring.minimumScore, score)
+        let correctAnswers = playerTurns.filter { $0.wasCorrect }
+        return Double(correctAnswers.count)
     }
     
     // Export all player scores for use in views
@@ -254,17 +245,8 @@ class SinglePlayerGameViewModel {
     // Computed property for score
     func getPlayerScore() -> Double {
         let playerTurns = turns.filter { $0.player.id == player.id }
-        var score: Double = 0.0
-        
-        for turn in playerTurns {
-            if turn.wasCorrect {
-                score += GameConstants.Scoring.correctAnswerPoints
-            } else {
-                score += GameConstants.Scoring.wrongAnswerPenalty
-            }
-        }
-        
-        return max(GameConstants.Scoring.minimumScore, score)
+        let correctAnswers = playerTurns.filter { $0.wasCorrect }
+        return Double(correctAnswers.count)
     }
     
     // Export player score for results screen

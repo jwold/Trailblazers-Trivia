@@ -95,9 +95,7 @@ struct SinglePlayerGameScreen: View {
                     }
                     .padding(.horizontal, 12)
                     
-                    Spacer()
-                    
-                    // Question Text - larger and centered (no eyeball button)
+                    // Question Text - sized to content
                     VStack(alignment: .leading, spacing: 0) {
                         VStack(alignment: .leading, spacing: 12) {
                             // Question text
@@ -107,15 +105,12 @@ struct SinglePlayerGameScreen: View {
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .frame(maxHeight: .infinity, alignment: .topLeading)
                                 .foregroundColor(Color.labelPrimary)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 24)
                     .frame(maxWidth: .infinity)
-                    .frame(maxHeight: .infinity, alignment: .center)
                     .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 24))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24)
@@ -131,22 +126,6 @@ struct SinglePlayerGameScreen: View {
                     .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
                     .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
                     .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
-                    .overlay(alignment: .topTrailing) {
-                        if singlePlayerViewModel.hasAnswered {
-                            let isCorrect = singlePlayerViewModel.selectedAnswer == singlePlayerViewModel.currentQuestion.answer
-                            
-                            Text(isCorrect ? "Correct" : "Wrong")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundColor(isCorrect ? .white : .black)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
-                                .background(
-                                    Capsule().fill(isCorrect ? Color.correctGreen : Color.coral)
-                                )
-                                .padding(16)
-                        }
-                    }
                     .padding(.horizontal, 12)
                     
                     Spacer()
@@ -175,8 +154,8 @@ struct SinglePlayerGameScreen: View {
                                     .fontWeight(.semibold)
                                     .font(.headline)
                                     .foregroundColor(.black.opacity(0.9))
-                                
-                                Spacer()
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 if singlePlayerViewModel.hasAnswered {
                                     if option == singlePlayerViewModel.currentQuestion.answer {
