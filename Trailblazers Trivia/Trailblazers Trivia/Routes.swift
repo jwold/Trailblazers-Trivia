@@ -14,16 +14,16 @@ struct PlayerScore: Hashable {
 }
 
 enum Routes: Hashable, Identifiable {
-    case gameOnePlayer
-    case gameTwoPlayer
+    case gameOnePlayer(category: TriviaCategory)
+    case gameTwoPlayer(category: TriviaCategory)
     case results(playerScores: [PlayerScore])
     case singlePlayerResults(finalScore: Double, questionsAnswered: Int, elapsedTime: TimeInterval)
     case about
     
     var id: String {
         switch self {
-        case .gameOnePlayer: return "gameOnePlayer"
-        case .gameTwoPlayer: return "gameTwoPlayer"
+        case .gameOnePlayer(let category): return "gameOnePlayer_\(category.rawValue)"
+        case .gameTwoPlayer(let category): return "gameTwoPlayer_\(category.rawValue)"
         case .results: return "results"
         case .singlePlayerResults: return "singlePlayerResults"
         case .about: return "about"

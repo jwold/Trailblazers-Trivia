@@ -11,6 +11,7 @@ import SwiftUI
 struct StartScreen: View {
     @State private var path: [Routes] = []
     @State private var selectedPlayerMode: PlayerMode = .onePlayer
+    @State private var selectedCategory: TriviaCategory = .bible
 
 
 
@@ -43,53 +44,62 @@ struct StartScreen: View {
                     }
                     .padding(.bottom, 20)
                     
-                    // Bible Category Card (since only Bible is available)
-                    VStack(spacing: 0) {
-                        HStack(spacing: 16) {
-                            // Icon
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.white)
-                                    .frame(width: 44, height: 44)
-                                
-                                Image(systemName: "book.closed")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.black)
+                    // Category Selection Cards
+                    VStack(spacing: 12) {
+                        ForEach(TriviaCategory.allCases, id: \.self) { category in
+                            Button {
+                                selectedCategory = category
+                            } label: {
+                                HStack(spacing: 16) {
+                                    // Icon
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.white)
+                                            .frame(width: 44, height: 44)
+                                        
+                                        Image(systemName: category.iconName)
+                                            .font(.system(size: 20))
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(category.displayName)
+                                            .font(.headline)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(Color.labelPrimary)
+                                            .multilineTextAlignment(.leading)
+                                        
+                                        Text(category.description)
+                                            .font(.subheadline)
+                                            .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    // Selected checkmark
+                                    ZStack {
+                                        Circle()
+                                            .fill(selectedCategory == category ? Color.chipBlue : Color.labelPrimary.opacity(0.2))
+                                            .frame(width: 24, height: 24)
+                                        
+                                        if selectedCategory == category {
+                                            Image(systemName: "checkmark")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 20)
                             }
-                            
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Bible")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.labelPrimary)
-                                    .multilineTextAlignment(.leading)
-                                
-                                Text("Test your biblical knowledge")
-                                    .font(.subheadline)
-                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
-                            }
-                            
-                            Spacer()
-                            
-                            // Selected checkmark
-                            ZStack {
-                                Circle()
-                                    .fill(Color.chipBlue)
-                                    .frame(width: 24, height: 24)
-                                
-                                Image(systemName: "checkmark")
-                                    .font(.system(size: 12, weight: .bold))
-                                    .foregroundColor(.black)
-                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .background(Color.cardBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                            .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+                            .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+                            .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 20)
                     }
-                    .background(Color.cardBackground)
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-                    .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
-                    .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
                     
                     // Player Mode Switcher
                     VStack(alignment: .leading, spacing: 12) {
@@ -140,7 +150,7 @@ struct StartScreen: View {
                     
                     Spacer()
                     
-                    NavigationLink(value: selectedPlayerMode == .onePlayer ? Routes.gameOnePlayer : Routes.gameTwoPlayer) {
+                    NavigationLink(value: selectedPlayerMode == .onePlayer ? Routes.gameOnePlayer(category: selectedCategory) : Routes.gameTwoPlayer(category: selectedCategory)) {
                         Text("Start New Game")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -160,10 +170,10 @@ struct StartScreen: View {
             }
             .navigationDestination(for: Routes.self) { route in
                 switch route {
-                case .gameOnePlayer:
-                    SinglePlayerGameScreen(path: $path)
-                case .gameTwoPlayer:
-                    GameScreen(path: $path)
+                case .gameOnePlayer(let category):
+                    SinglePlayerGameScreen(path: $path, category: category)
+                case .gameTwoPlayer(let category):
+                    GameScreen(path: $path, category: category)
                 case .results(let playerScores):
                     EndScreen(path: $path, playerScores: playerScores)
                 case .singlePlayerResults(let finalScore, let questionsAnswered, let elapsedTime):

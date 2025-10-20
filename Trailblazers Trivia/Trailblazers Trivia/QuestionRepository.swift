@@ -69,6 +69,12 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             print("Added \(bibleQuestions.count) bible questions")
         }
         
+        // Load questions from us_history.json (treat all as hard difficulty)
+        if let historyQuestions = try loadQuestions(from: "us_history") {
+            allQuestions.append(contentsOf: historyQuestions)
+            print("Added \(historyQuestions.count) US history questions")
+        }
+        
         print("Total questions loaded: \(allQuestions.count)")
         
         guard !allQuestions.isEmpty else {

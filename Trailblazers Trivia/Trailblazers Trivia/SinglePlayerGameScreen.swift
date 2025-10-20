@@ -9,7 +9,17 @@ import SwiftUI
 
 struct SinglePlayerGameScreen: View {
     @Binding var path: [Routes]
-    @State private var singlePlayerViewModel = SinglePlayerGameViewModel(playerName: "Player")
+    let category: TriviaCategory
+    @State private var singlePlayerViewModel: SinglePlayerGameViewModel
+    
+    init(path: Binding<[Routes]>, category: TriviaCategory) {
+        self._path = path
+        self.category = category
+        
+        // Generate a random team name for single player based on category
+        let teamName = TeamNameGenerator.randomTeamName(for: category)
+        self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(playerName: teamName))
+    }
     
     var body: some View {
         ZStack {
@@ -246,5 +256,5 @@ struct SinglePlayerGameScreen: View {
 }
 
 #Preview {
-    SinglePlayerGameScreen(path: .constant([]))
+    SinglePlayerGameScreen(path: .constant([]), category: .bible)
 }

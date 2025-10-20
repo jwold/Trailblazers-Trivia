@@ -9,7 +9,20 @@ import SwiftUI
 
 struct GameScreen: View {
     @Binding var path: [Routes]
-    @State private var gameViewModel = GameViewModel(player1Name: "Persians", player2Name: "Hebrews")
+    let category: TriviaCategory
+    @State private var gameViewModel: GameViewModel
+    
+    init(path: Binding<[Routes]>, category: TriviaCategory) {
+        self._path = path
+        self.category = category
+        
+        // Generate team names based on category
+        let teamNames = TeamNameGenerator.generateTeamNames(for: category)
+        self._gameViewModel = State(initialValue: GameViewModel(
+            player1Name: teamNames.team1, 
+            player2Name: teamNames.team2
+        ))
+    }
     
     var body: some View {
         ZStack {
@@ -240,6 +253,6 @@ struct GameScreen: View {
     }
 
 #Preview {
-    GameScreen(path: .constant([]))
+    GameScreen(path: .constant([]), category: .bible)
 }
 
