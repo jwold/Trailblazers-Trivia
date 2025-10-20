@@ -128,6 +128,12 @@ struct SinglePlayerGameScreen: View {
                     .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
                     .padding(.horizontal, 12)
                     
+                    // Answer buttons right below question card
+                    if !singlePlayerViewModel.isLoading {
+                        answerButtonsView
+                            .padding(.top, 20)
+                    }
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 0)
@@ -136,102 +142,106 @@ struct SinglePlayerGameScreen: View {
             }
         .safeAreaInset(edge: .bottom) {
             if !singlePlayerViewModel.isLoading {
-                bottomActionsView
+                continueButtonView
             }
         }
     }
     
-    private var bottomActionsView: some View {
-            VStack(spacing: 16) {
-                // Multiple choice answers
-                VStack(spacing: 12) {
-                    ForEach(singlePlayerViewModel.currentAnswerOptions, id: \.self) { option in
-                        Button {
-                            singlePlayerViewModel.selectAnswer(option)
-                        } label: {
-                            HStack {
-                                Text(option)
-                                    .fontWeight(.semibold)
-                                    .font(.headline)
-                                    .foregroundColor(.black.opacity(0.9))
-                                    .multilineTextAlignment(.leading)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                if singlePlayerViewModel.hasAnswered {
-                                    if option == singlePlayerViewModel.currentQuestion.answer {
-                                        // Correct answer - white checkmark
-                                        Image(systemName: "checkmark")
-                                            .font(.title2)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                    } else if option == singlePlayerViewModel.selectedAnswer {
-                                        // Wrong selected answer - black X
-                                        Image(systemName: "xmark")
-                                            .font(.title2)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.black)
-                                    }
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .padding(.horizontal, 20)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(buttonColor(for: option))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                            )
-                        }
-                        .disabled(singlePlayerViewModel.hasAnswered)
-                        .shadow(color: buttonColor(for: option).opacity(0.25), radius: 8, x: 0, y: 4)
-                    }
-                }
-                
-                // Continue button
-                Button {
-                    Task {
-                        await singlePlayerViewModel.continueToNextQuestion()
-                    }
-                } label: {
-                    Text("Continue")
-                        .fontWeight(.semibold)
-                        .font(.headline)
-                        .foregroundColor(.black.opacity(singlePlayerViewModel.hasAnswered ? 0.9 : 0.5))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(singlePlayerViewModel.hasAnswered ? Color.white : Color.chipBlue.opacity(0.3))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white.opacity(singlePlayerViewModel.hasAnswered ? 0.1 : 0.05), lineWidth: 1)
-                        )
-                }
-                .disabled(!singlePlayerViewModel.hasAnswered)
-                .shadow(color: Color.white.opacity(singlePlayerViewModel.hasAnswered ? 0.25 : 0.1), radius: 8, x: 0, y: 4)
+    private var continueButtonView: some View {
+        Button {
+            Task {
+                await singlePlayerViewModel.continueToNextQuestion()
             }
-            .padding(.horizontal, 12)
-            .padding(.bottom, 40)
-            .background(Color.appBackground)
-            .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
+        } label: {
+            Text("Continue")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(singlePlayerViewModel.selectedAnswer != nil ? Color.correctGreen : Color.correctGreen.opacity(0.5))
+                )
         }
+        .disabled(singlePlayerViewModel.selectedAnswer == nil)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 40)
+        .background(Color.appBackground)
+    }
+    
+    private var answerButtonsView: some View {
+        // Multiple choice answers - positioned right below question card
+        VStack(spacing: 16) {
+            ForEach(singlePlayerViewModel.currentAnswerOptions, id: \.self) { option in
+                Button {
+                    singlePlayerViewModel.selectAnswer(option)
+                } label: {
+                    HStack(spacing: 16) {
+                        // Circle icon on the left - radio button style
+                        ZStack {
+                            Circle()
+                                .stroke(Color.white.opacity(0.8), lineWidth: 2)
+                                .frame(width: 24, height: 24)
+                            
+                            // Show different states based on selection and results
+                            if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
+                                // Selected but not revealed yet - filled circle (radio button)
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 12, height: 12)
+                            } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
+                                // Results revealed and this is correct - checkmark
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.white)
+                            } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.selectedAnswer && option != singlePlayerViewModel.currentQuestion.answer {
+                                // Results revealed and this was selected but wrong - X mark
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        
+                        // Answer text
+                        Text(option)
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(buttonColor(for: option))
+                    )
+                    .overlay(
+                        // White outline for selected answer (before results) or correct answer (after results)
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(
+                                Color.white,
+                                lineWidth: (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) || 
+                                          (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? 3 : 0
+                            )
+                    )
+                    .scaleEffect(
+                        // Slight growth for selected answer or correct answer
+                        (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) || 
+                        (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? 1.05 : 1.0
+                    )
+                    .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.selectedAnswer)
+                    .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.showResults)
+                    .opacity(singlePlayerViewModel.selectedAnswer == nil || singlePlayerViewModel.selectedAnswer == option || singlePlayerViewModel.showResults ? 1.0 : 0.6)
+                }
+                .disabled(singlePlayerViewModel.showResults) // Only disable after results are shown
+            }
+        }
+        .padding(.horizontal, 20)
+    }
     
     private func buttonColor(for option: String) -> Color {
-        if !singlePlayerViewModel.hasAnswered {
-            return Color.chipBlue
-        }
-        
-        if option == singlePlayerViewModel.currentQuestion.answer {
-            return Color.correctGreen
-        } else if option == singlePlayerViewModel.selectedAnswer {
-            return Color.coral
-        } else {
-            return Color.chipBlue.opacity(0.5)
-        }
+        // Keep all buttons the same color - don't change to green or red
+        return Color.chipBlue
     }
 }
 

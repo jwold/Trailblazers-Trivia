@@ -232,6 +232,7 @@ class SinglePlayerGameViewModel {
     var gameEnded = false
     var selectedDifficulty: Difficulty = .hard
     var hasAnswered = false
+    var showResults = false
     var selectedAnswer: String?
     var currentAnswerOptions: [String] = []
     var elapsedTime: TimeInterval = 0
@@ -281,6 +282,7 @@ class SinglePlayerGameViewModel {
     func startNewTurn() async {
         isLoading = true
         hasAnswered = false
+        showResults = false
         selectedAnswer = nil
         
         // Create turn with player first
@@ -325,10 +327,14 @@ class SinglePlayerGameViewModel {
 
     
     func selectAnswer(_ answer: String) {
-        guard !hasAnswered else { return }
-        
-        hasAnswered = true
+        // Allow changing answers freely - don't set hasAnswered flag
         selectedAnswer = answer
+    }
+    
+    func revealResults() {
+        guard let answer = selectedAnswer else { return }
+        
+        showResults = true
         
         let wasCorrect = answer == currentQuestion.answer
         recordAnswer(wasCorrect: wasCorrect)
@@ -338,13 +344,20 @@ class SinglePlayerGameViewModel {
     
     @MainActor
     func continueToNextQuestion() async {
-        // Check if game should end
-        if shouldEndGame {
-            gameEnded = true
-            return
+        if !showResults {
+            // First press: reveal the results and mark as answered
+            hasAnswered = true
+            revealResults()
+        } else {
+            // Second press: move to next question
+            // Check if game should end
+            if shouldEndGame {
+                gameEnded = true
+                return
+            }
+            
+            await startNewTurn()
         }
-        
-        await startNewTurn()
     }
     
     private func recordAnswer(wasCorrect: Bool) {
@@ -401,6 +414,7 @@ class SinglePlayerGameViewModel {
         turns.removeAll()
         questionRepository.resetUsedQuestions()
         hasAnswered = false
+        showResults = false
         selectedAnswer = nil
         gameEnded = false
         stopTimer()
