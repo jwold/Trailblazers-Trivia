@@ -7,44 +7,11 @@
 
 import SwiftUI
 
-private extension Color {
-    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09)
-    static let cardBackground = Color(red: 0.18, green: 0.20, blue: 0.24)
-    static let lightCardBackground = Color(red: 0.25, green: 0.28, blue: 0.32)
-    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85)
-    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44)
-    static let correctGreen = Color(red: 0.4, green: 0.8, blue: 0.4)
-    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
-    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83)
-}
-
 struct SinglePlayerEndScreen: View {
     @Binding var path: [Routes]
     let finalScore: Double
     let questionsAnswered: Int
     let elapsedTime: TimeInterval
-    
-    // Function to format scores - show decimal only for .5, hide for .0
-    private func formatScore(_ score: Double) -> String {
-        let wholeNumber = Int(score)
-        let remainder = score - Double(wholeNumber)
-        
-        if remainder == 0.5 {
-            return String(format: "%.1f", score)
-        } else if remainder == 0 {
-            return "\(wholeNumber)"
-        } else {
-            // For any other fractional values, show one decimal place
-            return String(format: "%.1f", score)
-        }
-    }
-    
-    // Format elapsed time as MM:SS
-    private func formatElapsedTime() -> String {
-        let minutes = Int(elapsedTime) / 60
-        let seconds = Int(elapsedTime) % 60
-        return String(format: "%d:%02d", minutes, seconds)
-    }
     
     private var gameCompletionMessage: String {
         if finalScore >= 10 {
@@ -60,9 +27,9 @@ struct SinglePlayerEndScreen: View {
     
     private var gameCompletionDescription: String {
         if finalScore >= 10 {
-            return "You reached 10 points in \(formatElapsedTime())!"
+            return "You reached 10 points in \(ScoreFormatter.formatTime(elapsedTime))!"
         } else {
-            return "You answered \(questionsAnswered) questions in \(formatElapsedTime())"
+            return "You answered \(questionsAnswered) questions in \(ScoreFormatter.formatTime(elapsedTime))"
         }
     }
 
@@ -95,7 +62,7 @@ struct SinglePlayerEndScreen: View {
                             .font(.headline)
                             .foregroundColor(Color.labelPrimary.opacity(0.8))
                         
-                        Text(formatScore(finalScore))
+                        Text(ScoreFormatter.format(finalScore))
                             .font(.system(size: 64, weight: .bold, design: .rounded))
                             .foregroundColor(Color.labelPrimary)
                         
@@ -175,7 +142,7 @@ struct SinglePlayerEndScreen: View {
                         }
                         
                         VStack(spacing: 4) {
-                            Text(formatElapsedTime())
+                            Text(ScoreFormatter.formatTime(elapsedTime))
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(Color.chipBlue)

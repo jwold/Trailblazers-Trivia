@@ -7,32 +7,10 @@
 
 import SwiftUI
 
-private extension Color {
-    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09) // #0F1218 approx
-    static let cardBackground = Color(red: 0.14, green: 0.16, blue: 0.20) // #242833 approx
-    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85) // #5A8CD8 approx
-    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83) // #BEC3D4
-}
-
-struct TriviaCategory: Identifiable {
-    let id = UUID()
-    let name: String
-    let icon: String
-    let isAvailable: Bool
-}
 
 struct StartScreen: View {
     @State private var path: [Routes] = []
-
-    @State private var selectedCategory: String? = "Bible"
     @State private var selectedPlayerMode: PlayerMode = .twoPlayer
-    @State private var categories = [
-        TriviaCategory(name: "Bible", icon: "book.closed", isAvailable: true),
-        TriviaCategory(name: "Animals", icon: "pawprint", isAvailable: false),
-        TriviaCategory(name: "US History", icon: "flag", isAvailable: false),
-        TriviaCategory(name: "World History", icon: "globe", isAvailable: false),
-        TriviaCategory(name: "Geography", icon: "location", isAvailable: false)
-    ]
 
 
 
@@ -65,17 +43,47 @@ struct StartScreen: View {
                     }
                     .padding(.bottom, 20)
                     
+                    // Bible Category Card (since only Bible is available)
                     VStack(spacing: 0) {
-                        ForEach(categories) { category in
-                            CategoryCard(
-                                category: category,
-                                isSelected: selectedCategory == category.name
-                            )
+                        HStack(spacing: 16) {
+                            // Icon
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.white)
+                                    .frame(width: 44, height: 44)
+                                
+                                Image(systemName: "book.closed")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }
                             
-                            if category.id != categories.last?.id {
-                                Divider()
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Bible")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(Color.labelPrimary)
+                                    .multilineTextAlignment(.leading)
+                                
+                                Text("Test your biblical knowledge")
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
+                            }
+                            
+                            Spacer()
+                            
+                            // Selected checkmark
+                            ZStack {
+                                Circle()
+                                    .fill(Color.chipBlue)
+                                    .frame(width: 24, height: 24)
+                                
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(.black)
                             }
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 20)
                     }
                     .background(Color.cardBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -168,64 +176,7 @@ struct StartScreen: View {
     }
 }
 
-struct CategoryCard: View {
-    let category: TriviaCategory
-    let isSelected: Bool
-    
-    var body: some View {
-        Button(action: {}) {
-            HStack(spacing: 16) {
-                // Icon with dark background for selected, light for others
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color.white : Color.white.opacity(0.06))
-                        .frame(width: 44, height: 44)
-                    
-                    Image(systemName: category.icon)
-                        .font(.system(size: 20))
-                        .foregroundColor(isSelected ? .black : .secondary)
-                }
-                
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(category.name)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(category.isAvailable ? Color.labelPrimary : Color.labelPrimary.opacity(0.6))
-                        .multilineTextAlignment(.leading)
-                }
-                
-                Spacer()
-                
-                // Right side content
-                if category.isAvailable {
-                    if isSelected {
-                        ZStack {
-                            Circle()
-                                .fill(Color.chipBlue)
-                                .frame(width: 24, height: 24)
-                            
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.black)
-                        }
-                    }
-                } else {
-                    Text("Coming Soon")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(Color.labelPrimary.opacity(0.6))
-                }
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.06), lineWidth: 1))
-        }
-        .buttonStyle(PlainButtonStyle())
-        .disabled(!category.isAvailable)
-    }
-}
+
 
 #Preview {
     StartScreen()

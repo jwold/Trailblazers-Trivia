@@ -7,33 +7,9 @@
 
 import SwiftUI
 
-private extension Color {
-    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09)
-    static let cardBackground = Color(red: 0.14, green: 0.16, blue: 0.20)
-    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85)
-    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44)
-    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
-    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83)
-}
-
 struct EndScreen: View {
     @Binding var path: [Routes]
     let playerScores: [PlayerScore]
-    
-    // Function to format scores with fractions instead of decimals
-    private func formatScore(_ score: Double) -> String {
-        let wholeNumber = Int(score)
-        let remainder = score - Double(wholeNumber)
-        
-        if remainder == 0.5 {
-            return "\(wholeNumber)½"
-        } else if remainder == 0 {
-            return "\(wholeNumber)"
-        } else {
-            // For any other fractional values, fall back to decimal
-            return String(format: "%.1f", score)
-        }
-    }
     
     var winner: String? {
         playerScores.first(where: { $0.isWinner })?.name
@@ -78,7 +54,7 @@ struct EndScreen: View {
                                     }
                                 }
                                 Spacer()
-                                Text("\(formatScore(playerScore.score)) points")
+                                Text("\(ScoreFormatter.format(playerScore.score)) points")
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(Color.labelPrimary)

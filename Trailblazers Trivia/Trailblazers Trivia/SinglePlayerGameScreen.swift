@@ -7,35 +7,9 @@
 
 import SwiftUI
 
-private extension Color {
-    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09) // #0F1218 approx
-    static let cardBackground = Color(red: 0.18, green: 0.20, blue: 0.24) // Slightly lighter gray
-    static let lightCardBackground = Color(red: 0.25, green: 0.28, blue: 0.32) // Even lighter gray for chips
-    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85) // #5A8CD8 approx
-    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44) // #FF7F70 approx
-    static let correctGreen = Color(red: 0.4, green: 0.8, blue: 0.4) // Green for correct answers
-    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
-    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83) // #BEC3D4
-}
-
 struct SinglePlayerGameScreen: View {
     @Binding var path: [Routes]
     @State private var singlePlayerViewModel = SinglePlayerGameViewModel(playerName: "Player")
-    
-    // Function to format scores - show decimal only for .5, hide for .0
-    private func formatScore(_ score: Double) -> String {
-        let wholeNumber = Int(score)
-        let remainder = score - Double(wholeNumber)
-        
-        if remainder == 0.5 {
-            return String(format: "%.1f", score)
-        } else if remainder == 0 {
-            return "\(wholeNumber)"
-        } else {
-            // For any other fractional values, show one decimal place
-            return String(format: "%.1f", score)
-        }
-    }
     
     var body: some View {
         ZStack {
@@ -89,7 +63,7 @@ struct SinglePlayerGameScreen: View {
                     HStack(alignment: .center, spacing: 0) {
                         // Single player score box - matching two-player style
                         HStack(spacing: 8) {
-                            Text("\(formatScore(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
+                            Text("\(ScoreFormatter.format(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.labelPrimary)
@@ -126,17 +100,6 @@ struct SinglePlayerGameScreen: View {
                     // Question Text - larger and centered (no eyeball button)
                     VStack(alignment: .leading, spacing: 0) {
                         VStack(alignment: .leading, spacing: 12) {
-                            // Category chip
-                            Text("Bible History")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.labelPrimary)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
-                                .background(
-                                    Capsule().fill(Color.lightCardBackground)
-                                )
-                            
                             // Question text
                             Text(singlePlayerViewModel.currentQuestion.question)
                                 .font(.system(size: 34, weight: .medium))

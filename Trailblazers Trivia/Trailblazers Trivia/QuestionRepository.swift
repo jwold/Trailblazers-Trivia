@@ -93,26 +93,44 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let data = try Data(contentsOf: url)
         print("Successfully loaded \(data.count) bytes of data")
         
-        let jsonQuestions = try JSONDecoder().decode([JSONQuestion].self, from: data)
+        let decoder = JSONDecoder()
+        let jsonQuestions = try decoder.decode([JSONQuestion].self, from: data)
         print("Successfully decoded \(jsonQuestions.count) questions from JSON")
         
         // Determine difficulty based on file name (all bible questions treated as hard)
         let difficulty: Difficulty = .hard
         
         // Filter out malformed questions and convert to Question model
-        let validQuestions = jsonQuestions.compactMap { jsonQuestion -> Question? in
+        var validQuestions: [Question] = []
+        
+        for jsonQuestion in jsonQuestions {
             let question = jsonQuestion.toQuestion(difficulty: difficulty)
             
-            // Basic validation to filter out incomplete or malformed questions
-            guard !question.question.isEmpty,
-                  !question.answer.isEmpty,
-                  question.question.count > 5, // Reasonable minimum question length
-                  question.answer.count > 1 else {
-                print("Skipping malformed question with id: \(jsonQuestion.id)")
-                return nil
+            // Basic validation - check each condition separately
+            if question.question.isEmpty {
+                print("Skipping question with empty question text, id: \(jsonQuestion.id)")
+                continue
             }
             
-            return question
+            if question.answer.isEmpty {
+                print("Skipping question with empty answer, id: \(jsonQuestion.id)")
+                continue
+            }
+            
+            let minQuestionLength = GameConstants.Validation.minimumQuestionLength
+            if question.question.count <= minQuestionLength {
+                print("Skipping question with insufficient length, id: \(jsonQuestion.id)")
+                continue
+            }
+            
+            let minAnswerLength = GameConstants.Validation.minimumAnswerLength
+            if question.answer.count <= minAnswerLength {
+                print("Skipping question with insufficient answer length, id: \(jsonQuestion.id)")
+                continue
+            }
+            
+            // If we get here, the question is valid
+            validQuestions.append(question)
         }
         
         print("Successfully processed \(validQuestions.count) valid questions")
@@ -130,7 +148,13 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             print("Questions loaded successfully. Total: \(self.questions.count)")
         }
         
-        let questionsForDifficulty = questions.filter { $0.difficulty == newDifficulty }
+        // Filter questions by difficulty
+        var questionsForDifficulty: [Question] = []
+        for question in questions {
+            if question.difficulty == newDifficulty {
+                questionsForDifficulty.append(question)
+            }
+        }
         print("Found \(questionsForDifficulty.count) questions for difficulty \(newDifficulty)")
         
         guard !questionsForDifficulty.isEmpty else {
@@ -138,7 +162,13 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
         }
         
-        let availableQuestions = questionsForDifficulty.filter { !usedQuestionIds.contains($0.id) }
+        // Filter out used questions
+        var availableQuestions: [Question] = []
+        for question in questionsForDifficulty {
+            if !usedQuestionIds.contains(question.id) {
+                availableQuestions.append(question)
+            }
+        }
         print("Available questions: \(availableQuestions.count), Used questions: \(usedQuestionIds.count)")
         
         let selectedQuestion: Question
@@ -226,18 +256,34 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
     }
     
     func nextQuestion(for newDifficulty: Difficulty) async throws -> Question {
-        let questionsForDifficulty = questions.filter { $0.difficulty == newDifficulty }
-        let availableQuestions = questionsForDifficulty.filter { !usedQuestionIds.contains($0.id) }
+        // Filter questions by difficulty
+        var questionsForDifficulty: [Question] = []
+        for question in questions {
+            if question.difficulty == newDifficulty {
+                questionsForDifficulty.append(question)
+            }
+        }
+        
+        // Filter out used questions
+        var availableQuestions: [Question] = []
+        for question in questionsForDifficulty {
+            if !usedQuestionIds.contains(question.id) {
+                availableQuestions.append(question)
+            }
+        }
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
             // If all questions have been used, reset and start over
             resetUsedQuestions()
-            guard let randomQuestion = questionsForDifficulty.randomElement() ?? questionsForDifficulty.first else {
+            if let randomQuestion = questionsForDifficulty.randomElement() {
+                selectedQuestion = randomQuestion
+            } else if let firstQuestion = questionsForDifficulty.first {
+                selectedQuestion = firstQuestion
+            } else {
                 throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
             }
-            selectedQuestion = randomQuestion
         } else {
             guard let randomQuestion = availableQuestions.randomElement() else {
                 throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)

@@ -42,13 +42,13 @@ class GameViewModel {
         
         for turn in playerTurns {
             if turn.wasCorrect {
-                score += 1.0 // +1 point for correct
+                score += GameConstants.Scoring.correctAnswerPoints
             } else {
-                score -= 0.5 // -0.5 points for wrong
+                score += GameConstants.Scoring.wrongAnswerPenalty
             }
         }
         
-        return max(0, score) // Can't go below 0
+        return max(GameConstants.Scoring.minimumScore, score)
     }
     
     // Export all player scores for use in views
@@ -62,8 +62,8 @@ class GameViewModel {
             )
         }
         
-        // Find players with winning score (>= 10 points)
-        let playersWithWinningScore = playerScores.filter { $0.score >= 10 }
+        // Find players with winning score
+        let playersWithWinningScore = playerScores.filter { $0.score >= GameConstants.Scoring.winningScore }
         
         guard !playersWithWinningScore.isEmpty else { return playerScores }
         
@@ -91,7 +91,7 @@ class GameViewModel {
     }
     
     var shouldEndGame: Bool {
-        players.contains { getPlayerScore(for: $0) >= 10 }
+        players.contains { getPlayerScore(for: $0) >= GameConstants.Scoring.winningScore }
     }
     
     init(
@@ -258,13 +258,13 @@ class SinglePlayerGameViewModel {
         
         for turn in playerTurns {
             if turn.wasCorrect {
-                score += 1.0 // +1 point for correct
+                score += GameConstants.Scoring.correctAnswerPoints
             } else {
-                score -= 0.5 // -0.5 points for wrong
+                score += GameConstants.Scoring.wrongAnswerPenalty
             }
         }
         
-        return max(0, score) // Can't go below 0
+        return max(GameConstants.Scoring.minimumScore, score)
     }
     
     // Export player score for results screen
@@ -278,7 +278,7 @@ class SinglePlayerGameViewModel {
     }
     
     var shouldEndGame: Bool {
-        getPlayerScore() >= 10 || turns.count >= 20 // End after 10 points or 20 questions
+        getPlayerScore() >= GameConstants.SinglePlayer.winningScore || turns.count >= GameConstants.SinglePlayer.maxQuestions
     }
     
     init(

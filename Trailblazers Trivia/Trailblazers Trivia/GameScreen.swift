@@ -7,34 +7,9 @@
 
 import SwiftUI
 
-private extension Color {
-    static let appBackground = Color(red: 0.06, green: 0.07, blue: 0.09) // #0F1218 approx
-    static let cardBackground = Color(red: 0.18, green: 0.20, blue: 0.24) // Slightly lighter gray
-    static let chipBlue = Color(red: 0.35, green: 0.55, blue: 0.85) // #5A8CD8 approx
-    static let coral = Color(red: 1.0, green: 0.50, blue: 0.44) // #FF7F70 approx
-    static let controlTrack = Color(red: 0.18, green: 0.20, blue: 0.24)
-    static let controlShadow = Color.black.opacity(0.5)
-    static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83) // #BEC3D4
-}
-
 struct GameScreen: View {
     @Binding var path: [Routes]
     @State private var gameViewModel = GameViewModel(player1Name: "Persians", player2Name: "Hebrews")
-    
-    // Function to format scores with fractions instead of decimals
-    private func formatScore(_ score: Double) -> String {
-        let wholeNumber = Int(score)
-        let remainder = score - Double(wholeNumber)
-        
-        if remainder == 0.5 {
-            return "\(wholeNumber)½"
-        } else if remainder == 0 {
-            return "\(wholeNumber)"
-        } else {
-            // For any other fractional values, fall back to decimal
-            return String(format: "%.1f", score)
-        }
-    }
     
     var body: some View {
         ZStack {
@@ -57,7 +32,7 @@ struct GameScreen: View {
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                     .lineLimit(1)
                                 
-                                Text(formatScore(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
@@ -75,7 +50,7 @@ struct GameScreen: View {
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                     .lineLimit(1)
                                 
-                                Text(formatScore(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                             }
@@ -118,17 +93,6 @@ struct GameScreen: View {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack(alignment: .leading, spacing: 12) {
                             if !gameViewModel.showAnswer {
-                                // Category chip (question state)
-                                Text("Bible History")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.black.opacity(0.85))
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 8)
-                                    .background(
-                                        Capsule().fill(Color.white)
-                                    )
-                                    .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
                                 // Question text
                                 Text(gameViewModel.currentQuestion.question)
                                     .font(.system(size: 34, weight: .medium))
@@ -139,20 +103,8 @@ struct GameScreen: View {
                                     .frame(maxHeight: .infinity, alignment: .topLeading)
                                     .foregroundColor(Color.labelPrimary)
                             } else {
-                                // Answer state with category chip
+                                // Answer state
                                 VStack(alignment: .leading, spacing: 12) {
-                                    // Category chip (also shown in answer state)
-                                    Text("Bible History")
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.black.opacity(0.85))
-                                        .padding(.horizontal, 14)
-                                        .padding(.vertical, 8)
-                                        .background(
-                                            Capsule().fill(Color.white)
-                                        )
-                                        .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
-                                    
                                     // Answer text
                                     Text(gameViewModel.currentQuestion.answer)
                                         .font(.system(size: 50, weight: .semibold))
@@ -237,8 +189,7 @@ struct GameScreen: View {
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 16) {
-                if true {
-                    HStack(spacing: 16) {
+                HStack(spacing: 16) {
                         Button {
                             gameViewModel.answeredWrong()
                         } label: {
@@ -287,7 +238,6 @@ struct GameScreen: View {
             .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
         }
     }
-}
 
 #Preview {
     GameScreen(path: .constant([]))
