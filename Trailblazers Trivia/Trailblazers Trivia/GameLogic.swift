@@ -198,11 +198,7 @@ class GameViewModel {
     }
 }
 
-struct PlayerScore: Hashable {
-    let name: String
-    let score: Double
-    let isWinner: Bool
-}
+
 
 struct Player {
     let id: String

@@ -14,7 +14,7 @@ private extension Color {
     static let labelPrimary = Color(red: 0.75, green: 0.77, blue: 0.83) // #BEC3D4
 }
 
-struct TriviaCategory {
+struct TriviaCategory: Identifiable {
     let id = UUID()
     let name: String
     let icon: String
@@ -66,13 +66,13 @@ struct StartScreen: View {
                     .padding(.bottom, 20)
                     
                     VStack(spacing: 0) {
-                        ForEach(categories.indices, id: \.self) { index in
+                        ForEach(categories) { category in
                             CategoryCard(
-                                category: categories[index],
-                                isSelected: selectedCategory == categories[index].name
+                                category: category,
+                                isSelected: selectedCategory == category.name
                             )
                             
-                            if index < categories.count - 1 {
+                            if category.id != categories.last?.id {
                                 Divider()
                             }
                         }

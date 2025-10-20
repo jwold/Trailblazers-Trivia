@@ -100,7 +100,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let difficulty: Difficulty = .hard
         
         // Filter out malformed questions and convert to Question model
-        let validQuestions = jsonQuestions.compactMap { jsonQuestion in
+        let validQuestions = jsonQuestions.compactMap { jsonQuestion -> Question? in
             let question = jsonQuestion.toQuestion(difficulty: difficulty)
             
             // Basic validation to filter out incomplete or malformed questions
@@ -147,9 +147,15 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             // If all questions have been used, reset and start over
             print("All questions used, resetting...")
             resetUsedQuestions()
-            selectedQuestion = questionsForDifficulty.randomElement()!
+            guard let randomQuestion = questionsForDifficulty.randomElement() else {
+                throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
+            }
+            selectedQuestion = randomQuestion
         } else {
-            selectedQuestion = availableQuestions.randomElement()!
+            guard let randomQuestion = availableQuestions.randomElement() else {
+                throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
+            }
+            selectedQuestion = randomQuestion
         }
         
         // Mark the selected question as used
@@ -228,9 +234,15 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
         if availableQuestions.isEmpty {
             // If all questions have been used, reset and start over
             resetUsedQuestions()
-            selectedQuestion = questionsForDifficulty.randomElement() ?? questionsForDifficulty.first!
+            guard let randomQuestion = questionsForDifficulty.randomElement() ?? questionsForDifficulty.first else {
+                throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
+            }
+            selectedQuestion = randomQuestion
         } else {
-            selectedQuestion = availableQuestions.randomElement()!
+            guard let randomQuestion = availableQuestions.randomElement() else {
+                throw QuestionRepositoryError.noQuestionsForDifficulty(newDifficulty)
+            }
+            selectedQuestion = randomQuestion
         }
         
         // Mark the selected question as used

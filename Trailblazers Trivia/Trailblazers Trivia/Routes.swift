@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct PlayerScore: Hashable {
+    let name: String
+    let score: Double
+    let isWinner: Bool
+}
+
 enum Routes: Hashable, Identifiable {
     case gameOnePlayer
     case gameTwoPlayer
