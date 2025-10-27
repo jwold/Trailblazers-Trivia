@@ -17,7 +17,6 @@ class GameViewModel {
     var currentTurn: Turn?
     var showAnswer = false
     var gameEnded = false
-    var selectedDifficulty: Difficulty = .hard
     
     var currentPlayer: Player {
         players[currentPlayerIndex]
@@ -32,7 +31,7 @@ class GameViewModel {
     }
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."], difficulty: .easy)
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."])
     }
     
     // Computed property for scores
@@ -94,7 +93,7 @@ class GameViewModel {
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json, category: .bible)
         
         Task {
             await startNewTurn()
@@ -108,25 +107,11 @@ class GameViewModel {
         
         // Then load the question
         do {
-            let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
+            let question = try await questionRepository.nextQuestion()
             currentTurn?.question = question
         } catch {
             print("Failed to get question: \(error)")
             // Fallback to a default question or handle error appropriately
-        }
-    }
-    
-    @MainActor
-    func changeDifficultyForCurrentTurn(to newDifficulty: Difficulty) async {
-        selectedDifficulty = newDifficulty
-        // Only update the current turn if it hasn't been answered yet
-        if let turn = currentTurn, !turn.isAnswered {
-            do {
-                let newQuestion = try await questionRepository.nextQuestion(for: newDifficulty)
-                currentTurn?.question = newQuestion
-            } catch {
-                print("Failed to get question for difficulty change: \(error)")
-            }
         }
     }
     
@@ -196,17 +181,11 @@ struct Player {
     let name: String
 }
 
-enum Difficulty {
-    case easy
-    case hard
-}
-
 struct Question {
     let id: String
     let question: String
     let answer: String
     let wrongAnswers: [String]
-    let difficulty: Difficulty
 }
 
 struct Turn {
@@ -214,10 +193,6 @@ struct Turn {
     var question: Question?
     var isAnswered: Bool = false
     var wasCorrect: Bool = false
-    
-    var difficulty: Difficulty? {
-        question?.difficulty
-    }
 }
 
 @Observable
@@ -230,7 +205,6 @@ class SinglePlayerGameViewModel {
     var turns: [Turn] = []
     var currentTurn: Turn?
     var gameEnded = false
-    var selectedDifficulty: Difficulty = .hard
     var hasAnswered = false
     var showResults = false
     var selectedAnswer: String?
@@ -240,7 +214,7 @@ class SinglePlayerGameViewModel {
     var loadingError: String?
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."], difficulty: .easy)
+        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."])
     }
     
     // Computed property for score
@@ -269,7 +243,7 @@ class SinglePlayerGameViewModel {
         questionRepository: QuestionRepositoryProtocol? = nil
     ) {
         self.player = Player(id: UUID().uuidString, name: playerName)
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json)
+        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json, category: .bible)
         
         startTimer()
         
@@ -290,7 +264,7 @@ class SinglePlayerGameViewModel {
         
         // Then load the question
         do {
-            let question = try await questionRepository.nextQuestion(for: selectedDifficulty)
+            let question = try await questionRepository.nextQuestion()
             currentTurn?.question = question
             generateAnswerOptions()
             loadingError = nil
@@ -302,8 +276,7 @@ class SinglePlayerGameViewModel {
                 id: "fallback",
                 question: "Who was the first man created by God?",
                 answer: "Adam",
-                wrongAnswers: ["Seth", "Noah"],
-                difficulty: .hard
+                wrongAnswers: ["Seth", "Noah"]
             )
             currentTurn?.question = fallbackQuestion
             generateAnswerOptions()
@@ -428,3 +401,4 @@ class SinglePlayerGameViewModel {
         stopTimer()
     }
 }
+
