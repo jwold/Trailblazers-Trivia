@@ -49,13 +49,16 @@ struct JSONQuestion: Codable {
 class JSONQuestionRepository: QuestionRepositoryProtocol {
     
     private let category: TriviaCategory
+    private let instanceId = UUID().uuidString
     
     private var questions: [Question] = []
     private var usedQuestionIds: Set<String> = []
     private var isLoaded = false
+    private var isLoading = false
     
     init(category: TriviaCategory) {
         self.category = category
+        print("JSONQuestionRepository initialized with instanceId: \(instanceId)")
     }
     
     /// Loads and returns all questions from JSON files
@@ -137,40 +140,52 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     }
     
     func nextQuestion() async throws -> Question {
-        print("nextQuestion called")
+        print("nextQuestion called on instance: \(instanceId)")
         
         // Load questions if not already loaded
         if !isLoaded {
-            print("Questions not loaded yet, loading...")
-            self.questions = try loadAllQuestions()
-            self.isLoaded = true
-            print("Questions loaded successfully. Total: \(self.questions.count)")
+            if isLoading {
+                print("Already loading, waiting...")
+                // Wait for loading to complete
+                var attempts = 0
+                while isLoading && attempts < 50 { 
+                    try await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
+                    attempts += 1
+                }
+                if !isLoaded {
+                    throw QuestionRepositoryError.noQuestionsFound
+                }
+            } else {
+                print("Loading questions... (instance: \(instanceId))")
+                isLoading = true
+                do {
+                    self.questions = try loadAllQuestions()
+                    self.isLoaded = true
+                    print("Questions loaded successfully. Total: \(self.questions.count) (instance: \(instanceId))")
+                } catch {
+                    print("Failed to load questions: \(error)")
+                    throw error
+                }
+                self.isLoading = false
+            }
         }
         
-        // Filter out used questions
+        // Get available questions
         let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
         print("Available questions: \(availableQuestions.count), Used questions: \(usedQuestionIds.count)")
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
-            // If all questions have been used, reset and start over
-            print("All questions used, resetting...")
+            // Reset used questions and start over
             resetUsedQuestions()
-            guard let randomQuestion = questions.randomElement() else {
-                throw QuestionRepositoryError.noQuestionsFound
-            }
-            selectedQuestion = randomQuestion
+            selectedQuestion = questions.randomElement() ?? Question(id: "fallback", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Eve", "Noah"])
         } else {
-            guard let randomQuestion = availableQuestions.randomElement() else {
-                throw QuestionRepositoryError.noQuestionsFound
-            }
-            selectedQuestion = randomQuestion
+            selectedQuestion = availableQuestions.randomElement() ?? Question(id: "fallback", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Eve", "Noah"])
         }
         
-        // Mark the selected question as used
+        // Mark as used
         usedQuestionIds.insert(selectedQuestion.id)
-        
         print("Selected question: \(selectedQuestion.question)")
         return selectedQuestion
     }
@@ -277,6 +292,7 @@ class QuestionRepositoryFactory {
     ///   - category: The category of questions to load (default is .bible)
     /// - Returns: A question repository instance
     static func create(type: RepositoryType = .json, category: TriviaCategory = .bible) -> QuestionRepositoryProtocol {
+        print("QuestionRepositoryFactory: Creating new instance for \(category)")
         switch type {
         case .json:
             return JSONQuestionRepository(category: category)

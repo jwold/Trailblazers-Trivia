@@ -29,7 +29,7 @@ struct SinglePlayerGameScreen: View {
         
         // Generate a random team name for single player based on category
         let teamName = TeamNameGenerator.randomTeamName(for: category)
-        self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(playerName: teamName))
+        self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(playerName: teamName, category: category))
     }
     
     var body: some View {
@@ -38,8 +38,8 @@ struct SinglePlayerGameScreen: View {
             GrayTheme.background
                 .ignoresSafeArea()
             
-            if singlePlayerViewModel.isLoading {
-                // Loading state
+            // Show loading until we have answer options
+            if singlePlayerViewModel.currentAnswerOptions.isEmpty || singlePlayerViewModel.currentAnswerOptions.contains("Loading...") {
                 VStack(spacing: 20) {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: GrayTheme.accent))
@@ -59,12 +59,17 @@ struct SinglePlayerGameScreen: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                // Game content
                 gameContentView
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            // Start the game when the view appears
+            Task {
+                await singlePlayerViewModel.startGame()
+            }
+        }
         .onChange(of: singlePlayerViewModel.gameEnded) { _, gameEnded in
             if gameEnded {
                 let finalScore = singlePlayerViewModel.getPlayerScore()
@@ -95,7 +100,9 @@ struct SinglePlayerGameScreen: View {
                         .background(
                             Capsule()
                                 .fill(GrayTheme.lightCard)
-                                .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
+                                .overlay(
+                                    Capsule().stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
+                                )
                         )
                         .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                         .padding(.bottom, 8)
@@ -150,7 +157,7 @@ struct SinglePlayerGameScreen: View {
                     .padding(.horizontal, 12)
                     
                     // Answer buttons right below question card
-                    if !singlePlayerViewModel.isLoading {
+                    if !singlePlayerViewModel.currentAnswerOptions.isEmpty && !singlePlayerViewModel.currentAnswerOptions.contains("Loading...") {
                         answerButtonsView
                             .padding(.top, 20)
                     }
@@ -162,7 +169,7 @@ struct SinglePlayerGameScreen: View {
                 .frame(maxHeight: .infinity)
             }
         .safeAreaInset(edge: .bottom) {
-            if !singlePlayerViewModel.isLoading {
+            if !singlePlayerViewModel.currentAnswerOptions.isEmpty && !singlePlayerViewModel.currentAnswerOptions.contains("Loading...") {
                 continueButtonView
             }
         }
@@ -194,7 +201,7 @@ struct SinglePlayerGameScreen: View {
     private var answerButtonsView: some View {
         // Multiple choice answers - positioned right below question card
         VStack(spacing: 16) {
-            ForEach(singlePlayerViewModel.currentAnswerOptions, id: \.self) { option in
+            ForEach(Array(singlePlayerViewModel.currentAnswerOptions.enumerated()), id: \.offset) { index, option in
                 Button {
                     singlePlayerViewModel.selectAnswer(option)
                 } label: {
@@ -204,15 +211,12 @@ struct SinglePlayerGameScreen: View {
                             Circle()
                                 .stroke((singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? Color.clear : Color.white, lineWidth: 2)
                                 .frame(width: 24, height: 24)
-                            
-                            // Show different states based on selection and results
+
                             if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
-                                // Selected but not revealed yet - filled circle (radio button)
                                 Circle()
                                     .fill(Color.white)
                                     .frame(width: 12, height: 12)
                             } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
-                                // Results revealed and this is correct - checkmark
                                 ZStack {
                                     Circle()
                                         .fill(GrayTheme.gold)
@@ -222,14 +226,12 @@ struct SinglePlayerGameScreen: View {
                                         .foregroundColor(.black)
                                 }
                             } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.selectedAnswer && option != singlePlayerViewModel.currentQuestion.answer {
-                                // Results revealed and this was selected but wrong - X mark
                                 Image(systemName: "xmark")
                                     .font(.system(size: 14, weight: .bold))
                                     .foregroundColor(.white)
                             }
                         }
-                        
-                        // Answer text
+
                         Text(option)
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.white)
@@ -243,7 +245,6 @@ struct SinglePlayerGameScreen: View {
                             .fill(buttonColor(for: option))
                     )
                     .overlay(
-                        // White outline for selected answer (before results) or correct answer (after results)
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(
                                 Color.white,
@@ -251,15 +252,14 @@ struct SinglePlayerGameScreen: View {
                             )
                     )
                     .scaleEffect(
-                        // Slight growth for selected answer or correct answer
-                        (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) || 
+                        (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ||
                         (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? 1.05 : 1.0
                     )
                     .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.selectedAnswer)
                     .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.showResults)
                     .opacity(singlePlayerViewModel.selectedAnswer == nil || singlePlayerViewModel.selectedAnswer == option || singlePlayerViewModel.showResults ? 1.0 : 0.6)
                 }
-                .disabled(singlePlayerViewModel.showResults) // Only disable after results are shown
+                .disabled(singlePlayerViewModel.showResults)
             }
         }
         .padding(.horizontal, 20)

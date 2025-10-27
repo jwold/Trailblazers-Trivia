@@ -93,7 +93,7 @@ class GameViewModel {
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json, category: .bible)
+        self.questionRepository = questionRepository ?? MemoryQuestionRepository()
         
         Task {
             await startNewTurn()
@@ -240,20 +240,38 @@ class SinglePlayerGameViewModel {
     
     init(
         playerName: String = "Player",
+        category: TriviaCategory = .bible,
         questionRepository: QuestionRepositoryProtocol? = nil
     ) {
+        print("SinglePlayerGameViewModel initializing...")
         self.player = Player(id: UUID().uuidString, name: playerName)
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json, category: .bible)
+        // Use memory repository for now to avoid JSON loading issues
+        self.questionRepository = questionRepository ?? MemoryQuestionRepository()
+        
+        // Set up a default question immediately to prevent crashes
+        self.currentTurn = Turn(player: Player(id: UUID().uuidString, name: playerName))
+        self.currentTurn?.question = Question(
+            id: "loading",
+            question: "Loading...",
+            answer: "Loading...",
+            wrongAnswers: ["Loading...", "Loading..."]
+        )
+        self.currentAnswerOptions = ["Loading...", "Loading...", "Loading..."]
         
         startTimer()
-        
-        Task {
-            await startNewTurn()
-        }
+        print("SinglePlayerGameViewModel initialized")
+    }
+    
+    /// Start the game - loads the first real question
+    @MainActor
+    func startGame() async {
+        print("SinglePlayerGameViewModel: Starting game...")
+        await startNewTurn()
     }
     
     @MainActor
     func startNewTurn() async {
+        print("SinglePlayerGameViewModel: startNewTurn called")
         isLoading = true
         hasAnswered = false
         showResults = false
@@ -262,15 +280,17 @@ class SinglePlayerGameViewModel {
         // Create turn with player first
         currentTurn = Turn(player: player)
         
-        // Then load the question
+        // Then load the question with proper error handling
         do {
             let question = try await questionRepository.nextQuestion()
+            print("SinglePlayerGameViewModel: Got question: \(question.question)")
             currentTurn?.question = question
             generateAnswerOptions()
             loadingError = nil
         } catch {
-            print("Failed to get question: \(error)")
+            print("SinglePlayerGameViewModel: Failed to get question: \(error)")
             loadingError = "Failed to load question: \(error.localizedDescription)"
+            
             // Provide a fallback question to keep the game playable
             let fallbackQuestion = Question(
                 id: "fallback",
@@ -283,19 +303,40 @@ class SinglePlayerGameViewModel {
         }
         
         isLoading = false
+        print("SinglePlayerGameViewModel: startNewTurn completed, isLoading = \(isLoading)")
     }
     
     private func generateAnswerOptions() {
         guard let question = currentTurn?.question else { return }
-        
-        // Use the wrong answers from the question data
-        let wrongAnswers = question.wrongAnswers
-        
-        // Combine correct answer with wrong answers and shuffle
-        var options = wrongAnswers + [question.answer]
-        options.shuffle()
-        
-        currentAnswerOptions = options
+
+        // Combine wrong answers with the correct answer
+        let combined = question.wrongAnswers + [question.answer]
+
+        // Deduplicate while preserving order
+        var unique: [String] = []
+        var seen = Set<String>()
+        for option in combined {
+            if seen.insert(option).inserted {
+                unique.append(option)
+            }
+        }
+
+        // Ensure we have at least 3 unique options by padding with safe fillers
+        // (This protects against malformed data where a wrong answer duplicates the correct answer.)
+        let fillers = ["Option A", "Option B", "Option C", "Option D", "Option E"]
+        var fillerIndex = 0
+        while unique.count < 3 && fillerIndex < fillers.count {
+            let filler = fillers[fillerIndex]
+            fillerIndex += 1
+            if !seen.contains(filler) {
+                unique.append(filler)
+                seen.insert(filler)
+            }
+        }
+
+        // Shuffle for presentation
+        unique.shuffle()
+        currentAnswerOptions = unique
     }
 
     
@@ -317,6 +358,8 @@ class SinglePlayerGameViewModel {
     
     @MainActor
     func continueToNextQuestion() async {
+        print("SinglePlayerGameViewModel: continueToNextQuestion called, showResults = \(showResults)")
+        
         if !showResults {
             // First press: reveal the results and mark as answered
             hasAnswered = true
@@ -325,10 +368,12 @@ class SinglePlayerGameViewModel {
             // Second press: move to next question
             // Check if game should end
             if shouldEndGame {
+                print("SinglePlayerGameViewModel: Game should end, setting gameEnded = true")
                 gameEnded = true
                 return
             }
             
+            print("SinglePlayerGameViewModel: Starting next turn...")
             await startNewTurn()
         }
     }
