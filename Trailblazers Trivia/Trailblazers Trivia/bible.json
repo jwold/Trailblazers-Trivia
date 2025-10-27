@@ -491,7 +491,7 @@
   },
   {
     "id": 602,
-    "question": "In which New Testament Book does Jesus say \"\"I and my Father are one\"\"?",
+    "question": "In which New Testament Book does Jesus say \"I and my Father are one\"?",
     "answer": "Book of John",
     "wrongAnswers": [
       "Book of Luke",
@@ -1401,7 +1401,7 @@
   },
   {
     "id": 863,
-    "question": "Who does God call: \"\"my firstborn higher than the kings of the earth\"\"?",
+    "question": "Who does God call: \"my firstborn higher than the kings of the earth\"?",
     "answer": "David",
     "wrongAnswers": [
       "Saul",
@@ -1511,7 +1511,7 @@
   },
   {
     "id": 888,
-    "question": "Who said to whom: \"\"A person sees what is in front of his eyes but God sees the heart\"\"?",
+    "question": "Who said to whom: \"A person sees what is in front of his eyes but God sees the heart\"?",
     "answer": "God to Samuel",
     "wrongAnswers": [
       "God to David",
@@ -1971,7 +1971,7 @@
   },
   {
     "id": 523,
-    "question": "Complete this verse from Job: \"\"for the price of wisdom is …………",
+    "question": "Complete this verse from Job: \"for the price of wisdom is …………",
     "answer": "above rubies",
     "wrongAnswers": [
       "greater than gold",
@@ -2431,11 +2431,11 @@
   },
   {
     "id": 627,
-    "question": "What \"\"ran violently down a steep place into the sea and perished in the waters\"\"?",
+    "question": "What \"ran violently down a steep place into the sea and perished in the waters\"?",
     "answer": "A herd of swine",
     "wrongAnswers": [
       "A flock of sheep",
-      "A flock of gaots"
+      "A flock of goats"
     ],
     "reference": "Matthew 8:32"
   },
@@ -3231,7 +3231,7 @@
   },
   {
     "id": 791,
-    "question": "Where did Mary bring her newborn son Jesus \"\"when the days of her purification according to the law of Moses were accomplished\"\"?",
+    "question": "Where did Mary bring her newborn son Jesus \"when the days of her purification according to the law of Moses were accomplished\"?",
     "answer": "Jerusalem",
     "wrongAnswers": [
       "Bethlehem",
@@ -3421,7 +3421,7 @@
   },
   {
     "id": 839,
-    "question": "Which book start with \"\"In the beginning\"\"?",
+    "question": "Which book start with \"In the beginning\"?",
     "answer": "John",
     "wrongAnswers": [
       "Revelation",

@@ -108,7 +108,7 @@ struct StartScreen: View {
                             Button {
                                 selectedPlayerMode = .onePlayer
                             } label: {
-                                Text("1 Player")
+                                Text("Single Player")
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                     .frame(maxWidth: .infinity)
@@ -124,7 +124,7 @@ struct StartScreen: View {
                             Button {
                                 selectedPlayerMode = .twoPlayer
                             } label: {
-                                Text("2 Players")
+                                Text("Teams")
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(selectedPlayerMode == .twoPlayer ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
                                     .frame(maxWidth: .infinity)

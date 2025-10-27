@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+private enum GrayTheme {
+    static let background = Color(white: 0.04)      // deeper dark for higher contrast
+    static let card = Color(white: 0.10)            // darker card for separation
+    static let lightCard = Color(white: 0.16)       // darker chip/track for contrast
+    static let text = Color(white: 1.0)             // pure white text for maximum contrast
+    static let accent = Color(white: 0.22)          // dark accent for white text contrast
+    static let success = Color(white: 0.22)         // dark success for white text contrast
+    static let error = Color(white: 0.90)           // bright error text on dark bg
+    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0) // #FFD700 bright gold
+}
+
 struct SinglePlayerGameScreen: View {
     @Binding var path: [Routes]
     let category: TriviaCategory
@@ -24,24 +35,24 @@ struct SinglePlayerGameScreen: View {
     var body: some View {
         ZStack {
             // Clean background
-            Color.appBackground
+            GrayTheme.background
                 .ignoresSafeArea()
             
             if singlePlayerViewModel.isLoading {
                 // Loading state
                 VStack(spacing: 20) {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: Color.chipBlue))
+                        .progressViewStyle(CircularProgressViewStyle(tint: GrayTheme.accent))
                         .scaleEffect(1.5)
                     
                     Text("Loading Questions...")
                         .font(.headline)
-                        .foregroundColor(Color.labelPrimary)
+                        .foregroundColor(GrayTheme.text)
                     
                     if let error = singlePlayerViewModel.loadingError {
                         Text("Error: \(error)")
                             .font(.caption)
-                            .foregroundColor(Color.coral)
+                            .foregroundColor(GrayTheme.error)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     }
@@ -76,15 +87,15 @@ struct SinglePlayerGameScreen: View {
                             Text("\(ScoreFormatter.format(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(GrayTheme.text)
                                 .lineLimit(1)
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
                         .background(
                             Capsule()
-                                .fill(Color.lightCardBackground)
-                                .stroke(Color.labelPrimary.opacity(0.1), lineWidth: 1)
+                                .fill(GrayTheme.lightCard)
+                                .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
                         )
                         .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                         .padding(.bottom, 8)
@@ -99,7 +110,7 @@ struct SinglePlayerGameScreen: View {
                                 .foregroundColor(.black.opacity(0.85))
                                 .frame(width: 44, height: 44)
                                 .background(
-                                    Circle().fill(Color.labelPrimary.opacity(0.15))
+                                    Circle().fill(GrayTheme.text.opacity(0.15))
                                 )
                         }
                     }
@@ -115,13 +126,13 @@ struct SinglePlayerGameScreen: View {
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(GrayTheme.text)
                         }
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 24)
                     .frame(maxWidth: .infinity)
-                    .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 24))
+                    .background(GrayTheme.card, in: RoundedRectangle(cornerRadius: 24))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24)
                             .strokeBorder(
@@ -165,18 +176,19 @@ struct SinglePlayerGameScreen: View {
         } label: {
             Text("Continue")
                 .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(.white)
+                .foregroundColor(singlePlayerViewModel.selectedAnswer != nil ? .black.opacity(0.9) : .white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(singlePlayerViewModel.selectedAnswer != nil ? Color.correctGreen : Color.correctGreen.opacity(0.5))
+                        .fill(singlePlayerViewModel.selectedAnswer != nil ? GrayTheme.gold : GrayTheme.success.opacity(0.5))
                 )
+                .shadow(color: (singlePlayerViewModel.selectedAnswer != nil ? GrayTheme.gold.opacity(0.35) : Color.clear), radius: 10, x: 0, y: 4)
         }
         .disabled(singlePlayerViewModel.selectedAnswer == nil)
         .padding(.horizontal, 20)
         .padding(.bottom, 40)
-        .background(Color.appBackground)
+        .background(GrayTheme.background)
     }
     
     private var answerButtonsView: some View {
@@ -190,7 +202,7 @@ struct SinglePlayerGameScreen: View {
                         // Circle icon on the left - radio button style
                         ZStack {
                             Circle()
-                                .stroke(Color.white.opacity(0.8), lineWidth: 2)
+                                .stroke((singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? Color.clear : Color.white, lineWidth: 2)
                                 .frame(width: 24, height: 24)
                             
                             // Show different states based on selection and results
@@ -201,9 +213,14 @@ struct SinglePlayerGameScreen: View {
                                     .frame(width: 12, height: 12)
                             } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
                                 // Results revealed and this is correct - checkmark
-                                Image(systemName: "checkmark")
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(.white)
+                                ZStack {
+                                    Circle()
+                                        .fill(GrayTheme.gold)
+                                        .frame(width: 22, height: 22)
+                                    Image(systemName: "checkmark")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(.black)
+                                }
                             } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.selectedAnswer && option != singlePlayerViewModel.currentQuestion.answer {
                                 // Results revealed and this was selected but wrong - X mark
                                 Image(systemName: "xmark")
@@ -230,8 +247,7 @@ struct SinglePlayerGameScreen: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(
                                 Color.white,
-                                lineWidth: (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) || 
-                                          (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? 3 : 0
+                                lineWidth: (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ? 4 : 0
                             )
                     )
                     .scaleEffect(
@@ -251,10 +267,11 @@ struct SinglePlayerGameScreen: View {
     
     private func buttonColor(for option: String) -> Color {
         // Keep all buttons the same color - don't change to green or red
-        return Color.chipBlue
+        return GrayTheme.accent
     }
 }
 
 #Preview {
     SinglePlayerGameScreen(path: .constant([]), category: .bible)
 }
+
