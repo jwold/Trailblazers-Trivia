@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+private enum GrayTheme {
+    static let background = Color(white: 0.04)
+    static let card = Color(white: 0.10)
+    static let lightCard = Color(white: 0.16)
+    static let text = Color(white: 1.0)
+    static let accent = Color(white: 0.22)
+    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+}
+
 struct GameScreen: View {
     @Binding var path: [Routes]
     let category: TriviaCategory
@@ -20,14 +29,15 @@ struct GameScreen: View {
         let teamNames = TeamNameGenerator.generateTeamNames(for: category)
         self._gameViewModel = State(initialValue: GameViewModel(
             player1Name: teamNames.team1, 
-            player2Name: teamNames.team2
+            player2Name: teamNames.team2,
+            category: category
         ))
     }
     
     var body: some View {
         ZStack {
             // Clean background
-            Color.appBackground
+            GrayTheme.background
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -42,36 +52,36 @@ struct GameScreen: View {
                             HStack(spacing: 8) {
                                 Text(gameViewModel.player1.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
                                 Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
                             .background(
                                 Capsule()
-                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .white : Color.clear)
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? GrayTheme.gold : Color.clear)
                             )
                             
                             // Player 2 section
                             HStack(spacing: 8) {
                                 Text(gameViewModel.player2.name)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
                                 Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : Color.labelPrimary.opacity(0.8))
+                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
                             .background(
                                 Capsule()
-                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? Color.chipBlue : Color.clear)
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
                             )
                         }
                         .padding(.leading, 12) // Align with question card
@@ -79,8 +89,8 @@ struct GameScreen: View {
                         .padding(.vertical, 8)
                         .background(
                             Capsule()
-                                .fill(Color.controlTrack.opacity(0.6))
-                                .stroke(Color.labelPrimary.opacity(0.1), lineWidth: 1)
+                                .fill(GrayTheme.lightCard.opacity(0.6))
+                                .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
                         )
                         .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                         .frame(maxWidth: 280) // Limit the width of the score boxes
@@ -96,7 +106,7 @@ struct GameScreen: View {
                                 .foregroundColor(.black.opacity(0.85))
                                 .frame(width: 44, height: 44)
                                 .background(
-                                    Circle().fill(Color.labelPrimary.opacity(0.15))
+                                    Circle().fill(GrayTheme.text.opacity(0.15))
                                 )
                         }
                         .padding(.trailing, 12) // Align with question card
@@ -114,7 +124,7 @@ struct GameScreen: View {
                                     .fixedSize(horizontal: false, vertical: true)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .frame(maxHeight: .infinity, alignment: .topLeading)
-                                    .foregroundColor(Color.labelPrimary)
+                                    .foregroundColor(GrayTheme.text)
                             } else {
                                 // Answer state
                                 VStack(alignment: .leading, spacing: 12) {
@@ -123,7 +133,7 @@ struct GameScreen: View {
                                         .font(.system(size: 50, weight: .semibold))
                                         .multilineTextAlignment(.center)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                        .foregroundColor(Color.labelPrimary)
+                                        .foregroundColor(GrayTheme.text)
                                 }
                             }
                         }
@@ -133,7 +143,7 @@ struct GameScreen: View {
                     .padding(.vertical, 24)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity, alignment: .center)
-                    .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 24))
+                    .background(GrayTheme.card, in: RoundedRectangle(cornerRadius: 24))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24)
                             .strokeBorder(
@@ -158,9 +168,9 @@ struct GameScreen: View {
                                     .foregroundColor(.black.opacity(0.85))
                                     .frame(width: 44, height: 44)
                                     .background(
-                                        Circle().fill(Color.chipBlue)
+                                        Circle().fill(GrayTheme.gold)
                                     )
-                                    .shadow(color: Color.chipBlue.opacity(0.35), radius: 16, x: 0, y: 8)
+                                    .shadow(color: GrayTheme.gold.opacity(0.35), radius: 16, x: 0, y: 8)
                             }
                             .padding(16)
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
@@ -173,9 +183,9 @@ struct GameScreen: View {
                                     .foregroundColor(.black.opacity(0.85))
                                     .frame(width: 44, height: 44)
                                     .background(
-                                        Circle().fill(Color.chipBlue)
+                                        Circle().fill(GrayTheme.gold)
                                     )
-                                    .shadow(color: Color.chipBlue.opacity(0.35), radius: 16, x: 0, y: 8)
+                                    .shadow(color: GrayTheme.gold.opacity(0.35), radius: 16, x: 0, y: 8)
                             }
                             .padding(16)
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
@@ -214,14 +224,10 @@ struct GameScreen: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
                         .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.coral, Color.coral.opacity(0.9)]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(GrayTheme.accent)
                         )
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .shadow(color: Color.coral.opacity(0.25), radius: 8, x: 0, y: 4)
+                        .shadow(color: GrayTheme.accent.opacity(0.25), radius: 8, x: 0, y: 4)
                         
                         Button {
                             gameViewModel.answeredCorrect()
@@ -234,20 +240,16 @@ struct GameScreen: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
                         .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.chipBlue, Color.chipBlue.opacity(0.9)]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(GrayTheme.gold)
                         )
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .shadow(color: Color.chipBlue.opacity(0.25), radius: 8, x: 0, y: 4)
+                        .shadow(color: GrayTheme.gold.opacity(0.25), radius: 8, x: 0, y: 4)
                     }
                 }
             }
             .padding(.horizontal, 12) // Reduced from 20 to 12
             .padding(.bottom, 40)
-            .background(Color.appBackground)
+            .background(GrayTheme.background)
             .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
         }
     }

@@ -27,10 +27,16 @@ struct SinglePlayerEndScreen: View {
     
     private var gameCompletionDescription: String {
         if finalScore >= 10 {
-            return "You reached 10 points in \(ScoreFormatter.formatTime(elapsedTime))!"
+            return "You reached 10 points in \(formatTime(elapsedTime))!"
         } else {
-            return "You answered \(questionsAnswered) questions in \(ScoreFormatter.formatTime(elapsedTime))"
+            return "You answered \(questionsAnswered) questions in \(formatTime(elapsedTime))"
         }
+    }
+    
+    private func formatTime(_ timeInterval: TimeInterval) -> String {
+        let minutes = Int(timeInterval) / 60
+        let seconds = Int(timeInterval) % 60
+        return String(format: "%d:%02d", minutes, seconds)
     }
 
     var body: some View {
@@ -43,12 +49,12 @@ struct SinglePlayerEndScreen: View {
                     Text(gameCompletionMessage)
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(Color.labelPrimary)
+                        .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
                     Text(gameCompletionDescription)
                         .font(.title3)
-                        .foregroundColor(Color.labelPrimary.opacity(0.8))
+                        .foregroundColor(.white.opacity(0.8))
                         .multilineTextAlignment(.center)
                 }
                 .padding(.top, 60)
@@ -60,15 +66,15 @@ struct SinglePlayerEndScreen: View {
                     VStack(spacing: 8) {
                         Text("Final Score")
                             .font(.headline)
-                            .foregroundColor(Color.labelPrimary.opacity(0.8))
+                            .foregroundColor(.white.opacity(0.8))
                         
                         Text(ScoreFormatter.format(finalScore))
                             .font(.system(size: 64, weight: .bold, design: .rounded))
-                            .foregroundColor(Color.labelPrimary)
+                            .foregroundColor(.white)
                         
                         Text("out of 10 points")
                             .font(.subheadline)
-                            .foregroundColor(Color.labelPrimary.opacity(0.6))
+                            .foregroundColor(.white.opacity(0.6))
                     }
                     
                     // Progress indicator
@@ -76,14 +82,14 @@ struct SinglePlayerEndScreen: View {
                         HStack {
                             Text("Progress")
                                 .font(.subheadline)
-                                .foregroundColor(Color.labelPrimary.opacity(0.8))
+                                .foregroundColor(.white.opacity(0.8))
                             
                             Spacer()
                             
                             Text("\(Int((finalScore / 10.0) * 100))%")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(.white)
                         }
                         
                         // Progress bar
@@ -110,11 +116,11 @@ struct SinglePlayerEndScreen: View {
                             Text("\(questionsAnswered)")
                                 .font(.title2)
                                 .fontWeight(.bold)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(.white)
                             
                             Text("Questions")
                                 .font(.caption)
-                                .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                .foregroundColor(.white.opacity(0.6))
                         }
                         
                         VStack(spacing: 4) {
@@ -126,7 +132,7 @@ struct SinglePlayerEndScreen: View {
                             
                             Text("Correct")
                                 .font(.caption)
-                                .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                .foregroundColor(.white.opacity(0.6))
                         }
                         
                         VStack(spacing: 4) {
@@ -138,18 +144,18 @@ struct SinglePlayerEndScreen: View {
                             
                             Text("Wrong")
                                 .font(.caption)
-                                .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                .foregroundColor(.white.opacity(0.6))
                         }
                         
                         VStack(spacing: 4) {
-                            Text(ScoreFormatter.formatTime(elapsedTime))
+                            Text(formatTime(elapsedTime))
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(Color.chipBlue)
                             
                             Text("Time")
                                 .font(.caption)
-                                .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                .foregroundColor(.white.opacity(0.6))
                         }
                     }
                 }

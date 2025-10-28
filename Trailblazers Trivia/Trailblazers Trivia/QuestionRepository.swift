@@ -142,32 +142,43 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     func nextQuestion() async throws -> Question {
         print("nextQuestion called on instance: \(instanceId)")
         
-        // Load questions if not already loaded
-        if !isLoaded {
-            if isLoading {
-                print("Already loading, waiting...")
-                // Wait for loading to complete
-                var attempts = 0
-                while isLoading && attempts < 50 { 
-                    try await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
-                    attempts += 1
-                }
-                if !isLoaded {
-                    throw QuestionRepositoryError.noQuestionsFound
-                }
-            } else {
-                print("Loading questions... (instance: \(instanceId))")
-                isLoading = true
-                do {
-                    self.questions = try loadAllQuestions()
-                    self.isLoaded = true
-                    print("Questions loaded successfully. Total: \(self.questions.count) (instance: \(instanceId))")
-                } catch {
-                    print("Failed to load questions: \(error)")
-                    throw error
-                }
-                self.isLoading = false
+        // Ensure thread safety with a simple flag check
+        if isLoading {
+            print("Already loading, waiting...")
+            // Wait for loading to complete
+            var attempts = 0
+            while isLoading && attempts < 100 { // Increased timeout
+                try await Task.sleep(nanoseconds: 50_000_000) // 0.05 second
+                attempts += 1
             }
+            if !isLoaded || questions.isEmpty {
+                print("Loading failed or timed out")
+                throw QuestionRepositoryError.noQuestionsFound
+            }
+        }
+        
+        // Load questions if not loaded
+        if !isLoaded {
+            print("Loading questions... (instance: \(instanceId))")
+            isLoading = true
+            
+            do {
+                self.questions = try loadAllQuestions()
+                self.isLoaded = true
+                print("Questions loaded successfully. Total: \(self.questions.count) (instance: \(instanceId))")
+            } catch {
+                print("Failed to load questions: \(error)")
+                self.isLoading = false
+                throw error
+            }
+            
+            self.isLoading = false
+        }
+        
+        // Ensure we have questions
+        guard !questions.isEmpty else {
+            print("No questions available")
+            throw QuestionRepositoryError.noQuestionsFound
         }
         
         // Get available questions
@@ -178,6 +189,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         
         if availableQuestions.isEmpty {
             // Reset used questions and start over
+            print("All questions used, resetting...")
             resetUsedQuestions()
             selectedQuestion = questions.randomElement() ?? Question(id: "fallback", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Eve", "Noah"])
         } else {

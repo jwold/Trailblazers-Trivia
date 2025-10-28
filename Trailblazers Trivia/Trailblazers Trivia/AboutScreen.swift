@@ -22,7 +22,7 @@ struct AboutScreen: View {
                             Text("About")
                                 .font(.largeTitle)
                                 .fontWeight(.semibold)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(.white)
                             
                             Spacer()
                             
@@ -31,7 +31,7 @@ struct AboutScreen: View {
                             }) {
                                 Image(systemName: "xmark")
                                     .font(.title2)
-                                    .foregroundColor(Color.labelPrimary.opacity(0.7))
+                                    .foregroundColor(.white.opacity(0.7))
                                     .frame(width: 44, height: 44)
                                     .background(
                                         Circle().fill(Color.cardBackground)
@@ -52,7 +52,7 @@ struct AboutScreen: View {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("Test your knowledge with challenging trivia questions across various categories. Perfect for Bible study groups, classrooms, or friendly competition.")
                                 .font(.body)
-                                .foregroundColor(Color.labelPrimary.opacity(0.8))
+                                .foregroundColor(.white.opacity(0.8))
                                 .lineLimit(nil)
                         }
                         
@@ -63,7 +63,7 @@ struct AboutScreen: View {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("Created by Joshua Wold and Nathan Isaac.")
                                 .font(.body)
-                                .foregroundColor(Color.labelPrimary.opacity(0.8))
+                                .foregroundColor(.white.opacity(0.8))
                         }
                         
                         Divider()
@@ -73,7 +73,7 @@ struct AboutScreen: View {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("Got questions? Please reach out with any feedback to trailblazerstrivia@gmail.com.")
                                 .font(.body)
-                                .foregroundColor(Color.labelPrimary.opacity(0.8))
+                                .foregroundColor(.white.opacity(0.8))
                         }
                         
                         Divider()
@@ -84,17 +84,17 @@ struct AboutScreen: View {
                             Text("App Version")
                                 .font(.title3)
                                 .fontWeight(.semibold)
-                                .foregroundColor(Color.labelPrimary)
+                                .foregroundColor(.white)
                             
                             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                                let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
                                 Text("Version \(version) (Build \(build))")
                                     .font(.body)
-                                    .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                    .foregroundColor(.white.opacity(0.6))
                             } else {
                                 Text("Version 1.0")
                                     .font(.body)
-                                    .foregroundColor(Color.labelPrimary.opacity(0.6))
+                                    .foregroundColor(.white.opacity(0.6))
                             }
                         }
                     }
@@ -139,7 +139,7 @@ struct CreatorCard: View {
                 Text(name)
                     .font(.headline)
                     .fontWeight(.medium)
-                    .foregroundColor(Color.labelPrimary)
+                    .foregroundColor(.white)
                 
                 Button(action: {
                     if let url = URL(string: website) {
@@ -154,7 +154,7 @@ struct CreatorCard: View {
                         Text(websiteDisplay)
                             .font(.subheadline)
                     }
-                    .foregroundColor(Color.chipBlue)
+                    .foregroundColor(.blue)
                 }
                 .buttonStyle(PlainButtonStyle())
             }

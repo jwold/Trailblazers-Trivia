@@ -31,7 +31,7 @@ struct EndScreen: View {
                     Text("Final Scores")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(Color.labelPrimary)
+                        .foregroundColor(.white)
                     VStack(spacing: 12) {
                         ForEach(playerScores, id: \.name) { playerScore in
                             HStack(alignment: .center, spacing: 12) {
@@ -40,7 +40,7 @@ struct EndScreen: View {
                                         Text(playerScore.name)
                                             .font(.headline)
                                             .fontWeight(.medium)
-                                            .foregroundColor(Color.labelPrimary)
+                                            .foregroundColor(.white)
                                         if playerScore.isWinner {
                                             Text("WINNER")
                                                 .font(.caption)
@@ -57,7 +57,7 @@ struct EndScreen: View {
                                 Text("\(ScoreFormatter.format(playerScore.score)) points")
                                     .font(.headline)
                                     .fontWeight(.semibold)
-                                    .foregroundColor(Color.labelPrimary)
+                                    .foregroundColor(.white)
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 14)
@@ -129,4 +129,3 @@ struct EndScreen: View {
         ]
     )
 }
-
