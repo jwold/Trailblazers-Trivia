@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DC6BAAC62E7A591000A69ECA /* Trailblazers Trivia */ = {
+		DC6BAAC62E7A591000A69ECA /* TrailblazersTrivia */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Trailblazers Trivia";
+			path = TrailblazersTrivia;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		DC6BAABB2E7A590F00A69ECA = {
 			isa = PBXGroup;
 			children = (
-				DC6BAAC62E7A591000A69ECA /* Trailblazers Trivia */,
+				DC6BAAC62E7A591000A69ECA /* TrailblazersTrivia */,
 				DC6BAAC52E7A591000A69ECA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DC6BAAC32E7A591000A69ECA /* Trailblazers Trivia */ = {
+		DC6BAAC32E7A591000A69ECA /* TrailblazersTrivia */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC6BAACF2E7A591100A69ECA /* Build configuration list for PBXNativeTarget "Trailblazers Trivia" */;
+			buildConfigurationList = DC6BAACF2E7A591100A69ECA /* Build configuration list for PBXNativeTarget "TrailblazersTrivia" */;
 			buildPhases = (
 				DC6BAAC02E7A591000A69ECA /* Sources */,
 				DC6BAAC12E7A591000A69ECA /* Frameworks */,
@@ -61,9 +61,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DC6BAAC62E7A591000A69ECA /* Trailblazers Trivia */,
+				DC6BAAC62E7A591000A69ECA /* TrailblazersTrivia */,
 			);
-			name = "Trailblazers Trivia";
+			name = TrailblazersTrivia;
 			packageProductDependencies = (
 			);
 			productName = "Trailblazers Trivia";
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DC6BAABF2E7A590F00A69ECA /* Build configuration list for PBXProject "Trailblazers Trivia" */;
+			buildConfigurationList = DC6BAABF2E7A590F00A69ECA /* Build configuration list for PBXProject "TrailblazersTrivia" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DC6BAAC32E7A591000A69ECA /* Trailblazers Trivia */,
+				DC6BAAC32E7A591000A69ECA /* TrailblazersTrivia */,
 			);
 		};
 /* End PBXProject section */
@@ -315,7 +315,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC6BAABF2E7A590F00A69ECA /* Build configuration list for PBXProject "Trailblazers Trivia" */ = {
+		DC6BAABF2E7A590F00A69ECA /* Build configuration list for PBXProject "TrailblazersTrivia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC6BAACD2E7A591100A69ECA /* Debug */,
@@ -324,7 +324,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC6BAACF2E7A591100A69ECA /* Build configuration list for PBXNativeTarget "Trailblazers Trivia" */ = {
+		DC6BAACF2E7A591100A69ECA /* Build configuration list for PBXNativeTarget "TrailblazersTrivia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC6BAAD02E7A591100A69ECA /* Debug */,

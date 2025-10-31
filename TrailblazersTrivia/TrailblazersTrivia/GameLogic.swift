@@ -1,6 +1,6 @@
 //
 //  GameLogic.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by Tony Stark on 9/23/25.
 //

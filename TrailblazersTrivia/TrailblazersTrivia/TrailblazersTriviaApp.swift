@@ -1,6 +1,6 @@
 //
 //  Trailblazers_TriviaApp.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by Joshua Wold and Nathan Isaac on 9/16/25.
 //

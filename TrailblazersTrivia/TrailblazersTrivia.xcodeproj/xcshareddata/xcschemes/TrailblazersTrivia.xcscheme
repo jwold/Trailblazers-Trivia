@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC6BAAC32E7A591000A69ECA"
-               BuildableName = "Trailblazers Trivia.app"
-               BlueprintName = "Trailblazers Trivia"
-               ReferencedContainer = "container:Trailblazers Trivia.xcodeproj">
+               BuildableName = "TrailblazersTrivia.app"
+               BlueprintName = "TrailblazersTrivia"
+               ReferencedContainer = "container:TrailblazersTrivia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC6BAAC32E7A591000A69ECA"
-            BuildableName = "Trailblazers Trivia.app"
-            BlueprintName = "Trailblazers Trivia"
-            ReferencedContainer = "container:Trailblazers Trivia.xcodeproj">
+            BuildableName = "TrailblazersTrivia.app"
+            BlueprintName = "TrailblazersTrivia"
+            ReferencedContainer = "container:TrailblazersTrivia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC6BAAC32E7A591000A69ECA"
-            BuildableName = "Trailblazers Trivia.app"
-            BlueprintName = "Trailblazers Trivia"
-            ReferencedContainer = "container:Trailblazers Trivia.xcodeproj">
+            BuildableName = "TrailblazersTrivia.app"
+            BlueprintName = "TrailblazersTrivia"
+            ReferencedContainer = "container:TrailblazersTrivia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,6 +1,6 @@
 //
 //  QuestionRepository.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by Assistant on 9/24/25.
 //

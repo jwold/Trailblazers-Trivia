@@ -1,6 +1,6 @@
 //
 //  TriviaCategory.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by Assistant on 10/20/25.
 //

@@ -1,6 +1,6 @@
 //
 //  SinglePlayerGameScreen.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by AI Assistant on 10/17/25.
 //

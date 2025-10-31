@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Trailblazers Trivia
+//  TrailblazersTrivia
 //
 //  Created by Joshua Wold on 9/16/25.
 //
