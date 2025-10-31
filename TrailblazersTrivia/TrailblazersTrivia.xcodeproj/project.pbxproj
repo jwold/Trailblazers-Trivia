@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trailblazers Trivia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailblazersTrivia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		DC6BAAC52E7A591000A69ECA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */,
+				DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Trailblazers Trivia";
-			productReference = DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */;
+			productReference = DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
