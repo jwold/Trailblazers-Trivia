@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5180552E2EB468CF005F03F7 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 5180552D2EB468CF005F03F7 /* RevenueCat */; };
+		518055302EB468CF005F03F7 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5180552F2EB468CF005F03F7 /* RevenueCatUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trailblazers Trivia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailblazersTrivia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518055302EB468CF005F03F7 /* RevenueCatUI in Frameworks */,
+				5180552E2EB468CF005F03F7 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +47,7 @@
 		DC6BAAC52E7A591000A69ECA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */,
+				DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,9 +72,11 @@
 			);
 			name = TrailblazersTrivia;
 			packageProductDependencies = (
+				5180552D2EB468CF005F03F7 /* RevenueCat */,
+				5180552F2EB468CF005F03F7 /* RevenueCatUI */,
 			);
 			productName = "Trailblazers Trivia";
-			productReference = DC6BAAC42E7A591000A69ECA /* Trailblazers Trivia.app */;
+			productReference = DC6BAAC42E7A591000A69ECA /* TrailblazersTrivia.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,6 +103,9 @@
 			);
 			mainGroup = DC6BAABB2E7A590F00A69ECA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5180552C2EB468CF005F03F7 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DC6BAAC52E7A591000A69ECA /* Products */;
 			projectDirPath = "";
@@ -334,6 +346,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5180552C2EB468CF005F03F7 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.45.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5180552D2EB468CF005F03F7 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5180552C2EB468CF005F03F7 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		5180552F2EB468CF005F03F7 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5180552C2EB468CF005F03F7 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC6BAABC2E7A590F00A69ECA /* Project object */;
 }

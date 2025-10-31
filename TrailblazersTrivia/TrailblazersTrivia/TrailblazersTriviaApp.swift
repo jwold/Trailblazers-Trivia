@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import RevenueCat
 
 @main
 struct TrailblazersTriviaApp: App {
+    init() {
+        Purchases.logLevel = .debug
+        Purchases.configure(withAPIKey: Config.revenueCatAPIKey)
+    }
+
     var body: some Scene {
         WindowGroup {
             StartScreen()
