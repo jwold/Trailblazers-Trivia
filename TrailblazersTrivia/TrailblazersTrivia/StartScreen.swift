@@ -21,15 +21,39 @@ struct StartScreen: View {
     @State private var path: [Routes] = []
     @State private var selectedPlayerMode: PlayerMode = .onePlayer
     @State private var selectedCategory: TriviaCategory = .bible
+    
+    
+    // MARK: - Haptics & Selection Helpers
+    private func selectCategory(_ category: TriviaCategory) {
+        guard selectedCategory != category else { return }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        selectedCategory = category
+    }
+
+    private func selectMode(_ mode: PlayerMode) {
+        guard selectedPlayerMode != mode else { return }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        selectedPlayerMode = mode
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
                 HomeTheme.background.ignoresSafeArea()
+                LinearGradient(
+                    colors: [Color.white.opacity(0.06), Color.clear, Color.white.opacity(0.03)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                .opacity(0.6)
+                .blur(radius: 40)
                 
                 VStack(spacing: 0) {
                     headerView
-                    categorySelectionView
+                    categoryCarousel
                     playerModeCards
                     Spacer()
                     startGameButton
@@ -75,93 +99,106 @@ struct StartScreen: View {
         }
     }
     
-    // MARK: - Category Selection
-    private var categorySelectionView: some View {
-        VStack(spacing: 12) {
-            ForEach(TriviaCategory.allCases, id: \.self) { category in
-                categoryCard(for: category)
-            }
-        }
+    // MARK: - Category Carousel
+    private struct CategoryCard: Identifiable {
+        let id = UUID()
+        let iconName: String
+        let title: String
+        let priceText: String
+        let mappedCategory: TriviaCategory
+        let accent: Color
     }
-    
-    private func categoryCard(for category: TriviaCategory) -> some View {
-        Button {
-            selectedCategory = category
-        } label: {
-            HStack(spacing: 16) {
-                categoryIcon(for: category)
-                categoryInfo(for: category)
-                Spacer()
-                categoryCheckmark(for: category)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
-        }
-        .buttonStyle(PlainButtonStyle())
-        .background(categoryCardBackground(for: category))
-        .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-        .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
-        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
-        .scaleEffect(selectedCategory == category ? 1.02 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: selectedCategory)
+
+    private var categoryCards: [CategoryCard] {
+        [
+            CategoryCard(iconName: "book.fill", title: "Bible", priceText: "Free", mappedCategory: .bible, accent: .teal),
+            CategoryCard(iconName: "globe.americas.fill", title: "History", priceText: "Free", mappedCategory: .bible, accent: .orange),
+            CategoryCard(iconName: "pawprint.fill", title: "Animals", priceText: "Free", mappedCategory: .bible, accent: .pink),
+            CategoryCard(iconName: "map.fill", title: "Geography", priceText: "Free", mappedCategory: .bible, accent: .purple)
+        ]
     }
-    
-    private func categoryIcon(for category: TriviaCategory) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(selectedCategory == category ? HomeTheme.gold : HomeTheme.text)
-                .frame(width: 44, height: 44)
-            
-            Image(systemName: category.iconName)
-                .font(.system(size: 20))
-                .foregroundColor(.black)
-        }
-    }
-    
-    private func categoryInfo(for category: TriviaCategory) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(category.displayName)
+
+    private var categoryCarousel: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Choose your game")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .foregroundColor(HomeTheme.text)
-                .multilineTextAlignment(.leading)
-            
-            Text(category.description)
+            GeometryReader { geo in
+                let cardWidth = min(220, max(180, geo.size.width * 0.55))
+                let cardHeight = cardWidth * 0.95
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(categoryCards) { card in
+                                categoryCarouselCard(card: card, width: cardWidth, height: cardHeight, isSelected: selectedCategory == card.mappedCategory)
+                                    .id(card.id)
+                                    .onTapGesture { selectCategory(card.mappedCategory) }
+                            }
+                        }
+                        .padding(.horizontal, 0)
+                        .padding(.vertical, 2)
+                    }
+                    .onAppear {
+                        if let first = categoryCards.first { proxy.scrollTo(first.id, anchor: .leading) }
+                    }
+                }
+            }
+            .frame(height: 210)
+        }
+    }
+
+    private func categoryCarouselCard(card: CategoryCard, width: CGFloat, height: CGFloat, isSelected: Bool) -> some View {
+        VStack(spacing: 8) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(card.accent)
+                    .frame(width: 56, height: 56)
+                Image(systemName: card.iconName)
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundColor(.black)
+            }
+            Text(card.title)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(HomeTheme.text)
+            Text(card.priceText)
                 .font(.subheadline)
                 .foregroundColor(HomeTheme.text.opacity(0.7))
         }
-    }
-    
-    private func categoryCheckmark(for category: TriviaCategory) -> some View {
-        ZStack {
-            Circle()
-                .fill(selectedCategory == category ? HomeTheme.gold : HomeTheme.text.opacity(0.2))
-                .frame(width: 24, height: 24)
-            
-            if selectedCategory == category {
-                Image(systemName: "checkmark")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.black)
-            }
-        }
-    }
-    
-    private func categoryCardBackground(for category: TriviaCategory) -> some View {
-        RoundedRectangle(cornerRadius: 24)
-            .fill(HomeTheme.card)
-            .overlay(
-                RoundedRectangle(cornerRadius: 24)
-                    .strokeBorder(
-                        selectedCategory == category 
-                        ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
-                        : AnyShapeStyle(LinearGradient(
-                            colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )),
-                        lineWidth: selectedCategory == category ? 2 : 1
+        .padding(.vertical, 16)
+        .frame(width: width, height: height)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(HomeTheme.card)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .strokeBorder(
+                            isSelected
+                            ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
+                            : AnyShapeStyle(LinearGradient(
+                                colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )),
+                            lineWidth: isSelected ? 2 : 1
+                        )
+                )
+                .overlay(
+                    LinearGradient(
+                        colors: [Color.white.opacity(0.08), Color.clear],
+                        startPoint: .top,
+                        endPoint: .center
                     )
-            )
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .opacity(0.8)
+                )
+        )
+        .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+        .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .animation(.spring(response: 0.28, dampingFraction: 0.9), value: isSelected)
     }
     
     // MARK: - Player Mode Cards
@@ -178,21 +215,21 @@ struct StartScreen: View {
             PlayerModeOption(
                 mode: .onePlayer,
                 iconName: "person.fill",
-                title: "Single Player",
+                title: "Just me",
                 subtitle: "Play solo and test your knowledge.",
                 accent: Color.teal
             ),
             PlayerModeOption(
                 mode: .twoPlayer,
                 iconName: "person.2.fill",
-                title: "Two Players",
+                title: "Me and a friend",
                 subtitle: "Take turns and compete head‑to‑head.",
                 accent: Color.purple
             ),
             PlayerModeOption(
                 mode: .twoPlayer, // Shout Out reuses twoPlayer wiring for now
                 iconName: "megaphone.fill",
-                title: "Shout Out",
+                title: "A group of us",
                 subtitle: "First to answer out loud scores the point.",
                 accent: Color.pink
             )
@@ -200,25 +237,24 @@ struct StartScreen: View {
     }
     
     private var playerModeCards: some View {
-        VStack(spacing: 12) {
-            ForEach(playerModeOptions, id: \.title) { option in
-                playerModeCard(option: option, isSelected: selectedPlayerMode == option.mode)
-                    .onTapGesture { selectedPlayerMode = option.mode }
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Who is playing?")
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(HomeTheme.text)
+            VStack(spacing: 12) {
+                ForEach(playerModeOptions, id: \.title) { option in
+                    playerModeCard(option: option, isSelected: selectedPlayerMode == option.mode)
+                        .onTapGesture { selectMode(option.mode) }
+                }
             }
+            .padding(.top, 0)
         }
-        .padding(.top, 20)
+        .padding(.top, 24)
     }
     
     private func playerModeCard(option: PlayerModeOption, isSelected: Bool) -> some View {
         HStack(spacing: 16) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(option.accent)
-                    .frame(width: 44, height: 44)
-                Image(systemName: option.iconName)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.black)
-            }
             VStack(alignment: .leading, spacing: 2) {
                 Text(option.title)
                     .font(.headline)
@@ -258,17 +294,27 @@ struct StartScreen: View {
                             lineWidth: isSelected ? 2 : 1
                         )
                 )
+                .overlay(
+                    LinearGradient(
+                        colors: [Color.white.opacity(0.08), Color.clear],
+                        startPoint: .top,
+                        endPoint: .center
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .opacity(0.8)
+                )
         )
         .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
         .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
         .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
         .scaleEffect(isSelected ? 1.02 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .animation(.spring(response: 0.28, dampingFraction: 0.9), value: isSelected)
     }
     
     // MARK: - Start Game Button
     private var startGameButton: some View {
-        NavigationLink(value: selectedPlayerMode == .onePlayer ? Routes.gameOnePlayer(category: selectedCategory) : Routes.gameTwoPlayer(category: selectedCategory)) {
+        let destination: Routes = selectedPlayerMode == .onePlayer ? .gameOnePlayer(category: selectedCategory) : .gameTwoPlayer(category: selectedCategory)
+        return NavigationLink(value: destination) {
             Text("Start New Game")
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -280,7 +326,27 @@ struct StartScreen: View {
                         .fill(HomeTheme.gold)
                 )
                 .shadow(color: HomeTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
+                .overlay(
+                    GeometryReader { g in
+                        let gradient = LinearGradient(
+                            colors: [Color.white.opacity(0.0), Color.white.opacity(0.35), Color.white.opacity(0.0)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        Rectangle()
+                            .fill(gradient)
+                            .rotationEffect(.degrees(20))
+                            .offset(x: -g.size.width)
+                            .animation(.linear(duration: 1.8).repeatForever(autoreverses: false), value: UUID())
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .allowsHitTesting(false)
+                )
         }
+        .simultaneousGesture(TapGesture().onEnded {
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+        })
     }
     
     // MARK: - Navigation
