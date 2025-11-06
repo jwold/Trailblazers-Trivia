@@ -30,7 +30,7 @@ struct StartScreen: View {
                 VStack(spacing: 0) {
                     headerView
                     categorySelectionView
-                    playerModeSelector
+                    playerModeCards
                     Spacer()
                     startGameButton
                 }
@@ -164,60 +164,106 @@ struct StartScreen: View {
             )
     }
     
-    // MARK: - Player Mode Selector
-    private var playerModeSelector: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 0) {
-                singlePlayerButton
-                teamPlayerButton
+    // MARK: - Player Mode Cards
+    private struct PlayerModeOption {
+        let mode: PlayerMode
+        let iconName: String
+        let title: String
+        let subtitle: String
+        let accent: Color
+    }
+    
+    private var playerModeOptions: [PlayerModeOption] {
+        [
+            PlayerModeOption(
+                mode: .onePlayer,
+                iconName: "person.fill",
+                title: "Single Player",
+                subtitle: "Play solo and test your knowledge.",
+                accent: Color.teal
+            ),
+            PlayerModeOption(
+                mode: .twoPlayer,
+                iconName: "person.2.fill",
+                title: "Two Players",
+                subtitle: "Take turns and compete head‑to‑head.",
+                accent: Color.purple
+            ),
+            PlayerModeOption(
+                mode: .twoPlayer, // Shout Out reuses twoPlayer wiring for now
+                iconName: "megaphone.fill",
+                title: "Shout Out",
+                subtitle: "First to answer out loud scores the point.",
+                accent: Color.pink
+            )
+        ]
+    }
+    
+    private var playerModeCards: some View {
+        VStack(spacing: 12) {
+            ForEach(playerModeOptions, id: \.title) { option in
+                playerModeCard(option: option, isSelected: selectedPlayerMode == option.mode)
+                    .onTapGesture { selectedPlayerMode = option.mode }
             }
-            .background(playerModeSelectorBackground)
-            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 2)
         }
         .padding(.top, 20)
     }
     
-    private var singlePlayerButton: some View {
-        Button {
-            selectedPlayerMode = .onePlayer
-        } label: {
-            Text("Single Player")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(selectedPlayerMode == .onePlayer ? .black.opacity(0.9) : HomeTheme.text.opacity(0.8))
-                .frame(maxWidth: .infinity)
-                .frame(height: 44)
-                .background(
-                    Capsule()
-                        .fill(selectedPlayerMode == .onePlayer ? HomeTheme.gold : Color.clear)
-                )
-                .padding(.horizontal, 4)
+    private func playerModeCard(option: PlayerModeOption, isSelected: Bool) -> some View {
+        HStack(spacing: 16) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(option.accent)
+                    .frame(width: 44, height: 44)
+                Image(systemName: option.iconName)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.black)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(option.title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(HomeTheme.text)
+                Text(option.subtitle)
+                    .font(.subheadline)
+                    .foregroundColor(HomeTheme.text.opacity(0.7))
+            }
+            Spacer()
+            ZStack {
+                Circle()
+                    .fill(isSelected ? HomeTheme.gold : HomeTheme.text.opacity(0.2))
+                    .frame(width: 24, height: 24)
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.black)
+                }
+            }
         }
-    }
-    
-    private var teamPlayerButton: some View {
-        Button {
-            selectedPlayerMode = .twoPlayer
-        } label: {
-            Text("Teams")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(selectedPlayerMode == .twoPlayer ? .black.opacity(0.9) : HomeTheme.text.opacity(0.8))
-                .frame(maxWidth: .infinity)
-                .frame(height: 44)
-                .background(
-                    Capsule()
-                        .fill(selectedPlayerMode == .twoPlayer ? HomeTheme.gold : Color.clear)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 20)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(HomeTheme.card)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24)
+                        .strokeBorder(
+                            isSelected
+                            ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
+                            : AnyShapeStyle(LinearGradient(
+                                colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )),
+                            lineWidth: isSelected ? 2 : 1
+                        )
                 )
-                .padding(.horizontal, 4)
-        }
-    }
-    
-    private var playerModeSelectorBackground: some View {
-        Capsule()
-            .fill(HomeTheme.lightCard)
-            .overlay(
-                Capsule()
-                    .stroke(HomeTheme.text.opacity(0.1), lineWidth: 1)
-            )
+        )
+        .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
+        .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
     
     // MARK: - Start Game Button
