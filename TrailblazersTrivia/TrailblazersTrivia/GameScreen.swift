@@ -70,9 +70,12 @@ struct GameScreen: View {
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
-                                Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                                TickerTapeScore(
+                                    score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
+                                    font: .system(size: 16, weight: .bold, design: .rounded),
+                                    fontWeight: .bold,
+                                    foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
+                                )
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
@@ -88,9 +91,12 @@ struct GameScreen: View {
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
-                                Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                                TickerTapeScore(
+                                    score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
+                                    font: .system(size: 16, weight: .bold, design: .rounded),
+                                    fontWeight: .bold,
+                                    foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
+                                )
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)

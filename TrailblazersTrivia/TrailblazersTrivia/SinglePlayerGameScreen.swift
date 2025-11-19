@@ -96,11 +96,19 @@ struct SinglePlayerGameScreen: View {
                     
                     // Single player score box - next to back button
                     HStack(spacing: 8) {
-                        Text("\(ScoreFormatter.format(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(GrayTheme.text)
-                            .lineLimit(1)
+                        HStack(spacing: 4) {
+                            TickerTapeScore(
+                                score: singlePlayerViewModel.getPlayerScore(),
+                                font: .subheadline,
+                                fontWeight: .semibold,
+                                foregroundColor: GrayTheme.text
+                            )
+                            Text("/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(GrayTheme.text)
+                                .lineLimit(1)
+                        }
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
