@@ -214,33 +214,35 @@ struct GameScreen: View {
                             gameViewModel.answeredWrong()
                         } label: {
                             Text("Wrong")
+                                .font(.headline)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.black.opacity(0.9))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .fill(GrayTheme.accent)
+                                )
+                                .shadow(color: GrayTheme.accent.opacity(0.25), radius: 8, x: 0, y: 4)
                         }
-                        .font(.headline)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(GrayTheme.accent)
-                        )
-                        .shadow(color: GrayTheme.accent.opacity(0.25), radius: 8, x: 0, y: 4)
+                        .buttonStyle(PlainButtonStyle())
                         
                         Button {
                             gameViewModel.answeredCorrect()
                         } label: {
                             Text("Correct")
+                                .font(.headline)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.black.opacity(0.9))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .fill(GrayTheme.gold)
+                                )
+                                .shadow(color: GrayTheme.gold.opacity(0.25), radius: 8, x: 0, y: 4)
                         }
-                        .font(.headline)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(GrayTheme.gold)
-                        )
-                        .shadow(color: GrayTheme.gold.opacity(0.25), radius: 8, x: 0, y: 4)
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
@@ -282,6 +284,7 @@ struct InfoModalView: View {
                                 Circle().fill(GrayTheme.card)
                             )
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)

@@ -206,9 +206,20 @@ struct CouchModeGameScreen: View {
                             }
                         }
                     }
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(GrayTheme.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(buttonBorderColor(for: option), lineWidth: buttonBorderWidth(for: option))
+                            )
+                    )
                     .opacity(buttonOpacity(for: option))
+                    .contentShape(Rectangle()) // Make entire frame tappable
                 }
+                .buttonStyle(PlainButtonStyle())
                 .disabled(showResults)
             }
         }
@@ -232,6 +243,7 @@ struct CouchModeGameScreen: View {
                 )
                 .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
         }
+        .buttonStyle(PlainButtonStyle())
         .padding(.horizontal, 24)
     }
     
@@ -354,6 +366,7 @@ struct CouchModeInfoModalView: View {
                                 Circle().fill(GrayTheme.card)
                             )
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 20)
@@ -422,6 +435,7 @@ struct CouchModeInfoModalView: View {
                         )
                         .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
             }

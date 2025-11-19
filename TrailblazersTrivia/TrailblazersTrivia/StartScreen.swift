@@ -225,6 +225,7 @@ struct StartScreen: View {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(selectedPlayerMode == mode ? HomeTheme.lightCard : Color.clear)
                 )
+                .contentShape(Rectangle()) // Make entire frame tappable
         }
         .buttonStyle(PlainButtonStyle())
     }

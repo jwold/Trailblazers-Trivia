@@ -201,6 +201,7 @@ struct SinglePlayerEndScreen: View {
                         )
                         .shadow(color: Color.white.opacity(0.25), radius: 8, x: 0, y: 4)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)

@@ -194,6 +194,7 @@ struct SinglePlayerGameScreen: View {
                 )
                 .shadow(color: isButtonEnabled ? GrayTheme.gold.opacity(0.35) : Color.clear, radius: 10, x: 0, y: 4)
         }
+        .buttonStyle(PlainButtonStyle())
         .disabled(!isButtonEnabled)
         .padding(.horizontal, 24)
     }
@@ -242,9 +243,20 @@ struct SinglePlayerGameScreen: View {
                             }
                         }
                     }
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(GrayTheme.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(buttonBorderColor(for: option), lineWidth: buttonBorderWidth(for: option))
+                            )
+                    )
                     .opacity(buttonOpacity(for: option))
+                    .contentShape(Rectangle()) // Make entire frame tappable
                 }
+                .buttonStyle(PlainButtonStyle())
                 .disabled(singlePlayerViewModel.showResults)
             }
         }
