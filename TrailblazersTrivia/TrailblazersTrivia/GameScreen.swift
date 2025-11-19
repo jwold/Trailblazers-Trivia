@@ -31,7 +31,8 @@ struct GameScreen: View {
         self._gameViewModel = State(initialValue: GameViewModel(
             player1Name: teamNames.team1, 
             player2Name: teamNames.team2,
-            category: category
+            category: category,
+            questionRepository: JSONQuestionRepository()
         ))
     }
     

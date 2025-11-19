@@ -24,7 +24,8 @@ struct SinglePlayerGameScreen: View {
         self._path = path
         self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(
             playerName: "Player",
-            category: category
+            category: category,
+            questionRepository: JSONQuestionRepository()
         ))
     }
     

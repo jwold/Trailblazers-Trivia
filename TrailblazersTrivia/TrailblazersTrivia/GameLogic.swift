@@ -89,14 +89,14 @@ class GameViewModel {
         player1Name: String = "Player 1", 
         player2Name: String = "Player 2",
         category: TriviaCategory = .bible,
-        questionRepository: QuestionRepositoryProtocol? = nil
+        questionRepository: QuestionRepositoryProtocol
     ) {
         self.players = [
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
         self.category = category
-        self.questionRepository = questionRepository ?? JSONQuestionRepository()
+        self.questionRepository = questionRepository
         
         startNewTurn()
     }
@@ -238,17 +238,11 @@ class SinglePlayerGameViewModel {
     init(
         playerName: String = "Player",
         category: TriviaCategory = .bible,
-        questionRepository: QuestionRepositoryProtocol? = nil
+        questionRepository: QuestionRepositoryProtocol
     ) {
         self.player = Player(id: UUID().uuidString, name: playerName)
         self.category = category
-        
-        // Create question repository
-        if let customRepository = questionRepository {
-            self.questionRepository = customRepository
-        } else {
-            self.questionRepository = JSONQuestionRepository()
-        }
+        self.questionRepository = questionRepository
         
         // Set up a default question immediately to prevent crashes
         self.currentTurn = Turn(player: Player(id: UUID().uuidString, name: playerName))
