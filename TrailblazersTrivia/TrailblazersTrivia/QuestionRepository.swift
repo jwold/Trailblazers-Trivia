@@ -53,8 +53,6 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     
     private var questions: [Question] = []
     private var usedQuestionIds: Set<String> = []
-    private var isLoaded = false
-    private var isLoading = false
     
     // Static cache to share loaded questions across instances
     private static var questionCache: [TriviaCategory: [Question]] = [:]
@@ -123,42 +121,17 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     }
     
     func nextQuestion() throws -> Question {
-        // Check static cache first
-        if !isLoaded {
-            // Try to get from cache
-            let cachedQuestions = Self.questionCache[category]
+        // Load questions if needed (uses cache automatically)
+        if questions.isEmpty {
+            #if DEBUG
+            print("📂 Loading questions for \(category.rawValue)...")
+            #endif
             
-            if let cachedQuestions = cachedQuestions, !cachedQuestions.isEmpty {
-                // Use cached questions
-                #if DEBUG
-                print("✅ Using cached questions for \(category.rawValue) (\(cachedQuestions.count) questions)")
-                #endif
-                self.questions = cachedQuestions
-                self.isLoaded = true
-            } else {
-                // Need to load from disk
-                #if DEBUG
-                print("📂 Loading questions from disk for \(category.rawValue)...")
-                #endif
-                isLoading = true
-                
-                do {
-                    let loadedQuestions = try loadAllQuestions()
-                    self.questions = loadedQuestions
-                    self.isLoaded = true
-                    
-                    // Store in cache for next time
-                    Self.questionCache[category] = loadedQuestions
-                    #if DEBUG
-                    print("✅ Cached \(loadedQuestions.count) questions for \(category.rawValue)")
-                    #endif
-                } catch {
-                    self.isLoading = false
-                    throw error
-                }
-                
-                self.isLoading = false
-            }
+            self.questions = try loadAllQuestions()
+            
+            #if DEBUG
+            print("✅ Loaded \(questions.count) questions for \(category.rawValue)")
+            #endif
         }
         
         // Ensure we have questions
@@ -208,99 +181,17 @@ enum QuestionRepositoryError: Error, LocalizedError {
     }
 }
 
-// MARK: - Memory Question Repository
-
-/// In-memory implementation of the question repository (fallback)
-class MemoryQuestionRepository: QuestionRepositoryProtocol {
-    
-    private let questions: [Question]
-    private var usedQuestionIds: Set<String> = []
-    
-    init() {
-        // All questions pool - fallback questions
-        self.questions = [
-            // Easy questions
-            Question(id: "easy_1", question: "How many close disciples did Jesus have?", answer: "12", wrongAnswers: ["10", "7"]),
-            Question(id: "easy_2", question: "In what city was Jesus born?", answer: "Bethlehem", wrongAnswers: ["Nazareth", "Jerusalem"]),
-            Question(id: "easy_3", question: "How many days did it rain during the flood?", answer: "40 days", wrongAnswers: ["30 days", "50 days"]),
-            Question(id: "easy_4", question: "Who led the Israelites out of Egypt?", answer: "Moses", wrongAnswers: ["Abraham", "Joshua"]),
-            Question(id: "easy_5", question: "What did God create on the first day?", answer: "Light", wrongAnswers: ["Earth", "Animals"]),
-            Question(id: "easy_6", question: "How many books are in the New Testament?", answer: "27", wrongAnswers: ["39", "66"]),
-            Question(id: "easy_7", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Noah", "Abraham"]),
-            Question(id: "easy_8", question: "What was the first miracle of Jesus?", answer: "Turning water into wine", wrongAnswers: ["Healing the blind", "Walking on water"]),
-            
-            // Hard questions
-            Question(id: "hard_1", question: "Who was the first king of Israel?", answer: "Saul", wrongAnswers: ["David", "Solomon"]),
-            Question(id: "hard_2", question: "What is the shortest book in the New Testament?", answer: "2 John", wrongAnswers: ["3 John", "Jude"]),
-            Question(id: "hard_3", question: "Who was the oldest man in the Bible?", answer: "Methuselah", wrongAnswers: ["Noah", "Adam"]),
-            Question(id: "hard_4", question: "In what city did Paul meet Priscilla and Aquila?", answer: "Corinth", wrongAnswers: ["Rome", "Athens"]),
-            Question(id: "hard_5", question: "What was the name of Abraham's nephew?", answer: "Lot", wrongAnswers: ["Isaac", "Jacob"]),
-            Question(id: "hard_6", question: "How many sons did Jacob have?", answer: "12", wrongAnswers: ["10", "7"]),
-            Question(id: "hard_7", question: "What was the name of the garden where Jesus prayed before his crucifixion?", answer: "Gethsemane", wrongAnswers: ["Eden", "Galilee"]),
-            Question(id: "hard_8", question: "Who was the mother of John the Baptist?", answer: "Elizabeth", wrongAnswers: ["Mary", "Sarah"])
-        ]
-    }
-    
-    func nextQuestion() throws -> Question {
-        // Filter out used questions
-        let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
-        
-        let selectedQuestion: Question
-        
-        if availableQuestions.isEmpty {
-            // If all questions have been used, reset and start over
-            resetUsedQuestions()
-            if let randomQuestion = questions.randomElement() {
-                selectedQuestion = randomQuestion
-            } else if let firstQuestion = questions.first {
-                selectedQuestion = firstQuestion
-            } else {
-                throw QuestionRepositoryError.noQuestionsFound
-            }
-        } else {
-            guard let randomQuestion = availableQuestions.randomElement() else {
-                throw QuestionRepositoryError.noQuestionsFound
-            }
-            selectedQuestion = randomQuestion
-        }
-        
-        // Mark the selected question as used
-        usedQuestionIds.insert(selectedQuestion.id)
-        
-        return selectedQuestion
-    }
-    
-    func resetUsedQuestions() {
-        usedQuestionIds.removeAll()
-    }
-}
-
 // MARK: - Question Repository Factory
 
 /// Factory class for creating question repository instances
 class QuestionRepositoryFactory {
     
     /// Creates a question repository instance
-    /// - Parameters:
-    ///   - type: The type of repository to create
-    ///   - category: The category of questions to load (default is .bible)
+    /// - Parameter category: The category of questions to load (default is .bible)
     /// - Returns: A question repository instance
-    static func create(type: RepositoryType = .json, category: TriviaCategory = .bible) -> QuestionRepositoryProtocol {
+    static func create(category: TriviaCategory = .bible) -> QuestionRepositoryProtocol {
         print("QuestionRepositoryFactory: Creating new instance for \(category)")
-        switch type {
-        case .json:
-            return JSONQuestionRepository(category: category)
-        case .memory:
-            return MemoryQuestionRepository()
-        }
+        return JSONQuestionRepository(category: category)
     }
-}
-
-// MARK: - Repository Type Enum
-
-/// Enum defining available repository types
-enum RepositoryType {
-    case json
-    case memory
 }
 
