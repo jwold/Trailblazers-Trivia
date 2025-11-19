@@ -52,13 +52,7 @@ struct StartScreen: View {
     // Prepare haptic generator once for better performance
     private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
     
-    init() {
-        print("🎮 StartScreen init at \(Date())")
-    }
-    
     var body: some View {
-        let _ = print("🎨 StartScreen body evaluation at \(Date())")
-        
         NavigationStack(path: $path) {
             ZStack {
                 HomeTheme.background.ignoresSafeArea()
@@ -82,9 +76,7 @@ struct StartScreen: View {
                 AboutModalView()
             }
             .onAppear {
-                print("👀 StartScreen onAppear at \(Date())")
                 impactGenerator.prepare()
-                print("✅ Haptic generator prepared at \(Date())")
             }
         }
     }

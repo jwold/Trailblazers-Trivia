@@ -11,6 +11,7 @@ import Foundation
 class GameViewModel {
     private let players: [Player]
     private let questionRepository: QuestionRepositoryProtocol
+    private let category: TriviaCategory
     private var currentPlayerIndex = 0
     
     var turns: [Turn] = []
@@ -88,27 +89,25 @@ class GameViewModel {
         player1Name: String = "Player 1", 
         player2Name: String = "Player 2",
         category: TriviaCategory = .bible,
-        questionRepository: QuestionRepositoryProtocol? = nil
+        questionRepository: QuestionRepositoryProtocol
     ) {
         self.players = [
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(type: .json, category: category)
+        self.category = category
+        self.questionRepository = questionRepository
         
-        Task {
-            await startNewTurn()
-        }
+        startNewTurn()
     }
     
-    @MainActor
-    func startNewTurn() async {
+    func startNewTurn() {
         // Create turn with player first
         currentTurn = Turn(player: currentPlayer)
         
         // Then load the question
         do {
-            let question = try await questionRepository.nextQuestion()
+            let question = try questionRepository.nextQuestion(category: category)
             currentTurn?.question = question
         } catch {
             print("Failed to get question: \(error)")
@@ -118,16 +117,12 @@ class GameViewModel {
     
     func answeredCorrect() {
         recordAnswer(wasCorrect: true)
-        Task {
-            await nextTurn()
-        }
+        nextTurn()
     }
     
     func answeredWrong() {
         recordAnswer(wasCorrect: false)
-        Task {
-            await nextTurn()
-        }
+        nextTurn()
     }
     
     private func recordAnswer(wasCorrect: Bool) {
@@ -146,8 +141,7 @@ class GameViewModel {
         showAnswer = false
     }
     
-    @MainActor
-    private func nextTurn() async {
+    private func nextTurn() {
         // Check if game should end (when a player reaches 10 points)
         if shouldEndGame {
             gameEnded = true
@@ -156,7 +150,7 @@ class GameViewModel {
         
         // Switch to next player
         currentPlayerIndex = (currentPlayerIndex + 1) % players.count
-        await startNewTurn()
+        startNewTurn()
     }
     
     func resetGame() {
@@ -165,9 +159,7 @@ class GameViewModel {
         currentPlayerIndex = 0
         showAnswer = false
         gameEnded = false
-        Task {
-            await startNewTurn()
-        }
+        startNewTurn()
     }
     
     func showAnswerToggle() {
@@ -200,6 +192,7 @@ struct Turn {
 class SinglePlayerGameViewModel {
     let player: Player
     private let questionRepository: QuestionRepositoryProtocol
+    private let category: TriviaCategory
     private var gameStartTime: Date?
     private var timer: Timer?
     
@@ -245,16 +238,11 @@ class SinglePlayerGameViewModel {
     init(
         playerName: String = "Player",
         category: TriviaCategory = .bible,
-        questionRepository: QuestionRepositoryProtocol? = nil
+        questionRepository: QuestionRepositoryProtocol
     ) {
         self.player = Player(id: UUID().uuidString, name: playerName)
-        
-        // Create question repository
-        if let customRepository = questionRepository {
-            self.questionRepository = customRepository
-        } else {
-            self.questionRepository = QuestionRepositoryFactory.create(type: .json, category: category)
-        }
+        self.category = category
+        self.questionRepository = questionRepository
         
         // Set up a default question immediately to prevent crashes
         self.currentTurn = Turn(player: Player(id: UUID().uuidString, name: playerName))
@@ -267,37 +255,12 @@ class SinglePlayerGameViewModel {
         self.currentAnswerOptions = ["Loading...", "Loading...", "Loading..."]
     }
     
-    /// Diagnostic function to check for potential crash sources
-    func diagnoseIssues() {
-        print("\n🔍 DIAGNOSING SINGLE PLAYER ISSUES:")
-        print("================================")
-        print("Player: \(player.name)")
-        print("Current Turn: \(currentTurn != nil ? "✅" : "❌")")
-        print("Current Question: \(currentTurn?.question?.question ?? "nil")")
-        print("Answer Options: \(currentAnswerOptions)")
-        print("Is Loading: \(isLoading)")
-        print("Selected Answer: \(selectedAnswer ?? "none")")
-        print("Show Results: \(showResults)")
-        print("Game Ended: \(gameEnded)")
-        print("Loading Error: \(loadingError ?? "none")")
-        
-        // Test question repository
-        Task {
-            do {
-                let testQuestion = try await questionRepository.nextQuestion()
-                print("✅ Question Repository Test: SUCCESS")
-                print("   Sample Question: \(testQuestion.question)")
-            } catch {
-                print("❌ Question Repository Test: FAILED - \(error)")
-            }
-        }
-        
-        print("================================\n")
+    deinit {
+        stopTimer()
     }
-    
+
     /// Start the game - loads the first real question
-    @MainActor
-    func startGame() async {
+    func startGame() {
         // Prevent multiple starts
         guard currentAnswerOptions.contains("Loading...") else { 
             return 
@@ -305,11 +268,10 @@ class SinglePlayerGameViewModel {
         
         // Start timer when game actually begins
         startTimer()
-        await startNewTurn()
+        startNewTurn()
     }
     
-    @MainActor
-    func startNewTurn() async {
+    func startNewTurn() {
         
         // Set loading state first
         isLoading = true
@@ -320,12 +282,9 @@ class SinglePlayerGameViewModel {
         // Create turn with player first
         currentTurn = Turn(player: player)
         
-        // Small delay to ensure UI is in consistent state
-        try? await Task.sleep(nanoseconds: 10_000_000) // 0.01 second
-        
         // Then load the question with proper error handling
         do {
-            let question = try await questionRepository.nextQuestion()
+            let question = try questionRepository.nextQuestion(category: category)
             print("SinglePlayerGameViewModel: Got question: \(question.question)")
             
             // Update the turn and generate options atomically
@@ -414,7 +373,6 @@ class SinglePlayerGameViewModel {
     }
 
     
-    @MainActor
     func selectAnswer(_ answer: String) {
         // Validate the answer is in current options
         guard currentAnswerOptions.contains(answer) else {
@@ -439,7 +397,6 @@ class SinglePlayerGameViewModel {
         revealResults()
     }
     
-    @MainActor
     func revealResults() {
         guard let answer = selectedAnswer else { 
             return 
@@ -464,8 +421,7 @@ class SinglePlayerGameViewModel {
         // Don't automatically progress - wait for Continue button
     }
     
-    @MainActor
-    func continueToNextQuestion() async {
+    func continueToNextQuestion() {
         // If results are already showing, move to next question
         if showResults {
             // Check if game should end
@@ -475,7 +431,7 @@ class SinglePlayerGameViewModel {
             }
             
             actionLog.append("→ Next question")
-            await startNewTurn()
+            startNewTurn()
         } else {
             // If results aren't showing yet, this shouldn't happen since we auto-reveal
             hasAnswered = true
@@ -485,8 +441,7 @@ class SinglePlayerGameViewModel {
     
     // MARK: - Undo Functionality
     
-    @MainActor
-    func undoLastAction() async {
+    func undoLastAction() {
         guard !turns.isEmpty else { return }
         
         // Remove last turn
@@ -536,8 +491,7 @@ class SinglePlayerGameViewModel {
         print("Recorded answer: \(wasCorrect ? "correct" : "incorrect"). Total score: \(getPlayerScore())")
     }
     
-    @MainActor
-    private func nextTurn() async {
+    private func nextTurn() {
         // Check if game should end
         if shouldEndGame {
             stopTimer()
@@ -545,7 +499,7 @@ class SinglePlayerGameViewModel {
             return
         }
         
-        await startNewTurn()
+        startNewTurn()
     }
     
     private func startTimer() {
@@ -554,9 +508,7 @@ class SinglePlayerGameViewModel {
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, let startTime = self.gameStartTime else { return }
-            DispatchQueue.main.async {
-                self.elapsedTime = Date().timeIntervalSince(startTime)
-            }
+            self.elapsedTime = Date().timeIntervalSince(startTime)
         }
     }
     
@@ -581,13 +533,7 @@ class SinglePlayerGameViewModel {
         gameEnded = false
         stopTimer()
         startTimer()
-        Task {
-            await startNewTurn()
-        }
-    }
-    
-    deinit {
-        stopTimer()
+        startNewTurn()
     }
 }
 
