@@ -460,9 +460,9 @@ struct CouchModeInfoModalView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         InstructionRow(number: "1", text: "Current player reads and answers the question")
                         InstructionRow(number: "2", text: "Select your answer from the multiple choice options")
-                        InstructionRow(number: "3", text: "Tap 'Submit Answer' to see if you're correct")
+                        InstructionRow(number: "3", text: "Tap 'Continue' to see if you're correct")
                         InstructionRow(number: "4", text: "Pass the device to the next player")
-                        InstructionRow(number: "5", text: "First to 10 points wins!")
+                        InstructionRow(number: "5", text: "First player to reach 10 points wins!")
                     }
                 }
                 .padding(.horizontal, 24)

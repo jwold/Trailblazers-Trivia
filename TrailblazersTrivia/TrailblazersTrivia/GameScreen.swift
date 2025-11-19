@@ -376,9 +376,10 @@ struct InfoModalView: View {
                     // Instructions list
                     VStack(alignment: .leading, spacing: 16) {
                         InstructionRow(number: "1", text: "Read the question out loud to both teams")
-                        InstructionRow(number: "2", text: "First team to shout out the correct answer gets the point")
+                        InstructionRow(number: "2", text: "First team to shout out the answer wins the turn")
                         InstructionRow(number: "3", text: "Tap 'Show Answer' to reveal the correct answer")
                         InstructionRow(number: "4", text: "Award points using 'Correct' or 'Wrong' buttons")
+                        InstructionRow(number: "5", text: "First team to reach 10 points wins the game!")
                     }
                 }
                 .padding(.horizontal, 20)
