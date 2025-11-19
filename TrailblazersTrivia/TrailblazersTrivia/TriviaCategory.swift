@@ -34,70 +34,27 @@ enum TriviaCategory: String, CaseIterable, Hashable {
             return "flag.fill"
         }
     }
-    
-    var teamNames: [String] {
-        switch self {
-        case .bible:
-            return TeamNameGenerator.biblicalNations
-        case .usHistory:
-            return TeamNameGenerator.usHistoryTeams
-        }
-    }
 }
 
 // MARK: - Team Name Generator
 
 struct TeamNameGenerator {
     
-    // 10 Biblical Nations
-    static let biblicalNations = [
-        "Israelites",
-        "Philistines",
-        "Egyptians",
-        "Babylonians",
-        "Assyrians",
-        "Persians",
-        "Romans",
-        "Greeks",
-        "Moabites",
-        "Edomites"
-    ]
-    
-    // 10 US History Teams
-    static let usHistoryTeams = [
-        "Minutemen",
-        "Founding Fathers",
-        "Patriots",
-        "Rebels",
-        "Union",
-        "Confederates",
-        "Pioneers",
-        "Colonists",
-        "Federalists",
-        "Revolutionaries"
-    ]
-    
-    /// Generate two random team names for the given category
+    /// Generate two team names for the given category
     /// - Parameter category: The trivia category
-    /// - Returns: A tuple of two unique team names
+    /// - Returns: A tuple of two team names
     static func generateTeamNames(for category: TriviaCategory) -> (team1: String, team2: String) {
-        let availableNames = category.teamNames
-        
-        // Ensure we have at least 2 names
-        guard availableNames.count >= 2 else {
-            return ("Team 1", "Team 2")
+        // For Bible and US History, use simple team names
+        switch category {
+        case .bible, .usHistory:
+            return ("Team One", "Team Two")
         }
-        
-        // Shuffle the names and take the first two
-        let shuffledNames = availableNames.shuffled()
-        return (shuffledNames[0], shuffledNames[1])
     }
     
-    /// Get a random team name from the specified category
+    /// Get a team name from the specified category
     /// - Parameter category: The trivia category
-    /// - Returns: A random team name
+    /// - Returns: A team name
     static func randomTeamName(for category: TriviaCategory) -> String {
-        let availableNames = category.teamNames
-        return availableNames.randomElement() ?? "Team"
+        return "Team"
     }
 }
