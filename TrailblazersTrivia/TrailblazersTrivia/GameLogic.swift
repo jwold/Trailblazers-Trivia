@@ -94,7 +94,7 @@ class GameViewModel {
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? QuestionRepositoryFactory.create(category: category)
+        self.questionRepository = questionRepository ?? JSONQuestionRepository(category: category)
         
         startNewTurn()
     }
@@ -243,7 +243,7 @@ class SinglePlayerGameViewModel {
         if let customRepository = questionRepository {
             self.questionRepository = customRepository
         } else {
-            self.questionRepository = QuestionRepositoryFactory.create(category: category)
+            self.questionRepository = JSONQuestionRepository(category: category)
         }
         
         // Set up a default question immediately to prevent crashes

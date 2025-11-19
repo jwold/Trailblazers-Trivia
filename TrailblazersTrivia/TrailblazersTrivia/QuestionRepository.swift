@@ -181,17 +181,3 @@ enum QuestionRepositoryError: Error, LocalizedError {
     }
 }
 
-// MARK: - Question Repository Factory
-
-/// Factory class for creating question repository instances
-class QuestionRepositoryFactory {
-    
-    /// Creates a question repository instance
-    /// - Parameter category: The category of questions to load (default is .bible)
-    /// - Returns: A question repository instance
-    static func create(category: TriviaCategory = .bible) -> QuestionRepositoryProtocol {
-        print("QuestionRepositoryFactory: Creating new instance for \(category)")
-        return JSONQuestionRepository(category: category)
-    }
-}
-
