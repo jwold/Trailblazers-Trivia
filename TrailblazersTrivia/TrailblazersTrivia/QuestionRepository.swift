@@ -13,7 +13,7 @@ import Foundation
 protocol QuestionRepositoryProtocol {
     /// Get the next question, automatically managing used questions
     /// - Returns: The next available question, resetting the pool if all questions have been used
-    func nextQuestion() async throws -> Question
+    func nextQuestion() throws -> Question
     
     /// Reset the used questions tracking for a fresh start
     func resetUsedQuestions()
@@ -58,7 +58,6 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     
     // Static cache to share loaded questions across instances
     private static var questionCache: [TriviaCategory: [Question]] = [:]
-    private static var cacheQueue = DispatchQueue(label: "com.trailblazers.questioncache")
     
     init(category: TriviaCategory) {
         self.category = category
@@ -67,7 +66,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     /// Loads and returns all questions from JSON files
     private func loadAllQuestions() throws -> [Question] {
         // Check cache first
-        if let cached = Self.cacheQueue.sync(execute: { Self.questionCache[category] }) {
+        if let cached = Self.questionCache[category] {
             return cached
         }
         
@@ -89,9 +88,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         }
         
         // Cache the loaded questions
-        Self.cacheQueue.sync {
-            Self.questionCache[category] = allQuestions
-        }
+        Self.questionCache[category] = allQuestions
         
         return allQuestions
     }
@@ -125,13 +122,11 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         return validQuestions
     }
     
-    func nextQuestion() async throws -> Question {
+    func nextQuestion() throws -> Question {
         // Check static cache first
         if !isLoaded {
             // Try to get from cache
-            let cachedQuestions = Self.cacheQueue.sync {
-                Self.questionCache[category]
-            }
+            let cachedQuestions = Self.questionCache[category]
             
             if let cachedQuestions = cachedQuestions, !cachedQuestions.isEmpty {
                 // Use cached questions
@@ -153,9 +148,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
                     self.isLoaded = true
                     
                     // Store in cache for next time
-                    Self.cacheQueue.sync {
-                        Self.questionCache[category] = loadedQuestions
-                    }
+                    Self.questionCache[category] = loadedQuestions
                     #if DEBUG
                     print("✅ Cached \(loadedQuestions.count) questions for \(category.rawValue)")
                     #endif
@@ -248,7 +241,7 @@ class MemoryQuestionRepository: QuestionRepositoryProtocol {
         ]
     }
     
-    func nextQuestion() async throws -> Question {
+    func nextQuestion() throws -> Question {
         // Filter out used questions
         let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
         

@@ -72,9 +72,7 @@ struct SinglePlayerGameScreen: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            Task {
-                await singlePlayerViewModel.startGame()
-            }
+            singlePlayerViewModel.startGame()
         }
     }
 
@@ -172,11 +170,9 @@ struct SinglePlayerGameScreen: View {
     
     private var continueButtonView: some View {
         Button {
-            Task {
-                // If answer selected but results not shown, this will reveal results  
-                // If results shown, this will move to next question
-                await singlePlayerViewModel.continueToNextQuestion()
-            }
+            // If answer selected but results not shown, this will reveal results  
+            // If results shown, this will move to next question
+            singlePlayerViewModel.continueToNextQuestion()
         } label: {
             Text(buttonText)
                 .font(.system(size: 18, weight: .semibold))
@@ -213,9 +209,7 @@ struct SinglePlayerGameScreen: View {
         VStack(spacing: 16) {
             ForEach(Array(singlePlayerViewModel.currentAnswerOptions.enumerated()), id: \.offset) { index, option in
                 Button {
-                    Task { @MainActor in
-                        singlePlayerViewModel.selectAnswer(option)
-                    }
+                    singlePlayerViewModel.selectAnswer(option)
                 } label: {
                     HStack(spacing: 16) {
                         // Answer text with strikethrough for wrong answers
