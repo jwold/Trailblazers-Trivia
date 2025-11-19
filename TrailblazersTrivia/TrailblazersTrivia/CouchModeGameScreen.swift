@@ -248,7 +248,7 @@ struct CouchModeGameScreen: View {
                             if option == gameViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
-                                    .foregroundColor(GrayTheme.gold)
+                                    .foregroundColor(.white)
                             } else if option == selectedAnswer {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title2)
@@ -350,7 +350,7 @@ struct CouchModeGameScreen: View {
     
     private func buttonBorderColor(for option: String) -> Color {
         if showResults && option == gameViewModel.currentQuestion.answer {
-            return GrayTheme.gold
+            return .white
         } else if selectedAnswer == option && !showResults {
             return .white
         }

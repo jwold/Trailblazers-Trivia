@@ -238,7 +238,7 @@ struct SinglePlayerGameScreen: View {
                             if option == singlePlayerViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
-                                    .foregroundColor(GrayTheme.gold)
+                                    .foregroundColor(.white)
                             } else if option == singlePlayerViewModel.selectedAnswer {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title2)
@@ -290,7 +290,7 @@ struct SinglePlayerGameScreen: View {
     
     private func buttonBorderColor(for option: String) -> Color {
         if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
-            return GrayTheme.gold
+            return .white
         } else if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
             return .white
         }

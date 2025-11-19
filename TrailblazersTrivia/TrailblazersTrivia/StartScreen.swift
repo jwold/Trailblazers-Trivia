@@ -198,11 +198,11 @@ struct StartScreen: View {
             Text("Start")
                 .font(.headline)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.black.opacity(0.9))
                 .frame(maxWidth: .infinity)
                 .frame(height: 40) // Match height with mode selector
                 .background(
-                    RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 30)
                         .fill(Color(red: 0.35, green: 0.55, blue: 0.77)) // #5A8BC4 blue
                 )
         }
