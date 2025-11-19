@@ -56,154 +56,138 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
     private var isLoaded = false
     private var isLoading = false
     
+    // Static cache to share loaded questions across instances
+    private static var questionCache: [TriviaCategory: [Question]] = [:]
+    private static var cacheQueue = DispatchQueue(label: "com.trailblazers.questioncache")
+    
     init(category: TriviaCategory) {
         self.category = category
-        print("JSONQuestionRepository initialized with instanceId: \(instanceId)")
     }
     
     /// Loads and returns all questions from JSON files
     private func loadAllQuestions() throws -> [Question] {
-        print("loadAllQuestions called")
+        // Check cache first
+        if let cached = Self.cacheQueue.sync(execute: { Self.questionCache[category] }) {
+            return cached
+        }
+        
         var allQuestions: [Question] = []
         
         switch category {
         case .bible:
             if let bibleQuestions = try loadQuestions(from: "bible") {
                 allQuestions.append(contentsOf: bibleQuestions)
-                print("Added \(bibleQuestions.count) bible questions")
             }
         case .usHistory:
             if let usHistoryQuestions = try loadQuestions(from: "ushistory") {
                 allQuestions.append(contentsOf: usHistoryQuestions)
-                print("Added \(usHistoryQuestions.count) US history questions")
             }
         }
         
-        print("Total questions loaded: \(allQuestions.count)")
-        
         guard !allQuestions.isEmpty else {
-            print("Error: No questions found after loading")
             throw QuestionRepositoryError.noQuestionsFound
+        }
+        
+        // Cache the loaded questions
+        Self.cacheQueue.sync {
+            Self.questionCache[category] = allQuestions
         }
         
         return allQuestions
     }
     
     private func loadQuestions(from fileName: String) throws -> [Question]? {
-        print("Loading questions from \(fileName).json...")
-        
         guard let path = Bundle.main.path(forResource: fileName, ofType: "json") else {
-            print("Error: Could not find \(fileName).json in bundle")
             throw QuestionRepositoryError.fileNotFound(fileName)
         }
         
-        print("Found file at path: \(path)")
-        
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
-        print("Successfully loaded \(data.count) bytes of data")
         
         let decoder = JSONDecoder()
         let jsonQuestions = try decoder.decode([JSONQuestion].self, from: data)
-        print("Successfully decoded \(jsonQuestions.count) questions from JSON")
         
         // Filter out malformed questions and convert to Question model
-        var validQuestions: [Question] = []
-        
-        for jsonQuestion in jsonQuestions {
+        let validQuestions = jsonQuestions.compactMap { jsonQuestion -> Question? in
             let question = jsonQuestion.toQuestion()
             
-            // Basic validation - check each condition separately
-            if question.question.isEmpty {
-                print("Skipping question with empty question text, id: \(jsonQuestion.id)")
-                continue
+            // Quick validation without logging
+            guard !question.question.isEmpty,
+                  !question.answer.isEmpty,
+                  question.question.count > GameConstants.Validation.minimumQuestionLength,
+                  question.answer.count > GameConstants.Validation.minimumAnswerLength else {
+                return nil
             }
             
-            if question.answer.isEmpty {
-                print("Skipping question with empty answer, id: \(jsonQuestion.id)")
-                continue
-            }
-            
-            let minQuestionLength = GameConstants.Validation.minimumQuestionLength
-            if question.question.count <= minQuestionLength {
-                print("Skipping question with insufficient length, id: \(jsonQuestion.id)")
-                continue
-            }
-            
-            let minAnswerLength = GameConstants.Validation.minimumAnswerLength
-            if question.answer.count <= minAnswerLength {
-                print("Skipping question with insufficient answer length, id: \(jsonQuestion.id)")
-                continue
-            }
-            
-            // If we get here, the question is valid
-            validQuestions.append(question)
+            return question
         }
         
-        print("Successfully processed \(validQuestions.count) valid questions")
         return validQuestions
     }
     
     func nextQuestion() async throws -> Question {
-        print("nextQuestion called on instance: \(instanceId)")
-        
-        // Ensure thread safety with a simple flag check
-        if isLoading {
-            print("Already loading, waiting...")
-            // Wait for loading to complete
-            var attempts = 0
-            while isLoading && attempts < 100 { // Increased timeout
-                try await Task.sleep(nanoseconds: 50_000_000) // 0.05 second
-                attempts += 1
-            }
-            if !isLoaded || questions.isEmpty {
-                print("Loading failed or timed out")
-                throw QuestionRepositoryError.noQuestionsFound
-            }
-        }
-        
-        // Load questions if not loaded
+        // Check static cache first
         if !isLoaded {
-            print("Loading questions... (instance: \(instanceId))")
-            isLoading = true
-            
-            do {
-                self.questions = try loadAllQuestions()
-                self.isLoaded = true
-                print("Questions loaded successfully. Total: \(self.questions.count) (instance: \(instanceId))")
-            } catch {
-                print("Failed to load questions: \(error)")
-                self.isLoading = false
-                throw error
+            // Try to get from cache
+            let cachedQuestions = Self.cacheQueue.sync {
+                Self.questionCache[category]
             }
             
-            self.isLoading = false
+            if let cachedQuestions = cachedQuestions, !cachedQuestions.isEmpty {
+                // Use cached questions
+                #if DEBUG
+                print("✅ Using cached questions for \(category.rawValue) (\(cachedQuestions.count) questions)")
+                #endif
+                self.questions = cachedQuestions
+                self.isLoaded = true
+            } else {
+                // Need to load from disk
+                #if DEBUG
+                print("📂 Loading questions from disk for \(category.rawValue)...")
+                #endif
+                isLoading = true
+                
+                do {
+                    let loadedQuestions = try loadAllQuestions()
+                    self.questions = loadedQuestions
+                    self.isLoaded = true
+                    
+                    // Store in cache for next time
+                    Self.cacheQueue.sync {
+                        Self.questionCache[category] = loadedQuestions
+                    }
+                    #if DEBUG
+                    print("✅ Cached \(loadedQuestions.count) questions for \(category.rawValue)")
+                    #endif
+                } catch {
+                    self.isLoading = false
+                    throw error
+                }
+                
+                self.isLoading = false
+            }
         }
         
         // Ensure we have questions
         guard !questions.isEmpty else {
-            print("No questions available")
             throw QuestionRepositoryError.noQuestionsFound
         }
         
         // Get available questions
         let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
-        print("Available questions: \(availableQuestions.count), Used questions: \(usedQuestionIds.count)")
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
             // Reset used questions and start over
-            print("All questions used, resetting...")
             resetUsedQuestions()
-            selectedQuestion = questions.randomElement() ?? Question(id: "fallback", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Eve", "Noah"])
+            selectedQuestion = questions.randomElement() ?? questions[0]
         } else {
-            selectedQuestion = availableQuestions.randomElement() ?? Question(id: "fallback", question: "Who was the first man?", answer: "Adam", wrongAnswers: ["Eve", "Noah"])
+            selectedQuestion = availableQuestions.randomElement() ?? availableQuestions[0]
         }
         
         // Mark as used
         usedQuestionIds.insert(selectedQuestion.id)
-        print("Selected question: \(selectedQuestion.question)")
         return selectedQuestion
     }
     

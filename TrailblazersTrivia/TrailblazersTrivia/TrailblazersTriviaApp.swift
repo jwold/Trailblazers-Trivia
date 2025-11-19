@@ -6,18 +6,31 @@
 //
 
 import SwiftUI
-import RevenueCat
+// Commented out RevenueCat for now
+// import RevenueCat
 
 @main
 struct TrailblazersTriviaApp: App {
     init() {
-        Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: Config.revenueCatAPIKey)
+        print("🚀 App init started at \(Date())")
+        
+        // Commented out RevenueCat - Completely defer RevenueCat - it can wait
+//        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 2.0) {
+//            print("📦 Starting RevenueCat configuration at \(Date())")
+//            Purchases.logLevel = .debug
+//            Purchases.configure(withAPIKey: Config.revenueCatAPIKey)
+//            print("✅ RevenueCat configuration completed at \(Date())")
+//        }
+        
+        print("✅ App init completed at \(Date())")
     }
 
     var body: some Scene {
         WindowGroup {
             StartScreen()
+                .onAppear {
+                    print("👀 StartScreen appeared at \(Date())")
+                }
         }
     }
 }

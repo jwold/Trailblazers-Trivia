@@ -13,13 +13,14 @@ private enum GrayTheme {
     static let lightCard = Color(white: 0.16)
     static let text = Color(white: 1.0)
     static let accent = Color(white: 0.22)
-    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+    static let gold = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
 }
 
 struct GameScreen: View {
     @Binding var path: [Routes]
     let category: TriviaCategory
     @State private var gameViewModel: GameViewModel
+    @State private var showInfoModal = false
     
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
@@ -46,6 +47,22 @@ struct GameScreen: View {
                 VStack(alignment: .leading, spacing: 20) {
                     // Player info above question
                     HStack(alignment: .center, spacing: 0) {
+                        // Back button
+                        Button {
+                            path = []
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.headline)
+                                .foregroundColor(.black.opacity(0.85))
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle().fill(GrayTheme.text.opacity(0.15))
+                                )
+                        }
+                        .padding(.leading, 12)
+                        
+                        Spacer()
+                        
                         // Connected team boxes - aligned with question card
                         HStack(spacing: 0) {
                             // Player 1 section
@@ -98,10 +115,11 @@ struct GameScreen: View {
                         
                         Spacer()
                         
+                        // Info button
                         Button {
-                            path = []
+                            showInfoModal = true
                         } label: {
-                            Image(systemName: "xmark")
+                            Image(systemName: "info.circle")
                                 .font(.headline)
                                 .foregroundColor(.black.opacity(0.85))
                                 .frame(width: 44, height: 44)
@@ -109,7 +127,7 @@ struct GameScreen: View {
                                     Circle().fill(GrayTheme.text.opacity(0.15))
                                 )
                         }
-                        .padding(.trailing, 12) // Align with question card
+                        .padding(.trailing, 12)
                     }
                     Spacer()
                     // Question Text - larger and centered
@@ -210,6 +228,9 @@ struct GameScreen: View {
                 path.append(Routes.results(playerScores: playerScores))
             }
         }
+        .sheet(isPresented: $showInfoModal) {
+            InfoModalView()
+        }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
@@ -253,6 +274,136 @@ struct GameScreen: View {
             .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
         }
     }
+
+// MARK: - Info Modal View
+
+struct InfoModalView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        ZStack {
+            GrayTheme.background.ignoresSafeArea()
+            
+            VStack(spacing: 24) {
+                // Header
+                HStack {
+                    Spacer()
+                    Text("How to Play")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(GrayTheme.text)
+                    Spacer()
+                }
+                .overlay(alignment: .trailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.headline)
+                            .foregroundColor(GrayTheme.text.opacity(0.7))
+                            .frame(width: 44, height: 44)
+                            .background(
+                                Circle().fill(GrayTheme.card)
+                            )
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                
+                // Content
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "megaphone.fill")
+                                .font(.title2)
+                                .foregroundColor(GrayTheme.gold)
+                            Text("Shout Out Mode")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(GrayTheme.text)
+                        }
+                        
+                        Text("This mode is intended for a group setting, with two teams. The person reading the question can choose to be on a team, since the answer is hidden.")
+                            .font(.body)
+                            .foregroundColor(GrayTheme.text.opacity(0.8))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(GrayTheme.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .strokeBorder(
+                                        LinearGradient(
+                                            colors: [GrayTheme.text.opacity(0.12), GrayTheme.text.opacity(0.04)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            )
+                    )
+                    
+                    // Instructions list
+                    VStack(alignment: .leading, spacing: 16) {
+                        InstructionRow(number: "1", text: "Read the question out loud to both teams")
+                        InstructionRow(number: "2", text: "First team to shout out the correct answer gets the point")
+                        InstructionRow(number: "3", text: "Tap 'Show Answer' to reveal the correct answer")
+                        InstructionRow(number: "4", text: "Award points using 'Correct' or 'Wrong' buttons")
+                    }
+                }
+                .padding(.horizontal, 20)
+                
+                Spacer()
+                
+                // Close button
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Got it!")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black.opacity(0.9))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(GrayTheme.gold)
+                        )
+                        .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 40)
+            }
+        }
+    }
+}
+
+// MARK: - Instruction Row
+
+struct InstructionRow: View {
+    let number: String
+    let text: String
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(number)
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black.opacity(0.9))
+                .frame(width: 32, height: 32)
+                .background(
+                    Circle().fill(GrayTheme.gold)
+                )
+            
+            Text(text)
+                .font(.body)
+                .foregroundColor(GrayTheme.text.opacity(0.8))
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
 
 #Preview {
     GameScreen(path: .constant([]), category: .bible)

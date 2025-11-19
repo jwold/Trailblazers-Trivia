@@ -13,7 +13,7 @@ private enum GrayTheme {
     static let lightCard = Color(white: 0.16)
     static let text = Color(white: 1.0)
     static let accent = Color(white: 0.22)
-    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+    static let gold = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
 }
 
 struct CouchModeGameScreen: View {
@@ -22,6 +22,7 @@ struct CouchModeGameScreen: View {
     @State private var showPassDevicePrompt = false
     @State private var selectedAnswer: String?
     @State private var showResults = false
+    @State private var showInfoModal = false
     
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
@@ -54,6 +55,9 @@ struct CouchModeGameScreen: View {
             }
         }
         .navigationBarHidden(true)
+        .sheet(isPresented: $showInfoModal) {
+            CouchModeInfoModalView()
+        }
     }
     
     // MARK: - Game Content
@@ -61,36 +65,13 @@ struct CouchModeGameScreen: View {
         VStack(spacing: 0) {
             // Content Section
             VStack(alignment: .leading, spacing: 20) {
-                // Player info header
+                // Player info above question - same as Shout Out Mode
                 HStack(alignment: .center, spacing: 0) {
-                    // Current player indicator
-                    HStack(spacing: 12) {
-                        Text("\(gameViewModel.currentPlayer.name)'s Turn")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(GrayTheme.gold)
-                        
-                        Text("\(ScoreFormatter.format(gameViewModel.currentPlayerScore))/10")
-                            .font(.headline)
-                            .foregroundColor(GrayTheme.text.opacity(0.7))
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(GrayTheme.lightCard)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(GrayTheme.gold.opacity(0.5), lineWidth: 2)
-                            )
-                    )
-                    
-                    Spacer()
-                    
+                    // Back button
                     Button {
                         path = []
                     } label: {
-                        Image(systemName: "xmark")
+                        Image(systemName: "chevron.left")
                             .font(.headline)
                             .foregroundColor(.black.opacity(0.85))
                             .frame(width: 44, height: 44)
@@ -98,13 +79,75 @@ struct CouchModeGameScreen: View {
                                 Circle().fill(GrayTheme.text.opacity(0.15))
                             )
                     }
-                }
-                .padding(.horizontal, 12)
-                
-                // Score summary
-                HStack(spacing: 16) {
-                    playerScoreCard(player: gameViewModel.player1, score: gameViewModel.getPlayerScore(for: gameViewModel.player1), isCurrent: gameViewModel.currentPlayer.id == gameViewModel.player1.id)
-                    playerScoreCard(player: gameViewModel.player2, score: gameViewModel.getPlayerScore(for: gameViewModel.player2), isCurrent: gameViewModel.currentPlayer.id == gameViewModel.player2.id)
+                    .padding(.leading, 12)
+                    
+                    Spacer()
+                    
+                    // Connected team boxes - aligned with question card
+                    HStack(spacing: 0) {
+                        // Player 1 section
+                        HStack(spacing: 8) {
+                            Text(gameViewModel.player1.name)
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                                .lineLimit(1)
+                            
+                            Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player1)))
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .background(
+                            Capsule()
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? GrayTheme.gold : Color.clear)
+                        )
+                        
+                        // Player 2 section
+                        HStack(spacing: 8) {
+                            Text(gameViewModel.player2.name)
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                                .lineLimit(1)
+                            
+                            Text(ScoreFormatter.format(gameViewModel.getPlayerScore(for: gameViewModel.player2)))
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .background(
+                            Capsule()
+                                .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
+                        )
+                    }
+                    .padding(.leading, 12) // Align with question card
+                    .padding(.trailing, 12) // Match left padding
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(GrayTheme.lightCard.opacity(0.6))
+                            .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
+                    )
+                    .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
+                    .frame(maxWidth: 280) // Limit the width of the score boxes
+                    .padding(.bottom, 8) // Add small bottom padding to score boxes
+                    
+                    Spacer()
+                    
+                    // Info button
+                    Button {
+                        showInfoModal = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                            .font(.headline)
+                            .foregroundColor(.black.opacity(0.85))
+                            .frame(width: 44, height: 44)
+                            .background(
+                                Circle().fill(GrayTheme.text.opacity(0.15))
+                            )
+                    }
+                    .padding(.trailing, 12)
                 }
                 .padding(.horizontal, 12)
                 
@@ -153,29 +196,6 @@ struct CouchModeGameScreen: View {
             .padding(.top, 60)
             .frame(maxHeight: .infinity)
         }
-    }
-    
-    // MARK: - Player Score Card
-    private func playerScoreCard(player: Player, score: Double, isCurrent: Bool) -> some View {
-        VStack(spacing: 4) {
-            Text(player.name)
-                .font(.caption)
-                .foregroundColor(GrayTheme.text.opacity(0.7))
-            Text("\(ScoreFormatter.format(score))")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundColor(isCurrent ? GrayTheme.gold : GrayTheme.text)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isCurrent ? GrayTheme.card : GrayTheme.accent)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isCurrent ? GrayTheme.gold.opacity(0.3) : Color.clear, lineWidth: 1)
-                )
-        )
     }
     
     // MARK: - Answer Buttons
@@ -365,6 +385,112 @@ struct CouchModeGameScreen: View {
             return 0.6
         }
         return selectedAnswer == nil || selectedAnswer == option ? 1.0 : 0.6
+    }
+}
+
+// MARK: - Couch Mode Info Modal View
+
+struct CouchModeInfoModalView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        ZStack {
+            GrayTheme.background.ignoresSafeArea()
+            
+            VStack(spacing: 24) {
+                // Header
+                HStack {
+                    Spacer()
+                    Text("How to Play")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(GrayTheme.text)
+                    Spacer()
+                }
+                .overlay(alignment: .trailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.headline)
+                            .foregroundColor(GrayTheme.text.opacity(0.7))
+                            .frame(width: 44, height: 44)
+                            .background(
+                                Circle().fill(GrayTheme.card)
+                            )
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                
+                // Content
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "person.2.fill")
+                                .font(.title2)
+                                .foregroundColor(GrayTheme.gold)
+                            Text("Couch Mode")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(GrayTheme.text)
+                        }
+                        
+                        Text("This mode is designed for two players taking turns on the same device. Pass the device back and forth after each question.")
+                            .font(.body)
+                            .foregroundColor(GrayTheme.text.opacity(0.8))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(GrayTheme.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .strokeBorder(
+                                        LinearGradient(
+                                            colors: [GrayTheme.text.opacity(0.12), GrayTheme.text.opacity(0.04)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            )
+                    )
+                    
+                    // Instructions list
+                    VStack(alignment: .leading, spacing: 16) {
+                        InstructionRow(number: "1", text: "Current player reads and answers the question")
+                        InstructionRow(number: "2", text: "Select your answer from the multiple choice options")
+                        InstructionRow(number: "3", text: "Tap 'Submit Answer' to see if you're correct")
+                        InstructionRow(number: "4", text: "Pass the device to the next player")
+                        InstructionRow(number: "5", text: "First to 10 points wins!")
+                    }
+                }
+                .padding(.horizontal, 20)
+                
+                Spacer()
+                
+                // Close button
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Got it!")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black.opacity(0.9))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(GrayTheme.gold)
+                        )
+                        .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 40)
+            }
+        }
     }
 }
 

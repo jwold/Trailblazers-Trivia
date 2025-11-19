@@ -13,7 +13,7 @@ private enum GrayTheme {
     static let lightCard = Color(white: 0.16)
     static let text = Color(white: 1.0)
     static let accent = Color(white: 0.22)
-    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+    static let gold = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
 }
 
 struct SinglePlayerGameScreen: View {
@@ -84,8 +84,21 @@ struct SinglePlayerGameScreen: View {
             // Content Section
             VStack(alignment: .leading, spacing: 20) {
                 // Player info above question
-                HStack(alignment: .center, spacing: 0) {
-                    // Single player score box - matching two-player style
+                HStack(alignment: .center, spacing: 12) {
+                    // Back button
+                    Button {
+                        path = []
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.headline)
+                            .foregroundColor(.black.opacity(0.85))
+                            .frame(width: 44, height: 44)
+                            .background(
+                                Circle().fill(GrayTheme.text.opacity(0.15))
+                            )
+                    }
+                    
+                    // Single player score box - next to back button
                     HStack(spacing: 8) {
                         Text("\(ScoreFormatter.format(singlePlayerViewModel.getPlayerScore()))/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
                             .font(.subheadline)
@@ -106,18 +119,6 @@ struct SinglePlayerGameScreen: View {
                     .padding(.bottom, 8)
                     
                     Spacer()
-                    
-                    Button {
-                        path = []
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.headline)
-                            .foregroundColor(.black.opacity(0.85))
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.text.opacity(0.15))
-                            )
-                    }
                 }
                 .padding(.horizontal, 12)
                 
@@ -130,6 +131,9 @@ struct SinglePlayerGameScreen: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(GrayTheme.text)
+                        .id(singlePlayerViewModel.currentQuestion.id) // Force view update on question change
+                        .transition(.opacity) // Fade transition
+                        .animation(.easeInOut(duration: 0.3), value: singlePlayerViewModel.currentQuestion.id)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
@@ -155,6 +159,8 @@ struct SinglePlayerGameScreen: View {
                 if shouldShowAnswerButtons() {
                     answerButtonsView
                         .padding(.top, 20)
+                        .transition(.opacity) // Fade transition
+                        .animation(.easeInOut(duration: 0.3), value: singlePlayerViewModel.currentQuestion.id)
                 }
                 
                 // Continue button - moved into main content area
@@ -268,8 +274,6 @@ struct SinglePlayerGameScreen: View {
                             )
                     )
                     .scaleEffect(buttonScale(for: option))
-                    .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.selectedAnswer)
-                    .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.showResults)
                     .opacity(buttonOpacity(for: option))
                 }
                 .disabled(singlePlayerViewModel.showResults)

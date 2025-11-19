@@ -14,7 +14,7 @@ private enum HomeTheme {
     static let lightCard = Color(white: 0.16)       // same lighter card for selections
     static let text = Color(white: 1.0)             // pure white text
     static let accent = Color(white: 0.22)          // dark accent
-    static let gold = Color(red: 1.0, green: 0.84, blue: 0.0) // #FFD700 bright gold
+    static let gold = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
 }
 
 struct StartScreen: View {
@@ -22,34 +22,34 @@ struct StartScreen: View {
     @State private var selectedPlayerMode: PlayerMode = .onePlayer
     @State private var selectedCategory: TriviaCategory = .bible
     
+    // Prepare haptic generator once for better performance
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
+    
+    init() {
+        print("🎮 StartScreen init at \(Date())")
+    }
     
     // MARK: - Haptics & Selection Helpers
     private func selectCategory(_ category: TriviaCategory) {
         guard selectedCategory != category else { return }
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
+        print("📂 Category selected: \(category) at \(Date())")
+        impactGenerator.impactOccurred()
         selectedCategory = category
     }
 
     private func selectMode(_ mode: PlayerMode) {
         guard selectedPlayerMode != mode else { return }
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
+        print("🎯 Mode selected: \(mode) at \(Date())")
+        impactGenerator.impactOccurred()
         selectedPlayerMode = mode
     }
 
     var body: some View {
+        let _ = print("🎨 StartScreen body evaluation at \(Date())")
+        
         NavigationStack(path: $path) {
             ZStack {
                 HomeTheme.background.ignoresSafeArea()
-                LinearGradient(
-                    colors: [Color.white.opacity(0.06), Color.clear, Color.white.opacity(0.03)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
-                .opacity(0.6)
-                .blur(radius: 40)
                 
                 VStack(spacing: 0) {
                     headerView
@@ -64,6 +64,17 @@ struct StartScreen: View {
             }
             .navigationDestination(for: Routes.self) { route in
                 navigationDestination(for: route)
+            }
+            .onAppear {
+                print("👀 StartScreen onAppear at \(Date())")
+                // Prepare haptic generator for immediate response
+                impactGenerator.prepare()
+                print("✅ Haptic generator prepared at \(Date())")
+                
+                // Test if main thread is responsive
+                DispatchQueue.main.async {
+                    print("✅ Main thread responsive at \(Date())")
+                }
             }
         }
     }
@@ -122,11 +133,12 @@ struct StartScreen: View {
     private var categoryCarousel: some View {
         VStack(alignment: .leading, spacing: 8) {
             GeometryReader { geo in
-                let cardWidth = min(220, max(180, geo.size.width * 0.55))
+                // Reduced by 25%: was 0.55, now 0.4125 (0.55 * 0.75)
+                let cardWidth = min(165, max(135, geo.size.width * 0.4125))
                 let cardHeight = cardWidth * 0.95
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
+                        HStack(spacing: 12) { // Reduced spacing from 16 to 12
                             ForEach(categoryCards) { card in
                                 categoryCarouselCard(card: card, width: cardWidth, height: cardHeight, isSelected: selectedCategory == card.mappedCategory)
                                     .id(card.id)
@@ -145,59 +157,36 @@ struct StartScreen: View {
                     }
                 }
             }
-            .frame(height: 210)
+            .frame(height: 158) // Reduced by 25%: was 210, now 158 (210 * 0.75)
         }
     }
 
     private func categoryCarouselCard(card: CategoryCard, width: CGFloat, height: CGFloat, isSelected: Bool) -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) { // Reduced from 8 to 6
             ZStack {
-                RoundedRectangle(cornerRadius: 14)
+                RoundedRectangle(cornerRadius: 10) // Reduced from 14 to 10
                     .fill(card.isEnabled ? card.accent : Color.gray.opacity(0.3))
-                    .frame(width: 56, height: 56)
+                    .frame(width: 42, height: 42) // Reduced from 56 to 42 (25% smaller)
                 Image(systemName: card.iconName)
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(.system(size: 18, weight: .semibold)) // Reduced from 24 to 18
                     .foregroundColor(card.isEnabled ? .black : .gray)
             }
             Text(card.title)
-                .font(.headline)
+                .font(.subheadline) // Reduced from .headline to .subheadline
                 .fontWeight(.semibold)
                 .foregroundColor(card.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.4))
             Text(card.priceText)
-                .font(.subheadline)
+                .font(.caption) // Reduced from .subheadline to .caption
                 .foregroundColor(card.isEnabled ? HomeTheme.text.opacity(0.7) : HomeTheme.text.opacity(0.3))
         }
-        .padding(.vertical, 16)
+        .padding(.vertical, 12) // Reduced from 16 to 12
         .frame(width: width, height: height)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 15) // Reduced from 20 to 15
                 .fill(HomeTheme.card)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder(
-                            isSelected && card.isEnabled
-                            ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
-                            : AnyShapeStyle(LinearGradient(
-                                colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )),
-                            lineWidth: isSelected && card.isEnabled ? 2 : 1
-                        )
-                )
-                .overlay(
-                    LinearGradient(
-                        colors: [Color.white.opacity(0.08), Color.clear],
-                        startPoint: .top,
-                        endPoint: .center
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .opacity(0.8)
-                )
+                .stroke(isSelected && card.isEnabled ? HomeTheme.gold : HomeTheme.text.opacity(0.1), lineWidth: isSelected && card.isEnabled ? 2 : 1)
         )
-        .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-        .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
-        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+        .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 3) // Reduced shadow from radius 8 to 6
         .scaleEffect(isSelected && card.isEnabled ? 1.02 : 1.0)
         .animation(.spring(response: 0.28, dampingFraction: 0.9), value: isSelected)
         .opacity(card.isEnabled ? 1.0 : 0.5)
@@ -279,32 +268,9 @@ struct StartScreen: View {
         .background(
             RoundedRectangle(cornerRadius: 24)
                 .fill(HomeTheme.card)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .strokeBorder(
-                            isSelected
-                            ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
-                            : AnyShapeStyle(LinearGradient(
-                                colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )),
-                            lineWidth: isSelected ? 2 : 1
-                        )
-                )
-                .overlay(
-                    LinearGradient(
-                        colors: [Color.white.opacity(0.08), Color.clear],
-                        startPoint: .top,
-                        endPoint: .center
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .opacity(0.8)
-                )
+                .stroke(isSelected ? HomeTheme.gold : HomeTheme.text.opacity(0.1), lineWidth: isSelected ? 2 : 1)
         )
-        .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-        .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
-        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+        .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
         .scaleEffect(isSelected ? 1.02 : 1.0)
         .animation(.spring(response: 0.28, dampingFraction: 0.9), value: isSelected)
     }
@@ -333,24 +299,9 @@ struct StartScreen: View {
                         .fill(HomeTheme.gold)
                 )
                 .shadow(color: HomeTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
-                .overlay(
-                    GeometryReader { g in
-                        let gradient = LinearGradient(
-                            colors: [Color.white.opacity(0.0), Color.white.opacity(0.35), Color.white.opacity(0.0)],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        Rectangle()
-                            .fill(gradient)
-                            .rotationEffect(.degrees(20))
-                            .offset(x: -g.size.width)
-                            .animation(.linear(duration: 1.8).repeatForever(autoreverses: false), value: UUID())
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .allowsHitTesting(false)
-                )
         }
         .simultaneousGesture(TapGesture().onEnded {
+            print("🎮 Start Game button tapped at \(Date())")
             let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.success)
         })

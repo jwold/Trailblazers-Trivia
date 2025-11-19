@@ -247,29 +247,13 @@ class SinglePlayerGameViewModel {
         category: TriviaCategory = .bible,
         questionRepository: QuestionRepositoryProtocol? = nil
     ) {
-        print("SinglePlayerGameViewModel initializing...")
         self.player = Player(id: UUID().uuidString, name: playerName)
         
-        // Safely create question repository with better error handling
+        // Create question repository
         if let customRepository = questionRepository {
             self.questionRepository = customRepository
-            print("Using custom question repository")
         } else {
-            // Try JSON first, but have memory as fallback
-            let jsonRepo = QuestionRepositoryFactory.create(type: .json, category: category)
-            
-            // Test if JSON repo can actually load questions
-            Task {
-                do {
-                    let _ = try await jsonRepo.nextQuestion()
-                    print("JSON repository test successful")
-                } catch {
-                    print("JSON repository failed, this might cause crashes: \(error)")
-                }
-            }
-            
-            self.questionRepository = jsonRepo
-            print("Created JSON question repository (may fallback during gameplay)")
+            self.questionRepository = QuestionRepositoryFactory.create(type: .json, category: category)
         }
         
         // Set up a default question immediately to prevent crashes
@@ -281,9 +265,6 @@ class SinglePlayerGameViewModel {
             wrongAnswers: ["Loading...", "Loading..."]
         )
         self.currentAnswerOptions = ["Loading...", "Loading...", "Loading..."]
-        
-        // Don't start timer until game actually begins
-        print("SinglePlayerGameViewModel initialized")
     }
     
     /// Diagnostic function to check for potential crash sources
@@ -319,11 +300,9 @@ class SinglePlayerGameViewModel {
     func startGame() async {
         // Prevent multiple starts
         guard currentAnswerOptions.contains("Loading...") else { 
-            print("SinglePlayerGameViewModel: Game already started")
             return 
         }
         
-        print("SinglePlayerGameViewModel: Starting game...")
         // Start timer when game actually begins
         startTimer()
         await startNewTurn()
@@ -331,7 +310,6 @@ class SinglePlayerGameViewModel {
     
     @MainActor
     func startNewTurn() async {
-        print("SinglePlayerGameViewModel: startNewTurn called")
         
         // Set loading state first
         isLoading = true
@@ -356,7 +334,6 @@ class SinglePlayerGameViewModel {
             loadingError = nil
             
         } catch {
-            print("SinglePlayerGameViewModel: Failed to get question: \(error)")
             loadingError = "Failed to load question: \(error.localizedDescription)"
             
             // Provide multiple fallback questions to keep the game playable
@@ -374,25 +351,20 @@ class SinglePlayerGameViewModel {
             
             currentTurn?.question = fallbackQuestion
             generateAnswerOptions()
-            
-            print("Using fallback question: \(fallbackQuestion.question)")
         }
         
         // Only set loading to false after everything is ready
         isLoading = false
-        print("SinglePlayerGameViewModel: startNewTurn completed, isLoading = \(isLoading)")
     }
     
     private func generateAnswerOptions() {
         guard let question = currentTurn?.question else { 
-            print("ERROR: No question available for generating options")
             currentAnswerOptions = ["Error loading options"]
             return 
         }
 
         // Validate question has required data
         guard !question.answer.isEmpty else {
-            print("ERROR: Question has empty answer")
             currentAnswerOptions = ["Error: Invalid question data"]
             return
         }
@@ -439,8 +411,6 @@ class SinglePlayerGameViewModel {
         // Shuffle for presentation
         unique.shuffle()
         currentAnswerOptions = unique
-        
-        print("Generated \(unique.count) answer options: \(unique)")
     }
 
     
@@ -448,13 +418,11 @@ class SinglePlayerGameViewModel {
     func selectAnswer(_ answer: String) {
         // Validate the answer is in current options
         guard currentAnswerOptions.contains(answer) else {
-            print("ERROR: Selected answer '\(answer)' not in current options: \(currentAnswerOptions)")
             return
         }
         
         // Don't allow selection if still loading or showing results
         guard !isLoading && !showResults else {
-            print("Cannot select answer while loading or showing results")
             return
         }
         
@@ -462,12 +430,10 @@ class SinglePlayerGameViewModel {
         guard let currentTurn = currentTurn, 
               let question = currentTurn.question,
               !question.answer.isEmpty else {
-            print("ERROR: Cannot select answer - no valid question available")
             return
         }
         
         selectedAnswer = answer
-        print("Selected answer: \(answer)")
         
         // Auto-reveal results when answer is selected
         revealResults()
@@ -476,21 +442,18 @@ class SinglePlayerGameViewModel {
     @MainActor
     func revealResults() {
         guard let answer = selectedAnswer else { 
-            print("ERROR: Cannot reveal results - no answer selected")
             return 
         }
         
         // Additional safety check
         guard let currentTurn = currentTurn,
               let question = currentTurn.question else {
-            print("ERROR: Cannot reveal results - no valid question")
             return
         }
         
         showResults = true
         
         let wasCorrect = answer == question.answer
-        print("Answer was \(wasCorrect ? "correct" : "incorrect"). Selected: '\(answer)', Correct: '\(question.answer)'")
         
         // Add to action log
         let actionText = wasCorrect ? "✓ Answered correctly" : "✗ Answered incorrectly"
@@ -503,23 +466,18 @@ class SinglePlayerGameViewModel {
     
     @MainActor
     func continueToNextQuestion() async {
-        print("SinglePlayerGameViewModel: continueToNextQuestion called, showResults = \(showResults)")
-        
         // If results are already showing, move to next question
         if showResults {
             // Check if game should end
             if shouldEndGame {
-                print("SinglePlayerGameViewModel: Game should end, setting gameEnded = true")
                 gameEnded = true
                 return
             }
             
-            print("SinglePlayerGameViewModel: Starting next turn...")
             actionLog.append("→ Next question")
             await startNewTurn()
         } else {
             // If results aren't showing yet, this shouldn't happen since we auto-reveal
-            print("Warning: Continue button pressed but results not showing - this shouldn't happen")
             hasAnswered = true
             revealResults()
         }
@@ -547,8 +505,6 @@ class SinglePlayerGameViewModel {
         selectedAnswer = nil
         showResults = false
         hasAnswered = false
-        
-        print("Undid last action. Score now: \(getPlayerScore())")
     }
     
     var canUndo: Bool {
