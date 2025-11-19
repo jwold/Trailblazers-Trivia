@@ -129,7 +129,8 @@ struct SinglePlayerGameScreen: View {
                 VStack(alignment: .leading, spacing: 12) {
                     let questionText = singlePlayerViewModel.currentQuestion.question
                     Text(questionText.isEmpty ? "Loading question..." : questionText)
-                        .font(.system(size: 34, weight: .medium))
+                        .font(.largeTitle)
+                        .fontWeight(.medium)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -184,7 +185,8 @@ struct SinglePlayerGameScreen: View {
             singlePlayerViewModel.continueToNextQuestion()
         } label: {
             Text(buttonText)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.title3)
+                .fontWeight(.semibold)
                 .foregroundColor(.black.opacity(isButtonEnabled ? 0.9 : 0.4))
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
@@ -224,7 +226,8 @@ struct SinglePlayerGameScreen: View {
                     HStack(spacing: 16) {
                         // Answer text with strikethrough for wrong answers
                         Text(option)
-                            .font(.system(size: 22, weight: .medium))
+                            .font(.title3)
+                            .fontWeight(.medium)
                             .foregroundColor(answerTextColor(for: option))
                             .strikethrough(shouldStrikethrough(option), color: .white.opacity(0.5))
                             .multilineTextAlignment(.leading)
@@ -234,11 +237,11 @@ struct SinglePlayerGameScreen: View {
                         if singlePlayerViewModel.showResults {
                             if option == singlePlayerViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(.title2)
                                     .foregroundColor(GrayTheme.gold)
                             } else if option == singlePlayerViewModel.selectedAnswer {
                                 Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(.title2)
                                     .foregroundColor(.white.opacity(0.5))
                             }
                         }

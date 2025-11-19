@@ -66,13 +66,14 @@ struct GameScreen: View {
                             // Player 1 section
                             HStack(spacing: 8) {
                                 Text(gameViewModel.player1.name)
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
                                 TickerTapeScore(
                                     score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
-                                    font: .system(size: 16, weight: .bold, design: .rounded),
+                                    font: .subheadline,
                                     fontWeight: .bold,
                                     foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
                                 )
@@ -87,13 +88,14 @@ struct GameScreen: View {
                             // Player 2 section
                             HStack(spacing: 8) {
                                 Text(gameViewModel.player2.name)
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
                                     .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                     .lineLimit(1)
                                 
                                 TickerTapeScore(
                                     score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
-                                    font: .system(size: 16, weight: .bold, design: .rounded),
+                                    font: .subheadline,
                                     fontWeight: .bold,
                                     foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
                                 )
@@ -127,7 +129,7 @@ struct GameScreen: View {
                             if !gameViewModel.showAnswer {
                                 // Question text
                                 Text(gameViewModel.currentQuestion.question)
-                                    .font(.system(size: 34, weight: .medium))
+                                    .font(.largeTitle)
                                     .fontWeight(.medium)
                                     .multilineTextAlignment(.leading)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -139,7 +141,8 @@ struct GameScreen: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     // Answer text
                                     Text(gameViewModel.currentQuestion.answer)
-                                        .font(.system(size: 50, weight: .semibold))
+                                        .font(.system(size: 50))
+                                        .fontWeight(.semibold)
                                         .multilineTextAlignment(.center)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                         .foregroundColor(GrayTheme.text)

@@ -127,7 +127,8 @@ struct StartScreen: View {
                 // Category name row
                 HStack {
                     Text(category.rawValue)
-                        .font(.system(size: 32, weight: .bold))
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         .foregroundColor(category.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.3))
                     
                     Spacer()

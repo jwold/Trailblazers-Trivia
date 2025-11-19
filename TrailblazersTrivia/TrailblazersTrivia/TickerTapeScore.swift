@@ -19,7 +19,7 @@ struct TickerTapeScore: View {
     
     init(
         score: Double,
-        font: Font = .system(size: 16, weight: .bold, design: .rounded),
+        font: Font = .subheadline,
         fontWeight: Font.Weight = .bold,
         foregroundColor: Color = .white
     ) {
@@ -90,7 +90,7 @@ private struct TickerTapeScoreDemo: View {
                 
                 TickerTapeScore(
                     score: score,
-                    font: .system(size: 32, weight: .bold, design: .rounded),
+                    font: .largeTitle,
                     fontWeight: .bold,
                     foregroundColor: Color(red: 0.35, green: 0.55, blue: 0.77)
                 )

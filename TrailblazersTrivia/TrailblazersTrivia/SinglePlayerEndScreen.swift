@@ -13,6 +13,8 @@ struct SinglePlayerEndScreen: View {
     let questionsAnswered: Int
     let elapsedTime: TimeInterval
     
+    @ScaledMetric(relativeTo: .largeTitle) private var largeScoreSize: CGFloat = 64
+    
     private var gameCompletionMessage: String {
         if finalScore >= 10 {
             return "Congratulations!"
@@ -69,7 +71,7 @@ struct SinglePlayerEndScreen: View {
                             .foregroundColor(.white.opacity(0.8))
                         
                         Text(ScoreFormatter.format(finalScore))
-                            .font(.system(size: 64, weight: .bold, design: .rounded))
+                            .font(.system(size: largeScoreSize, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
                         
                         Text("out of 10 points")

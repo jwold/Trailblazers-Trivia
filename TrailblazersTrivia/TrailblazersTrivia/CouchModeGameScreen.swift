@@ -90,13 +90,14 @@ struct CouchModeGameScreen: View {
                         // Player 1 section
                         HStack(spacing: 8) {
                             Text(gameViewModel.player1.name)
-                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
                                 .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                 .lineLimit(1)
                             
                             TickerTapeScore(
                                 score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
-                                font: .system(size: 16, weight: .bold, design: .rounded),
+                                font: .subheadline,
                                 fontWeight: .bold,
                                 foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
                             )
@@ -111,13 +112,14 @@ struct CouchModeGameScreen: View {
                         // Player 2 section
                         HStack(spacing: 8) {
                             Text(gameViewModel.player2.name)
-                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
                                 .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
                                 .lineLimit(1)
                             
                             TickerTapeScore(
                                 score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
-                                font: .system(size: 16, weight: .bold, design: .rounded),
+                                font: .subheadline,
                                 fontWeight: .bold,
                                 foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
                             )
@@ -149,7 +151,8 @@ struct CouchModeGameScreen: View {
                 // Question Text
                 VStack(alignment: .leading, spacing: 12) {
                     Text(gameViewModel.currentQuestion.question)
-                        .font(.system(size: 34, weight: .medium))
+                        .font(.largeTitle)
+                        .fontWeight(.medium)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -188,7 +191,8 @@ struct CouchModeGameScreen: View {
                 } label: {
                     HStack(spacing: 16) {
                         Text(option)
-                            .font(.system(size: 22, weight: .medium))
+                            .font(.title3)
+                            .fontWeight(.medium)
                             .foregroundColor(answerTextColor(for: option))
                             .strikethrough(shouldStrikethrough(option), color: .white.opacity(0.5))
                             .multilineTextAlignment(.leading)
@@ -197,11 +201,11 @@ struct CouchModeGameScreen: View {
                         if showResults {
                             if option == gameViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(.title2)
                                     .foregroundColor(GrayTheme.gold)
                             } else if option == selectedAnswer {
                                 Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(.title2)
                                     .foregroundColor(.white.opacity(0.5))
                             }
                         }
