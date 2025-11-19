@@ -137,23 +137,6 @@ struct SinglePlayerGameScreen: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
-                .frame(maxWidth: .infinity)
-                .background(GrayTheme.card, in: RoundedRectangle(cornerRadius: 24))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .strokeBorder(
-                            LinearGradient(
-                                colors: [.white.opacity(0.12), .white.opacity(0.04)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
-                .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-                .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
-                .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
-                .padding(.horizontal, 12)
                 
                 // Answer buttons right below question card - with safety checks
                 if shouldShowAnswerButtons() {
@@ -187,8 +170,8 @@ struct SinglePlayerGameScreen: View {
     }
     
     private func shouldShowContinueButton() -> Bool {
-        // Always show continue button when not loading and have valid question
-        return shouldShowAnswerButtons()
+        // Only show continue button when an answer has been selected
+        return shouldShowAnswerButtons() && singlePlayerViewModel.selectedAnswer != nil
     }
     
     private var continueButtonView: some View {
