@@ -188,7 +188,6 @@ struct SinglePlayerGameScreen: View {
     private var continueButtonView: some View {
         Button {
             Task {
-                // If no answer selected, this will skip the question
                 // If answer selected but results not shown, this will reveal results  
                 // If results shown, this will move to next question
                 await singlePlayerViewModel.continueToNextQuestion()
@@ -196,16 +195,22 @@ struct SinglePlayerGameScreen: View {
         } label: {
             Text(buttonText)
                 .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(.black.opacity(0.9))
+                .foregroundColor(.black.opacity(isButtonEnabled ? 0.9 : 0.4))
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(GrayTheme.gold)
+                        .fill(isButtonEnabled ? GrayTheme.gold : Color.gray.opacity(0.3))
                 )
-                .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
+                .shadow(color: isButtonEnabled ? GrayTheme.gold.opacity(0.35) : Color.clear, radius: 10, x: 0, y: 4)
         }
+        .disabled(!isButtonEnabled)
         .padding(.horizontal, 20)
+    }
+    
+    private var isButtonEnabled: Bool {
+        // Button is enabled when an answer is selected
+        singlePlayerViewModel.selectedAnswer != nil
     }
     
     private var buttonText: String {
@@ -214,7 +219,7 @@ struct SinglePlayerGameScreen: View {
         } else if singlePlayerViewModel.selectedAnswer != nil {
             return "Show Answer"
         } else {
-            return "Skip Question"
+            return "Select an Answer"
         }
     }
     
@@ -228,37 +233,26 @@ struct SinglePlayerGameScreen: View {
                     }
                 } label: {
                     HStack(spacing: 16) {
-                        // Circle icon on the left - radio button style
-                        ZStack {
-                            Circle()
-                                .stroke((singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? Color.clear : Color.white, lineWidth: 2)
-                                .frame(width: 24, height: 24)
-
-                            if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 12, height: 12)
-                            } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
-                                ZStack {
-                                    Circle()
-                                        .fill(GrayTheme.gold)
-                                        .frame(width: 22, height: 22)
-                                    Image(systemName: "checkmark")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(.black)
-                                }
-                            } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.selectedAnswer && option != singlePlayerViewModel.currentQuestion.answer {
-                                Image(systemName: "xmark")
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(.white)
-                            }
-                        }
-
+                        // Answer text with strikethrough for wrong answers
                         Text(option)
                             .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(answerTextColor(for: option))
+                            .strikethrough(shouldStrikethrough(option), color: .white.opacity(0.5))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        // Show checkmark or X only after results are revealed
+                        if singlePlayerViewModel.showResults {
+                            if option == singlePlayerViewModel.currentQuestion.answer {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 24, weight: .semibold))
+                                    .foregroundColor(GrayTheme.gold)
+                            } else if option == singlePlayerViewModel.selectedAnswer {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 24, weight: .semibold))
+                                    .foregroundColor(.white.opacity(0.5))
+                            }
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
@@ -269,17 +263,14 @@ struct SinglePlayerGameScreen: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(
-                                Color.white,
-                                lineWidth: (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ? 4 : 0
+                                buttonBorderColor(for: option),
+                                lineWidth: buttonBorderWidth(for: option)
                             )
                     )
-                    .scaleEffect(
-                        (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ||
-                        (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) ? 1.05 : 1.0
-                    )
+                    .scaleEffect(buttonScale(for: option))
                     .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.selectedAnswer)
                     .animation(.easeInOut(duration: 0.2), value: singlePlayerViewModel.showResults)
-                    .opacity(singlePlayerViewModel.selectedAnswer == nil || singlePlayerViewModel.selectedAnswer == option || singlePlayerViewModel.showResults ? 1.0 : 0.6)
+                    .opacity(buttonOpacity(for: option))
                 }
                 .disabled(singlePlayerViewModel.showResults)
             }
@@ -290,6 +281,67 @@ struct SinglePlayerGameScreen: View {
     private func buttonColor(for option: String) -> Color {
         // Keep all buttons the same color - don't change to green or red
         return GrayTheme.accent
+    }
+    
+    // MARK: - Answer Button Styling Helpers
+    
+    private func answerTextColor(for option: String) -> Color {
+        if singlePlayerViewModel.showResults {
+            if option == singlePlayerViewModel.currentQuestion.answer {
+                return .white // Correct answer stays white
+            } else if option == singlePlayerViewModel.selectedAnswer {
+                return .white.opacity(0.5) // Wrong selected answer is dimmed
+            } else {
+                return .white.opacity(0.4) // Other wrong answers are dimmed
+            }
+        }
+        return .white
+    }
+    
+    private func shouldStrikethrough(_ option: String) -> Bool {
+        // Strike through the selected wrong answer
+        return singlePlayerViewModel.showResults && 
+               option == singlePlayerViewModel.selectedAnswer && 
+               option != singlePlayerViewModel.currentQuestion.answer
+    }
+    
+    private func buttonBorderColor(for option: String) -> Color {
+        if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
+            return GrayTheme.gold
+        } else if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
+            return .white
+        }
+        return .clear
+    }
+    
+    private func buttonBorderWidth(for option: String) -> CGFloat {
+        if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
+            return 3
+        } else if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
+            return 4
+        }
+        return 0
+    }
+    
+    private func buttonScale(for option: String) -> CGFloat {
+        if (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ||
+           (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) {
+            return 1.05
+        }
+        return 1.0
+    }
+    
+    private func buttonOpacity(for option: String) -> Double {
+        if singlePlayerViewModel.showResults {
+            // Correct answer is always visible
+            if option == singlePlayerViewModel.currentQuestion.answer {
+                return 1.0
+            }
+            // Wrong answers are dimmed
+            return 0.6
+        }
+        // Before showing results, show selected or all options
+        return singlePlayerViewModel.selectedAnswer == nil || singlePlayerViewModel.selectedAnswer == option ? 1.0 : 0.6
     }
 }
 

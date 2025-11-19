@@ -107,23 +107,20 @@ struct StartScreen: View {
         let priceText: String
         let mappedCategory: TriviaCategory
         let accent: Color
+        let isEnabled: Bool
     }
 
     private var categoryCards: [CategoryCard] {
         [
-            CategoryCard(iconName: "book.fill", title: "Bible", priceText: "Free", mappedCategory: .bible, accent: .teal),
-            CategoryCard(iconName: "globe.americas.fill", title: "History", priceText: "Free", mappedCategory: .bible, accent: .orange),
-            CategoryCard(iconName: "pawprint.fill", title: "Animals", priceText: "Free", mappedCategory: .bible, accent: .pink),
-            CategoryCard(iconName: "map.fill", title: "Geography", priceText: "Free", mappedCategory: .bible, accent: .purple)
+            CategoryCard(iconName: "book.fill", title: "Bible", priceText: "Free", mappedCategory: .bible, accent: .teal, isEnabled: true),
+            CategoryCard(iconName: "flag.fill", title: "US History", priceText: "Free", mappedCategory: .usHistory, accent: .red, isEnabled: true),
+            CategoryCard(iconName: "pawprint.fill", title: "Animals", priceText: "Coming Soon", mappedCategory: .bible, accent: .pink, isEnabled: false),
+            CategoryCard(iconName: "map.fill", title: "Geography", priceText: "Coming Soon", mappedCategory: .bible, accent: .purple, isEnabled: false)
         ]
     }
 
     private var categoryCarousel: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Choose your game")
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(HomeTheme.text)
             GeometryReader { geo in
                 let cardWidth = min(220, max(180, geo.size.width * 0.55))
                 let cardHeight = cardWidth * 0.95
@@ -133,7 +130,11 @@ struct StartScreen: View {
                             ForEach(categoryCards) { card in
                                 categoryCarouselCard(card: card, width: cardWidth, height: cardHeight, isSelected: selectedCategory == card.mappedCategory)
                                     .id(card.id)
-                                    .onTapGesture { selectCategory(card.mappedCategory) }
+                                    .onTapGesture { 
+                                        if card.isEnabled {
+                                            selectCategory(card.mappedCategory)
+                                        }
+                                    }
                             }
                         }
                         .padding(.horizontal, 0)
@@ -152,19 +153,19 @@ struct StartScreen: View {
         VStack(spacing: 8) {
             ZStack {
                 RoundedRectangle(cornerRadius: 14)
-                    .fill(card.accent)
+                    .fill(card.isEnabled ? card.accent : Color.gray.opacity(0.3))
                     .frame(width: 56, height: 56)
                 Image(systemName: card.iconName)
                     .font(.system(size: 24, weight: .semibold))
-                    .foregroundColor(.black)
+                    .foregroundColor(card.isEnabled ? .black : .gray)
             }
             Text(card.title)
                 .font(.headline)
                 .fontWeight(.semibold)
-                .foregroundColor(HomeTheme.text)
+                .foregroundColor(card.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.4))
             Text(card.priceText)
                 .font(.subheadline)
-                .foregroundColor(HomeTheme.text.opacity(0.7))
+                .foregroundColor(card.isEnabled ? HomeTheme.text.opacity(0.7) : HomeTheme.text.opacity(0.3))
         }
         .padding(.vertical, 16)
         .frame(width: width, height: height)
@@ -174,14 +175,14 @@ struct StartScreen: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(
-                            isSelected
+                            isSelected && card.isEnabled
                             ? AnyShapeStyle(HomeTheme.gold.opacity(0.5))
                             : AnyShapeStyle(LinearGradient(
                                 colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )),
-                            lineWidth: isSelected ? 2 : 1
+                            lineWidth: isSelected && card.isEnabled ? 2 : 1
                         )
                 )
                 .overlay(
@@ -197,8 +198,9 @@ struct StartScreen: View {
         .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
         .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
         .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
-        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .scaleEffect(isSelected && card.isEnabled ? 1.02 : 1.0)
         .animation(.spring(response: 0.28, dampingFraction: 0.9), value: isSelected)
+        .opacity(card.isEnabled ? 1.0 : 0.5)
     }
     
     // MARK: - Player Mode Cards
@@ -220,16 +222,16 @@ struct StartScreen: View {
                 accent: Color.teal
             ),
             PlayerModeOption(
-                mode: .twoPlayer,
+                mode: .couchMode,
                 iconName: "person.2.fill",
-                title: "Me and a friend",
-                subtitle: "Take turns and compete head‑to‑head.",
+                title: "Couch Mode",
+                subtitle: "Take turns passing the device back and forth.",
                 accent: Color.purple
             ),
             PlayerModeOption(
-                mode: .twoPlayer, // Shout Out reuses twoPlayer wiring for now
+                mode: .twoPlayer,
                 iconName: "megaphone.fill",
-                title: "A group of us",
+                title: "Shout Out Mode",
                 subtitle: "First to answer out loud scores the point.",
                 accent: Color.pink
             )
@@ -238,10 +240,6 @@ struct StartScreen: View {
     
     private var playerModeCards: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Who is playing?")
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(HomeTheme.text)
             VStack(spacing: 12) {
                 ForEach(playerModeOptions, id: \.title) { option in
                     playerModeCard(option: option, isSelected: selectedPlayerMode == option.mode)
@@ -313,7 +311,16 @@ struct StartScreen: View {
     
     // MARK: - Start Game Button
     private var startGameButton: some View {
-        let destination: Routes = selectedPlayerMode == .onePlayer ? .gameOnePlayer(category: selectedCategory) : .gameTwoPlayer(category: selectedCategory)
+        let destination: Routes
+        switch selectedPlayerMode {
+        case .onePlayer:
+            destination = .gameOnePlayer(category: selectedCategory)
+        case .twoPlayer:
+            destination = .gameTwoPlayer(category: selectedCategory)
+        case .couchMode:
+            destination = .gameCouchMode(category: selectedCategory)
+        }
+        
         return NavigationLink(value: destination) {
             Text("Start New Game")
                 .font(.title2)
@@ -357,6 +364,8 @@ struct StartScreen: View {
             SinglePlayerGameScreen(path: $path, category: category)
         case .gameTwoPlayer(let category):
             GameScreen(path: $path, category: category)
+        case .gameCouchMode(let category):
+            CouchModeGameScreen(path: $path, category: category)
         case .results(let playerScores):
             EndScreen(path: $path, playerScores: playerScores)
         case .singlePlayerResults(let finalScore, let questionsAnswered, let elapsedTime):

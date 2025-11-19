@@ -72,6 +72,11 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
                 allQuestions.append(contentsOf: bibleQuestions)
                 print("Added \(bibleQuestions.count) bible questions")
             }
+        case .usHistory:
+            if let usHistoryQuestions = try loadQuestions(from: "ushistory") {
+                allQuestions.append(contentsOf: usHistoryQuestions)
+                print("Added \(usHistoryQuestions.count) US history questions")
+            }
         }
         
         print("Total questions loaded: \(allQuestions.count)")

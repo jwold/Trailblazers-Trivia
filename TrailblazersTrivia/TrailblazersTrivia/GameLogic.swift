@@ -214,6 +214,9 @@ class SinglePlayerGameViewModel {
     var isLoading = true
     var loadingError: String?
     
+    // Action log for undo functionality
+    var actionLog: [String] = []
+    
     var currentQuestion: Question {
         currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."])
     }
@@ -489,6 +492,10 @@ class SinglePlayerGameViewModel {
         let wasCorrect = answer == question.answer
         print("Answer was \(wasCorrect ? "correct" : "incorrect"). Selected: '\(answer)', Correct: '\(question.answer)'")
         
+        // Add to action log
+        let actionText = wasCorrect ? "✓ Answered correctly" : "✗ Answered incorrectly"
+        actionLog.append(actionText)
+        
         recordAnswer(wasCorrect: wasCorrect)
         
         // Don't automatically progress - wait for Continue button
@@ -508,6 +515,7 @@ class SinglePlayerGameViewModel {
             }
             
             print("SinglePlayerGameViewModel: Starting next turn...")
+            actionLog.append("→ Next question")
             await startNewTurn()
         } else {
             // If results aren't showing yet, this shouldn't happen since we auto-reveal
@@ -515,6 +523,36 @@ class SinglePlayerGameViewModel {
             hasAnswered = true
             revealResults()
         }
+    }
+    
+    // MARK: - Undo Functionality
+    
+    @MainActor
+    func undoLastAction() async {
+        guard !turns.isEmpty else { return }
+        
+        // Remove last turn
+        let removedTurn = turns.removeLast()
+        
+        // Remove last 2 actions from log (the answer action and the "next question" action)
+        if !actionLog.isEmpty {
+            actionLog.removeLast() // Remove "next question"
+        }
+        if !actionLog.isEmpty {
+            actionLog.removeLast() // Remove answer result
+        }
+        
+        // Restore the previous question
+        currentTurn = removedTurn
+        selectedAnswer = nil
+        showResults = false
+        hasAnswered = false
+        
+        print("Undid last action. Score now: \(getPlayerScore())")
+    }
+    
+    var canUndo: Bool {
+        !turns.isEmpty && !gameEnded
     }
     
     private func recordAnswer(wasCorrect: Bool) {

@@ -11,6 +11,7 @@ import Foundation
 
 enum TriviaCategory: String, CaseIterable, Hashable {
     case bible = "Bible"
+    case usHistory = "US History"
     
     var displayName: String {
         rawValue
@@ -20,6 +21,8 @@ enum TriviaCategory: String, CaseIterable, Hashable {
         switch self {
         case .bible:
             return "Test your biblical knowledge"
+        case .usHistory:
+            return "Test your US History knowledge"
         }
     }
     
@@ -27,6 +30,8 @@ enum TriviaCategory: String, CaseIterable, Hashable {
         switch self {
         case .bible:
             return "book.closed"
+        case .usHistory:
+            return "flag.fill"
         }
     }
     
@@ -34,6 +39,8 @@ enum TriviaCategory: String, CaseIterable, Hashable {
         switch self {
         case .bible:
             return TeamNameGenerator.biblicalNations
+        case .usHistory:
+            return TeamNameGenerator.usHistoryTeams
         }
     }
 }
@@ -54,6 +61,20 @@ struct TeamNameGenerator {
         "Greeks",
         "Moabites",
         "Edomites"
+    ]
+    
+    // 10 US History Teams
+    static let usHistoryTeams = [
+        "Minutemen",
+        "Founding Fathers",
+        "Patriots",
+        "Rebels",
+        "Union",
+        "Confederates",
+        "Pioneers",
+        "Colonists",
+        "Federalists",
+        "Revolutionaries"
     ]
     
     /// Generate two random team names for the given category
