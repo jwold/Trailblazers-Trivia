@@ -11,6 +11,7 @@ import Foundation
 class GameViewModel {
     private let players: [Player]
     private let questionRepository: QuestionRepositoryProtocol
+    private let category: TriviaCategory
     private var currentPlayerIndex = 0
     
     var turns: [Turn] = []
@@ -94,7 +95,8 @@ class GameViewModel {
             Player(id: UUID().uuidString, name: player1Name),
             Player(id: UUID().uuidString, name: player2Name)
         ]
-        self.questionRepository = questionRepository ?? JSONQuestionRepository(category: category)
+        self.category = category
+        self.questionRepository = questionRepository ?? JSONQuestionRepository()
         
         startNewTurn()
     }
@@ -105,7 +107,7 @@ class GameViewModel {
         
         // Then load the question
         do {
-            let question = try questionRepository.nextQuestion()
+            let question = try questionRepository.nextQuestion(category: category)
             currentTurn?.question = question
         } catch {
             print("Failed to get question: \(error)")
@@ -190,6 +192,7 @@ struct Turn {
 class SinglePlayerGameViewModel {
     let player: Player
     private let questionRepository: QuestionRepositoryProtocol
+    private let category: TriviaCategory
     private var gameStartTime: Date?
     private var timer: Timer?
     
@@ -238,12 +241,13 @@ class SinglePlayerGameViewModel {
         questionRepository: QuestionRepositoryProtocol? = nil
     ) {
         self.player = Player(id: UUID().uuidString, name: playerName)
+        self.category = category
         
         // Create question repository
         if let customRepository = questionRepository {
             self.questionRepository = customRepository
         } else {
-            self.questionRepository = JSONQuestionRepository(category: category)
+            self.questionRepository = JSONQuestionRepository()
         }
         
         // Set up a default question immediately to prevent crashes
@@ -286,7 +290,7 @@ class SinglePlayerGameViewModel {
         
         // Then load the question with proper error handling
         do {
-            let question = try questionRepository.nextQuestion()
+            let question = try questionRepository.nextQuestion(category: category)
             print("SinglePlayerGameViewModel: Got question: \(question.question)")
             
             // Update the turn and generate options atomically

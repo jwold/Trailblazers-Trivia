@@ -12,10 +12,10 @@ import Foundation
 /// Protocol defining the interface for question data sources
 protocol QuestionRepositoryProtocol {
     /// Get the next question, automatically managing used questions
+    /// - Parameter category: The trivia category to get a question from
     /// - Returns: The next available question, resetting the pool if all questions have been used
-    func nextQuestion() throws -> Question
+    func nextQuestion(category: TriviaCategory) throws -> Question
     
-    /// Reset the used questions tracking for a fresh start
     func resetUsedQuestions()
 }
 
@@ -47,23 +47,12 @@ struct JSONQuestion: Codable {
 
 /// JSON file-based implementation of the question repository
 class JSONQuestionRepository: QuestionRepositoryProtocol {
+    private var questionsByCategory: [TriviaCategory: [Question]] = [:]
+    private var usedQuestionIdsByCategory: [TriviaCategory: Set<String>] = [:]
     
-    private let category: TriviaCategory
-    private let instanceId = UUID().uuidString
-    
-    private var questions: [Question] = []
-    private var usedQuestionIds: Set<String> = []
-    
-    // Static cache to share loaded questions across instances
     private static var questionCache: [TriviaCategory: [Question]] = [:]
     
-    init(category: TriviaCategory) {
-        self.category = category
-    }
-    
-    /// Loads and returns all questions from JSON files
-    private func loadAllQuestions() throws -> [Question] {
-        // Check cache first
+    private func loadAllQuestions(for category: TriviaCategory) throws -> [Question] {
         if let cached = Self.questionCache[category] {
             return cached
         }
@@ -102,7 +91,6 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let decoder = JSONDecoder()
         let jsonQuestions = try decoder.decode([JSONQuestion].self, from: data)
         
-        // Filter out malformed questions and convert to Question model
         let validQuestions = jsonQuestions.compactMap { jsonQuestion -> Question? in
             let question = jsonQuestion.toQuestion()
             
@@ -120,45 +108,39 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         return validQuestions
     }
     
-    func nextQuestion() throws -> Question {
-        // Load questions if needed (uses cache automatically)
+    func nextQuestion(category: TriviaCategory) throws -> Question {
+        var questions = questionsByCategory[category] ?? []
+        
         if questions.isEmpty {
-            #if DEBUG
-            print("📂 Loading questions for \(category.rawValue)...")
-            #endif
-            
-            self.questions = try loadAllQuestions()
-            
-            #if DEBUG
-            print("✅ Loaded \(questions.count) questions for \(category.rawValue)")
-            #endif
+            questions = try loadAllQuestions(for: category)
+            questionsByCategory[category] = questions
         }
         
-        // Ensure we have questions
         guard !questions.isEmpty else {
             throw QuestionRepositoryError.noQuestionsFound
         }
         
-        // Get available questions
+        var usedQuestionIds = usedQuestionIdsByCategory[category] ?? []
+        
         let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
         
         let selectedQuestion: Question
         
         if availableQuestions.isEmpty {
-            // Reset used questions and start over
-            resetUsedQuestions()
+            usedQuestionIds.removeAll()
             selectedQuestion = questions.randomElement() ?? questions[0]
         } else {
             selectedQuestion = availableQuestions.randomElement() ?? availableQuestions[0]
         }
         
-        // Mark as used
         usedQuestionIds.insert(selectedQuestion.id)
+        usedQuestionIdsByCategory[category] = usedQuestionIds
+        
         return selectedQuestion
     }
     
     func resetUsedQuestions() {
-        usedQuestionIds.removeAll()
+        usedQuestionIdsByCategory.removeAll()
     }
 }
 
