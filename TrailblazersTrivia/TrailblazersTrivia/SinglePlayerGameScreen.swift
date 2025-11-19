@@ -91,11 +91,8 @@ struct SinglePlayerGameScreen: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.headline)
-                            .foregroundColor(.black.opacity(0.85))
+                            .foregroundColor(GrayTheme.text)
                             .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.text.opacity(0.15))
-                            )
                     }
                     
                     // Single player score box - next to back button
@@ -116,11 +113,10 @@ struct SinglePlayerGameScreen: View {
                             )
                     )
                     .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
-                    .padding(.bottom, 8)
                     
                     Spacer()
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 24)
                 
                 // Question Text - with safety checks
                 VStack(alignment: .leading, spacing: 12) {
@@ -135,7 +131,7 @@ struct SinglePlayerGameScreen: View {
                         .transition(.opacity) // Fade transition
                         .animation(.easeInOut(duration: 0.3), value: singlePlayerViewModel.currentQuestion.id)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.vertical, 24)
                 
                 // Answer buttons right below question card - with safety checks
@@ -194,7 +190,7 @@ struct SinglePlayerGameScreen: View {
                 .shadow(color: isButtonEnabled ? GrayTheme.gold.opacity(0.35) : Color.clear, radius: 10, x: 0, y: 4)
         }
         .disabled(!isButtonEnabled)
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 24)
     }
     
     private var isButtonEnabled: Bool {
@@ -224,7 +220,7 @@ struct SinglePlayerGameScreen: View {
                     HStack(spacing: 16) {
                         // Answer text with strikethrough for wrong answers
                         Text(option)
-                            .font(.system(size: 18, weight: .medium))
+                            .font(.system(size: 22, weight: .medium))
                             .foregroundColor(answerTextColor(for: option))
                             .strikethrough(shouldStrikethrough(option), color: .white.opacity(0.5))
                             .multilineTextAlignment(.leading)
@@ -243,31 +239,13 @@ struct SinglePlayerGameScreen: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 20)
                     .padding(.vertical, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(buttonColor(for: option))
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(
-                                buttonBorderColor(for: option),
-                                lineWidth: buttonBorderWidth(for: option)
-                            )
-                    )
-                    .scaleEffect(buttonScale(for: option))
                     .opacity(buttonOpacity(for: option))
                 }
                 .disabled(singlePlayerViewModel.showResults)
             }
         }
-        .padding(.horizontal, 20)
-    }
-    
-    private func buttonColor(for option: String) -> Color {
-        // Keep all buttons the same color - don't change to green or red
-        return GrayTheme.accent
+        .padding(.horizontal, 24)
     }
     
     // MARK: - Answer Button Styling Helpers
@@ -298,26 +276,19 @@ struct SinglePlayerGameScreen: View {
         } else if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
             return .white
         }
-        return .clear
+        return GrayTheme.text.opacity(0.2)
     }
     
     private func buttonBorderWidth(for option: String) -> CGFloat {
         if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
             return 3
         } else if singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults {
-            return 4
+            return 2
         }
-        return 0
+        return 1
     }
     
-    private func buttonScale(for option: String) -> CGFloat {
-        if (singlePlayerViewModel.selectedAnswer == option && !singlePlayerViewModel.showResults) ||
-           (singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer) {
-            return 1.05
-        }
-        return 1.0
-    }
-    
+
     private func buttonOpacity(for option: String) -> Double {
         if singlePlayerViewModel.showResults {
             // Correct answer is always visible

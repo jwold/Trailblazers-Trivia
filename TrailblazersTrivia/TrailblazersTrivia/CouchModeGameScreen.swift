@@ -19,10 +19,10 @@ private enum GrayTheme {
 struct CouchModeGameScreen: View {
     @Binding var path: [Routes]
     @State private var gameViewModel: GameViewModel
-    @State private var showPassDevicePrompt = false
     @State private var selectedAnswer: String?
     @State private var showResults = false
     @State private var showInfoModal = false
+    @State private var shuffledAnswers: [String] = []
     
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
@@ -42,9 +42,7 @@ struct CouchModeGameScreen: View {
             GrayTheme.background
                 .ignoresSafeArea()
             
-            if showPassDevicePrompt {
-                passDeviceOverlay
-            } else if gameViewModel.gameEnded {
+            if gameViewModel.gameEnded {
                 // Navigate to results
                 Color.clear
                     .onAppear {
@@ -57,6 +55,12 @@ struct CouchModeGameScreen: View {
         .navigationBarHidden(true)
         .sheet(isPresented: $showInfoModal) {
             CouchModeInfoModalView()
+        }
+        .onAppear {
+            shuffleAnswers()
+        }
+        .onChange(of: gameViewModel.currentQuestion.id) { _, _ in
+            shuffleAnswers()
         }
     }
     
@@ -73,11 +77,8 @@ struct CouchModeGameScreen: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.headline)
-                            .foregroundColor(.black.opacity(0.85))
+                            .foregroundColor(GrayTheme.text)
                             .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.text.opacity(0.15))
-                            )
                     }
                     .padding(.leading, 12)
                     
@@ -121,17 +122,7 @@ struct CouchModeGameScreen: View {
                                 .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
                         )
                     }
-                    .padding(.leading, 12) // Align with question card
-                    .padding(.trailing, 12) // Match left padding
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(GrayTheme.lightCard.opacity(0.6))
-                            .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
-                    )
-                    .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
-                    .frame(maxWidth: 280) // Limit the width of the score boxes
-                    .padding(.bottom, 8) // Add small bottom padding to score boxes
+                    .frame(maxWidth: 280)
                     
                     Spacer()
                     
@@ -141,15 +132,12 @@ struct CouchModeGameScreen: View {
                     } label: {
                         Image(systemName: "info.circle")
                             .font(.headline)
-                            .foregroundColor(.black.opacity(0.85))
+                            .foregroundColor(GrayTheme.text)
                             .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.text.opacity(0.15))
-                            )
                     }
                     .padding(.trailing, 12)
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 24)
                 
                 // Question Text
                 VStack(alignment: .leading, spacing: 12) {
@@ -160,23 +148,9 @@ struct CouchModeGameScreen: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(GrayTheme.text)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.vertical, 24)
                 .frame(maxWidth: .infinity)
-                .background(GrayTheme.card, in: RoundedRectangle(cornerRadius: 24))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .strokeBorder(
-                            LinearGradient(
-                                colors: [.white.opacity(0.12), .white.opacity(0.04)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
-                .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-                .padding(.horizontal, 12)
                 
                 // Answer buttons
                 if !gameViewModel.showAnswer {
@@ -200,17 +174,14 @@ struct CouchModeGameScreen: View {
     
     // MARK: - Answer Buttons
     private var answerButtonsView: some View {
-        let options = [gameViewModel.currentQuestion.answer] + gameViewModel.currentQuestion.wrongAnswers
-        let shuffledOptions = options.shuffled()
-        
-        return VStack(spacing: 16) {
-            ForEach(Array(shuffledOptions.enumerated()), id: \.offset) { index, option in
+        VStack(spacing: 16) {
+            ForEach(Array(shuffledAnswers.enumerated()), id: \.offset) { index, option in
                 Button {
                     selectAnswer(option)
                 } label: {
                     HStack(spacing: 16) {
                         Text(option)
-                            .font(.system(size: 18, weight: .medium))
+                            .font(.system(size: 22, weight: .medium))
                             .foregroundColor(answerTextColor(for: option))
                             .strikethrough(shouldStrikethrough(option), color: .white.opacity(0.5))
                             .multilineTextAlignment(.leading)
@@ -228,26 +199,13 @@ struct CouchModeGameScreen: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 20)
                     .padding(.vertical, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(GrayTheme.accent)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(
-                                buttonBorderColor(for: option),
-                                lineWidth: buttonBorderWidth(for: option)
-                            )
-                    )
-                    .scaleEffect(buttonScale(for: option))
                     .opacity(buttonOpacity(for: option))
                 }
                 .disabled(showResults)
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 24)
     }
     
     // MARK: - Continue Button
@@ -267,69 +225,39 @@ struct CouchModeGameScreen: View {
                 )
                 .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
         }
-        .padding(.horizontal, 20)
-    }
-    
-    // MARK: - Pass Device Overlay
-    private var passDeviceOverlay: some View {
-        VStack(spacing: 24) {
-            Image(systemName: "arrow.triangle.2.circlepath")
-                .font(.system(size: 80, weight: .light))
-                .foregroundColor(GrayTheme.gold)
-            
-            Text("Pass to \(gameViewModel.currentPlayer.name)")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(GrayTheme.text)
-            
-            Text("Hand the device to the next player")
-                .font(.title3)
-                .foregroundColor(GrayTheme.text.opacity(0.7))
-            
-            Button {
-                withAnimation {
-                    showPassDevicePrompt = false
-                }
-            } label: {
-                Text("I'm Ready")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black.opacity(0.9))
-                    .frame(width: 200)
-                    .frame(height: 56)
-                    .background(
-                        RoundedRectangle(cornerRadius: 30)
-                            .fill(GrayTheme.gold)
-                    )
-                    .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
-            }
-            .padding(.top, 16)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(GrayTheme.background.opacity(0.98))
+        .padding(.horizontal, 24)
     }
     
     // MARK: - Actions
+    private func shuffleAnswers() {
+        let options = [gameViewModel.currentQuestion.answer] + gameViewModel.currentQuestion.wrongAnswers
+        shuffledAnswers = options.shuffled()
+    }
+    
     private func selectAnswer(_ answer: String) {
         selectedAnswer = answer
         showResults = true
-        
-        let wasCorrect = answer == gameViewModel.currentQuestion.answer
+    }
+    
+    private func nextQuestion() {
+        // Award points based on selected answer
+        let wasCorrect = selectedAnswer == gameViewModel.currentQuestion.answer
         if wasCorrect {
             gameViewModel.answeredCorrect()
         } else {
             gameViewModel.answeredWrong()
         }
-    }
-    
-    private func nextQuestion() {
+        
+        // Reset state
         selectedAnswer = nil
         showResults = false
         
+        // Shuffle answers for next question
+        shuffleAnswers()
+        
+        // Check if game should end
         if gameViewModel.shouldEndGame {
             gameViewModel.gameEnded = true
-        } else {
-            showPassDevicePrompt = true
         }
     }
     
@@ -420,7 +348,7 @@ struct CouchModeInfoModalView: View {
                             )
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.top, 20)
                 
                 // Content
@@ -467,7 +395,7 @@ struct CouchModeInfoModalView: View {
                         InstructionRow(number: "5", text: "First to 10 points wins!")
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 
                 Spacer()
                 
@@ -487,7 +415,7 @@ struct CouchModeInfoModalView: View {
                         )
                         .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.bottom, 40)
             }
         }

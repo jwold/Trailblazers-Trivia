@@ -53,11 +53,8 @@ struct GameScreen: View {
                         } label: {
                             Image(systemName: "chevron.left")
                                 .font(.headline)
-                                .foregroundColor(.black.opacity(0.85))
+                                .foregroundColor(GrayTheme.text)
                                 .frame(width: 44, height: 44)
-                                .background(
-                                    Circle().fill(GrayTheme.text.opacity(0.15))
-                                )
                         }
                         .padding(.leading, 12)
                         
@@ -101,17 +98,7 @@ struct GameScreen: View {
                                     .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
                             )
                         }
-                        .padding(.leading, 12) // Align with question card
-                        .padding(.trailing, 12) // Match left padding
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(GrayTheme.lightCard.opacity(0.6))
-                                .stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
-                        )
-                        .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                         .frame(maxWidth: 280) // Limit the width of the score boxes
-                        .padding(.bottom, 8) // Add small bottom padding to score boxes
                         
                         Spacer()
                         
@@ -121,11 +108,8 @@ struct GameScreen: View {
                         } label: {
                             Image(systemName: "info.circle")
                                 .font(.headline)
-                                .foregroundColor(.black.opacity(0.85))
+                                .foregroundColor(GrayTheme.text)
                                 .frame(width: 44, height: 44)
-                                .background(
-                                    Circle().fill(GrayTheme.text.opacity(0.15))
-                                )
                         }
                         .padding(.trailing, 12)
                     }
@@ -161,21 +145,6 @@ struct GameScreen: View {
                     .padding(.vertical, 24)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity, alignment: .center)
-                    .background(GrayTheme.card, in: RoundedRectangle(cornerRadius: 24))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .strokeBorder(
-                                LinearGradient(
-                                    colors: [.white.opacity(0.12), .white.opacity(0.04)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 1
-                            )
-                    )
-                    .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-                    .shadow(color: .primary.opacity(0.08), radius: 12, x: 0, y: 6)
-                    .shadow(color: .primary.opacity(0.04), radius: 2, x: 0, y: 1)
                     .overlay(alignment: .bottomTrailing) {
                         if !gameViewModel.showAnswer {
                             Button {
