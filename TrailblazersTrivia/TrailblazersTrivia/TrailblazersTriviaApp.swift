@@ -12,8 +12,6 @@ import SwiftUI
 @main
 struct TrailblazersTriviaApp: App {
     init() {
-        print("🚀 App init started at \(Date())")
-        
         // Commented out RevenueCat - Completely defer RevenueCat - it can wait
 //        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 2.0) {
 //            print("📦 Starting RevenueCat configuration at \(Date())")
@@ -21,16 +19,11 @@ struct TrailblazersTriviaApp: App {
 //            Purchases.configure(withAPIKey: Config.revenueCatAPIKey)
 //            print("✅ RevenueCat configuration completed at \(Date())")
 //        }
-        
-        print("✅ App init completed at \(Date())")
     }
 
     var body: some Scene {
         WindowGroup {
             StartScreen()
-                .onAppear {
-                    print("👀 StartScreen appeared at \(Date())")
-                }
         }
     }
 }
