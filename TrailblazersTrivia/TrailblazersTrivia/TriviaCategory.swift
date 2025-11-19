@@ -44,18 +44,15 @@ struct TeamNameGenerator {
     /// - Parameters:
     ///   - category: The trivia category
     ///   - isCouchMode: Whether this is for Couch Mode (2P) vs Group mode
-    /// - Returns: A tuple of two team names
+    /// - Returns: A tuple of two team names (uses stored custom names if available)
     static func generateTeamNames(for category: TriviaCategory, isCouchMode: Bool = false) -> (team1: String, team2: String) {
-        // For Couch Mode (2P), use Player names
+        // For Couch Mode (2P), use stored Player names
         if isCouchMode {
-            return ("Player 1", "Player 2")
+            return (TeamNameStorage.couchPlayer1Name, TeamNameStorage.couchPlayer2Name)
         }
         
-        // For Group mode, use Team names
-        switch category {
-        case .bible, .usHistory:
-            return ("Team One", "Team Two")
-        }
+        // For Group mode, use stored Team names
+        return (TeamNameStorage.groupTeam1Name, TeamNameStorage.groupTeam2Name)
     }
     
     /// Get a team name from the specified category

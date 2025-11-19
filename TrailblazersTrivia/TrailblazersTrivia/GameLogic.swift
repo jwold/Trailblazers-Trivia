@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 class GameViewModel {
-    private let players: [Player]
+    private var players: [Player]
     private let questionRepository: QuestionRepositoryProtocol
     private let category: TriviaCategory
     private var currentPlayerIndex = 0
@@ -164,6 +164,18 @@ class GameViewModel {
     
     func showAnswerToggle() {
         showAnswer.toggle()
+    }
+    
+    // MARK: - Update Player Names
+    
+    func updatePlayer1Name(_ newName: String) {
+        guard !newName.isEmpty else { return }
+        players[0] = Player(id: players[0].id, name: newName)
+    }
+    
+    func updatePlayer2Name(_ newName: String) {
+        guard !newName.isEmpty else { return }
+        players[1] = Player(id: players[1].id, name: newName)
     }
 }
 

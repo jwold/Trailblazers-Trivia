@@ -21,6 +21,10 @@ struct GameScreen: View {
     let category: TriviaCategory
     @State private var gameViewModel: GameViewModel
     @State private var showInfoModal = false
+    @State private var showEditTeam1 = false
+    @State private var showEditTeam2 = false
+    @State private var editingTeam1Name = ""
+    @State private var editingTeam2Name = ""
     
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
@@ -91,6 +95,10 @@ struct GameScreen: View {
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
+                            .onTapGesture {
+                                editingTeam1Name = gameViewModel.player1.name
+                                showEditTeam1 = true
+                            }
                             
                             // Player 2 section
                             VStack(spacing: 4) {
@@ -120,6 +128,10 @@ struct GameScreen: View {
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
+                            .onTapGesture {
+                                editingTeam2Name = gameViewModel.player2.name
+                                showEditTeam2 = true
+                            }
                         }
                         .frame(maxWidth: 280) // Limit the width of the score boxes
                         
@@ -223,6 +235,26 @@ struct GameScreen: View {
         }
         .sheet(isPresented: $showInfoModal) {
             InfoModalView()
+        }
+        .sheet(isPresented: $showEditTeam1) {
+            EditTeamNameSheet(
+                teamNumber: 1,
+                currentName: $editingTeam1Name,
+                onSave: {
+                    TeamNameStorage.groupTeam1Name = editingTeam1Name
+                    gameViewModel.updatePlayer1Name(editingTeam1Name)
+                }
+            )
+        }
+        .sheet(isPresented: $showEditTeam2) {
+            EditTeamNameSheet(
+                teamNumber: 2,
+                currentName: $editingTeam2Name,
+                onSave: {
+                    TeamNameStorage.groupTeam2Name = editingTeam2Name
+                    gameViewModel.updatePlayer2Name(editingTeam2Name)
+                }
+            )
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 16) {
@@ -398,6 +430,82 @@ struct InstructionRow: View {
                 .foregroundColor(GrayTheme.text.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
         }
+    }
+}
+
+// MARK: - Edit Team Name Sheet
+
+struct EditTeamNameSheet: View {
+    @Environment(\.dismiss) var dismiss
+    let teamNumber: Int
+    @Binding var currentName: String
+    let onSave: () -> Void
+    
+    @FocusState private var isTextFieldFocused: Bool
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                // Dark background
+                GrayTheme.background
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 24) {
+                    VStack(spacing: 12) {
+                        Text("Edit Team \(teamNumber == 1 ? "One" : "Two") Name")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(GrayTheme.text)
+                        
+                        TextField("Enter team name", text: $currentName)
+                            .font(.title3)
+                            .padding()
+                            .background(GrayTheme.card)
+                            .foregroundColor(GrayTheme.text)
+                            .cornerRadius(12)
+                            .focused($isTextFieldFocused)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                saveAndDismiss()
+                            }
+                    }
+                    .padding()
+                    
+                    Spacer()
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .foregroundColor(GrayTheme.text)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        saveAndDismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundColor(GrayTheme.gold)
+                    .disabled(currentName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            .toolbarBackground(GrayTheme.background, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .onAppear {
+                isTextFieldFocused = true
+            }
+        }
+    }
+    
+    private func saveAndDismiss() {
+        let trimmed = currentName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        currentName = trimmed
+        onSave()
+        dismiss()
     }
 }
 

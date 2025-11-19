@@ -23,6 +23,10 @@ struct CouchModeGameScreen: View {
     @State private var showResults = false
     @State private var showInfoModal = false
     @State private var shuffledAnswers: [String] = []
+    @State private var showEditPlayer1 = false
+    @State private var showEditPlayer2 = false
+    @State private var editingPlayer1Name = ""
+    @State private var editingPlayer2Name = ""
     
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
@@ -56,6 +60,26 @@ struct CouchModeGameScreen: View {
         .navigationBarHidden(true)
         .sheet(isPresented: $showInfoModal) {
             CouchModeInfoModalView()
+        }
+        .sheet(isPresented: $showEditPlayer1) {
+            EditPlayerNameSheet(
+                playerNumber: 1,
+                currentName: $editingPlayer1Name,
+                onSave: {
+                    TeamNameStorage.couchPlayer1Name = editingPlayer1Name
+                    gameViewModel.updatePlayer1Name(editingPlayer1Name)
+                }
+            )
+        }
+        .sheet(isPresented: $showEditPlayer2) {
+            EditPlayerNameSheet(
+                playerNumber: 2,
+                currentName: $editingPlayer2Name,
+                onSave: {
+                    TeamNameStorage.couchPlayer2Name = editingPlayer2Name
+                    gameViewModel.updatePlayer2Name(editingPlayer2Name)
+                }
+            )
         }
         .onAppear {
             shuffleAnswers()
@@ -115,6 +139,10 @@ struct CouchModeGameScreen: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
+                        .onTapGesture {
+                            editingPlayer1Name = gameViewModel.player1.name
+                            showEditPlayer1 = true
+                        }
                         
                         // Player 2 section
                         VStack(spacing: 4) {
@@ -144,6 +172,10 @@ struct CouchModeGameScreen: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
+                        .onTapGesture {
+                            editingPlayer2Name = gameViewModel.player2.name
+                            showEditPlayer2 = true
+                        }
                     }
                     .frame(maxWidth: 280)
                     
@@ -458,6 +490,82 @@ struct CouchModeInfoModalView: View {
                 .padding(.bottom, 40)
             }
         }
+    }
+}
+
+// MARK: - Edit Player Name Sheet
+
+struct EditPlayerNameSheet: View {
+    @Environment(\.dismiss) var dismiss
+    let playerNumber: Int
+    @Binding var currentName: String
+    let onSave: () -> Void
+    
+    @FocusState private var isTextFieldFocused: Bool
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                // Dark background
+                GrayTheme.background
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 24) {
+                    VStack(spacing: 12) {
+                        Text("Edit Player \(playerNumber) Name")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(GrayTheme.text)
+                        
+                        TextField("Enter name", text: $currentName)
+                            .font(.title3)
+                            .padding()
+                            .background(GrayTheme.card)
+                            .foregroundColor(GrayTheme.text)
+                            .cornerRadius(12)
+                            .focused($isTextFieldFocused)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                saveAndDismiss()
+                            }
+                    }
+                    .padding()
+                    
+                    Spacer()
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .foregroundColor(GrayTheme.text)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        saveAndDismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundColor(GrayTheme.gold)
+                    .disabled(currentName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            .toolbarBackground(GrayTheme.background, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .onAppear {
+                isTextFieldFocused = true
+            }
+        }
+    }
+    
+    private func saveAndDismiss() {
+        let trimmed = currentName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        currentName = trimmed
+        onSave()
+        dismiss()
     }
 }
 
