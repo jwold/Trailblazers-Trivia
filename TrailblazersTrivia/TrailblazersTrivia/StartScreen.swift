@@ -73,7 +73,7 @@ struct StartScreen: View {
                 navigationDestination(for: route)
             }
             .sheet(isPresented: $showAboutModal) {
-                AboutModalView()
+                UnifiedInfoModalView()
             }
             .onAppear {
                 impactGenerator.prepare()
@@ -102,7 +102,7 @@ struct StartScreen: View {
             showAboutModal = true
         } label: {
             Image(systemName: "info.circle")
-                .font(.title2)
+                .font(.headline)
                 .foregroundColor(HomeTheme.text.opacity(0.7))
                 .frame(width: 44, height: 44)
         }
@@ -273,116 +273,6 @@ struct StartScreen: View {
     }
 }
 
-// MARK: - About Modal View
-
-struct AboutModalView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        ZStack {
-            HomeTheme.background.ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 24) {
-                    // Header
-                    HStack {
-                        Spacer()
-                        Text("About")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(HomeTheme.text)
-                        Spacer()
-                    }
-                    .overlay(alignment: .trailing) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.headline)
-                                .foregroundColor(HomeTheme.text.opacity(0.7))
-                                .frame(width: 44, height: 44)
-                                .background(
-                                    Circle().fill(HomeTheme.card)
-                                )
-                        }
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 20)
-                    
-                    // Content
-                    VStack(alignment: .leading, spacing: 24) {
-                        // App info section
-                        VStack(alignment: .leading, spacing: 16) {
-                            Text("Test your knowledge with challenging trivia questions across various categories. Perfect for Bible study groups, classrooms, or friendly competition.")
-                                .font(.body)
-                                .foregroundColor(HomeTheme.text.opacity(0.8))
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        
-                        Divider()
-                            .background(HomeTheme.text.opacity(0.1))
-                        
-                        // Creators section
-                        VStack(alignment: .leading, spacing: 16) {
-                            Text("Created by Joshua Wold and Nathan Isaac.")
-                                .font(.body)
-                                .foregroundColor(HomeTheme.text.opacity(0.8))
-                        }
-                        
-                        Divider()
-                            .background(HomeTheme.text.opacity(0.1))
-                        
-                        // Contact section
-                        VStack(alignment: .leading, spacing: 16) {
-                            Text("Got questions? Please reach out with any feedback to trailblazerstrivia@gmail.com.")
-                                .font(.body)
-                                .foregroundColor(HomeTheme.text.opacity(0.8))
-                        }
-                        
-                        Divider()
-                            .background(HomeTheme.text.opacity(0.1))
-                        
-                        // App info
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("App Version")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(HomeTheme.text)
-                            
-                            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-                               let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-                                Text("Version \(version) (Build \(build))")
-                                    .font(.body)
-                                    .foregroundColor(HomeTheme.text.opacity(0.6))
-                            } else {
-                                Text("Version 1.0")
-                                    .font(.body)
-                                    .foregroundColor(HomeTheme.text.opacity(0.6))
-                            }
-                        }
-                    }
-                    .padding(20)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(HomeTheme.card, in: RoundedRectangle(cornerRadius: 24))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .strokeBorder(
-                                LinearGradient(
-                                    colors: [HomeTheme.text.opacity(0.12), HomeTheme.text.opacity(0.04)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 1
-                            )
-                    )
-                    .shadow(color: Color.black.opacity(0.45), radius: 24, x: 0, y: 12)
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 40)
-            }
-        }
-    }
-}
 
 #Preview {
     StartScreen()

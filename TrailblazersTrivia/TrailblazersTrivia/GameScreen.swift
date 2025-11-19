@@ -302,113 +302,6 @@ struct GameScreen: View {
         }
     }
 
-// MARK: - Info Modal View
-
-struct InfoModalView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        ZStack {
-            GrayTheme.background.ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                // Header
-                HStack {
-                    Spacer()
-                    Text("How to Play")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(GrayTheme.text)
-                    Spacer()
-                }
-                .overlay(alignment: .trailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.headline)
-                            .foregroundColor(GrayTheme.text.opacity(0.7))
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.card)
-                            )
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 20)
-                
-                // Content
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack(spacing: 12) {
-                            Image(systemName: "megaphone.fill")
-                                .font(.title2)
-                                .foregroundColor(GrayTheme.gold)
-                            Text("Shout Out Mode")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(GrayTheme.text)
-                        }
-                        
-                        Text("This mode is intended for a group setting, with two teams. The person reading the question can choose to be on a team, since the answer is hidden.")
-                            .font(.body)
-                            .foregroundColor(GrayTheme.text.opacity(0.8))
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(GrayTheme.card)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .strokeBorder(
-                                        LinearGradient(
-                                            colors: [GrayTheme.text.opacity(0.12), GrayTheme.text.opacity(0.04)],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        ),
-                                        lineWidth: 1
-                                    )
-                            )
-                    )
-                    
-                    // Instructions list
-                    VStack(alignment: .leading, spacing: 16) {
-                        InstructionRow(number: "1", text: "Read the question out loud to both teams")
-                        InstructionRow(number: "2", text: "First team to shout out the answer wins the turn")
-                        InstructionRow(number: "3", text: "Tap 'Show Answer' to reveal the correct answer")
-                        InstructionRow(number: "4", text: "Award points using 'Correct' or 'Wrong' buttons")
-                        InstructionRow(number: "5", text: "First team to reach 10 points wins the game!")
-                    }
-                }
-                .padding(.horizontal, 20)
-                
-                Spacer()
-                
-                // Close button
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Got it!")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(GrayTheme.gold)
-                        )
-                        .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 40)
-            }
-        }
-    }
-}
-
 // MARK: - Instruction Row
 
 struct InstructionRow: View {
@@ -431,6 +324,14 @@ struct InstructionRow: View {
                 .foregroundColor(GrayTheme.text.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
         }
+    }
+}
+
+// MARK: - Info Modal View (Wrapper for UnifiedInfoModalView)
+
+struct InfoModalView: View {
+    var body: some View {
+        UnifiedInfoModalView()
     }
 }
 

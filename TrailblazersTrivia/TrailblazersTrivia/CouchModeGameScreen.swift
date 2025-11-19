@@ -385,111 +385,11 @@ struct CouchModeGameScreen: View {
     }
 }
 
-// MARK: - Couch Mode Info Modal View
+// MARK: - Couch Mode Info Modal View (Wrapper for UnifiedInfoModalView)
 
 struct CouchModeInfoModalView: View {
-    @Environment(\.dismiss) var dismiss
-    
     var body: some View {
-        ZStack {
-            GrayTheme.background.ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                // Header
-                HStack {
-                    Spacer()
-                    Text("How to Play")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(GrayTheme.text)
-                    Spacer()
-                }
-                .overlay(alignment: .trailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.headline)
-                            .foregroundColor(GrayTheme.text.opacity(0.7))
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.card)
-                            )
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 20)
-                
-                // Content
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack(spacing: 12) {
-                            Image(systemName: "person.2.fill")
-                                .font(.title2)
-                                .foregroundColor(GrayTheme.gold)
-                            Text("Couch Mode")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(GrayTheme.text)
-                        }
-                        
-                        Text("This mode is designed for two players taking turns on the same device. Pass the device back and forth after each question.")
-                            .font(.body)
-                            .foregroundColor(GrayTheme.text.opacity(0.8))
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(GrayTheme.card)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .strokeBorder(
-                                        LinearGradient(
-                                            colors: [GrayTheme.text.opacity(0.12), GrayTheme.text.opacity(0.04)],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        ),
-                                        lineWidth: 1
-                                    )
-                            )
-                    )
-                    
-                    // Instructions list
-                    VStack(alignment: .leading, spacing: 16) {
-                        InstructionRow(number: "1", text: "Current player reads and answers the question")
-                        InstructionRow(number: "2", text: "Select your answer from the multiple choice options")
-                        InstructionRow(number: "3", text: "Tap 'Continue' to see if you're correct")
-                        InstructionRow(number: "4", text: "Pass the device to the next player")
-                        InstructionRow(number: "5", text: "First player to reach 10 points wins!")
-                    }
-                }
-                .padding(.horizontal, 24)
-                
-                Spacer()
-                
-                // Close button
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Got it!")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(GrayTheme.gold)
-                        )
-                        .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal, 24)
-                .padding(.bottom, 40)
-            }
-        }
+        UnifiedInfoModalView()
     }
 }
 

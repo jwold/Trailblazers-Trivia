@@ -335,111 +335,11 @@ struct SinglePlayerGameScreen: View {
     }
 }
 
-// MARK: - Single Player Info Modal View
+// MARK: - Single Player Info Modal View (Wrapper for UnifiedInfoModalView)
 
 struct SinglePlayerInfoModalView: View {
-    @Environment(\.dismiss) var dismiss
-    
     var body: some View {
-        ZStack {
-            GrayTheme.background.ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                // Header
-                HStack {
-                    Spacer()
-                    Text("How to Play")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(GrayTheme.text)
-                    Spacer()
-                }
-                .overlay(alignment: .trailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.headline)
-                            .foregroundColor(GrayTheme.text.opacity(0.7))
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Circle().fill(GrayTheme.card)
-                            )
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 20)
-                
-                // Content
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack(spacing: 12) {
-                            Image(systemName: "person.fill")
-                                .font(.title2)
-                                .foregroundColor(GrayTheme.gold)
-                            Text("Single Player")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(GrayTheme.text)
-                        }
-                        
-                        Text("Test your knowledge solo! Answer multiple choice questions and try to get the best score possible.")
-                            .font(.body)
-                            .foregroundColor(GrayTheme.text.opacity(0.8))
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(GrayTheme.card)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .strokeBorder(
-                                        LinearGradient(
-                                            colors: [GrayTheme.text.opacity(0.12), GrayTheme.text.opacity(0.04)],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        ),
-                                        lineWidth: 1
-                                    )
-                            )
-                    )
-                    
-                    // Instructions list
-                    VStack(alignment: .leading, spacing: 16) {
-                        InstructionRow(number: "1", text: "Read each question carefully")
-                        InstructionRow(number: "2", text: "Select your answer from 4 options")
-                        InstructionRow(number: "3", text: "Results show immediately after each answer")
-                        InstructionRow(number: "4", text: "Reach 10 points to win, or answer 20 questions max")
-                        InstructionRow(number: "5", text: "Beat your best time and score!")
-                    }
-                }
-                .padding(.horizontal, 24)
-                
-                Spacer()
-                
-                // Close button
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Got it!")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.black.opacity(0.9))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(GrayTheme.gold)
-                        )
-                        .shadow(color: GrayTheme.gold.opacity(0.35), radius: 10, x: 0, y: 4)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal, 24)
-                .padding(.bottom, 40)
-            }
-        }
+        UnifiedInfoModalView()
     }
 }
 
