@@ -40,11 +40,18 @@ enum TriviaCategory: String, CaseIterable, Hashable {
 
 struct TeamNameGenerator {
     
-    /// Generate two team names for the given category
-    /// - Parameter category: The trivia category
+    /// Generate two team names for the given category and mode
+    /// - Parameters:
+    ///   - category: The trivia category
+    ///   - isCouchMode: Whether this is for Couch Mode (2P) vs Group mode
     /// - Returns: A tuple of two team names
-    static func generateTeamNames(for category: TriviaCategory) -> (team1: String, team2: String) {
-        // For Bible and US History, use simple team names
+    static func generateTeamNames(for category: TriviaCategory, isCouchMode: Bool = false) -> (team1: String, team2: String) {
+        // For Couch Mode (2P), use Player names
+        if isCouchMode {
+            return ("Player 1", "Player 2")
+        }
+        
+        // For Group mode, use Team names
         switch category {
         case .bible, .usHistory:
             return ("Team One", "Team Two")

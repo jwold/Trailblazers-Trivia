@@ -64,48 +64,62 @@ struct GameScreen: View {
                         // Connected team boxes - aligned with question card
                         HStack(spacing: 0) {
                             // Player 1 section
-                            HStack(spacing: 8) {
-                                Text(gameViewModel.player1.name)
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
-                                    .lineLimit(1)
+                            VStack(spacing: 4) {
+                                HStack(spacing: 8) {
+                                    Text(gameViewModel.player1.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(GrayTheme.text)
+                                    
+                                    TickerTapeScore(
+                                        score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
+                                        font: .subheadline,
+                                        fontWeight: .bold,
+                                        foregroundColor: GrayTheme.text
+                                    )
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(GrayTheme.card)
+                                    )
+                                }
                                 
-                                TickerTapeScore(
-                                    score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
-                                    font: .subheadline,
-                                    fontWeight: .bold,
-                                    foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player1.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
-                                )
+                                Rectangle()
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? GrayTheme.gold : Color.clear)
+                                    .frame(height: 3)
                             }
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                Capsule()
-                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player1.name ? GrayTheme.gold : Color.clear)
-                            )
+                            .padding(.vertical, 8)
                             
                             // Player 2 section
-                            HStack(spacing: 8) {
-                                Text(gameViewModel.player2.name)
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8))
-                                    .lineLimit(1)
+                            VStack(spacing: 4) {
+                                HStack(spacing: 8) {
+                                    Text(gameViewModel.player2.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(GrayTheme.text)
+                                    
+                                    TickerTapeScore(
+                                        score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
+                                        font: .subheadline,
+                                        fontWeight: .bold,
+                                        foregroundColor: GrayTheme.text
+                                    )
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(GrayTheme.card)
+                                    )
+                                }
                                 
-                                TickerTapeScore(
-                                    score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
-                                    font: .subheadline,
-                                    fontWeight: .bold,
-                                    foregroundColor: gameViewModel.currentPlayer.name == gameViewModel.player2.name ? .black.opacity(0.9) : GrayTheme.text.opacity(0.8)
-                                )
+                                Rectangle()
+                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
+                                    .frame(height: 3)
                             }
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                Capsule()
-                                    .fill(gameViewModel.currentPlayer.name == gameViewModel.player2.name ? GrayTheme.gold : Color.clear)
-                            )
+                            .padding(.vertical, 8)
                         }
                         .frame(maxWidth: 280) // Limit the width of the score boxes
                         
