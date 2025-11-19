@@ -19,8 +19,6 @@ protocol QuestionRepositoryProtocol {
     func resetUsedQuestions()
 }
 
-// MARK: - JSON Question Model
-
 /// Codable version of Question for JSON parsing
 struct JSONQuestion: Codable {
     let id: Int
@@ -31,7 +29,6 @@ struct JSONQuestion: Codable {
     
     /// Convert to domain Question model with UUID
     func toQuestion() -> Question {
-        // Generate a UUID for the question since we don't trust the original IDs
         let uuid = UUID().uuidString
         
         return Question(
@@ -43,20 +40,46 @@ struct JSONQuestion: Codable {
     }
 }
 
-// MARK: - JSON Question Repository
-
 /// JSON file-based implementation of the question repository
 class JSONQuestionRepository: QuestionRepositoryProtocol {
-    private var questionsByCategory: [TriviaCategory: [Question]] = [:]
-    private var usedQuestionIdsByCategory: [TriviaCategory: Set<String>] = [:]
+    private var currentlyLoadedCategory: TriviaCategory?
     
-    private static var questionCache: [TriviaCategory: [Question]] = [:]
+    private var loadedQuestions: [Question] = []
     
-    private func loadAllQuestions(for category: TriviaCategory) throws -> [Question] {
-        if let cached = Self.questionCache[category] {
-            return cached
+    private var usedQuestionIds: Set<String> = []
+    
+    func nextQuestion(category: TriviaCategory) throws -> Question {
+        if currentlyLoadedCategory != category {
+            loadedQuestions = try loadAllQuestions(for: category)
+            currentlyLoadedCategory = category
+            usedQuestionIds.removeAll()
         }
         
+        guard !loadedQuestions.isEmpty else {
+            throw QuestionRepositoryError.noQuestionsFound
+        }
+        
+        let availableQuestions = loadedQuestions.filter { !usedQuestionIds.contains($0.id) }
+        
+        let selectedQuestion: Question
+        
+        if availableQuestions.isEmpty {
+            usedQuestionIds.removeAll()
+            selectedQuestion = loadedQuestions.randomElement() ?? loadedQuestions[0]
+        } else {
+            selectedQuestion = availableQuestions.randomElement() ?? availableQuestions[0]
+        }
+        
+        usedQuestionIds.insert(selectedQuestion.id)
+        
+        return selectedQuestion
+    }
+    
+    func resetUsedQuestions() {
+        usedQuestionIds.removeAll()
+    }
+    
+    private func loadAllQuestions(for category: TriviaCategory) throws -> [Question] {
         var allQuestions: [Question] = []
         
         switch category {
@@ -73,9 +96,6 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         guard !allQuestions.isEmpty else {
             throw QuestionRepositoryError.noQuestionsFound
         }
-        
-        // Cache the loaded questions
-        Self.questionCache[category] = allQuestions
         
         return allQuestions
     }
@@ -94,7 +114,6 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         let validQuestions = jsonQuestions.compactMap { jsonQuestion -> Question? in
             let question = jsonQuestion.toQuestion()
             
-            // Quick validation without logging
             guard !question.question.isEmpty,
                   !question.answer.isEmpty,
                   question.question.count > GameConstants.Validation.minimumQuestionLength,
@@ -107,44 +126,7 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
         
         return validQuestions
     }
-    
-    func nextQuestion(category: TriviaCategory) throws -> Question {
-        var questions = questionsByCategory[category] ?? []
-        
-        if questions.isEmpty {
-            questions = try loadAllQuestions(for: category)
-            questionsByCategory[category] = questions
-        }
-        
-        guard !questions.isEmpty else {
-            throw QuestionRepositoryError.noQuestionsFound
-        }
-        
-        var usedQuestionIds = usedQuestionIdsByCategory[category] ?? []
-        
-        let availableQuestions = questions.filter { !usedQuestionIds.contains($0.id) }
-        
-        let selectedQuestion: Question
-        
-        if availableQuestions.isEmpty {
-            usedQuestionIds.removeAll()
-            selectedQuestion = questions.randomElement() ?? questions[0]
-        } else {
-            selectedQuestion = availableQuestions.randomElement() ?? availableQuestions[0]
-        }
-        
-        usedQuestionIds.insert(selectedQuestion.id)
-        usedQuestionIdsByCategory[category] = usedQuestionIds
-        
-        return selectedQuestion
-    }
-    
-    func resetUsedQuestions() {
-        usedQuestionIdsByCategory.removeAll()
-    }
 }
-
-// MARK: - Question Repository Errors
 
 enum QuestionRepositoryError: Error, LocalizedError {
     case noQuestionsFound
