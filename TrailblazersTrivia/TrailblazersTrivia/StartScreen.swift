@@ -11,10 +11,14 @@ import SwiftUI
 private enum HomeTheme {
     static let background = Color(white: 0.04)      // same deep dark background
     static let card = Color(white: 0.10)            // same dark card background
+    static let inactiveCard = Color(white: 0.08)    // very subtle card for inactive categories
     static let lightCard = Color(white: 0.16)       // same lighter card for selections
     static let text = Color(white: 1.0)             // pure white text
     static let accent = Color(white: 0.22)          // dark accent
     static let selectedCard = Color(white: 0.20)    // selected state
+    static let blue = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
+    static let blueGradientStart = Color(red: 0.40, green: 0.60, blue: 0.82) // Lighter blue
+    static let blueGradientEnd = Color(red: 0.30, green: 0.50, blue: 0.72) // Darker blue
 }
 
 // Extended categories including disabled ones
@@ -124,39 +128,59 @@ struct StartScreen: View {
             handleCategoryTap(category)
         } label: {
             VStack(spacing: 0) {
-                // Category name row
-                HStack {
-                    Text(category.rawValue)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(category.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.3))
-                    
-                    Spacer()
-                    
-                    if !category.isEnabled {
-                        Text("Coming Soon")
-                            .font(.caption)
-                            .foregroundColor(HomeTheme.text.opacity(0.4))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(
-                                Capsule()
-                                    .fill(HomeTheme.text.opacity(0.1))
-                            )
-                    }
-                }
-                .padding(.vertical, 16)
-                
-                // Player mode selector (only show for selected enabled category)
                 if selectedCategory == category && category.isEnabled {
-                    HStack(spacing: 12) {
-                        playerModeSelector
+                    // Selected active category - full card with controls
+                    VStack(alignment: .leading, spacing: 20) {
+                        // Category name
+                        Text(category.rawValue)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(HomeTheme.text)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        // Player mode selector - spanning full width
+                        playerModeSelectorFullWidth
                         
                         // Start Game button
-                        startGameButton
+                        startGameButtonLarge
                     }
-                    .padding(.top, 8)
-                    .transition(.opacity)
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(HomeTheme.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .strokeBorder(HomeTheme.text.opacity(0.15), lineWidth: 1)
+                            )
+                    )
+                } else {
+                    // Non-selected category - minimal card
+                    HStack {
+                        Text(category.rawValue)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(category.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.3))
+                        
+                        Spacer()
+                        
+                        if !category.isEnabled {
+                            Text("COMING SOON")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundColor(HomeTheme.text.opacity(0.4))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(
+                                    Capsule()
+                                        .fill(HomeTheme.text.opacity(0.08))
+                                )
+                        }
+                    }
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(HomeTheme.inactiveCard)
+                    )
                 }
             }
             .frame(maxWidth: .infinity)
@@ -176,7 +200,66 @@ struct StartScreen: View {
         }
     }
     
-    // MARK: - Player Mode Selector
+    // MARK: - Player Mode Selector (Full Width)
+    
+    private var playerModeSelectorFullWidth: some View {
+        HStack(spacing: 0) {
+            playerModeOptionFullWidth(.onePlayer, title: "1P")
+            playerModeOptionFullWidth(.couchMode, title: "2P")
+            playerModeOptionFullWidth(.twoPlayer, title: "Group")
+        }
+        .padding(4)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.black.opacity(0.3))
+        )
+    }
+    
+    private func playerModeOptionFullWidth(_ mode: PlayerMode, title: String) -> some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                selectedPlayerMode = mode
+            }
+            impactGenerator.impactOccurred()
+        } label: {
+            Text(title)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(selectedPlayerMode == mode ? HomeTheme.text : HomeTheme.text.opacity(0.5))
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(selectedPlayerMode == mode ? HomeTheme.lightCard : Color.clear)
+                )
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private var startGameButtonLarge: some View {
+        Button {
+            startGame()
+        } label: {
+            Text("Start Game")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(
+                    LinearGradient(
+                        colors: [HomeTheme.blueGradientStart, HomeTheme.blueGradientEnd],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    // MARK: - Player Mode Selector (Old - Keep for compatibility)
     
     private var playerModeSelector: some View {
         HStack(spacing: 0) {

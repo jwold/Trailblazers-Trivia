@@ -228,16 +228,11 @@ struct GameModeCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Header
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundColor(ModalTheme.gold)
-                Text(title)
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(ModalTheme.text)
-            }
+            // Header - title only, no icon
+            Text(title)
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundColor(ModalTheme.text)
             
             // Description
             Text(description)

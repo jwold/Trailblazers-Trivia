@@ -53,7 +53,7 @@ struct GameScreen: View {
             VStack(spacing: 0) {
                                 
                 // Content Section
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 12) {
                     // Player info above question
                     HStack(alignment: .center, spacing: 0) {
                         // Back button
@@ -156,83 +156,36 @@ struct GameScreen: View {
                         }
                         .padding(.trailing, 12)
                     }
-                    Spacer()
-                    // Question Text - larger and centered
-                    VStack(alignment: .leading, spacing: 0) {
-                        VStack(alignment: .leading, spacing: 12) {
-                            if !gameViewModel.showAnswer {
-                                // Question text
-                                Text(gameViewModel.currentQuestion.question)
-                                    .font(.largeTitle)
-                                    .fontWeight(.medium)
-                                    .multilineTextAlignment(.leading)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .frame(maxHeight: .infinity, alignment: .topLeading)
-                                    .foregroundColor(GrayTheme.text)
-                            } else {
-                                // Answer state
-                                VStack(alignment: .leading, spacing: 12) {
-                                    // Answer text
-                                    Text(gameViewModel.currentQuestion.answer)
-                                        .font(.system(size: 50))
-                                        .fontWeight(.semibold)
-                                        .multilineTextAlignment(.center)
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                        .foregroundColor(GrayTheme.text)
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    
+                    // Question Text - always visible
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(gameViewModel.currentQuestion.question)
+                            .font(.largeTitle)
+                            .fontWeight(.medium)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(GrayTheme.text)
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 24)
                     .padding(.vertical, 24)
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: .infinity, alignment: .center)
-                    .overlay(alignment: .bottomTrailing) {
-                        if !gameViewModel.showAnswer {
-                            Button {
-                                impactLight.impactOccurred()
-                                gameViewModel.showAnswerToggle()
-                            } label: {
-                                Image(systemName: "eye.fill")
-                                    .font(.title3)
-                                    .foregroundColor(.black.opacity(0.85))
-                                    .frame(width: 44, height: 44)
-                                    .background(
-                                        Circle().fill(GrayTheme.gold)
-                                    )
-                                    .shadow(color: GrayTheme.gold.opacity(0.35), radius: 16, x: 0, y: 8)
-                            }
-                            .padding(16)
-                            .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
-                        } else {
-                            Button {
-                                impactLight.impactOccurred()
-                                gameViewModel.showAnswerToggle()
-                            } label: {
-                                Image(systemName: "arrow.left")
-                                    .font(.title3)
-                                    .foregroundColor(.black.opacity(0.85))
-                                    .frame(width: 44, height: 44)
-                                    .background(
-                                        Circle().fill(GrayTheme.gold)
-                                    )
-                                    .shadow(color: GrayTheme.gold.opacity(0.35), radius: 16, x: 0, y: 8)
-                            }
-                            .padding(16)
-                            .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
-                        }
+                    
+                    // Answer Options - Correct (blurred) and Incorrect
+                    VStack(spacing: 16) {
+                        // Correct Answer Card (blurred with eye icon)
+                        correctAnswerButton
+                        
+                        // Incorrect Card
+                        incorrectAnswerButton
                     }
-                    .padding(.horizontal, 12) // Add padding back for question card
+                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
+                    
                     Spacer()
                 }
-                .padding(.horizontal, 0) // Remove horizontal padding to allow score box to go to edge
-                .padding(.top, 60)
+                .padding(.horizontal, 0)
+                .padding(.top, 20)
                 .frame(maxHeight: .infinity)
-                
-                // Removed the standalone Spacer() here
-                
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -270,53 +223,86 @@ struct GameScreen: View {
                 }
             )
         }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 16) {
-                HStack(spacing: 16) {
-                        Button {
-                            impactMedium.impactOccurred()
-                            gameViewModel.answeredWrong()
-                        } label: {
-                            Text("Wrong")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.black.opacity(0.9))
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 56)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 30)
-                                        .fill(GrayTheme.accent)
-                                )
-                                .shadow(color: GrayTheme.accent.opacity(0.25), radius: 8, x: 0, y: 4)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        
-                        Button {
-                            impactMedium.impactOccurred()
-                            gameViewModel.answeredCorrect()
-                        } label: {
-                            Text("Correct")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.black.opacity(0.9))
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 56)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 30)
-                                        .fill(GrayTheme.gold)
-                                )
-                                .shadow(color: GrayTheme.gold.opacity(0.25), radius: 8, x: 0, y: 4)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+    }
+    
+    // MARK: - Correct Answer Button (Two-Zone)
+    
+    private var correctAnswerButton: some View {
+        HStack(spacing: 0) {
+            // LEFT ZONE - Answer text (main tap area)
+            Text(gameViewModel.currentQuestion.answer)
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(GrayTheme.text)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 20)
+                .blur(radius: gameViewModel.showAnswer ? 0 : 8)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if gameViewModel.showAnswer {
+                        // When revealed: award point and proceed
+                        impactMedium.impactOccurred()
+                        gameViewModel.answeredCorrect()
                     }
                 }
-            }
-            .padding(.horizontal, 12) // Reduced from 20 to 12
-            .padding(.bottom, 40)
-            .background(GrayTheme.background)
-            .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
+            
+            // Vertical divider
+            Rectangle()
+                .fill(GrayTheme.text.opacity(0.2))
+                .frame(width: 1)
+                .frame(maxHeight: .infinity)
+            
+            // RIGHT ZONE - Eye toggle
+            Image(systemName: gameViewModel.showAnswer ? "eye.slash.fill" : "eye.fill")
+                .font(.title2)
+                .foregroundColor(GrayTheme.gold)
+                .frame(width: 70)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    // Always active: toggle reveal
+                    impactLight.impactOccurred()
+                    gameViewModel.showAnswerToggle()
+                }
         }
+        .fixedSize(horizontal: false, vertical: true)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(GrayTheme.card)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(GrayTheme.text.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
+    
+    // MARK: - Incorrect Answer Button
+    
+    private var incorrectAnswerButton: some View {
+        Button {
+            impactMedium.impactOccurred()
+            gameViewModel.answeredWrong()
+        } label: {
+            Text("Incorrect")
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(GrayTheme.text)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(GrayTheme.card)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(GrayTheme.text.opacity(0.2), lineWidth: 1)
+                        )
+                )
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
 
 // MARK: - Instruction Row
 
