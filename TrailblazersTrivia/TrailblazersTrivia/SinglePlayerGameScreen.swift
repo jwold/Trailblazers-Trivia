@@ -107,13 +107,23 @@ struct SinglePlayerGameScreen: View {
                                 fontWeight: .semibold,
                                 foregroundColor: GrayTheme.text
                             )
-                            Text("Points • \(singlePlayerViewModel.formatElapsedTime())")
+                            Text("/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(GrayTheme.text)
                                 .lineLimit(1)
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        Capsule()
+                            .fill(GrayTheme.lightCard)
+                            .overlay(
+                                Capsule().stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
+                            )
+                    )
+                    .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                     
                     Spacer()
                     
@@ -163,7 +173,7 @@ struct SinglePlayerGameScreen: View {
                 Spacer()
             }
             .padding(.horizontal, 0)
-            .padding(.top, 60)
+            .padding(.top, 20)
             .frame(maxHeight: .infinity)
         }
     }

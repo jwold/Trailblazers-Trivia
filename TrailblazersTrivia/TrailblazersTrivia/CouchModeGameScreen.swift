@@ -233,7 +233,7 @@ struct CouchModeGameScreen: View {
                 Spacer()
             }
             .padding(.horizontal, 0)
-            .padding(.top, 60)
+            .padding(.top, 20)
             .frame(maxHeight: .infinity)
         }
     }
