@@ -91,6 +91,10 @@ class JSONQuestionRepository: QuestionRepositoryProtocol {
             if let usHistoryQuestions = try loadQuestions(from: "ushistory") {
                 allQuestions.append(contentsOf: usHistoryQuestions)
             }
+        case .animals:
+            if let animalsQuestions = try loadQuestions(from: "animals") {
+                allQuestions.append(contentsOf: animalsQuestions)
+            }
         }
         
         guard !allQuestions.isEmpty else {

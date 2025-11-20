@@ -31,9 +31,9 @@ enum CategoryOption: String, CaseIterable {
     
     var isEnabled: Bool {
         switch self {
-        case .bible, .usHistory:
+        case .bible, .usHistory, .animals:
             return true
-        case .geography, .worldHistory, .animals:
+        case .geography, .worldHistory:
             return false
         }
     }
@@ -42,6 +42,7 @@ enum CategoryOption: String, CaseIterable {
         switch self {
         case .bible: return .bible
         case .usHistory: return .usHistory
+        case .animals: return .animals
         default: return nil
         }
     }
@@ -117,7 +118,7 @@ struct StartScreen: View {
     
     private var categoryList: some View {
         VStack(spacing: 16) {
-            ForEach(CategoryOption.allCases, id: \.self) { category in
+            ForEach(CategoryOption.allCases.filter { $0.isEnabled }, id: \.self) { category in
                 categoryRow(category)
             }
         }

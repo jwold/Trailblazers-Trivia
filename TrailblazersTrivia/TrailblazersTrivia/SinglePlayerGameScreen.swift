@@ -21,6 +21,10 @@ struct SinglePlayerGameScreen: View {
     @State private var singlePlayerViewModel: SinglePlayerGameViewModel
     @State private var showInfoModal = false
     
+    // Haptic generators
+    private let selectionHaptic = UIImpactFeedbackGenerator(style: .medium)
+    private let successHaptic = UINotificationFeedbackGenerator()
+    
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
         self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(
@@ -95,7 +99,7 @@ struct SinglePlayerGameScreen: View {
                                 fontWeight: .semibold,
                                 foregroundColor: GrayTheme.text
                             )
-                            Text("/10 Points • \(singlePlayerViewModel.formatElapsedTime())")
+                            Text("Points • \(singlePlayerViewModel.formatElapsedTime())")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(GrayTheme.text)
@@ -177,6 +181,7 @@ struct SinglePlayerGameScreen: View {
     
     private var continueButtonView: some View {
         Button {
+            selectionHaptic.impactOccurred()
             // If answer selected but results not shown, this will reveal results  
             // If results shown, this will move to next question
             singlePlayerViewModel.continueToNextQuestion()
@@ -218,6 +223,7 @@ struct SinglePlayerGameScreen: View {
         VStack(spacing: 16) {
             ForEach(Array(singlePlayerViewModel.currentAnswerOptions.enumerated()), id: \.offset) { index, option in
                 Button {
+                    selectionHaptic.impactOccurred()
                     singlePlayerViewModel.selectAnswer(option)
                 } label: {
                     HStack(spacing: 16) {

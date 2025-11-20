@@ -12,6 +12,7 @@ import Foundation
 enum TriviaCategory: String, CaseIterable, Hashable {
     case bible = "Bible"
     case usHistory = "US History"
+    case animals = "Animals"
     
     var displayName: String {
         rawValue
@@ -23,6 +24,8 @@ enum TriviaCategory: String, CaseIterable, Hashable {
             return "Test your biblical knowledge"
         case .usHistory:
             return "Test your US History knowledge"
+        case .animals:
+            return "Test your animal knowledge"
         }
     }
     
@@ -32,6 +35,8 @@ enum TriviaCategory: String, CaseIterable, Hashable {
             return "book.closed"
         case .usHistory:
             return "flag.fill"
+        case .animals:
+            return "pawprint.fill"
         }
     }
 }
