@@ -40,19 +40,7 @@ struct SinglePlayerGameScreen: View {
             GrayTheme.background
                 .ignoresSafeArea()
             
-            if singlePlayerViewModel.isLoading {
-                // Loading state
-                VStack {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(2)
-                    
-                    Text("Loading question...")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding(.top)
-                }
-            } else if singlePlayerViewModel.gameEnded {
+            if singlePlayerViewModel.gameEnded {
                 // Game ended - navigate to results
                 VStack {
                     Text("Game Complete!")
@@ -147,10 +135,9 @@ struct SinglePlayerGameScreen: View {
                 }
                 .padding(.horizontal, 24)
                 
-                // Question Text - with safety checks
+                // Question Text - simplified without loading checks
                 VStack(alignment: .leading, spacing: 12) {
-                    let questionText = singlePlayerViewModel.currentQuestion.question
-                    Text(questionText.isEmpty ? "Loading question..." : questionText)
+                    Text(singlePlayerViewModel.currentQuestion.question)
                         .font(.largeTitle)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.leading)
@@ -164,7 +151,7 @@ struct SinglePlayerGameScreen: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 24)
                 
-                // Answer buttons right below question card - with safety checks
+                // Answer buttons right below question card
                 if shouldShowAnswerButtons() {
                     answerButtonsView
                         .padding(.top, 20)
@@ -187,12 +174,8 @@ struct SinglePlayerGameScreen: View {
     }
     
     private func shouldShowAnswerButtons() -> Bool {
-        return !singlePlayerViewModel.isLoading &&
-               !singlePlayerViewModel.currentAnswerOptions.isEmpty &&
-               !singlePlayerViewModel.currentAnswerOptions.contains("Loading...") &&
-               !singlePlayerViewModel.currentQuestion.question.isEmpty &&
-               singlePlayerViewModel.currentQuestion.question != "Loading..." &&
-               singlePlayerViewModel.currentQuestion.question != "Loading question..."
+        return !singlePlayerViewModel.currentAnswerOptions.isEmpty &&
+               !singlePlayerViewModel.currentQuestion.question.isEmpty
     }
     
     private func shouldShowContinueButton() -> Bool {
