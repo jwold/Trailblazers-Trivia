@@ -32,7 +32,7 @@ class GameViewModel {
     }
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."])
+        currentTurn?.question ?? Question(id: "default", question: "", answer: "", wrongAnswers: [])
     }
     
     // Computed property for scores
@@ -216,14 +216,12 @@ class SinglePlayerGameViewModel {
     var selectedAnswer: String?
     var currentAnswerOptions: [String] = []
     var elapsedTime: TimeInterval = 0
-    var isLoading = true
-    var loadingError: String?
     
     // Action log for undo functionality
     var actionLog: [String] = []
     
     var currentQuestion: Question {
-        currentTurn?.question ?? Question(id: "default", question: "Loading...", answer: "...", wrongAnswers: ["Loading...", "Loading..."])
+        currentTurn?.question ?? Question(id: "default", question: "", answer: "", wrongAnswers: [])
     }
     
     // Computed property for score
@@ -255,16 +253,6 @@ class SinglePlayerGameViewModel {
         self.player = Player(id: UUID().uuidString, name: playerName)
         self.category = category
         self.questionRepository = questionRepository
-        
-        // Set up a default question immediately to prevent crashes
-        self.currentTurn = Turn(player: Player(id: UUID().uuidString, name: playerName))
-        self.currentTurn?.question = Question(
-            id: "loading",
-            question: "Loading...",
-            answer: "Loading...",
-            wrongAnswers: ["Loading...", "Loading..."]
-        )
-        self.currentAnswerOptions = ["Loading...", "Loading...", "Loading..."]
     }
     
     deinit {
@@ -273,20 +261,12 @@ class SinglePlayerGameViewModel {
 
     /// Start the game - loads the first real question
     func startGame() {
-        // Prevent multiple starts
-        guard currentAnswerOptions.contains("Loading...") else { 
-            return 
-        }
-        
-        // Start timer when game actually begins
+        // Start timer when game begins
         startTimer()
         startNewTurn()
     }
     
     func startNewTurn() {
-        
-        // Set loading state first
-        isLoading = true
         hasAnswered = false
         showResults = false
         selectedAnswer = nil
@@ -302,30 +282,10 @@ class SinglePlayerGameViewModel {
             // Update the turn and generate options atomically
             currentTurn?.question = question
             generateAnswerOptions()
-            loadingError = nil
             
         } catch {
-            loadingError = "Failed to load question: \(error.localizedDescription)"
-            
-            // Provide multiple fallback questions to keep the game playable
-            let fallbackQuestions = [
-                Question(id: "fallback1", question: "Who was the first man created by God?", answer: "Adam", wrongAnswers: ["Seth", "Noah", "Abraham"]),
-                Question(id: "fallback2", question: "What is the first book of the Bible?", answer: "Genesis", wrongAnswers: ["Exodus", "Matthew", "Psalms"]),
-                Question(id: "fallback3", question: "How many days did God take to create the world?", answer: "6 days", wrongAnswers: ["7 days", "5 days", "10 days"]),
-                Question(id: "fallback4", question: "What was Noah's ark made of?", answer: "Gopher wood", wrongAnswers: ["Cedar", "Oak", "Pine"]),
-                Question(id: "fallback5", question: "Who led the Israelites out of Egypt?", answer: "Moses", wrongAnswers: ["Aaron", "Joshua", "David"])
-            ]
-            
-            // Use a different fallback question each time
-            let fallbackIndex = turns.count % fallbackQuestions.count
-            let fallbackQuestion = fallbackQuestions[fallbackIndex]
-            
-            currentTurn?.question = fallbackQuestion
-            generateAnswerOptions()
+            print("Failed to load question: \(error)")
         }
-        
-        // Only set loading to false after everything is ready
-        isLoading = false
     }
     
     private func generateAnswerOptions() {
@@ -344,7 +304,7 @@ class SinglePlayerGameViewModel {
         var combined = question.wrongAnswers + [question.answer]
         
         // Remove empty strings that might cause issues
-        combined = combined.filter { !$0.isEmpty && $0 != "Loading..." }
+        combined = combined.filter { !$0.isEmpty }
         
         // Ensure we have the correct answer
         if !combined.contains(question.answer) {
@@ -391,8 +351,8 @@ class SinglePlayerGameViewModel {
             return
         }
         
-        // Don't allow selection if still loading or showing results
-        guard !isLoading && !showResults else {
+        // Don't allow selection if showing results
+        guard !showResults else {
             return
         }
         
