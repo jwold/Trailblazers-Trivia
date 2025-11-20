@@ -110,12 +110,6 @@ struct UnifiedInfoModalView: View {
                                 .padding(.horizontal, 24)
                             
                             VStack(alignment: .leading, spacing: 24) {
-                                // App description
-                                Text("Test your knowledge with challenging trivia questions across various categories. Perfect for Bible study groups, classrooms, or friendly competition.")
-                                    .font(.body)
-                                    .foregroundColor(ModalTheme.text.opacity(0.8))
-                                    .fixedSize(horizontal: false, vertical: true)
-                                
                                 // Creators
                                 Text("Created by Joshua Wold and Nathan Isaac.")
                                     .font(.body)

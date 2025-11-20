@@ -89,33 +89,22 @@ struct SinglePlayerGameScreen: View {
                             .foregroundColor(GrayTheme.text)
                             .frame(width: 44, height: 44)
                     }
+                    .padding(.leading, 12)
                     
-                    // Single player score box - next to back button
-                    HStack(spacing: 8) {
-                        HStack(spacing: 4) {
-                            TickerTapeScore(
-                                score: singlePlayerViewModel.getPlayerScore(),
-                                font: .subheadline,
-                                fontWeight: .semibold,
-                                foregroundColor: GrayTheme.text
-                            )
-                            Text("Points • \(singlePlayerViewModel.formatElapsedTime())")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(GrayTheme.text)
-                                .lineLimit(1)
-                        }
+                    // Single player score - next to back button
+                    HStack(spacing: 4) {
+                        TickerTapeScore(
+                            score: singlePlayerViewModel.getPlayerScore(),
+                            font: .subheadline,
+                            fontWeight: .semibold,
+                            foregroundColor: GrayTheme.text
+                        )
+                        Text("Points • \(singlePlayerViewModel.formatElapsedTime())")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(GrayTheme.text)
+                            .lineLimit(1)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        Capsule()
-                            .fill(GrayTheme.lightCard)
-                            .overlay(
-                                Capsule().stroke(GrayTheme.text.opacity(0.1), lineWidth: 1)
-                            )
-                    )
-                    .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
                     
                     Spacer()
                     
@@ -128,8 +117,8 @@ struct SinglePlayerGameScreen: View {
                             .foregroundColor(GrayTheme.text)
                             .frame(width: 44, height: 44)
                     }
+                    .padding(.trailing, 12)
                 }
-                .padding(.horizontal, 24)
                 
                 // Question Text - simplified without loading checks
                 VStack(alignment: .leading, spacing: 12) {

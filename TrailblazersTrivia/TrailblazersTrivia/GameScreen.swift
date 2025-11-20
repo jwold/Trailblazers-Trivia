@@ -79,6 +79,8 @@ struct GameScreen: View {
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(GrayTheme.text)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                     
                                     TickerTapeScore(
                                         score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
@@ -113,6 +115,8 @@ struct GameScreen: View {
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(GrayTheme.text)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                     
                                     TickerTapeScore(
                                         score: gameViewModel.getPlayerScore(for: gameViewModel.player2),

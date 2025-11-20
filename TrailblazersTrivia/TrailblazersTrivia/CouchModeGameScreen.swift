@@ -125,6 +125,8 @@ struct CouchModeGameScreen: View {
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(GrayTheme.text)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                                 
                                 TickerTapeScore(
                                     score: gameViewModel.getPlayerScore(for: gameViewModel.player1),
@@ -159,6 +161,8 @@ struct CouchModeGameScreen: View {
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(GrayTheme.text)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                                 
                                 TickerTapeScore(
                                     score: gameViewModel.getPlayerScore(for: gameViewModel.player2),
@@ -202,7 +206,6 @@ struct CouchModeGameScreen: View {
                     }
                     .padding(.trailing, 12)
                 }
-                .padding(.horizontal, 24)
                 
                 // Question Text
                 VStack(alignment: .leading, spacing: 12) {
