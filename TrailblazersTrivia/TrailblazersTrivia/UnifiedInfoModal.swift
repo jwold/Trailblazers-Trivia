@@ -116,24 +116,15 @@ struct UnifiedInfoModalView: View {
                                     .foregroundColor(ModalTheme.text.opacity(0.8))
                                     .fixedSize(horizontal: false, vertical: true)
                                 
-                                Divider()
-                                    .background(ModalTheme.text.opacity(0.1))
-                                
                                 // Creators
                                 Text("Created by Joshua Wold and Nathan Isaac.")
                                     .font(.body)
                                     .foregroundColor(ModalTheme.text.opacity(0.8))
                                 
-                                Divider()
-                                    .background(ModalTheme.text.opacity(0.1))
-                                
                                 // Contact
                                 Text("Got questions? Please reach out with any feedback to trailblazerstrivia@gmail.com.")
                                     .font(.body)
                                     .foregroundColor(ModalTheme.text.opacity(0.8))
-                                
-                                Divider()
-                                    .background(ModalTheme.text.opacity(0.1))
                                 
                                 // Version
                                 VStack(alignment: .leading, spacing: 8) {
