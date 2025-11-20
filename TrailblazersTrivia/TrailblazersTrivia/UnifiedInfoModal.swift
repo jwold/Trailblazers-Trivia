@@ -21,6 +21,9 @@ private enum ModalTheme {
 struct UnifiedInfoModalView: View {
     @Environment(\.dismiss) var dismiss
     
+    // Haptic feedback
+    private let impactLight = UIImpactFeedbackGenerator(style: .light)
+    
     var body: some View {
         ZStack {
             ModalTheme.background.ignoresSafeArea()
@@ -30,6 +33,7 @@ struct UnifiedInfoModalView: View {
                 HStack {
                     Spacer()
                     Button {
+                        impactLight.impactOccurred()
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
@@ -176,6 +180,7 @@ struct UnifiedInfoModalView: View {
                 // Close button (fixed at bottom)
                 VStack {
                     Button {
+                        impactLight.impactOccurred()
                         dismiss()
                     } label: {
                         Text("Got it!")
@@ -206,6 +211,9 @@ struct UnifiedInfoModalView: View {
                 )
                 .background(ModalTheme.background)
             }
+        }
+        .onAppear {
+            impactLight.prepare()
         }
     }
 }

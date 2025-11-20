@@ -21,6 +21,10 @@ struct SinglePlayerGameScreen: View {
     @State private var singlePlayerViewModel: SinglePlayerGameViewModel
     @State private var showInfoModal = false
     
+    // Haptic feedback generators
+    private let impactLight = UIImpactFeedbackGenerator(style: .light)
+    private let impactMedium = UIImpactFeedbackGenerator(style: .medium)
+    
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
         self._singlePlayerViewModel = State(initialValue: SinglePlayerGameViewModel(
@@ -78,6 +82,8 @@ struct SinglePlayerGameScreen: View {
         }
         .onAppear {
             singlePlayerViewModel.startGame()
+            impactLight.prepare()
+            impactMedium.prepare()
         }
     }
 
@@ -90,6 +96,7 @@ struct SinglePlayerGameScreen: View {
                 HStack(alignment: .center, spacing: 12) {
                     // Back button
                     Button {
+                        impactLight.impactOccurred()
                         path = []
                     } label: {
                         Image(systemName: "chevron.left")
@@ -129,6 +136,7 @@ struct SinglePlayerGameScreen: View {
                     
                     // Info button
                     Button {
+                        impactLight.impactOccurred()
                         showInfoModal = true
                     } label: {
                         Image(systemName: "info.circle")
@@ -194,6 +202,7 @@ struct SinglePlayerGameScreen: View {
     
     private var continueButtonView: some View {
         Button {
+            impactMedium.impactOccurred()
             // If answer selected but results not shown, this will reveal results  
             // If results shown, this will move to next question
             singlePlayerViewModel.continueToNextQuestion()
@@ -235,6 +244,7 @@ struct SinglePlayerGameScreen: View {
         VStack(spacing: 16) {
             ForEach(Array(singlePlayerViewModel.currentAnswerOptions.enumerated()), id: \.offset) { index, option in
                 Button {
+                    impactLight.impactOccurred()
                     singlePlayerViewModel.selectAnswer(option)
                 } label: {
                     HStack(spacing: 16) {

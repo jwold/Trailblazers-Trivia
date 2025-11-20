@@ -26,6 +26,10 @@ struct GameScreen: View {
     @State private var editingTeam1Name = ""
     @State private var editingTeam2Name = ""
     
+    // Haptic feedback generators
+    private let impactLight = UIImpactFeedbackGenerator(style: .light)
+    private let impactMedium = UIImpactFeedbackGenerator(style: .medium)
+    
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
         self.category = category
@@ -54,6 +58,7 @@ struct GameScreen: View {
                     HStack(alignment: .center, spacing: 0) {
                         // Back button
                         Button {
+                            impactLight.impactOccurred()
                             path = []
                         } label: {
                             Image(systemName: "chevron.left")
@@ -96,6 +101,7 @@ struct GameScreen: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
                             .onTapGesture {
+                                impactLight.impactOccurred()
                                 editingTeam1Name = gameViewModel.player1.name
                                 showEditTeam1 = true
                             }
@@ -129,6 +135,7 @@ struct GameScreen: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
                             .onTapGesture {
+                                impactLight.impactOccurred()
                                 editingTeam2Name = gameViewModel.player2.name
                                 showEditTeam2 = true
                             }
@@ -139,6 +146,7 @@ struct GameScreen: View {
                         
                         // Info button
                         Button {
+                            impactLight.impactOccurred()
                             showInfoModal = true
                         } label: {
                             Image(systemName: "info.circle")
@@ -184,6 +192,7 @@ struct GameScreen: View {
                     .overlay(alignment: .bottomTrailing) {
                         if !gameViewModel.showAnswer {
                             Button {
+                                impactLight.impactOccurred()
                                 gameViewModel.showAnswerToggle()
                             } label: {
                                 Image(systemName: "eye.fill")
@@ -199,6 +208,7 @@ struct GameScreen: View {
                             .shadow(color: .primary.opacity(0.08), radius: 8, x: 0, y: 4)
                         } else {
                             Button {
+                                impactLight.impactOccurred()
                                 gameViewModel.showAnswerToggle()
                             } label: {
                                 Image(systemName: "arrow.left")
@@ -227,6 +237,10 @@ struct GameScreen: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            impactLight.prepare()
+            impactMedium.prepare()
+        }
         .onChange(of: gameViewModel.gameEnded) { _, gameEnded in
             if gameEnded {
                 let playerScores = gameViewModel.getAllPlayerScores()
@@ -260,6 +274,7 @@ struct GameScreen: View {
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
                         Button {
+                            impactMedium.impactOccurred()
                             gameViewModel.answeredWrong()
                         } label: {
                             Text("Wrong")
@@ -277,6 +292,7 @@ struct GameScreen: View {
                         .buttonStyle(PlainButtonStyle())
                         
                         Button {
+                            impactMedium.impactOccurred()
                             gameViewModel.answeredCorrect()
                         } label: {
                             Text("Correct")

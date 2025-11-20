@@ -28,6 +28,10 @@ struct CouchModeGameScreen: View {
     @State private var editingPlayer1Name = ""
     @State private var editingPlayer2Name = ""
     
+    // Haptic feedback generators
+    private let impactLight = UIImpactFeedbackGenerator(style: .light)
+    private let impactMedium = UIImpactFeedbackGenerator(style: .medium)
+    
     init(path: Binding<[Routes]>, category: TriviaCategory) {
         self._path = path
         
@@ -83,6 +87,8 @@ struct CouchModeGameScreen: View {
         }
         .onAppear {
             shuffleAnswers()
+            impactLight.prepare()
+            impactMedium.prepare()
         }
         .onChange(of: gameViewModel.currentQuestion.id) { _, _ in
             shuffleAnswers()
@@ -98,6 +104,7 @@ struct CouchModeGameScreen: View {
                 HStack(alignment: .center, spacing: 0) {
                     // Back button
                     Button {
+                        impactLight.impactOccurred()
                         path = []
                     } label: {
                         Image(systemName: "chevron.left")
@@ -140,6 +147,7 @@ struct CouchModeGameScreen: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .onTapGesture {
+                            impactLight.impactOccurred()
                             editingPlayer1Name = gameViewModel.player1.name
                             showEditPlayer1 = true
                         }
@@ -173,6 +181,7 @@ struct CouchModeGameScreen: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .onTapGesture {
+                            impactLight.impactOccurred()
                             editingPlayer2Name = gameViewModel.player2.name
                             showEditPlayer2 = true
                         }
@@ -183,6 +192,7 @@ struct CouchModeGameScreen: View {
                     
                     // Info button
                     Button {
+                        impactLight.impactOccurred()
                         showInfoModal = true
                     } label: {
                         Image(systemName: "info.circle")
@@ -233,6 +243,7 @@ struct CouchModeGameScreen: View {
         VStack(spacing: 16) {
             ForEach(Array(shuffledAnswers.enumerated()), id: \.offset) { index, option in
                 Button {
+                    impactLight.impactOccurred()
                     selectAnswer(option)
                 } label: {
                     HStack(spacing: 16) {
@@ -279,6 +290,7 @@ struct CouchModeGameScreen: View {
     // MARK: - Continue Button
     private var continueButton: some View {
         Button {
+            impactMedium.impactOccurred()
             nextQuestion()
         } label: {
             Text("Continue")
