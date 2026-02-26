@@ -24,6 +24,10 @@ struct UnifiedInfoModalView: View {
     // Haptic feedback
     private let impactLight = UIImpactFeedbackGenerator(style: .light)
     
+    @State private var singlePlayerExpanded = false
+    @State private var twoPlayerExpanded = false
+    @State private var groupExpanded = false
+    
     var body: some View {
         ZStack {
             ModalTheme.background.ignoresSafeArea()
@@ -63,41 +67,158 @@ struct UnifiedInfoModalView: View {
                                 .padding(.horizontal, 24)
                             
                             VStack(spacing: 16) {
-                                // Single Player Mode
-                                GameModeCard(
-                                    icon: "person.fill",
-                                    title: "Single Player",
-                                    description: "Test your knowledge solo with multiple choice questions.",
-                                    instructions: [
-                                        "Select answers from 4 options",
-                                        "Results show immediately",
-                                        "Reach 10 points or answer 20 questions"
-                                    ]
+                                // Single Player DisclosureGroup
+                                DisclosureGroup(
+                                    isExpanded: $singlePlayerExpanded,
+                                    content: {
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            Text("Test your knowledge solo with multiple choice questions.")
+                                                .font(.callout)
+                                                .foregroundColor(ModalTheme.text.opacity(0.7))
+                                                .fixedSize(horizontal: false, vertical: true)
+                                            
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text("• Select answers from 4 options")
+                                                Text("• Results show immediately")
+                                                Text("• Reach 10 points or answer 20 questions")
+                                            }
+                                            .font(.subheadline)
+                                            .foregroundColor(ModalTheme.text.opacity(0.8))
+                                        }
+                                        .padding(.top, 8)
+                                    },
+                                    label: {
+                                        HStack(spacing: 12) {
+                                            Image(systemName: "person.fill")
+                                                .foregroundColor(ModalTheme.gold)
+                                            Text("Single Player")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(ModalTheme.text)
+                                        }
+                                        .padding(20)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(ModalTheme.card)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 20)
+                                                        .strokeBorder(
+                                                            LinearGradient(
+                                                                colors: [ModalTheme.text.opacity(0.12), ModalTheme.text.opacity(0.04)],
+                                                                startPoint: .topLeading,
+                                                                endPoint: .bottomTrailing
+                                                            ),
+                                                            lineWidth: 1
+                                                        )
+                                                )
+                                        )
+                                    }
                                 )
+                                .accentColor(ModalTheme.gold)
+                                .padding(.horizontal, 24)
                                 
-                                // 2 Player Mode
-                                GameModeCard(
-                                    icon: "person.2.fill",
-                                    title: "2 Player",
-                                    description: "Two players take turns on the same device.",
-                                    instructions: [
-                                        "Current player reads and answers",
-                                        "Pass device after each question",
-                                        "First to 10 points wins"
-                                    ]
+                                // 2 Player DisclosureGroup
+                                DisclosureGroup(
+                                    isExpanded: $twoPlayerExpanded,
+                                    content: {
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            Text("Two players take turns on the same device.")
+                                                .font(.callout)
+                                                .foregroundColor(ModalTheme.text.opacity(0.7))
+                                                .fixedSize(horizontal: false, vertical: true)
+                                            
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text("• Current player reads and answers")
+                                                Text("• Pass device after each question")
+                                                Text("• First to 10 points wins")
+                                            }
+                                            .font(.subheadline)
+                                            .foregroundColor(ModalTheme.text.opacity(0.8))
+                                        }
+                                        .padding(.top, 8)
+                                    },
+                                    label: {
+                                        HStack(spacing: 12) {
+                                            Image(systemName: "person.2.fill")
+                                                .foregroundColor(ModalTheme.gold)
+                                            Text("2 Player")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(ModalTheme.text)
+                                        }
+                                        .padding(20)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(ModalTheme.card)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 20)
+                                                        .strokeBorder(
+                                                            LinearGradient(
+                                                                colors: [ModalTheme.text.opacity(0.12), ModalTheme.text.opacity(0.04)],
+                                                                startPoint: .topLeading,
+                                                                endPoint: .bottomTrailing
+                                                            ),
+                                                            lineWidth: 1
+                                                        )
+                                                )
+                                        )
+                                    }
                                 )
+                                .accentColor(ModalTheme.gold)
+                                .padding(.horizontal, 24)
                                 
-                                // Group Mode
-                                GameModeCard(
-                                    icon: "megaphone.fill",
-                                    title: "Group",
-                                    description: "Group setting with two teams competing.",
-                                    instructions: [
-                                        "Read question to both teams",
-                                        "First team to shout wins the turn",
-                                        "Award points for correct answers"
-                                    ]
+                                // Group DisclosureGroup
+                                DisclosureGroup(
+                                    isExpanded: $groupExpanded,
+                                    content: {
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            Text("Group setting with two teams competing.")
+                                                .font(.callout)
+                                                .foregroundColor(ModalTheme.text.opacity(0.7))
+                                                .fixedSize(horizontal: false, vertical: true)
+                                            
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text("• Read question to both teams")
+                                                Text("• First team to shout wins the turn")
+                                                Text("• Award points for correct answers")
+                                            }
+                                            .font(.subheadline)
+                                            .foregroundColor(ModalTheme.text.opacity(0.8))
+                                        }
+                                        .padding(.top, 8)
+                                    },
+                                    label: {
+                                        HStack(spacing: 12) {
+                                            Image(systemName: "megaphone.fill")
+                                                .foregroundColor(ModalTheme.gold)
+                                            Text("Group")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(ModalTheme.text)
+                                        }
+                                        .padding(20)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(ModalTheme.card)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 20)
+                                                        .strokeBorder(
+                                                            LinearGradient(
+                                                                colors: [ModalTheme.text.opacity(0.12), ModalTheme.text.opacity(0.04)],
+                                                                startPoint: .topLeading,
+                                                                endPoint: .bottomTrailing
+                                                            ),
+                                                            lineWidth: 1
+                                                        )
+                                                )
+                                        )
+                                    }
                                 )
+                                .accentColor(ModalTheme.gold)
+                                .padding(.horizontal, 24)
                             }
                         }
                         

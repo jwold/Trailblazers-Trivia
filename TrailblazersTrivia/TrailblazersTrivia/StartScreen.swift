@@ -9,13 +9,13 @@ import SwiftUI
 
 // Home screen theme matching the game screen
 private enum HomeTheme {
-    static let background = Color(white: 0.04)      // same deep dark background
+    static let background = Color(white: 0.015)      // reverted to soft very dark gray
     static let card = Color(white: 0.10)            // same dark card background
     static let inactiveCard = Color(white: 0.08)    // very subtle card for inactive categories
     static let lightCard = Color(white: 0.16)       // same lighter card for selections
     static let text = Color(white: 1.0)             // pure white text
     static let accent = Color(white: 0.22)          // dark accent
-    static let selectedCard = Color(white: 0.20)    // selected state
+    static let selectedCard = Color(white: 0.10)    // updated selected state to dark semi-opaque style (was red)
     static let blue = Color(red: 0.35, green: 0.55, blue: 0.77) // #5A8BC4 blue
     static let blueGradientStart = Color(red: 0.40, green: 0.60, blue: 0.82) // Lighter blue
     static let blueGradientEnd = Color(red: 0.30, green: 0.50, blue: 0.72) // Darker blue
@@ -60,19 +60,20 @@ struct StartScreen: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
-                HomeTheme.background.ignoresSafeArea()
+                HomeTheme.background
+                    .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
                     headerView
                         .padding(.top, 40)
                     
-                    Spacer().frame(height: 40)
+                    Spacer().frame(height: 24)
                     
                     categoryList
                     
                     Spacer()
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 16)
             }
             .navigationDestination(for: Routes.self) { route in
                 navigationDestination(for: route)
@@ -90,6 +91,8 @@ struct StartScreen: View {
     
     private var headerView: some View {
         HStack {
+            // Removed Image(systemName: "questionmark.circle.fill")
+            
             // App title
             Text("Trailblazers Trivia")
                 .font(.title2)
@@ -145,18 +148,22 @@ struct StartScreen: View {
                         // Start Game button
                         startGameButtonLarge
                     }
-                    .padding(24)
+                    .padding(16)
                     .background(
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(HomeTheme.card)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .strokeBorder(HomeTheme.text.opacity(0.15), lineWidth: 1)
-                            )
+                            .fill(HomeTheme.selectedCard)
                     )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
+                    )
+                    .shadow(color: Color.black.opacity(0.25), radius: 8, x: 0, y: 4)
                 } else {
                     // Non-selected category - minimal card
                     HStack {
+                        Image(systemName: iconName(for: category))
+                            .foregroundColor(category.isEnabled ? HomeTheme.text : HomeTheme.text.opacity(0.3))
+                        
                         Text(category.rawValue)
                             .font(.largeTitle)
                             .fontWeight(.bold)
@@ -177,11 +184,7 @@ struct StartScreen: View {
                                 )
                         }
                     }
-                    .padding(24)
-                    .background(
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(HomeTheme.inactiveCard)
-                    )
+                    .padding(16)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -205,35 +208,38 @@ struct StartScreen: View {
     
     private var playerModeSelectorFullWidth: some View {
         HStack(spacing: 0) {
-            playerModeOptionFullWidth(.onePlayer, title: "1P")
-            playerModeOptionFullWidth(.couchMode, title: "2P")
-            playerModeOptionFullWidth(.twoPlayer, title: "Group")
+            playerModeOptionFullWidth(.onePlayer, title: "1P", iconName: "person.fill")
+            playerModeOptionFullWidth(.couchMode, title: "2P", iconName: "person.2.fill")
+            playerModeOptionFullWidth(.twoPlayer, title: "Group", iconName: "person.3.fill")
         }
         .padding(4)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.black.opacity(0.3))
+                .fill(.ultraThinMaterial)
         )
     }
     
-    private func playerModeOptionFullWidth(_ mode: PlayerMode, title: String) -> some View {
+    private func playerModeOptionFullWidth(_ mode: PlayerMode, title: String, iconName: String) -> some View {
         Button {
             withAnimation(.easeInOut(duration: 0.15)) {
                 selectedPlayerMode = mode
             }
             impactGenerator.impactOccurred()
         } label: {
-            Text(title)
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(selectedPlayerMode == mode ? HomeTheme.text : HomeTheme.text.opacity(0.5))
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(selectedPlayerMode == mode ? HomeTheme.lightCard : Color.clear)
-                )
-                .contentShape(Rectangle())
+            HStack(spacing: 8) {
+                Image(systemName: iconName)
+                Text(title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundColor(selectedPlayerMode == mode ? HomeTheme.text : HomeTheme.text.opacity(0.5))
+            .frame(maxWidth: .infinity)
+            .frame(height: 50)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(selectedPlayerMode == mode ? HomeTheme.lightCard : Color.clear)
+            )
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -242,7 +248,7 @@ struct StartScreen: View {
         Button {
             startGame()
         } label: {
-            Text("Start Game")
+            Label("Start Game", systemImage: "play.fill")
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -254,6 +260,11 @@ struct StartScreen: View {
                         startPoint: .leading,
                         endPoint: .trailing
                     )
+                )
+                // added ultraThinMaterial background behind the gradient
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(.ultraThinMaterial)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 16))
         }
@@ -354,6 +365,20 @@ struct StartScreen: View {
         case .about:
             AboutScreen(path: $path)
         }
+    }
+}
+
+// Helper function for category icons
+private func iconName(for category: CategoryOption) -> String {
+    switch category {
+    case .bible:
+        return "book.fill"
+    case .usHistory:
+        return "flag.fill"
+    case .animals:
+        return "pawprint.fill"
+    default:
+        return "lock.fill"
     }
 }
 

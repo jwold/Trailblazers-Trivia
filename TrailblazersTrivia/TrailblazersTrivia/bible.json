@@ -241,7 +241,7 @@
   },
   {
     "id": 544,
-    "question": "How did Moses throw into bitter water to turn it sweet?",
+    "question": "What did Moses throw into bitter water to turn it sweet?",
     "answer": "Wood",
     "wrongAnswers": [
       "Salt",
@@ -1144,7 +1144,7 @@
     "question": "Where did King Darius order Daniel to be thrown?",
     "answer": "The lion's den",
     "wrongAnswers": [
-      "The colisum",
+      "The Coliseum",
       "Into the river"
     ],
     "reference": ""
@@ -3561,7 +3561,7 @@
   },
   {
     "id": 893,
-    "question": "Who said: „The LORD gave and the LORD hath taken away; blessed be the name of the LORD“?",
+    "question": "Who said: The LORD gave and the LORD hath taken away; blessed be the name of the LORD",
     "answer": "Job",
     "wrongAnswers": [
       "Moses",

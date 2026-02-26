@@ -60,16 +60,6 @@
         "reference": ""
     },
     {
-        "id": 7,
-        "question": "Which animal is known as the 'King of the Jungle'?",
-        "answer": "Lion",
-        "wrongAnswers": [
-            "Tiger",
-            "Gorilla"
-        ],
-        "reference": ""
-    },
-    {
         "id": 8,
         "question": "What is the tallest living terrestrial animal?",
         "answer": "Giraffe",
@@ -112,7 +102,7 @@
     {
         "id": 12,
         "question": "What is the only continent where wild penguins live?",
-        "answer": "Southern Hemisphere (mostly Antarctica)",
+        "answer": "Antarctica",
         "wrongAnswers": [
             "North America",
             "Europe"
@@ -362,7 +352,7 @@
     {
         "id": 37,
         "question": "Which animal is the largest member of the dolphin family?",
-        "answer": "Orca (Killer Whale)",
+        "answer": "Orca",
         "wrongAnswers": [
             "Bottlenose Dolphin",
             "Pilot Whale"
@@ -371,7 +361,7 @@
     },
     {
         "id": 38,
-        "question": "What is the slowest mammal on Earth?",
+        "question": "What is the slowest mammal on land?",
         "answer": "Three-toed Sloth",
         "wrongAnswers": [
             "Koala",
@@ -470,16 +460,6 @@
         "reference": ""
     },
     {
-        "id": 48,
-        "question": "What is the fastest fish in the ocean?",
-        "answer": "Sailfish",
-        "wrongAnswers": [
-            "Swordfish",
-            "Marlin"
-        ],
-        "reference": ""
-    },
-    {
         "id": 49,
         "question": "Which animal has the largest eyes in the animal kingdom?",
         "answer": "Colossal Squid",
@@ -500,18 +480,8 @@
         "reference": ""
     },
     {
-        "id": 51,
-        "question": "What is the only mammal that can fly?",
-        "answer": "Bat",
-        "wrongAnswers": [
-            "Flying Squirrel",
-            "Sugar Glider"
-        ],
-        "reference": ""
-    },
-    {
         "id": 52,
-        "question": "Which animal has the thickest fur of any mammal?",
+        "question": "Which animal has the thickest fur?",
         "answer": "Sea Otter",
         "wrongAnswers": [
             "Polar Bear",
@@ -634,8 +604,8 @@
         "question": "Which animal is known for its ability to regenerate lost limbs?",
         "answer": "Axolotl",
         "wrongAnswers": [
-            "Starfish",
-            "Gecko"
+            "Cobra",
+            "Lemur"
         ],
         "reference": ""
     },
@@ -741,7 +711,7 @@
     },
     {
         "id": 75,
-        "question": "What is the only animal that can't vomit?",
+        "question": "Which animal can't vomit?",
         "answer": "Horse",
         "wrongAnswers": [
             "Cow",
@@ -754,8 +724,8 @@
         "question": "Which animal is known for its ability to mimic sounds?",
         "answer": "Lyrebird",
         "wrongAnswers": [
-            "Parrot",
-            "Mockingbird"
+            "Mockingjay",
+            "Hummingbird"
         ],
         "reference": ""
     },
@@ -821,7 +791,7 @@
     },
     {
         "id": 83,
-        "question": "What is the only animal that has a cube-shaped poop?",
+        "question": "What animal has cube-shaped poop?",
         "answer": "Wombat",
         "wrongAnswers": [
             "Koala",
@@ -901,7 +871,7 @@
     },
     {
         "id": 91,
-        "question": "What is the only animal that can digest bones?",
+        "question": "What animal can digest bones?",
         "answer": "Bearded Vulture",
         "wrongAnswers": [
             "Hyena",
@@ -946,16 +916,6 @@
         "wrongAnswers": [
             "Jellyfish",
             "Sponge"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 96,
-        "question": "Which animal is known for its ability to walk on water?",
-        "answer": "Basilisk Lizard",
-        "wrongAnswers": [
-            "Gecko",
-            "Frog"
         ],
         "reference": ""
     },
@@ -1021,7 +981,7 @@
     },
     {
         "id": 103,
-        "question": "What is the only animal that can't sweat?",
+        "question": "What animal can't sweat?",
         "answer": "Pig",
         "wrongAnswers": [
             "Dog",
@@ -1050,32 +1010,12 @@
         "reference": ""
     },
     {
-        "id": 106,
-        "question": "Which animal has the most legs relative to its body size?",
-        "answer": "Millipede",
-        "wrongAnswers": [
-            "Centipede",
-            "Spider"
-        ],
-        "reference": ""
-    },
-    {
         "id": 107,
-        "question": "What is the only animal that can't get sick?",
+        "question": "What animal can't get sick?",
         "answer": "Shark",
         "wrongAnswers": [
             "Crocodile",
             "Komodo Dragon"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 108,
-        "question": "Which animal is known for its ability to survive in a vacuum?",
-        "answer": "Tardigrade",
-        "wrongAnswers": [
-            "Cockroach",
-            "Rat"
         ],
         "reference": ""
     },
@@ -1090,18 +1030,8 @@
         "reference": ""
     },
     {
-        "id": 110,
-        "question": "Which animal has the longest pregnancy?",
-        "answer": "Elephant",
-        "wrongAnswers": [
-            "Whale",
-            "Rhino"
-        ],
-        "reference": ""
-    },
-    {
         "id": 111,
-        "question": "What is the only animal that can't hear?",
+        "question": "What animal can't hear?",
         "answer": "Snake",
         "wrongAnswers": [
             "Fish",
@@ -1114,8 +1044,8 @@
         "question": "Which animal is known for its ability to see in the dark?",
         "answer": "Owl",
         "wrongAnswers": [
-            "Cat",
-            "Bat"
+            "Rhino",
+            "Elephant"
         ],
         "reference": ""
     },
@@ -1141,21 +1071,11 @@
     },
     {
         "id": 115,
-        "question": "What is the only animal that can't sleep?",
+        "question": "What animal can't sleep?",
         "answer": "Bullfrog",
         "wrongAnswers": [
             "Shark",
             "Dolphin"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 116,
-        "question": "Which animal is known for its ability to fly without wings?",
-        "answer": "Flying Snake",
-        "wrongAnswers": [
-            "Flying Squirrel",
-            "Flying Fish"
         ],
         "reference": ""
     },
@@ -1181,7 +1101,7 @@
     },
     {
         "id": 119,
-        "question": "What is the only animal that can't breathe through its mouth?",
+        "question": "What animal can't breathe through its mouth?",
         "answer": "Horse",
         "wrongAnswers": [
             "Cow",
@@ -1220,16 +1140,6 @@
         "reference": ""
     },
     {
-        "id": 123,
-        "question": "What is the only animal that can't get drunk?",
-        "answer": "Human",
-        "wrongAnswers": [
-            "Elephant",
-            "Monkey"
-        ],
-        "reference": ""
-    },
-    {
         "id": 124,
         "question": "Which animal is known for its ability to survive being boiled?",
         "answer": "Tardigrade",
@@ -1256,26 +1166,6 @@
         "wrongAnswers": [
             "Bear",
             "Groundhog"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 127,
-        "question": "What is the only animal that can't get lost?",
-        "answer": "Cat",
-        "wrongAnswers": [
-            "Dog",
-            "Pigeon"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 128,
-        "question": "Which animal is known for its ability to survive being frozen solid?",
-        "answer": "Wood Frog",
-        "wrongAnswers": [
-            "Tardigrade",
-            "Woolly Bear Caterpillar"
         ],
         "reference": ""
     },
@@ -1310,16 +1200,6 @@
         "reference": ""
     },
     {
-        "id": 132,
-        "question": "Which animal is known for its ability to survive in the desert?",
-        "answer": "Camel",
-        "wrongAnswers": [
-            "Fennec Fox",
-            "Kangaroo Rat"
-        ],
-        "reference": ""
-    },
-    {
         "id": 133,
         "question": "What is the largest species of centipede?",
         "answer": "Amazonian Giant Centipede",
@@ -1346,16 +1226,6 @@
         "wrongAnswers": [
             "Sponge",
             "Coral"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 136,
-        "question": "Which animal is known for its ability to survive in the arctic?",
-        "answer": "Polar Bear",
-        "wrongAnswers": [
-            "Arctic Fox",
-            "Walrus"
         ],
         "reference": ""
     },
@@ -1390,52 +1260,12 @@
         "reference": ""
     },
     {
-        "id": 140,
-        "question": "Which animal is known for its ability to survive in the deep sea?",
-        "answer": "Giant Squid",
-        "wrongAnswers": [
-            "Anglerfish",
-            "Viperfish"
-        ],
-        "reference": ""
-    },
-    {
         "id": 141,
         "question": "What is the largest species of starfish?",
         "answer": "Sunflower Sea Star",
         "wrongAnswers": [
             "Crown-of-Thorns Starfish",
             "Chocolate Chip Starfish"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 142,
-        "question": "Which animal has the longest gestation period of any mammal?",
-        "answer": "Elephant",
-        "wrongAnswers": [
-            "Whale",
-            "Rhino"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 143,
-        "question": "What is the only animal that can't get fat?",
-        "answer": "Hummingbird",
-        "wrongAnswers": [
-            "Shrew",
-            "Mouse"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 144,
-        "question": "Which animal is known for its ability to survive in the rainforest?",
-        "answer": "Jaguar",
-        "wrongAnswers": [
-            "Toucan",
-            "Sloth"
         ],
         "reference": ""
     },
@@ -1450,72 +1280,12 @@
         "reference": ""
     },
     {
-        "id": 146,
-        "question": "Which animal has the most complex social structure?",
-        "answer": "Ant",
-        "wrongAnswers": [
-            "Bee",
-            "Termite"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 147,
-        "question": "What is the only animal that can't get bored?",
-        "answer": "Cat",
-        "wrongAnswers": [
-            "Dog",
-            "Parrot"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 148,
-        "question": "Which animal is known for its ability to survive in the mountains?",
-        "answer": "Snow Leopard",
-        "wrongAnswers": [
-            "Mountain Goat",
-            "Yak"
-        ],
-        "reference": ""
-    },
-    {
         "id": 149,
         "question": "What is the largest species of cockroach?",
         "answer": "Giant Burrowing Cockroach",
         "wrongAnswers": [
             "Madagascar Hissing Cockroach",
             "American Cockroach"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 150,
-        "question": "Which animal has the longest memory?",
-        "answer": "Dolphin",
-        "wrongAnswers": [
-            "Elephant",
-            "Chimpanzee"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 151,
-        "question": "What is the only animal that can't get lost at sea?",
-        "answer": "Sea Turtle",
-        "wrongAnswers": [
-            "Whale",
-            "Dolphin"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 152,
-        "question": "Which animal is known for its ability to survive in the tundra?",
-        "answer": "Musk Ox",
-        "wrongAnswers": [
-            "Arctic Hare",
-            "Lemming"
         ],
         "reference": ""
     },
@@ -1540,26 +1310,6 @@
         "reference": ""
     },
     {
-        "id": 155,
-        "question": "What is the only animal that can't get cold?",
-        "answer": "Penguin",
-        "wrongAnswers": [
-            "Polar Bear",
-            "Seal"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 156,
-        "question": "Which animal is known for its ability to survive in the savanna?",
-        "answer": "Lion",
-        "wrongAnswers": [
-            "Zebra",
-            "Elephant"
-        ],
-        "reference": ""
-    },
-    {
         "id": 157,
         "question": "What is the largest species of termite?",
         "answer": "Macrotermes Bellicosus",
@@ -1576,26 +1326,6 @@
         "wrongAnswers": [
             "Shark",
             "Dog"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 159,
-        "question": "What is the only animal that can't get hot?",
-        "answer": "Camel",
-        "wrongAnswers": [
-            "Lizard",
-            "Snake"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 160,
-        "question": "Which animal is known for its ability to survive in the wetlands?",
-        "answer": "Alligator",
-        "wrongAnswers": [
-            "Hippo",
-            "Capybara"
         ],
         "reference": ""
     },
@@ -1620,26 +1350,6 @@
         "reference": ""
     },
     {
-        "id": 163,
-        "question": "What is the only animal that can't get lonely?",
-        "answer": "Solitary Bee",
-        "wrongAnswers": [
-            "Tiger",
-            "Bear"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 164,
-        "question": "Which animal is known for its ability to survive in the grasslands?",
-        "answer": "Bison",
-        "wrongAnswers": [
-            "Antelope",
-            "Prairie Dog"
-        ],
-        "reference": ""
-    },
-    {
         "id": 165,
         "question": "What is the largest species of louse?",
         "answer": "Hog Louse",
@@ -1656,26 +1366,6 @@
         "wrongAnswers": [
             "Bear",
             "Pig"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 167,
-        "question": "What is the only animal that can't get scared?",
-        "answer": "Honey Badger",
-        "wrongAnswers": [
-            "Lion",
-            "Shark"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 168,
-        "question": "Which animal is known for its ability to survive in the forest?",
-        "answer": "Deer",
-        "wrongAnswers": [
-            "Bear",
-            "Wolf"
         ],
         "reference": ""
     },
@@ -1700,26 +1390,6 @@
         "reference": ""
     },
     {
-        "id": 171,
-        "question": "What is the only animal that can't get angry?",
-        "answer": "Quokka",
-        "wrongAnswers": [
-            "Capybara",
-            "Sloth"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 172,
-        "question": "Which animal is known for its ability to survive in the jungle?",
-        "answer": "Tiger",
-        "wrongAnswers": [
-            "Monkey",
-            "Snake"
-        ],
-        "reference": ""
-    },
-    {
         "id": 173,
         "question": "What is the largest species of mite?",
         "answer": "Red Velvet Mite",
@@ -1736,26 +1406,6 @@
         "wrongAnswers": [
             "Cow",
             "Bird"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 175,
-        "question": "What is the only animal that can't get hungry?",
-        "answer": "Snake",
-        "wrongAnswers": [
-            "Crocodile",
-            "Spider"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 176,
-        "question": "Which animal is known for its ability to survive in the swamp?",
-        "answer": "Alligator",
-        "wrongAnswers": [
-            "Frog",
-            "Snake"
         ],
         "reference": ""
     },
@@ -1780,26 +1430,6 @@
         "reference": ""
     },
     {
-        "id": 179,
-        "question": "What is the only animal that can't get thirsty?",
-        "answer": "Koala",
-        "wrongAnswers": [
-            "Camel",
-            "Kangaroo Rat"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 180,
-        "question": "Which animal is known for its ability to survive in the cave?",
-        "answer": "Bat",
-        "wrongAnswers": [
-            "Spider",
-            "Salamander"
-        ],
-        "reference": ""
-    },
-    {
         "id": 181,
         "question": "What is the largest species of leech?",
         "answer": "Giant Amazon Leech",
@@ -1820,62 +1450,12 @@
         "reference": ""
     },
     {
-        "id": 183,
-        "question": "What is the only animal that can't get tired of swimming?",
-        "answer": "Shark",
-        "wrongAnswers": [
-            "Dolphin",
-            "Whale"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 184,
-        "question": "Which animal is known for its ability to survive in the city?",
-        "answer": "Pigeon",
-        "wrongAnswers": [
-            "Rat",
-            "Raccoon"
-        ],
-        "reference": ""
-    },
-    {
         "id": 185,
         "question": "What is the largest species of slug?",
         "answer": "Black Sea Hare",
         "wrongAnswers": [
             "Banana Slug",
             "Leopard Slug"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 186,
-        "question": "Which animal has the most adaptable diet?",
-        "answer": "Pig",
-        "wrongAnswers": [
-            "Bear",
-            "Raccoon"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 187,
-        "question": "What is the only animal that can't get tired of running?",
-        "answer": "Wolf",
-        "wrongAnswers": [
-            "Horse",
-            "Dog"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 188,
-        "question": "Which animal is known for its ability to survive in the suburbs?",
-        "answer": "Squirrel",
-        "wrongAnswers": [
-            "Rabbit",
-            "Skunk"
         ],
         "reference": ""
     },
@@ -1890,32 +1470,12 @@
         "reference": ""
     },
     {
-        "id": 190,
-        "question": "Which animal has the most resilient immune system?",
-        "answer": "Shark",
-        "wrongAnswers": [
-            "Crocodile",
-            "Bat"
-        ],
-        "reference": ""
-    },
-    {
         "id": 191,
-        "question": "What is the only animal that can't get tired of flying?",
+        "question": "Which animal is capable of staying airborn the longest?",
         "answer": "Albatross",
         "wrongAnswers": [
             "Eagle",
             "Swift"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 192,
-        "question": "Which animal is known for its ability to survive in the farm?",
-        "answer": "Cow",
-        "wrongAnswers": [
-            "Pig",
-            "Chicken"
         ],
         "reference": ""
     },
@@ -1941,21 +1501,11 @@
     },
     {
         "id": 195,
-        "question": "What is the only animal that can't get tired of eating?",
+        "question": "What animal is known for eating continuously?",
         "answer": "Caterpillar",
         "wrongAnswers": [
             "Pig",
             "Cow"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 196,
-        "question": "Which animal is known for its ability to survive in the zoo?",
-        "answer": "Panda",
-        "wrongAnswers": [
-            "Lion",
-            "Elephant"
         ],
         "reference": ""
     },
@@ -1980,36 +1530,6 @@
         "reference": ""
     },
     {
-        "id": 199,
-        "question": "What is the only animal that can't get tired of sleeping?",
-        "answer": "Sloth",
-        "wrongAnswers": [
-            "Koala",
-            "Cat"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 200,
-        "question": "Which animal is known for its ability to survive in the wild?",
-        "answer": "Wolf",
-        "wrongAnswers": [
-            "Lion",
-            "Bear"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 201,
-        "question": "What is the fastest fish?",
-        "answer": "Sailfish",
-        "wrongAnswers": [
-            "Marlin",
-            "Tuna"
-        ],
-        "reference": ""
-    },
-    {
         "id": 202,
         "question": "Which animal has the largest ears?",
         "answer": "African Elephant",
@@ -2020,32 +1540,12 @@
         "reference": ""
     },
     {
-        "id": 203,
-        "question": "What is the only bird that can fly backwards?",
-        "answer": "Hummingbird",
-        "wrongAnswers": [
-            "Kingfisher",
-            "Swift"
-        ],
-        "reference": ""
-    },
-    {
         "id": 204,
         "question": "Which animal has the strongest bite?",
         "answer": "Saltwater Crocodile",
         "wrongAnswers": [
             "Great White Shark",
             "Hippo"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 205,
-        "question": "What is the largest primate?",
-        "answer": "Gorilla",
-        "wrongAnswers": [
-            "Orangutan",
-            "Chimpanzee"
         ],
         "reference": ""
     },
@@ -2070,16 +1570,6 @@
         "reference": ""
     },
     {
-        "id": 208,
-        "question": "Which animal has the longest pregnancy?",
-        "answer": "Elephant",
-        "wrongAnswers": [
-            "Whale",
-            "Rhino"
-        ],
-        "reference": ""
-    },
-    {
         "id": 209,
         "question": "What is a group of crows called?",
         "answer": "Murder",
@@ -2100,112 +1590,12 @@
         "reference": ""
     },
     {
-        "id": 211,
-        "question": "What is the slowest mammal?",
-        "answer": "Sloth",
-        "wrongAnswers": [
-            "Koala",
-            "Loris"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 212,
-        "question": "Which animal has the best smell?",
-        "answer": "Elephant",
-        "wrongAnswers": [
-            "Bloodhound",
-            "Bear"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 213,
-        "question": "What is the only venomous mammal that lays eggs?",
-        "answer": "Platypus",
-        "wrongAnswers": [
-            "Echidna",
-            "Loris"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 214,
-        "question": "Which animal has stripes?",
-        "answer": "Zebra",
-        "wrongAnswers": [
-            "Okapi",
-            "Tapir"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 215,
-        "question": "What is the largest reptile?",
-        "answer": "Saltwater Crocodile",
-        "wrongAnswers": [
-            "Komodo Dragon",
-            "Turtle"
-        ],
-        "reference": ""
-    },
-    {
         "id": 216,
         "question": "Which bird swims but can't fly?",
         "answer": "Penguin",
         "wrongAnswers": [
             "Ostrich",
             "Kiwi"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 217,
-        "question": "What is the loudest animal?",
-        "answer": "Sperm Whale",
-        "wrongAnswers": [
-            "Blue Whale",
-            "Howler Monkey"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 218,
-        "question": "Which animal has a prehensile tail?",
-        "answer": "Spider Monkey",
-        "wrongAnswers": [
-            "Lemur",
-            "Baboon"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 219,
-        "question": "What eats Great White Sharks?",
-        "answer": "Orca",
-        "wrongAnswers": [
-            "Sperm Whale",
-            "Squid"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 220,
-        "question": "Which animal builds dams?",
-        "answer": "Beaver",
-        "wrongAnswers": [
-            "Otter",
-            "Muskrat"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 221,
-        "question": "What is the fastest fish?",
-        "answer": "Sailfish",
-        "wrongAnswers": [
-            "Swordfish",
-            "Marlin"
         ],
         "reference": ""
     },
@@ -2334,8 +1724,8 @@
         "question": "Which animal tastes with its feet?",
         "answer": "Butterfly",
         "wrongAnswers": [
-            "Fly",
-            "Bee"
+            "Cat",
+            "Racoon"
         ],
         "reference": ""
     },
@@ -2360,56 +1750,6 @@
         "reference": ""
     },
     {
-        "id": 237,
-        "question": "What is the largest species of penguin?",
-        "answer": "Emperor Penguin",
-        "wrongAnswers": [
-            "King Penguin",
-            "Gentoo"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 238,
-        "question": "Which animal has 3 hearts?",
-        "answer": "Octopus",
-        "wrongAnswers": [
-            "Squid",
-            "Cuttlefish"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 239,
-        "question": "What is the fastest land animal?",
-        "answer": "Cheetah",
-        "wrongAnswers": [
-            "Lion",
-            "Gazelle"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 240,
-        "question": "Which animal is the King of the Jungle?",
-        "answer": "Lion",
-        "wrongAnswers": [
-            "Tiger",
-            "Gorilla"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 241,
-        "question": "What is the tallest animal?",
-        "answer": "Giraffe",
-        "wrongAnswers": [
-            "Elephant",
-            "Ostrich"
-        ],
-        "reference": ""
-    },
-    {
         "id": 242,
         "question": "Which bird lays the largest egg?",
         "answer": "Ostrich",
@@ -2420,32 +1760,12 @@
         "reference": ""
     },
     {
-        "id": 243,
-        "question": "What is a group of lions?",
-        "answer": "Pride",
-        "wrongAnswers": [
-            "Pack",
-            "Herd"
-        ],
-        "reference": ""
-    },
-    {
         "id": 244,
         "question": "Which animal sleeps 22 hours?",
         "answer": "Koala",
         "wrongAnswers": [
             "Sloth",
             "Cat"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 245,
-        "question": "What is the largest mammal?",
-        "answer": "Blue Whale",
-        "wrongAnswers": [
-            "Elephant",
-            "Squid"
         ],
         "reference": ""
     },
@@ -2486,16 +1806,6 @@
         "wrongAnswers": [
             "Lion",
             "Jaguar"
-        ],
-        "reference": ""
-    },
-    {
-        "id": 250,
-        "question": "Which animal has the longest neck?",
-        "answer": "Giraffe",
-        "wrongAnswers": [
-            "Ostrich",
-            "Flamingo"
         ],
         "reference": ""
     },
@@ -2710,16 +2020,6 @@
         "reference": ""
     },
     {
-        "id": 272,
-        "question": "Which animal has a forked penis?",
-        "answer": "Echidna",
-        "wrongAnswers": [
-            "Platypus",
-            "Opossum"
-        ],
-        "reference": ""
-    },
-    {
         "id": 273,
         "question": "What is the fastest growing plant eaten by animals?",
         "answer": "Bamboo",
@@ -2851,7 +2151,7 @@
     },
     {
         "id": 286,
-        "question": "Which animal has the longest pregnancy of any animal?",
+        "question": "Which animal has the longest pregnancy",
         "answer": "Alpine Salamander",
         "wrongAnswers": [
             "Elephant",
@@ -2874,7 +2174,7 @@
         "question": "Which animal can live without its head for weeks?",
         "answer": "Cockroach",
         "wrongAnswers": [
-            "Chicken",
+            "Ant",
             "Snake"
         ],
         "reference": ""
@@ -2894,8 +2194,8 @@
         "question": "Which animal has the most teeth of any land mammal?",
         "answer": "Giant Armadillo",
         "wrongAnswers": [
-            "Dolphin",
-            "Shark"
+            "Tiger",
+            "Lemur"
         ],
         "reference": ""
     },

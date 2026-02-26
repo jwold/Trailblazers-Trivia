@@ -40,25 +40,22 @@ struct SinglePlayerGameScreen: View {
             GrayTheme.background
                 .ignoresSafeArea()
             
+            // Instead of showing intermediate results UI when game ends,
+            // immediately navigate to final screen
             if singlePlayerViewModel.gameEnded {
-                // Game ended - navigate to results
-                VStack {
-                    Text("Game Complete!")
-                        .font(.title)
-                        .foregroundColor(.white)
-                    
-                    Button("View Results") {
-                        path.append(Routes.singlePlayerResults(
-                            finalScore: singlePlayerViewModel.getPlayerScore(),
-                            questionsAnswered: singlePlayerViewModel.turns.count,
-                            elapsedTime: singlePlayerViewModel.elapsedTime
-                        ))
+                // Push results view immediately
+                Color.clear
+                    .onAppear {
+                        if !path.contains(where: {
+                            if case .singlePlayerResults = $0 { return true } else { return false }
+                        }) {
+                            path.append(Routes.singlePlayerResults(
+                                finalScore: singlePlayerViewModel.getPlayerScore(),
+                                questionsAnswered: singlePlayerViewModel.turns.count,
+                                elapsedTime: singlePlayerViewModel.elapsedTime
+                            ))
+                        }
                     }
-                    .foregroundColor(.black)
-                    .padding()
-                    .background(.green)
-                    .cornerRadius(12)
-                }
             } else {
                 // Game content
                 gameContentView
@@ -140,8 +137,6 @@ struct SinglePlayerGameScreen: View {
                 if shouldShowAnswerButtons() {
                     answerButtonsView
                         .padding(.top, 20)
-                        .transition(.opacity) // Fade transition
-                        .animation(.easeInOut(duration: 0.3), value: singlePlayerViewModel.currentQuestion.id)
                 }
                 
                 // Continue button - moved into main content area
@@ -225,18 +220,22 @@ struct SinglePlayerGameScreen: View {
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        // Show checkmark or X only after results are revealed
-                        if singlePlayerViewModel.showResults {
-                            if option == singlePlayerViewModel.currentQuestion.answer {
+                        Spacer()
+                        
+                        ZStack {
+                            if singlePlayerViewModel.showResults && option == singlePlayerViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
                                     .foregroundColor(.white)
-                            } else if option == singlePlayerViewModel.selectedAnswer {
+                            } else if singlePlayerViewModel.showResults && option == singlePlayerViewModel.selectedAnswer && option != singlePlayerViewModel.currentQuestion.answer {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title2)
                                     .foregroundColor(.white.opacity(0.5))
+                            } else {
+                                Color.clear
                             }
                         }
+                        .frame(width: 28, height: 28)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)

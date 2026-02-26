@@ -920,16 +920,6 @@
     "reference": ""
   },
   {
-    "id": 93,
-    "question": "Who was the only President to serve non-consecutive terms?",
-    "answer": "Grover Cleveland",
-    "wrongAnswers": [
-      "Benjamin Harrison",
-      "William Howard Taft"
-    ],
-    "reference": ""
-  },
-  {
     "id": 94,
     "question": "What year did California become a state?",
     "answer": "1850",

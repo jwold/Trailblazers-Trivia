@@ -258,17 +258,21 @@ struct CouchModeGameScreen: View {
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        if showResults {
-                            if option == gameViewModel.currentQuestion.answer {
+                        Spacer()
+                        ZStack {
+                            if showResults && option == gameViewModel.currentQuestion.answer {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
                                     .foregroundColor(.white)
-                            } else if option == selectedAnswer {
+                            } else if showResults && option == selectedAnswer {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title2)
                                     .foregroundColor(.white.opacity(0.5))
+                            } else {
+                                Color.clear
                             }
                         }
+                        .frame(width: 28, height: 28)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
